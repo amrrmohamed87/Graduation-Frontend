@@ -1,6 +1,6 @@
-import { navLinks } from "../data/navbar";
+import { navLinks } from "../data/constants";
 import logoImage1 from "../assets/images/MHI.png";
-import logoImage2 from "../assets/images/MHI-Black.svg";
+import logoImage2 from "../assets/images/MHI-Emerald.svg";
 export default function Navbar({ isScrolled }) {
   return (
     <header className="w-full z-10 bg-[#F7F5F2] absolute">
@@ -22,7 +22,7 @@ export default function Navbar({ isScrolled }) {
               key={link.label}
               className={
                 isScrolled
-                  ? "text-xl text-slate-950 hover:text-slate-500"
+                  ? "text-xl text-emerald-950 hover:text-slate-500"
                   : "text-xl text-slate-300 hover:text-slate-100"
               }
             >
@@ -33,7 +33,7 @@ export default function Navbar({ isScrolled }) {
         <button
           className={
             isScrolled
-              ? "text-xl text-slate-950 hover:text-slate-500 px-8"
+              ? "text-xl text-emerald-950 hover:text-slate-500 px-8"
               : "text-xl text-slate-300 hover:text-slate-100 px-8"
           }
         >
