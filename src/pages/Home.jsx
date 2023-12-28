@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import hero from "../assets/images/hero.jpg";
 import AboutUs from "../components/AboutUs";
+import TopDoctors from "../components/TopDoctors";
+import Services from "../components/Services";
+import Footer from "../components/Footer";
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -36,6 +39,9 @@ export default function Home() {
         </div>
       </header>
       <AboutUs />
+      <Services />
+      <TopDoctors />
+      <Footer />
     </main>
   );
 }
