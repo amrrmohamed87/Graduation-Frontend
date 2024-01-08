@@ -1,10 +1,21 @@
+import { Routes, Route } from "react-router-dom";
+
+import AuthLayout from "./authentication/AuthLayout";
 import Home from "./pages/Home";
-function App() {
+import ContactUs from "./pages/ContactUs";
+//import AboutUs from "./components/AboutUs";
+
+export default function App() {
   return (
     <>
-      <Home />
+      <Routes>
+        {/* Public Pages */}
+        <Route element={<AuthLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+        </Route>
+        {/* Private Pages */}
+      </Routes>
     </>
   );
 }
-
-export default App;
