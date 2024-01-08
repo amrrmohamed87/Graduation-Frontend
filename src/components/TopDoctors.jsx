@@ -1,37 +1,34 @@
-import { topDoctors } from "../data/constants";
+import { topDoctors } from "../data/constants.js";
 
 export default function TopDoctors() {
   return (
-    <section className=" flex justify-center items-center flex-col">
-      <h1 className="text-center text-4xl font-bold text-emerald-950 mb-3">
+    <section className="max-container mb-16">
+      <h1 className="text-center text-4xl font-bold text-emerald-950">
+        {" "}
         أفضل الأطباء
       </h1>
-      <div className="w-1/3 border-b-2 rounded-full border-emerald-950"></div>
-      <div className="container mt-8">
-        <div className="flex justify-between items-center">
-          {topDoctors.map((doctor) => (
-            <div
-              key={doctor.name}
-              className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/3 px-4"
-            >
-              <div className=" p-6 rounded-3xl flex justify-between items-center flex-col">
-                <a href={doctor.href}>
-                  <img
-                    src={doctor.image}
-                    width={200}
-                    className="rounded-xl mb-4 shadow-2xl hover:animate-pulse"
-                  />
-                </a>
-                <h3 className="text-emerald-950 text-2xl">{doctor.name}</h3>
-                <p className="text-emerald-950 text-xl">
-                  {doctor.specialization}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="mt-20 flex flex-1 justify-evenly items-center max-lg:flex-col gap-14">
+        {topDoctors.map((doctor) => (
+          <div
+            key={doctor.name}
+            className="flex justify-center items-center flex-col"
+          >
+            <a href={doctor.href}>
+              <img
+                src={doctor.image}
+                alt={doctor.name}
+                className="object-cover rounded-xl w-[150px] h-[150px]"
+              />
+            </a>
+            <h3 className="mt-3 text-3xl text-center font-bold text-emerald-950">
+              {doctor.name}
+            </h3>
+            <p className="mt-2 max-w-sm text-center text-lg leading-7 text-emerald-950">
+              {doctor.specialization}
+            </p>
+          </div>
+        ))}
       </div>
-      <div className="w-1/3 border-b-2 rounded-full border-emerald-950 mb-5"></div>
     </section>
   );
 }
