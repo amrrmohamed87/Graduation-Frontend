@@ -1,31 +1,13 @@
 import d1 from "../assets/images/d1.jpg";
 import d2 from "../assets/images/d2.jpg";
 import d3 from "../assets/images/d3.jpeg";
-import s1 from "../assets/images/search1.jpg";
-import s2 from "../assets/images/search2.jpg";
-import s3 from "../assets/images/search3.jpg";
-import medicine from "../assets/images/medicine.jpg";
+
 
 export const navLinks = [
-    {href: "/", label: "التواصل معنا" },
-    {href: "/", label: "الخدمات"},
-    {href: "#about-us", label: "معلومات عنا"},
-    {href: "/", label:"الصفحة الرئيسية"},
-];
-
-export const servicesImages = [
-    {
-        image: medicine,
-    },
-    {
-        image: s1,
-    },
-    {
-        image:s2,
-    },
-    {
-        image:s3,
-    },
+    {to: "/contact-us", label: "التواصل معنا" },
+    {to: "/service", label: "الخدمات"},
+    {to: "/about-us", label: "معلومات عنا"},
+    {to: "/", label:"الصفحة الرئيسية"},
 ];
 
 export const topDoctors = [
@@ -75,4 +57,27 @@ export const footerLinks = [
             { name: "+0223440399", link: "/" },
         ],
     },
-]
+];
+
+export const contactUs = [
+    {  
+        name: 'Amr Muhammad',
+        specialization: 'Frontend - Software Engineer',
+    },
+    {  
+        name: 'Ramez Hossam',
+        specialization: 'Frontend - Web Developer',
+    },
+    {  
+        name: 'Mohamed Saber',
+        specialization: 'Frontend - Mobile Developer',
+    },
+    {  
+        name: 'Abdelrahman Khaled',
+        specialization: 'Backend',
+    },
+    {  
+        name: 'Ibrahim Elfatarany',
+        specialization: 'Backend',
+    },
+];
