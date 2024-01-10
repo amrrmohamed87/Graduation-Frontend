@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import aboutImage from "../assets/images/about-bg.jpg";
 
 export default function AboutUs() {
+  const navigate = useNavigate();
+
+  function navigateHandler() {
+    navigate("/contact-us");
+  }
   return (
     <section className="lg:h-screen flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container">
       <div className="flex flex-1 justify-center items-center">
@@ -25,7 +32,10 @@ export default function AboutUs() {
           يسبب الإزعاج والضغط للأفراد الذين يبحثون عن العلاج الطبي
         </p>
         <div>
-          <button className="mt-4 px-2 py-2 bg-emerald-950 hover:bg-black text-white rounded-full w-36 text-xl font-bold">
+          <button
+            onClick={navigateHandler}
+            className="mt-4 px-2 py-2 bg-emerald-950 hover:bg-black text-white rounded-full w-36 text-xl font-bold"
+          >
             التواصل معنا
           </button>
         </div>
