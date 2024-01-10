@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import serviceImage from "../assets/images/service.png";
 
 export default function Services() {
+  const navigate = useNavigate();
+
+  function navigateHandler() {
+    navigate("/services");
+  }
   return (
     <section className="lg:h-screen flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container">
       <div className="flex flex-1 flex-col items-end text-right">
@@ -20,7 +27,10 @@ export default function Services() {
           التطبيب عن بعد، وتمكين الأفراد بالمعلومات، وتحسين صحة المجتمع بشكل عام
         </p>
         <div>
-          <button className="mt-3 px-2 py-2 bg-emerald-950 hover:bg-black text-white rounded-full w-36 text-xl font-bold">
+          <button
+            onClick={navigateHandler}
+            className="mt-3 px-2 py-2 bg-emerald-950 hover:bg-black text-white rounded-full w-36 text-xl font-bold"
+          >
             الخدمات
           </button>
         </div>
