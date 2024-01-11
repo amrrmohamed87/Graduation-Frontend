@@ -1,30 +1,16 @@
-import { useState, useEffect } from "react";
-
-import Navbar from "../components/Navbar";
 import hero from "../assets/images/hero.jpg";
 import AboutUs from "../components/AboutUs";
 import TopDoctors from "../components/TopDoctors";
 import Services from "../components/Services";
 import Footer from "../components/Footer";
+
+import Menu from "../components/Menu";
+
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  function handleScroll() {
-    const scrollTop = window.scrollY;
-    setIsScrolled(scrollTop > 0);
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <main className="h-screen">
       <header className="">
-        <Navbar isScrolled={isScrolled} />
+        <Menu />
         <div className="flex flex-col justify-center items-center relative">
           <img src={hero} className="object-contain w-full" />
           <div className="absolute inset-0 bg-black opacity-80"></div>
