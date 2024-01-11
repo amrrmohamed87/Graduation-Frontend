@@ -4,7 +4,6 @@ export default function TopDoctors() {
   return (
     <section className="max-container mb-16">
       <h1 className="text-center text-4xl font-bold text-emerald-950">
-        {" "}
         أفضل الأطباء
       </h1>
       <div className="mt-20 flex flex-1 justify-evenly items-center max-lg:flex-col gap-14">
