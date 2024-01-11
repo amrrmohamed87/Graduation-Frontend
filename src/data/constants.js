@@ -2,14 +2,15 @@ import d1 from "../assets/images/d1.jpg";
 import d2 from "../assets/images/d2.jpg";
 import d3 from "../assets/images/d3.jpeg";
 
-
+// Navbar Links
 export const navLinks = [
+    {to: "/login", label: "تسجيل الدخول"},
     {to: "/contact-us", label: "التواصل معنا" },
     {to: "/service", label: "الخدمات"},
-    {to: "/about-us", label: "معلومات عنا"},
     {to: "/", label:"الصفحة الرئيسية"},
 ];
 
+// Top Doctors Data
 export const topDoctors = [
     {
         image: d1,
@@ -31,6 +32,7 @@ export const topDoctors = [
     }
 ];
 
+// Footer Links
 export const footerLinks = [
     {
         title: "Help",
@@ -59,25 +61,14 @@ export const footerLinks = [
     },
 ];
 
-export const contactUs = [
-    {  
-        name: 'Amr Muhammad',
-        specialization: 'Frontend - Software Engineer',
-    },
-    {  
-        name: 'Ramez Hossam',
-        specialization: 'Frontend - Web Developer',
-    },
-    {  
-        name: 'Mohamed Saber',
-        specialization: 'Frontend - Mobile Developer',
-    },
-    {  
-        name: 'Abdelrahman Khaled',
-        specialization: 'Backend',
-    },
-    {  
-        name: 'Ibrahim Elfatarany',
-        specialization: 'Backend',
-    },
+// Contact Us
+export const  frontendEngineers = [
+    {name: "Amr Muhammad", specialization: "Frontend Software Engineer", email:"amrrmohamed87@gmail.com"},
+    {name: "Ramez Hossam", specialization: "Frontend Web Developer", email: "ramezhossam92@gmail.com"},
+    {name: "Mohamed Saber" , specialization: "Frontend Mobile Developer", email: "elmohandesstamera@gamil.com"},
+];
+
+export const backendEngineers = [
+    {name: "Abdelrahman Khaled", specialization: "Backend Engineer", email: "keshko123456@gmail.com"},
+    {name: "Ibrahim Elfatarany", specialization: "Backend Engineer", email: "ibrahimelfatarny75@gmail.com"},
 ];
