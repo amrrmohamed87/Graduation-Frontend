@@ -1,21 +1,21 @@
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import AuthLayout from "./authentication/AuthLayout";
+import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
-import ContactUs from "./pages/ContactUs";
-//import AboutUs from "./components/AboutUs";
+import Error from "./Error/Error";
+import ContactUs from "./pages/ContactUs.jsx";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <Error />,
+    children: [
+      { path: "", element: <Home /> },
+      { path: "contact-us", element: <ContactUs /> },
+    ],
+  },
+]);
 
 export default function App() {
-  return (
-    <>
-      <Routes>
-        {/* Public Pages */}
-        <Route element={<AuthLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-        </Route>
-        {/* Private Pages */}
-      </Routes>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
