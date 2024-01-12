@@ -1,29 +1,30 @@
-import hero from "../assets/images/hero.jpg";
+import Menu from "../components/Menu";
 import AboutUs from "../components/AboutUs";
-import TopDoctors from "../components/TopDoctors";
 import Services from "../components/Services";
+import TopDoctors from "../components/TopDoctors";
 import Footer from "../components/Footer";
 
-import Menu from "../components/Menu";
+import hero from "../assets/images/hero.jpg";
 
 export default function Home() {
   return (
-    <main className="h-screen">
-      <header className="">
+    <main>
+      <section className="relative h-screen w-full">
         <Menu />
-        <div className="flex flex-col justify-center items-center relative">
-          <img src={hero} className="object-contain w-full" />
-          <div className="absolute inset-0 bg-black opacity-80"></div>
-          <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full ">
-            <h2 className="text-[80px] text-slate-200 font-bold mb-2">
-              مصر للتأمين الصحي
-            </h2>
-            <p className="text-[40px] text-slate-300 ">
-              أعظم الثروة هي الصحة، والحياة مع التأمين يخلق ثروة عظيمة
-            </p>
-          </div>
+        <div className="absolute w-full h-screen">
+          <img
+            src={hero}
+            className="object-cover object-center h-screen w-full"
+          />
         </div>
-      </header>
+        <div className="absolute inset-0 bg-black opacity-80"></div>
+        <div className="absolute inset-2 left-4 md:inset-0 flex flex-1 flex-col justify-center text-right mr-2 md:mr-0 md:items-center">
+          <h2 className="text-white text-[80px]">مصر للتأمين الصحي</h2>
+          <p className="text-slate-300 text-[40px] mt-2 md:mt-0">
+            أعظم الثروة هي الصحة، والحياة مع التأمين يخلق ثروة عظيمة
+          </p>
+        </div>
+      </section>
       <AboutUs />
       <Services />
       <TopDoctors />
