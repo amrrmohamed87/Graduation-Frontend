@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
@@ -6,9 +6,22 @@ import { navLinks } from "../data/constants";
 import logo1 from "../assets/images/MHI.png";
 import logo2 from "../assets/images/MHI-Emerald.svg";
 
-export default function Menu({ isScrolled }) {
+export default function Menu() {
   // State to Manage the navbar's visibility on small screens
   const [isSidebar, setIsSidebar] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  function handleScroll() {
+    const scrollTop = window.scrollY;
+    setIsScrolled(scrollTop > 0);
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const navigate = useNavigate();
 
@@ -103,11 +116,7 @@ export default function Menu({ isScrolled }) {
           <div className="text-right mt-8">
             <button
               onClick={navigateHandler}
-              className={
-                isScrolled
-                  ? "text-xl text-emerald-950 hover:text-slate-500 px-8"
-                  : "text-xl text-slate-300 hover:text-slate-100 px-8"
-              }
+              className="text-xl text-emerald-950 hover:text-slate-500 px-8"
             >
               تسجيل الدخول
             </button>
