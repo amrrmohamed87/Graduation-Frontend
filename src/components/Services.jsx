@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import serviceImage from "../assets/images/service.png";
+import serviceImage from "../assets/images/service-section.png";
 
 export default function Services() {
   const navigate = useNavigate();
