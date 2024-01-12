@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import Menu from "../components/Menu.jsx";
 
 export default function RootLayout() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  /*  const [isScrolled, setIsScrolled] = useState(false);
 
   function handleScroll() {
     const scrollTop = window.scrollY;
@@ -16,11 +16,11 @@ export default function RootLayout() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, []); */
 
   return (
     <>
-      <Menu isScrolled={isScrolled} />
+      <Menu />
       <main>
         <Outlet />
       </main>
