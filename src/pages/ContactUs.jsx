@@ -1,12 +1,9 @@
-import Menu from "../components/Menu.jsx";
-
-import bg from "../assets/images/contact-us1.jpg";
 import { backendEngineers, frontendEngineers } from "../data/constants.js";
+import bg from "../assets/images/contact-us1.jpg";
 
 export default function ContactUs() {
   return (
     <main className="">
-      <Menu />
       <section className="relative h-screen w-full">
         <div className="absolute w-full h-screen">
           <img src={bg} className="object-cover object-center w-full h-full" />
