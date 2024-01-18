@@ -4,6 +4,8 @@ import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
 import Error from "./Error/Error";
 import ContactUs from "./pages/ContactUs.jsx";
+import Login from "./pages/Login.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -12,6 +14,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "contact-us", element: <ContactUs /> },
+      { path: "login", element: <Login /> },
     ],
   },
 ]);
