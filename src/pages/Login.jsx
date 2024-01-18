@@ -17,8 +17,8 @@ export default function Login() {
         </div>
         <div className="absolute">
           <h1
-            className="text-center text-white
-           text-xl p-8 md:px-16 mt-36 md:mt-28 "
+            className="text-center text-white 
+           text-2xl p-8 md:px-96 mt-36 md:mt-20 "
           >
             مرحبًا! مجرد تذكير بأنه لكي تتمكن من تسجيل الدخول، يجب أن تكون
             مسجلاً في التأمين الصحي في مصر. إذا كانت لديك أي أسئلة حول حالة
