@@ -3,6 +3,9 @@ import Input from "../components/Input";
 import login from "../assets/images/login2.jpg";
 
 export default function Login() {
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
   return (
     <main className="flex flex-col">
       <section className="relative h-screen w-full">
@@ -22,7 +25,10 @@ export default function Login() {
             التسجيل الخاصة بك أو كنت بحاجة إلى المساعدة، فلا تتردد في التواصل
             معي وسأبذل قصارى جهدي لمساعدتك
           </h1>
-          <form className="w-[90%] max-w-2xl mx-auto mb-8 p-8  bg-opacity-80 rounded-lg shadow-2xl">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[90%] max-w-2xl mx-auto mb-8 p-8  bg-opacity-80 rounded-lg shadow-2xl"
+          >
             <h2 className="text-center mb-8 text-2xl text-[#dff6f6]">
               تسجيل الدخول
             </h2>
