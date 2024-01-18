@@ -113,14 +113,14 @@ export default function Menu() {
               <NavLink to={item.to}>{item.label}</NavLink>
             </li>
           ))}
-          <div className="text-right mt-8">
+          {/*  <div className="text-right mt-8">
             <button
               onClick={navigateHandler}
               className="text-xl text-emerald-950 hover:text-slate-500 px-8"
             >
               تسجيل الدخول
             </button>
-          </div>
+          </div> */}
         </ul>
       </nav>
     </header>
