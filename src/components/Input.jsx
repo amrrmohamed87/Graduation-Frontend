@@ -3,7 +3,7 @@ export default function Input({ label, id, ...props }) {
     <div className="mb-4 text-end ">
       <label
         htmlFor={id}
-        className="block text-[0.8rem] md:text-xl mb-[0.2rem] text-[#dff6f6]"
+        className="block text-[0.8rem] md:text-2xl mb-[0.2rem] text-white"
       >
         {label}
       </label>
