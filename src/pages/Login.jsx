@@ -32,7 +32,7 @@ export default function Login() {
             <h2 className="text-center mb-8 text-2xl text-[#dff6f6]">
               تسجيل الدخول
             </h2>
-            <div className="flex flex-wrap justify-end gap-4">
+            <div className="flex flex-1 justify-end gap-4">
               <Input
                 label="كلمة المرور"
                 id="password"
@@ -41,7 +41,7 @@ export default function Login() {
               />
               <Input label="أسم المستخدم" id="text" type="text" name="text" />
             </div>
-            <p className="flex justify-start gap-4">
+            <p className="flex justify-center md:justify-start gap-4">
               <button className="border border-slate-100 px-12 py-2 rounded-full text-[1rem] text-white hover:bg-[#319890] hover:border-none">
                 التالي
               </button>
