@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Form,
+  NavLink,
+  useNavigate,
+  useRouteLoaderData,
+  useSubmit,
+} from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 import { navLinks } from "../data/constants";
@@ -7,6 +13,17 @@ import logo1 from "../assets/images/MHI.png";
 import logo2 from "../assets/images/MHI-Emerald.svg";
 
 export default function Menu() {
+  const token = useRouteLoaderData("root");
+  const submit = useSubmit();
+
+  function deleteHandler() {
+    const proceed = window.confirm("Are you Sure?");
+
+    if (proceed) {
+      submit(null, { action: "/logout", method: "post" });
+    }
+  }
+
   // State to Manage the navbar's visibility on small screens
   const [isSidebar, setIsSidebar] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,6 +66,18 @@ export default function Menu() {
         </NavLink>
 
         {/* Desktop */}
+        {!token && (
+          <li className="text-white list-none text-2xl">
+            <NavLink to="/login">تسجيل الدخول</NavLink>
+          </li>
+        )}
+        {token && (
+          <li className="text-white list-none text-2xl">
+            <Form action="/logout" method="post">
+              <button onClick={deleteHandler}>تسجيل الخروج</button>
+            </Form>
+          </li>
+        )}
         <ul className="hidden md:flex">
           {navLinks.map((item) => (
             <li
@@ -63,6 +92,7 @@ export default function Menu() {
               <NavLink to={item.to}>{item.label}</NavLink>
             </li>
           ))}
+
           {/* <div className="flex items-end">
             <button
               onClick={navigateHandler}
@@ -93,7 +123,7 @@ export default function Menu() {
         <ul
           className={
             isSidebar
-              ? "fixed md:hidden right-0 top-0 w-[50%] h-full border-r border-r-gray-9000 bg-[#f7f5f2] ease-in-out duration-500"
+              ? "fixed md:hidden right-0 top-0 w-[50%] h-full  bg-[#f7f5f2] ease-in-out duration-500"
               : "ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 right-[-100%]"
           }
         >

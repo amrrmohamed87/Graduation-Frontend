@@ -4,7 +4,6 @@ import d3 from "../assets/images/d3.jpeg";
 
 // Navbar Links
 export const navLinks = [
-    {to: "/login", label: "تسجيل الدخول"},
     {to: "/contact-us", label: "التواصل معنا" },
     {to: "/service", label: "الخدمات"},
     {to: "/", label:"الصفحة الرئيسية"},

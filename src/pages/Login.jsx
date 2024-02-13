@@ -1,10 +1,32 @@
 import Input from "../components/Input";
 
 import login from "../assets/images/login2.jpg";
+import { useInput } from "../hooks/useInput";
+import { hasMinLength, isNotEmpty, isUsername } from "../util/validation";
 
 export default function Login() {
+  const {
+    value: usernameValue,
+    handleInputChange: handleUsernameChange,
+    handleInputValidation: handleUsernameBlur,
+    hasError: usernameHasError,
+  } = useInput("", (value) => isUsername(value, 6) && isNotEmpty(value));
+
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputValidation: handlePasswordBlur,
+    hasError: passwordHasError,
+  } = useInput("", (value) => hasMinLength(value, 14));
+
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (usernameHasError || passwordHasError) {
+      return;
+    }
+
+    console.log(usernameValue, passwordValue);
   }
   return (
     <main className="flex flex-col">
@@ -38,8 +60,21 @@ export default function Login() {
                 id="password"
                 type="password"
                 name="password"
+                onChange={handlePasswordChange}
+                onBlur={handlePasswordBlur}
+                value={passwordValue}
+                error={passwordHasError && "كلمة المرور يجب أن تكون 14 رقم "}
               />
-              <Input label="أسم المستخدم" id="text" type="text" name="text" />
+              <Input
+                label="أسم المستخدم"
+                id="text"
+                type="text"
+                name="text"
+                onChange={handleUsernameChange}
+                onBlur={handleUsernameBlur}
+                value={usernameValue}
+                error={usernameHasError && "الرجاءادخال اسم مستخدم صحيح "}
+              />
             </div>
             <p className="flex justify-center md:justify-start gap-4">
               <button className="border border-slate-100 px-12 py-2 rounded-full text-[1rem] text-white hover:bg-[#319890] hover:border-none">

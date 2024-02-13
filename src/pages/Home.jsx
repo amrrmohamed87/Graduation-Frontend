@@ -1,4 +1,3 @@
-import Menu from "../components/Menu";
 import AboutUs from "../components/AboutUs";
 import Services from "../components/Services";
 import TopDoctors from "../components/TopDoctors";
@@ -10,7 +9,6 @@ export default function Home() {
   return (
     <main>
       <section className="relative h-screen w-full">
-        <Menu />
         <div className="absolute w-full h-screen">
           <img
             src={hero}

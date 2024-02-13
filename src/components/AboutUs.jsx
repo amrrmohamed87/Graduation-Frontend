@@ -25,7 +25,7 @@ export default function AboutUs() {
         <h3 className="text-4xl text-slate-800 lg:max-w-lg">
           لم يفت الأوان بعد لبدء العيش بشكل جيد
         </h3>
-        <p className="mt-4 lg:max-w-lg text-xl leading-7 text-emerald-950">
+        <p className="mt-4 lg:max-w-lg text-xl leading-[2rem] text-emerald-950 md:text-[25px]">
           يهدف مشروعنا إلى إحداث ثورة في نظام الرعاية الصحية في مصر من خلال
           تقديم نظام تأمين صحي شامل مصحوب بتطبيق ويب وتطبيق جوال. تفتقر مصر
           حاليًا إلى نظام مركزي يتيح للمرضى الوصول إلى خدمات الرعاية الصحية مما

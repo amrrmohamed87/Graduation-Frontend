@@ -17,12 +17,12 @@ export default function Services() {
         <h3 className="text-3xl text-slate-800 lg:max-w-lg">
           المعجزة ليست أننا نقوم بهذا العمل، ولكننا سعداء للقيام بذلك
         </h3>
-        <p className="text-xl leading-7 mt-4 lg:max-w-lg">
+        <p className="text-xl leading-[2rem] mt-4 lg:max-w-lg md:text-[25px]">
           يقدم نظام التأمين الصحي المقترح خدمات رعاية صحية مريحة من خلال جدولة
           المواعيد مع الأطباء، ومعلومات الأدوية وتوافرها، والنصائح الصحية،
           والتصفية حسب أسماء الأطباء وتخصصاتهم
         </p>
-        <p className="text-xl leading-7 mt-2 lg:max-w-lg">
+        <p className="text-xl leading-[2rem] mt-3 lg:max-w-lg md:text-[25px]">
           ويهدف البرنامج إلى تسهيل الوصول إلى الرعاية الصحية في مصر، وتعزيز
           التطبيب عن بعد، وتمكين الأفراد بالمعلومات، وتحسين صحة المجتمع بشكل عام
         </p>

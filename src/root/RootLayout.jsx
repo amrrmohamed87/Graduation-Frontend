@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 import Menu from "../components/Menu.jsx";
+
+import NewNavbar from "../components/NewNavbar.jsx";
 
 export default function RootLayout() {
   /*  const [isScrolled, setIsScrolled] = useState(false);
@@ -20,7 +21,7 @@ export default function RootLayout() {
 
   return (
     <>
-      <Menu />
+      <NewNavbar />
       <main>
         <Outlet />
       </main>
