@@ -9,7 +9,7 @@ export default function AboutUs() {
     navigate("/contact-us");
   }
   return (
-    <section className="lg:h-screen flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container">
+    <section className="lg:h-screen  flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container">
       <div className="flex flex-1 justify-center items-center">
         <img
           src={aboutImage}

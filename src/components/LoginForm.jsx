@@ -33,14 +33,15 @@ function LoginForm() {
   return (
     <div className="bg-white shadow-2xl p-8 mx-4 mt-8 rounded-xl">
       <Form method="post">
-        {data && data.errors && (
+        {data && data.error && (
           <ul>
-            {Object.values(data.errors).map((err) => (
-              <li key={err}>{err}</li>
+            {Object.values(data.error).map((err) => (
+              <li key={err} className="text-black">
+                {err}
+              </li>
             ))}
           </ul>
         )}
-
         <Input
           id="username"
           label="أسم المستخدم"
@@ -61,6 +62,11 @@ function LoginForm() {
           value={passwordValue}
           error={passwordHasError && "كلمة المرور يجب أن تكون 14 رقم"}
         />
+        {data && data.message && (
+          <p className="text-center mb-4 text-red-500 text-[18px]">
+            {data.message}
+          </p>
+        )}
         <button
           disabled={isSubmitting}
           className="bg-emerald-500 px-6 py-1 text-white rounded-lg transition-all

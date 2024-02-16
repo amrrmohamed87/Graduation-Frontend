@@ -15,19 +15,19 @@ function NewLogin() {
             التسجيل الخاصة بك أو كنت بحاجة إلى المساعدة، فلا تتردد في التواصل
             معي وسأبذل قصارى جهدي لمساعدتك
           </p>
-          <div className="mt-4 flex justify-center items-center gap-16">
+          <div className="mt-4 flex justify-center items-center gap-12 md:gap-16">
+            <Link
+              to="/contact-us"
+              className="hover:underline text-emerald-500 text-[20px] md:text-[25px]"
+            >
+              التواصل معنا
+            </Link>
             <Link
               to=".."
               relative="path"
               className="hover:underline text-emerald-500 text-[20px] md:text-[25px]"
             >
               العودة إلى الصفحة الرئيسية
-            </Link>
-            <Link
-              to="/contact-us"
-              className="hover:underline text-emerald-500 text-[20px] md:text-[25px]"
-            >
-              التواصل معنا
             </Link>
           </div>
         </div>
@@ -54,14 +54,15 @@ export async function action({ request }) {
     body: JSON.stringify(authData),
   });
 
-  if (response.status === 422 || response.status === 401) {
+  if (response.status === 400) {
     return response;
+    //throw json({ message: "invalid data" }, { status: 400 });
   }
 
   if (!response.ok) {
     throw json(
       { message: "Could not authenticate this user." },
-      { status: 500 }
+      { status: 400 }
     );
   }
 

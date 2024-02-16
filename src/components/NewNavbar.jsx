@@ -64,7 +64,7 @@ function NewNavbar() {
               </li>
             ))} */}
             <li
-              className={`text-[26px] p-6 pr-12  hover:animate-pulse ${
+              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
                 isScrolled ? "text-emerald-800" : "text-slate-100"
               }`}
             >
@@ -80,12 +80,12 @@ function NewNavbar() {
               </NavLink>
             </li>
             <li
-              className={`text-[26px] p-6 pr-12  hover:animate-pulse ${
+              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
                 isScrolled ? "text-emerald-800" : "text-slate-100"
               }`}
             >
               <NavLink
-                to={token ? "/service" : "/login"}
+                to="/service"
                 className={({ isActive }) =>
                   isActive
                     ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
@@ -96,7 +96,23 @@ function NewNavbar() {
               </NavLink>
             </li>
             <li
-              className={`text-[26px] p-6 pr-12  hover:animate-pulse ${
+              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
+                isScrolled ? "text-emerald-800" : "text-slate-100"
+              }`}
+            >
+              <NavLink
+                to="/health-awareness"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    : "bg-transparent"
+                }
+              >
+                التوعية الصحية
+              </NavLink>
+            </li>
+            <li
+              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
                 isScrolled ? "text-emerald-800" : "text-slate-100"
               }`}
             >
@@ -174,19 +190,33 @@ function NewNavbar() {
             ))} */}
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
-                to="/contact-us"
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    : "bg-transparent"
+                }
+                end
+              >
+                الصفحة الرئيسية
+              </NavLink>
+            </li>
+
+            <li className="text-right text-[23px] mr-6 mt-12">
+              <NavLink
+                to="/health-awareness"
                 className={({ isActive }) =>
                   isActive
                     ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
                     : "bg-transparent"
                 }
               >
-                التواصل معنا
+                التوعية الصحية
               </NavLink>
             </li>
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
-                to={token ? "/service" : "/login"}
+                to="/service"
                 className={({ isActive }) =>
                   isActive
                     ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
@@ -198,15 +228,14 @@ function NewNavbar() {
             </li>
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
-                to="/"
+                to="/contact-us"
                 className={({ isActive }) =>
                   isActive
                     ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
                     : "bg-transparent"
                 }
-                end
               >
-                الصفحة الرئيسية
+                التواصل معنا
               </NavLink>
             </li>
             {!token && (
