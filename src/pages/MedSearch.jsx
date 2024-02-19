@@ -20,7 +20,10 @@ export function MedSearch() {
           <div className='flex flex-column justify-content-center align-items-center text-center'>
             <div>
             <h2 className="text-black text-[80px]"> الأدوية </h2>
-            <input type="text" className="form-control text-right mt-3 shadow-sm  " placeholder="...بحث" />
+            <div class="input-group mb-3">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">ابحث</button>
+                                <input type="text" class="form-control text-right" placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                            </div>
             </div>
             {/* this div for result of the search  */}
             <div className='w-50 text-left mt-4 p-4 border-3 border-black rounded-5 '> 
