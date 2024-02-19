@@ -1,0 +1,159 @@
+*{
+    box-sizing: border-box;
+}
+.styleCard{
+    width: 96.3%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6));
+    top: 0;
+
+}
+.textForH2{
+   font-size: 80px;
+    padding: 1%;
+}
+.textForP{
+    font-size: 25px;
+    padding: 1%;
+    
+}
+@media (min-width:1030px) and (max-width: 1280px) {
+   .textForH2{
+    font-size: 80px;
+   }
+    .textForP{
+    font-size: 18px;
+   }
+}
+@media (min-width:775px) and (max-width: 1029px) {
+   .textForH2{
+    font-size: 50px;
+   }
+    .textForP{
+    font-size: 16px;
+   }
+   .buttonResponsive{
+    margin-left: 14px !important;
+    font-size: medium !important;
+   }
+   .styleCard{
+      width: 95%;
+      
+  
+  }
+}
+@media (min-width:530px) and (max-width: 660px) {
+.textForH2{
+    font-size: 25px;
+   }
+    .textForP{
+    font-size: 12px;
+   }
+   .buttonResponsive{
+    font-size: 9px !important;
+    padding: 0px !important;
+    margin-top: 10px !important;
+    margin-left: 8px !important;
+    
+   }
+}
+@media (min-width:452px) and (max-width: 530px) {
+   .textForH2{
+    font-size: 16px;
+   }
+    .textForP{
+    font-size: 9px;
+   }
+   .buttonResponsive{
+    font-size: 9px !important;
+    padding: 0px !important;
+    margin-top: 10px !important;
+    margin-left: 8px !important;
+    
+}
+}
+@media (min-width:530px) and (max-width: 566px) {
+   .textForH2{
+    font-size: 25px;
+   }
+    .textForP{
+    font-size: 9px;
+   }
+   .buttonResponsive{
+    font-size: 9px !important;
+    padding: 0px !important;
+    margin-top: 10px !important;
+    margin-left: 8px !important;
+    
+   }
+}
+@media (min-width:660px) and (max-width: 775px) {
+   /* .textForH2{
+    font-size: px;
+   } */
+    .textForP{
+    font-size: 18px;
+   }
+   .buttonResponsive{
+    font-size: 12px !important;
+    padding: 0px !important;
+    margin-top: 10px !important;
+    margin-left: 8px !important;
+    
+   }
+}
+@media (min-width:385px) and (max-width:450px) {
+   .textForH2{
+    font-size: 15px;
+   }
+    .textForP{
+    font-size: 12px;
+   }
+   .buttonResponsive{
+    font-size: 12px !important;
+    padding: 0px !important;
+    margin-top: 10px !important;
+    margin-left: 8px !important;
+    
+   }
+   .styleCard{
+      width: 93.2%;
+      
+  
+  }
+}
+@media (min-width:300px) and (max-width:385px) {
+   .textForH2{
+    font-size: 20px;
+    padding-bottom: 3px !important;
+   }
+    .textForP{
+    font-size: 12px;
+   }
+   .buttonResponsive{
+    font-size: 9px !important;
+    padding: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    width: 40% !important;
+    bottom: 5px !important;
+   }
+   .styleCard{
+    width: 93.1%;
+   }
+}
+@media (min-width:160px) and (max-width:300px) {
+   .textForH2{
+    font-size: px;
+   }
+    .textForP{
+    font-size: 4px;
+   }
+   .buttonResponsive{
+    font-size: 5px !important;
+    padding: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    width: 40% !important;
+   }
+}

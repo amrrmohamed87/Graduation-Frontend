@@ -8,6 +8,9 @@ import Login from "./pages/Login.jsx";
 import Signin from "./pages/Signin.jsx";
 import NewLogin from "./pages/NewLogin.jsx";
 import { action as authAction } from "./pages/NewLogin.jsx";
+import { Service } from "./pages/Service.jsx";
+import { MedSearch } from "./pages/MedSearch.jsx";
+import { DocSearch } from "./pages/DocSearch.jsx";
 import { action as logoutAction } from "./pages/Logout.js";
 import { loader as tokenLoader } from "./util/auth.js";
 import Nutrition from "./health/Nutrition.jsx";
@@ -33,6 +36,9 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "contact-us", element: <ContactUs /> },
+      { path: "service", element: <Service /> },
+      { path: "searchmed", element: <MedSearch/> },
+      { path: "docsearch", element: <DocSearch/> },
       { path: "health-awareness", element: <HealthAwareness /> },
       { path: "ca", element: <Nutrition /> },
       { path: "logout", action: logoutAction },
