@@ -15,7 +15,7 @@ function HealthAwareness() {
           src={heroImage}
           className="object-cover object-center h-[932px] w-full md:h-[680px]"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center">
           <h1 className="text-[65px] md:text-[80px] text-slate-100">
             التوعية الصحية
@@ -53,7 +53,7 @@ function HealthAwareness() {
               <p className="text-[22px] text-center mb-4 text-[#A55858]">
                 {health.description}
               </p>
-              <ul className="grid grid-flow-row grid-cols-2 text-center place-items-center">
+              <ul className="grid grid-flow-row grid-cols-2 gap-6 text-center place-items-center">
                 {health.list.map((item) => (
                   <li
                     key={item.item}
