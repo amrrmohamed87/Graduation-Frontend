@@ -16,7 +16,7 @@ export function Service() {
       imgSrc: FirstSectionPhoto,
       buttonContent: "BOOK NOW",
       alt:"first",
-      to:"/"
+      to:"/book"
     },
     {
       title: "معلومات طبية",

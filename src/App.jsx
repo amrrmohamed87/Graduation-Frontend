@@ -11,6 +11,7 @@ import { action as authAction } from "./pages/NewLogin.jsx";
 import { Service } from "./pages/Service.jsx";
 import { MedSearch } from "./pages/MedSearch.jsx";
 import { DocSearch } from "./pages/DocSearch.jsx";
+import { Booking } from "./pages/Booking.jsx";
 import { action as logoutAction } from "./pages/Logout.js";
 import { loader as tokenLoader } from "./util/auth.js";
 import Nutrition from "./health/Nutrition.jsx";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "service", element: <Service /> },
       { path: "searchmed", element: <MedSearch/> },
       { path: "docsearch", element: <DocSearch/> },
+      { path: "book", element: <Booking/> },
       { path: "health-awareness", element: <HealthAwareness /> },
       { path: "ca", element: <Nutrition /> },
       { path: "logout", action: logoutAction },
