@@ -33,15 +33,6 @@ function LoginForm() {
   return (
     <div className="bg-white shadow-2xl p-8 mx-4 mt-8 rounded-xl">
       <Form method="post">
-        {data && data.error && (
-          <ul>
-            {Object.values(data.error).map((err) => (
-              <li key={err} className="text-black">
-                {err}
-              </li>
-            ))}
-          </ul>
-        )}
         <Input
           id="username"
           label="أسم المستخدم"
