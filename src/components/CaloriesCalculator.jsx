@@ -77,9 +77,9 @@ function CaloriesCalculator() {
       <h1 className="text-center mt-8 text-[40px] text-emerald-800 mb-4 md:mt-12 md:mb-8 md:text-[60px]">
         احسب سعراتك الحرارية
       </h1>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center">
         <form onSubmit={handleSubmit}>
-          <div className="bg-emerald-700 rounded-[30px] shadow-2xl py-4 mx-4 md:ml-16 md:py-16 md:px-8">
+          <div className="bg-[#0c3430] rounded-[30px] shadow-2xl py-4 mx-4 md:ml-16 md:py-16 md:px-8">
             <div className="flex md:gap-4">
               <CalculatorInput
                 label="الطول(سم)"
@@ -123,7 +123,14 @@ function CaloriesCalculator() {
                 </select>
               </div>
             </div>
-            <div className="flex justify-between items-center gap-4 mx-4 md:flex-col md:mr-2 md:items-end">
+            <div className="flex justify-center items-center gap-16 md:gap-4 mx-4 md:mr-2 md:items-center">
+              <button
+                onClick={calculate}
+                className="w-[120px] h-[30px] text-center mt-8 text-emerald-600 bg-white  border border-gray-500 rounded-lg
+                  md:ml-[4.5rem] md:w-[150px] md:h-[45px] hover:bg-[#dddd94] md:text-[28px]"
+              >
+                احسب
+              </button>
               <div className="flex flex-col">
                 <label
                   htmlFor="activityLevel"
@@ -156,18 +163,11 @@ function CaloriesCalculator() {
                     مرتين)
                   </option>
                 </select>
-                <button
-                  onClick={calculate}
-                  className="w-[120px] h-[30px] text-center mt-8 text-emerald-600 bg-white  border border-gray-500 rounded-lg
-                  md:ml-[4.5rem] md:w-[150px] md:h-[45px] hover:bg-[#dddd94] md:text-[28px]"
-                >
-                  احسب
-                </button>
               </div>
             </div>
           </div>
         </form>
-        <div>
+        <div className="m-4 md:m-0">
           <p className="text-[25px] text-right mx-4 mb-4 md:text-[35px] md:mr-16 md:ml-28">
             أدخل معلوماتك في النموذج أدناه وانقر على "احسب" لتحديد كمية السعرات
             الحرارية اليومية التي تتناولها
