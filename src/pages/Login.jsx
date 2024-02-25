@@ -1,89 +1,142 @@
-import Input from "../components/Input";
+import { Form, Link, useNavigate } from "react-router-dom";
+import Input from "../components/NewInput";
+import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
+function Login() {
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setIsLoading] = useState(false);
 
-import login from "../assets/images/login2.jpg";
-import { useInput } from "../hooks/useInput";
-import { hasMinLength, isNotEmpty, isUsername } from "../util/validation";
+  const navigate = useNavigate();
 
-export default function Login() {
-  const {
-    value: usernameValue,
-    handleInputChange: handleUsernameChange,
-    handleInputValidation: handleUsernameBlur,
-    hasError: usernameHasError,
-  } = useInput("", (value) => isUsername(value, 6) && isNotEmpty(value));
-
-  const {
-    value: passwordValue,
-    handleInputChange: handlePasswordChange,
-    handleInputValidation: handlePasswordBlur,
-    hasError: passwordHasError,
-  } = useInput("", (value) => hasMinLength(value, 14));
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    if (usernameHasError || passwordHasError) {
-      return;
-    }
-
-    console.log(usernameValue, passwordValue);
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setError("");
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   }
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("أسم المستخدم أو كلمة المرور خطأ");
+      }
+
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
+
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+
+      const user = { ...decoded };
+      switch (user.userId) {
+        case "65c63a722c04dbc59dfce9e4":
+          navigate("/doctor-profile");
+          break;
+        case "65c63b961f77969fc15aad84":
+          navigate("/hospital");
+          break;
+
+        case "65c63a3135a6469a0384304d":
+          navigate("/");
+          break;
+        default:
+          setError("Unauthorized access");
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setError(error.message);
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <main className="flex flex-col">
-      <section className="relative h-screen w-full">
-        <div className="absolute w-full">
-          <img
-            src={login}
-            className="object-cover object-center w-full h-screen"
-          />
-        </div>
-        <div className="absolute">
-          <h1
-            className="text-center text-white 
-           text-2xl p-8 md:px-96 mt-36 md:mt-20 "
-          >
+    <section className="flex flex-col">
+      <div className="mt-24 md:mt-36 md:flex md:items-center md:gap-14">
+        <div className="text-center md:w-1/2 md:ml-24">
+          <h1 className="text-[27px] md:text-[49px] md:mb-4">
+            مصر للتأمين الصحي
+          </h1>
+          <p className="text-[22px] px-8 md:text-[25px]">
             مرحبًا! مجرد تذكير بأنه لكي تتمكن من تسجيل الدخول، يجب أن تكون
             مسجلاً في التأمين الصحي في مصر. إذا كانت لديك أي أسئلة حول حالة
             التسجيل الخاصة بك أو كنت بحاجة إلى المساعدة، فلا تتردد في التواصل
             معي وسأبذل قصارى جهدي لمساعدتك
-          </h1>
-          <form
-            onSubmit={handleSubmit}
-            className="w-[90%] max-w-2xl mx-auto mb-8 p-8  bg-opacity-80 rounded-lg shadow-2xl"
-          >
-            <h2 className="text-center mb-8 text-2xl text-[#dff6f6]">
-              تسجيل الدخول
-            </h2>
-            <div className="flex flex-1 justify-end gap-4">
-              <Input
-                label="كلمة المرور"
-                id="password"
-                type="password"
-                name="password"
-                onChange={handlePasswordChange}
-                onBlur={handlePasswordBlur}
-                value={passwordValue}
-                error={passwordHasError && "كلمة المرور يجب أن تكون 14 رقم "}
-              />
-              <Input
-                label="أسم المستخدم"
-                id="text"
-                type="text"
-                name="text"
-                onChange={handleUsernameChange}
-                onBlur={handleUsernameBlur}
-                value={usernameValue}
-                error={usernameHasError && "الرجاءادخال اسم مستخدم صحيح "}
-              />
-            </div>
-            <p className="flex justify-center md:justify-start gap-4">
-              <button className="border border-slate-100 px-12 py-2 rounded-full text-[1rem] text-white hover:bg-[#319890] hover:border-none">
-                التالي
-              </button>
+          </p>
+          <div className="mt-4 flex justify-center items-center gap-12 md:gap-16">
+            <Link
+              to="/contact-us"
+              className="hover:underline text-emerald-500 text-[20px] md:text-[25px]"
+            >
+              التواصل معنا
+            </Link>
+            <Link
+              to=".."
+              relative="path"
+              className="hover:underline text-emerald-500 text-[20px] md:text-[25px]"
+            >
+              العودة إلى الصفحة الرئيسية
+            </Link>
+          </div>
+        </div>
+        <div className="bg-white shadow-2xl p-8 mx-4 mt-8 rounded-xl">
+          <form onSubmit={handleLogin}>
+            <Input
+              id="username"
+              label="أسم المستخدم"
+              type="text"
+              name="username"
+              value={userData.username}
+              onChange={handleChange}
+            />
+            <Input
+              id="password"
+              label="كلمة المرور"
+              type="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
+            {/* {data && data.message && (
+            <p className="text-center mb-4 text-red-500 text-[18px]">
+              {data.message}
             </p>
+          )} */}
+            {error && <p className="text-center text-red-600 my-8">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-emerald-500 px-6 py-1 text-white rounded-lg transition-all
+         hover:bg-emerald-700 md:text-[25px] md:px-10"
+            >
+              {loading ? "...جاري الدخول" : "التالي"}
+            </button>
           </form>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }
+
+export default Login;
