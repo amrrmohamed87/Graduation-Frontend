@@ -39,14 +39,15 @@ function NewLogin() {
 
 export default NewLogin;
 
-export async function action({ request }) {
+/* export async function action({ request }) {
   const data = await request.formData();
   const authData = {
     username: data.get("username"),
     password: data.get("password"),
   };
 
-  const response = await fetch("http://localhost:3000/auth/login", {
+  console.log(authData.username);
+  const response = await fetch("https://mhiproject.onrender.com/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -70,5 +71,8 @@ export async function action({ request }) {
   const token = resData.token;
 
   localStorage.setItem("token", token);
+
+  console.log(token);
   return redirect("/");
 }
+ */
