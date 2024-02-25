@@ -1,4 +1,4 @@
-function Input({ id, label, error, ...props }) {
+function Input({ id, label, ...props }) {
   return (
     <div className="flex flex-col mb-8">
       <label
@@ -12,11 +12,12 @@ function Input({ id, label, error, ...props }) {
         required
         {...props}
         className={`h-[30px] border border-gray-500 focus:border-gray-950 rounded-lg pl-2
-        md:h-[40px] ${error && "border-red-500 border-[2px]"} `}
+        md:h-[40px]`}
       />
-      <div className="mt-2">
+      {/* <div className="mt-2">
+      ${error && "border-red-500 border-[2px]"}
         {error && <p className="text-[red] text-right">{error}</p>}
-      </div>
+      </div> */}
     </div>
   );
 }
