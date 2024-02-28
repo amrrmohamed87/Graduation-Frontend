@@ -1,6 +1,18 @@
 *{
     box-sizing: border-box;
 }
+.iconX{
+    cursor: pointer;
+    color: red ;
+    
+    /*width: 12px !important;
+    height: 12px;
+    background-color: red;
+    */
+    width: 5% !important;
+
+    
+}
 .cardSize{
     width: 23% !important;
     height: 250px !important;
