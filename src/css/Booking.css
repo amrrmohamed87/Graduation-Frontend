@@ -1,6 +1,11 @@
 *{
     box-sizing: border-box;
 }
+.cardSize{
+    width: 23% !important;
+    height: 250px !important;
+    cursor: pointer;
+}
 .layerUp{
     width: 92%;
     left: 4%;
@@ -8,10 +13,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.4s;
-   
+    transition: all 1.5s;
+    
 }
 
-.layer:hover .layerUp{
-    top: 0;
+.layer:hover > .layerUp {
+   opacity: 0.5 !important;
 }
