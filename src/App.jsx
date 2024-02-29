@@ -1,4 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  useLocation,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 
 import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
@@ -26,8 +32,73 @@ import DoctorProfile from "./pages/DoctorProfile.jsx";
 import Admin from "./pages/Admin.jsx";
 import Hospital from "./pages/Hospital.jsx";
 import Login from "./pages/Login.jsx";
+import { useEffect } from "react";
+import Contact from "./pages/Contact.jsx";
+
+function PrivateRoutes({ roles, children }) {
+  const location = useLocation();
+  const isAuthenticated = localStorage.getItem("token");
+  const userRole = localStorage.getItem("role");
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ location }} replace />;
+  }
+
+  if (!roles.includes(userRole)) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
+
+/* function useRoleRedirect() {
+  const role = localStorage.getItem("role");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const publicRoutes = [
+      "/",
+      "/health-awareness",
+      "/ca",
+      "/service",
+      "/searchmed",
+      "/docsearch",
+      "/contact-us",
+      "/child-safety",
+      "/vaccinations",
+      "/school-health",
+      "/baby-nutrition",
+      "/before-pregnancy",
+      "/during-pregnancy",
+      "/after-pregnancy",
+      "/care-of-the-elderly",
+      "/alzheimers",
+      "/birth",
+    ];
+
+    const isAccessingPublicRoutes = publicRoutes.includes(pathname);
+
+    if (isAccessingPublicRoutes) {
+      switch (role) {
+        case "doctor":
+          navigate("/doctor");
+          break;
+        case "admin":
+          navigate("/admin");
+          break;
+        case "hospital":
+          navigate("/hospital");
+          break;
+        default:
+          navigate("/");
+          break;
+      }
+    }
+  }, [navigate, location, role]);
+} */
 
 export default function App() {
+  //useRoleRedirect();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -42,14 +113,35 @@ export default function App() {
         { path: "service", element: <Service /> },
         { path: "searchmed", element: <MedSearch /> },
         { path: "docsearch", element: <DocSearch /> },
-        { path: "contact-us", element: <ContactUs /> },
+        { path: "contact-us", element: <Contact /> },
         { path: "logout", action: logoutAction },
       ],
     },
     { path: "/login", element: <Login /> },
-    { path: "/doctor-profile", element: <DoctorProfile /> },
-    { path: "/admin", element: <Admin /> },
-    { path: "/hospital", element: <Hospital /> },
+    {
+      path: "/doctor",
+      element: (
+        <PrivateRoutes roles={["doctor"]}>
+          <DoctorProfile />
+        </PrivateRoutes>
+      ),
+    },
+    {
+      path: "/admin",
+      element: (
+        <PrivateRoutes roles={["admin"]}>
+          <Admin />
+        </PrivateRoutes>
+      ),
+    },
+    {
+      path: "/hospital",
+      element: (
+        <PrivateRoutes roles={["hospital"]}>
+          <Hospital />
+        </PrivateRoutes>
+      ),
+    },
     { path: "child-safety", element: <ChildSafety /> },
     { path: "vaccinations", element: <Vaccinations /> },
     { path: "school-health", element: <SchoolHealth /> },
@@ -61,5 +153,6 @@ export default function App() {
     { path: "care-of-the-elderly", element: <Elderly /> },
     { path: "alzheimers", element: <Alzheimers /> },
   ]);
+
   return <RouterProvider router={router} />;
 }

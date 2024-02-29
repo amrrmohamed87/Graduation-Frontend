@@ -41,18 +41,18 @@ function NewNavbar() {
       <nav
         className={`fixed w-full h-[4rem] md:h-[5.5rem] max-w-[1536px] transition-all duration-300 ${
           isScrolled
-            ? "bg-white bg-opacity-90 shadow-2xl"
+            ? "bg-emerald-950 shadow-2xl"
             : "bg-transparent shadow-none"
         }`}
       >
         <div className="md:flex md:justify-between md:items-center">
           <NavLink>
             <img
-              src={isScrolled ? logo2 : logo1}
+              src={isScrolled ? logo1 : logo1}
               className="w-[85px] ml-2 mb-2 hidden md:block"
             />
           </NavLink>
-          <ul className="hidden md:flex ml-16">
+          <ul className="hidden md:flex ml-16 pr-4">
             {/* {navLinks.map((item) => (
               <li
                 key={item.label}
@@ -64,15 +64,15 @@ function NewNavbar() {
               </li>
             ))} */}
             <li
-              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+              className={`text-[26px] pr-10  hover:animate-pulse ${
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <NavLink
                 to="/contact-us"
                 className={({ isActive }) =>
                   isActive
-                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    ? "bg-white px-4 text-emerald-950 rounded-xl"
                     : "bg-transparent"
                 }
               >
@@ -80,15 +80,15 @@ function NewNavbar() {
               </NavLink>
             </li>
             <li
-              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+              className={`text-[26px] pr-10  hover:animate-pulse ${
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <NavLink
                 to="/service"
                 className={({ isActive }) =>
                   isActive
-                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    ? "bg-white px-4 text-emerald-950 rounded-xl"
                     : "bg-transparent"
                 }
               >
@@ -96,15 +96,15 @@ function NewNavbar() {
               </NavLink>
             </li>
             <li
-              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+              className={`text-[26px] pr-10  hover:animate-pulse ${
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <NavLink
                 to="/health-awareness"
                 className={({ isActive }) =>
                   isActive
-                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    ? "bg-white px-4 text-emerald-950 rounded-xl"
                     : "bg-transparent"
                 }
               >
@@ -112,15 +112,15 @@ function NewNavbar() {
               </NavLink>
             </li>
             <li
-              className={`text-[26px] p-2 pr-12  hover:animate-pulse ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+              className={`text-[26px] pr-10  hover:animate-pulse ${
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <NavLink
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                    ? "bg-white px-4 text-emerald-950 rounded-xl"
                     : "bg-transparent"
                 }
                 end
@@ -132,7 +132,7 @@ function NewNavbar() {
           {!token && (
             <li
               className={`hidden md:block list-none text-[23px] p-6 hover:animate-pulse ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <NavLink to="/login">تسجيل الدخول</NavLink>
@@ -153,7 +153,7 @@ function NewNavbar() {
 
         <div
           onClick={handleSidebar}
-          className="flex justify-end cursor-pointer p-6 md:hidden"
+          className="flex justify-end text-white cursor-pointer p-6 md:hidden"
         >
           {!isSidebar && <AiOutlineMenu size={20} />}
         </div>

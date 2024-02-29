@@ -14,16 +14,16 @@ export function Service() {
       pragrapgh:
         "إن نظام التأمين الصحي الذي نقترحه سيمكن المستخدمين من جدولة المواعيد بسهولة في المستشفيات ومرافق الرعاية الصحية، وتبسيط العملية وتخفيف العبء على المرضى. ومن خلال بضع نقرات فقط على التطبيق أو موقع الويب، سيتمكن المستخدمون من تأمين المواعيد والحصول على خدمات الرعاية الصحية في الوقت المناسب",
       imgSrc: FirstSectionPhoto,
-      buttonContent: "BOOK NOW",
+      buttonContent: "احجز الآن",
       alt: "first",
-      to: "/",
+      to: "/book",
     },
     {
       title: "معلومات طبية",
       pragrapgh:
         "ستتاح للمستخدمين فرصة البحث عن الأدوية ومعرفة آثارها الجانبية وفائدة هذا الدواء",
       imgSrc: SecoundPhoto,
-      buttonContent: "SEARCH NOW",
+      buttonContent: "ابحث الآن",
       alt: "secound",
       to: "/searchmed",
     },
@@ -32,7 +32,7 @@ export function Service() {
       pragrapgh:
         "تبحث عن طبيب؟ يمكنك كتابة اسم الطبيب في شريط البحث وسنزودك بجميع الأطباء المتاحين بهذا الاسم.",
       imgSrc: SecoundSectionPhoto,
-      buttonContent: "SEARCH NOW",
+      buttonContent: "ابحث الآن",
       alt: "third",
       to: "/docsearch",
     },
@@ -41,11 +41,13 @@ export function Service() {
       pragrapgh:
         "سواء كنت بحاجة إلى طبيب قلب، أو طبيب أطفال، أو جراح عظام، أو أي متخصص آخر، فلدينا ما تحتاجه. تتيح لك واجهتنا سهلة الاستخدام اختيار التخصص المفضل لديك",
       imgSrc: SecoundPhotoSecoundSection,
-      buttonContent: "SEARCH NOW",
+      buttonContent: "ابحث الآن",
       alt: "fourth",
       to: "/docsearch",
     },
   ];
+
+  const token = localStorage.getItem("token");
   return (
     <>
       <header className="relative h-screen w-full">
@@ -88,7 +90,7 @@ export function Service() {
                   <p className="text-white text-right textForP pe-5">
                     {element.pragrapgh}
                   </p>
-                  <NavLink to={element.to}>
+                  <NavLink to={token ? element.to : "/login"}>
                     <button className="absolute start-0 bottom-8  bg-red-950 ms-12 mt-4 px-2 py-2  hover:bg-black text-white rounded-full w-38 text-xl font-bold buttonResponsive">
                       {" "}
                       {element.buttonContent}

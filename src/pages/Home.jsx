@@ -4,6 +4,7 @@ import TopDoctors from "../components/TopDoctors";
 import Footer from "../components/Footer";
 
 import hero from "../assets/images/hero.jpg";
+import DownLoadApp from "../components/DownloadApp";
 
 export default function Home() {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
       </section>
       <AboutUs />
       <Services />
-      <TopDoctors />
+      <DownLoadApp />
       <Footer />
     </main>
   );

@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+.layerUp{
+    width: 92%;
+    left: 4%;
+    height: 122px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+   
+}
+
+.layer:hover .layerUp{
+    top: 0;
+}

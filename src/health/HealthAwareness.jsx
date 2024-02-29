@@ -27,7 +27,7 @@ function HealthAwareness() {
         <h1 className="text-center text-[30px] text-emerald-700 mt-6 mb-3 md:mt-28 md:text-[60px] md:mb-16">
           نمط الحياة الصحية
         </h1>
-        <div className="md:flex md:items-center md:gap-8 md:mx-8">
+        <div className="md:flex md:items-center md:gap-8 md:mx-8 md:mt-24">
           <p className="text-right text-emerald-950 text-[22px] mx-4 md:text-[30px]">
             إن تبني نمط حياة صحي هو رحلة شخصية، وقد تختلف التوصيات المحددة لكل
             فرد. وهو ينطوي على إجراء تغييرات تدريجية ومستدامة على العادات
@@ -35,7 +35,7 @@ function HealthAwareness() {
           </p>
           <img
             src={patternImage}
-            className="p-4 rounded-[30px] shadow-2xl md:w-[650px]"
+            className="p-4 rounded-[30px] shadow-2xl md:w-[750px]"
           />
         </div>
       </section>
