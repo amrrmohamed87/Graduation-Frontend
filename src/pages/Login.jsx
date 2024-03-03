@@ -111,7 +111,7 @@ function Login() {
           <div className="mt-4 flex justify-center items-center gap-12 md:gap-6">
             <Link
               to="/contact-us"
-              className="bg-emerald-700 px-3 py-1 rounded-xl text-white hover:bg-emerald-700 text-[20px] md:text-[25px] flex justify-center items-center gap-1"
+              className="bg-emerald-950 px-3 py-1 rounded-xl text-white hover:bg-emerald-700 text-[20px] md:text-[25px] flex justify-center items-center gap-1"
             >
               <FaPhoneAlt size={20} />
               <button>التواصل معنا</button>
