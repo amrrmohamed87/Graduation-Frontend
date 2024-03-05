@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../css/Search.css"
 import Footer from '../components/Footer'
 import SearchPhoto from "../assets/images/search.jpg"
+import axios from 'axios'
 export function DocSearch() {
+    let [DocData, setDocData] = useState([])
 
+    useEffect(() => {
+        getDoctors()
+
+    }, [])
+    async function getDoctors() {
+        let { data } = await axios.get('https://mhiproject.onrender.com/patient/getDoctors')
+        setDocData(data.userD)
+    }
 
 
 
@@ -32,9 +42,23 @@ export function DocSearch() {
                         </div>
                         {/* this div for result of the search  */}
                         <div className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5 '>
-                        <h2 className="text-black textStyleForH2"> احمد بخة  </h2>
+                            <h2 className="text-black textStyleForH2"> احمد بخة  </h2>
                             <p className="mt-2 md:mt-0 textStyleForP"> دكتور عيون  </p>
-                   </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className='py-8 bg-white'>
+                <div className="container">
+                    <div className="row py-3 ">
+                        {DocData.map((element, i) => <div key={i} className="col-md-4 rounded-5 border-4 mt-3">
+                            <div className='py-3 ps-2 text-end'>
+                                <h1 className='fs-3'>{element.name}</h1>
+                                <span className='fs-5 '>id</span>
+                                <h6 className='fs-6'> {element._id} </h6>
+                                <h3 className='fs-5'>{element.specialize} </h3>
+                            </div>
+                        </div>)}
                     </div>
                 </div>
             </section>
