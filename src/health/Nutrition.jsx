@@ -10,7 +10,7 @@ function Nutrition() {
           src={heroImage}
           className="object-cover object-center w-full h-[932px] md:h-[700px]"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-25"></div>
         <div className="absolute inset-2 flex flex-col justify-center items-end mt-48 mr-2 md:mt-16 md:mr-4">
           <h1 className="text-emerald-700 text-[70px]">التغذية</h1>
           <h1 className="text-emerald-700 text-[40px]">

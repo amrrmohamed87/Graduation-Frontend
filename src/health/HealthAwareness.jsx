@@ -15,7 +15,7 @@ function HealthAwareness() {
           src={heroImage}
           className="object-cover object-center h-[932px] w-full md:h-[680px]"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center">
           <h1 className="text-[65px] md:text-[80px] text-slate-100">
             التوعية الصحية
@@ -27,7 +27,7 @@ function HealthAwareness() {
         <h1 className="text-center text-[30px] text-emerald-700 mt-6 mb-3 md:mt-28 md:text-[60px] md:mb-16">
           نمط الحياة الصحية
         </h1>
-        <div className="md:flex md:items-center md:gap-8 md:mx-8">
+        <div className="md:flex md:items-center md:gap-8 md:mx-8 md:mt-24">
           <p className="text-right text-emerald-950 text-[22px] mx-4 md:text-[30px]">
             إن تبني نمط حياة صحي هو رحلة شخصية، وقد تختلف التوصيات المحددة لكل
             فرد. وهو ينطوي على إجراء تغييرات تدريجية ومستدامة على العادات
@@ -35,7 +35,7 @@ function HealthAwareness() {
           </p>
           <img
             src={patternImage}
-            className="p-4 rounded-[30px] shadow-2xl md:w-[650px]"
+            className="p-4 rounded-[30px] shadow-2xl md:w-[750px]"
           />
         </div>
       </section>
@@ -53,7 +53,7 @@ function HealthAwareness() {
               <p className="text-[22px] text-center mb-4 text-[#A55858]">
                 {health.description}
               </p>
-              <ul className="grid grid-flow-row grid-cols-2 text-center place-items-center">
+              <ul className="grid grid-flow-row grid-cols-2 gap-6 text-center place-items-center">
                 {health.list.map((item) => (
                   <li
                     key={item.item}

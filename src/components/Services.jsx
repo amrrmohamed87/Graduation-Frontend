@@ -9,7 +9,7 @@ export default function Services() {
     navigate("/services");
   }
   return (
-    <section className="lg:h-screen flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container">
+    <section className="lg:h-screen bg-white rounded-[30px] flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container mb-16">
       <div className="flex flex-1 flex-col items-end text-right">
         <h2 className=" text-5xl font-bold mb-3 text-emerald-950 lg:max-w-lg">
           الخدمات
