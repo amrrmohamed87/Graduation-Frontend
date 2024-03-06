@@ -37,7 +37,7 @@ export function DocSearch() {
                             <h2 className="text-black text-[80px] mb-3"> الاطباء </h2>
                             <form class="input-group mb-3">
                                 <button class="btn btn-outline-secondary" type="button" id="button-addon1">ابحث</button>
-                                <input type="text" class="form-control text-right" placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                <input type="text" class="form-control text-right " placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
                             </form>
                         </div>
                         {/* this div for result of the search  */}
