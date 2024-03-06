@@ -30,15 +30,15 @@ export function DocSearch() {
                     <p className="text-slate-300 text-[40px] mt-2 md:mt-0 opacity-50"> توفير معرفة أعمق تساعد الأشخاص في جميع المعلومات التي يحتاجونها </p>
                 </div>
             </header>
-            <section className='py-8 flex justify-content-center align-items-center bg-white'>
+            <section className='py-8 flex justify-content-center align-items-center bg-white '>
                 <div className='container-xxl'>
                     <div className='flex flex-column justify-content-evenly justify-content-center align-items-center text-center'>
                         <div className=' '>
-                            <h2 className="text-black text-[80px]"> الاطباء </h2>
-                            <div class="input-group mb-3">
+                            <h2 className="text-black text-[80px] mb-3"> الاطباء </h2>
+                            <form class="input-group mb-3">
                                 <button class="btn btn-outline-secondary" type="button" id="button-addon1">ابحث</button>
                                 <input type="text" class="form-control text-right" placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-                            </div>
+                            </form>
                         </div>
                         {/* this div for result of the search  */}
                         <div className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5 '>
@@ -53,10 +53,9 @@ export function DocSearch() {
                     <div className="row py-3 ">
                         {DocData.map((element, i) => <div key={i} className="col-md-4 rounded-5 border-4 mt-3">
                             <div className='py-3 ps-2 text-end'>
-                                <h1 className='fs-3'>{element.name}</h1>
-                                <span className='fs-5 '>id</span>
-                                <h6 className='fs-6'> {element._id} </h6>
-                                <h3 className='fs-5'>{element.specialize} </h3>
+                                <h1 className='fs-3 mb-2'>{element.name}</h1>
+                                <h6 className='fs-6 mb-2'> {element._id} </h6>
+                                <h3 className='fs-5 mb-2'>{element.specialize} </h3>
                             </div>
                         </div>)}
                     </div>
