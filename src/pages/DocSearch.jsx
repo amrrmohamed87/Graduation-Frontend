@@ -4,8 +4,13 @@ import Footer from '../components/Footer'
 import SearchPhoto from "../assets/images/search.jpg"
 import axios from 'axios'
 export function DocSearch() {
+    let [searchUser, setSearchUser] = useState({
+        name: "sayed",
+        specialize: "sayed",
+    })
     let [DocData, setDocData] = useState([])
-
+    let [showResult , setShowResult] = useState([]) 
+    console.log(showResult[0]);
     useEffect(() => {
         getDoctors()
 
@@ -14,9 +19,19 @@ export function DocSearch() {
         let { data } = await axios.get('https://mhiproject.onrender.com/patient/getDoctors')
         setDocData(data.userD)
     }
+    function searchForDoctor(e) {
+        let MyUser = { ...searchUser }
+        MyUser[e.target.name] = e.target.value
+        setSearchUser(MyUser)
+        
+    }
+    async function submitSearch(e){
+        e.preventDefault()
+        let {data} = await axios.post("https://mhiproject.onrender.com/patient/search",searchUser)
+       setShowResult(data.search)
 
-
-
+    }
+    
 
     return (
         <>
@@ -36,15 +51,19 @@ export function DocSearch() {
                         <div className=' '>
                             <h2 className="text-black text-[80px] mb-3"> الاطباء </h2>
                             <form class="input-group mb-3">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">ابحث</button>
-                                <input type="text" class="form-control text-right " placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                <button class="btn btn-outline-secondary" type="button" onClick={submitSearch}>ابحث</button>
+                                <input type="text" class="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
+                                <input type="text" class="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
                             </form>
                         </div>
                         {/* this div for result of the search  */}
-                        <div className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5 '>
-                            <h2 className="text-black textStyleForH2"> احمد بخة  </h2>
-                            <p className="mt-2 md:mt-0 textStyleForP"> دكتور عيون  </p>
-                        </div>
+                        {showResult == null ? '': showResult.map((element , i)=><div key={i} className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5'>
+                            
+                            <h2 className="text-black textStyleForH2">  {element.name}  </h2>
+                            <p className="mt-2 md:mt-0 textStyleForP"> {element.specialize}  </p>
+                        
+                        </div>)}
+                        
                     </div>
                 </div>
             </section>
