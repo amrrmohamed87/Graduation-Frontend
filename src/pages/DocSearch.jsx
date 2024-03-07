@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import "../css/Search.css"
-import Footer from '../components/Footer'
-import SearchPhoto from "../assets/images/search.jpg"
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import "../css/Search.css";
+import Footer from "../components/Footer";
+import SearchPhoto from "../assets/images/search.jpg";
+import axios from "axios";
 export function DocSearch() {
     let [searchUser, setSearchUser] = useState({
         name: "sayed",

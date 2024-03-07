@@ -34,7 +34,7 @@ import Hospital from "./pages/Hospital.jsx";
 import Login from "./pages/Login.jsx";
 import { useEffect } from "react";
 import Contact from "./pages/Contact.jsx";
-import { Booking } from './pages/Booking';
+import { Booking } from "./pages/Booking";
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -112,7 +112,7 @@ export default function App() {
         { path: "health-awareness", element: <HealthAwareness /> },
         { path: "ca", element: <Nutrition /> },
         { path: "service", element: <Service /> },
-        { path: "book", element: <Booking/> },
+        { path: "book", element: <Booking /> },
         { path: "searchmed", element: <MedSearch /> },
         { path: "docsearch", element: <DocSearch /> },
         { path: "contact-us", element: <Contact /> },
