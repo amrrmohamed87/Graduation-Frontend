@@ -170,7 +170,7 @@ export function Booking() {
             >
               <p>اغلاق</p>
             </div>
-            <div className="col-md-6 py-3">
+            <form className="col-md-6 py-3">
               <label
                 htmlFor=""
                 className="me-2  text-end d-block col-form-label mt-2"
@@ -187,7 +187,7 @@ export function Booking() {
               </label>
               <input type="time" className="form-control w-25" />
               <button className="btn btn-success mt-3">احجز الان</button>
-            </div>
+            </form>
             <div className="col-md-6 text-end py-3">
               <h1 className="selectTag fs-2"></h1>
             </div>
