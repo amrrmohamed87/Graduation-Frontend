@@ -87,11 +87,11 @@ export function Service() {
                   <h2 className="text-white text-right textForH2 pe-10 pb-10">
                     {element.title}
                   </h2>
-                  <p className="text-white text-right textForP pe-5">
+                  <p className="text-white text-right textForP pe-5 ">
                     {element.pragrapgh}
                   </p>
                   <NavLink to={token ? element.to : "/login"}>
-                    <button className="absolute start-0 bottom-8  bg-red-950 ms-12 mt-4 px-2 py-2  hover:bg-black text-white rounded-full w-38 text-xl font-bold buttonResponsive">
+                    <button className="absolute start-0 bottom-1  bg-red-950 ms-12 mt-4 px-2 py-2  hover:bg-black text-white rounded-full w-38 text-xl font-bold buttonResponsive">
                       {" "}
                       {element.buttonContent}
                     </button>
