@@ -42,8 +42,8 @@ function DoctorProfile() {
           throw new Error("Could not fetch medical records");
         }
         const resData = await response.json();
-
-        setMedicalRecords(resData.user);
+        console.log(resData);
+        setMedicalRecords(resData.userR);
         setIsLoadingRecords(false);
       } catch (error) {
         setMedicalRecordsError(error.message);
@@ -70,11 +70,10 @@ function DoctorProfile() {
         </div>
       </section>
       <section className="mb-20">
-        <Table className="bg-emerald-950 text-white w-[80%] m-4">
+        <Table className="bg-emerald-950 text-white w-[50%] m-4">
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-white">Patient Id</TableHead>
               <TableHead className="text-white">Patient Name</TableHead>
               <TableHead className="text-white">Medical Records</TableHead>
               <TableHead className="text-white">Date</TableHead>
@@ -83,8 +82,7 @@ function DoctorProfile() {
           <TableBody>
             {medicalRecords.map((record) => (
               <TableRow key={record._id}>
-                <TableCell className="font-medium">{record._id}</TableCell>
-                <TableCell>{record._id}</TableCell>
+                <TableCell>{record.patient.name}</TableCell>
                 <TableCell>
                   <Dialog>
                     <DialogTrigger asChild>
@@ -102,10 +100,30 @@ function DoctorProfile() {
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
                         <div>
-                          <h1>medicine: (panadol, brofen)</h1>
-                          <h1>diagnose: (flu, covid 19)</h1>
-                          <h1>Dr Name: Ahmed</h1>
-                          <h1>date: 03/01/2024</h1>
+                          <h1 className="text-[25px] text-black">
+                            medications:{" "}
+                            <span className="text-[25px] text-emerald-950">
+                              {record.medicine}
+                            </span>
+                          </h1>
+                          <h1 className="text-[25px] text-black">
+                            Diagnosis:{" "}
+                            <span className="text-[25px] text-emerald-950">
+                              {record.diagnose}
+                            </span>
+                          </h1>
+                          <h1 className="text-[25px] text-black">
+                            Dr Name:{" "}
+                            <span className="text-[25px] text-emerald-950">
+                              {record.doctor.name}
+                            </span>
+                          </h1>
+                          <h1 className="text-[25px] text-black">
+                            date:{" "}
+                            <span className="text-[25px] text-emerald-950">
+                              {record.date}
+                            </span>
+                          </h1>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                           <label htmlFor="name" className="text-right">
@@ -113,18 +131,16 @@ function DoctorProfile() {
                           </label>
                           <input
                             id="name"
-                            value="panadol"
-                            className="col-span-3"
+                            className="col-span-3 border-2 border-emerald-950"
                           />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                           <label htmlFor="username" className="text-right">
                             diagnose
                           </label>
-                          <input
+                          <textarea
                             id="username"
-                            value="flu"
-                            className="col-span-3"
+                            className="col-span-3 border-2 border-emerald-950"
                           />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
@@ -133,8 +149,7 @@ function DoctorProfile() {
                           </label>
                           <input
                             id="username"
-                            value="Ahmed"
-                            className="col-span-3"
+                            className="col-span-3 border-2 border-emerald-950"
                           />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
@@ -144,7 +159,7 @@ function DoctorProfile() {
                           <input
                             id="username"
                             type="date"
-                            className="col-span-3"
+                            className="col-span-3 border-2 border-emerald-950"
                           />
                         </div>
                       </div>
@@ -154,16 +169,16 @@ function DoctorProfile() {
                     </DialogContent>
                   </Dialog>
                 </TableCell>
-                <TableCell>{record.date}</TableCell>
+                <TableCell className="w-18">{record.date}</TableCell>
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
+          {/* <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>Total</TableCell>
               <TableCell className="text-right">$2,500.00</TableCell>
             </TableRow>
-          </TableFooter>
+          </TableFooter> */}
         </Table>
       </section>
       <section className="m-20">

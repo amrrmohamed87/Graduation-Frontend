@@ -10,12 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.6.7",
-=======
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
->>>>>>> 50304a6fb06067764d5d01b2c0260a45c520c4fc
+    "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
