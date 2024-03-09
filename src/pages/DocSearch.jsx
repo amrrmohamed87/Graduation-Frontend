@@ -10,7 +10,6 @@ export function DocSearch() {
     })
     let [DocData, setDocData] = useState([])
     let [showResult , setShowResult] = useState([]) 
-    console.log(showResult[0]);
     useEffect(() => {
         getDoctors()
 
@@ -57,7 +56,7 @@ export function DocSearch() {
                             </form>
                         </div>
                         {/* this div for result of the search  */}
-                        {showResult == null ? '': showResult.map((element , i)=><div key={i} className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5'>
+                        {showResult == null  ? <div className="alert alert-danger text-center text-lg-center">not found</div>: showResult.map((element , i)=><div key={i} className='w-50 mt-4 text-right p-4 border-3 border-black rounded-5'>
                             
                             <h2 className="text-black textStyleForH2">  {element.name}  </h2>
                             <p className="mt-2 md:mt-0 textStyleForP"> {element.specialize}  </p>
