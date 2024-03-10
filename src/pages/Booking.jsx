@@ -20,6 +20,7 @@ import sectionsPhoto16 from "../assets/images/download.jfif";
 import Footer from "./../components/Footer";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 export function Booking() {
   const cardData = [
     {
@@ -98,7 +99,6 @@ export function Booking() {
   }
   const scrollToCenter = () => {
     const windowHeight = window.innerHeight;
-    console.log(windowHeight);
     const scrollPosition = windowHeight * 2.5;
     window.scrollTo({
       top: scrollPosition,
@@ -109,6 +109,24 @@ export function Booking() {
   function closeBookSection() {
     setClassName("d-none");
   }
+let [BookTime , setBookTime] = useState(
+  {
+    day:"",
+    time:"",
+    patientID :"",
+    doctorID :"",
+  }
+)
+function setBookForPatient (e){
+  let myBook = {...BookTime}
+  myBook[e.target.name] = e.target.value
+  setBookTime(myBook)
+}
+async function submitBook(e){
+  e.preventDefault()
+  let {data} = await axios.post("https://mhiproject.onrender.com/patient/book",BookTime)
+  console.log(data);
+}
 
   return (
     <>
@@ -172,21 +190,30 @@ export function Booking() {
             </div>
             <form className="col-md-6 py-3">
               <label
-                htmlFor=""
+                htmlFor="day"
                 className="me-2  text-end d-block col-form-label mt-2"
               >
                 احجز التاريخ
               </label>
-              <DatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                className="form-control d-block text-end"
-              ></DatePicker>
-              <label htmlFor="" className="d-block col-form-label text-end">
+              <input
+                name="day"
+                type="date"
+                onChange={setBookForPatient}
+                className="form-control d-block text-end w-50"
+              ></input>
+              <label htmlFor="time" className="d-block col-form-label text-end">
                 احجز الوقت
               </label>
-              <input type="time" className="form-control w-25" />
-              <button className="btn btn-success mt-3">احجز الان</button>
+              <input onChange={setBookForPatient} type="time" className="form-control w-25" name="time"/>
+              <label htmlFor="patientID" className="d-block col-form-label text-end">
+                patient
+              </label>
+              <input onChange={setBookForPatient} type="text" className="form-control w-75" name="patientID"/>
+              <label htmlFor="doctorID" className="d-block col-form-label text-end">
+                doctor  
+              </label>
+              <input onChange={setBookForPatient} type="text" className="form-control w-75" name="doctorID"/>
+              <button onClick={submitBook} type="submit" className="btn btn-success text-black mt-3">احجز الان</button>
             </form>
             <div className="col-md-6 text-end py-3">
               <h1 className="selectTag fs-2"></h1>
