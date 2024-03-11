@@ -30,6 +30,7 @@ function Admin() {
   });
   const [isAddingHospital, setIsAddingHospital] = useState(false);
   const [hospitalError, setHospitalError] = useState("");
+  const [doctorImage, setDoctorImage] = useState(null);
 
   function handlePatientChange(event) {
     const { name, value } = event.target;
@@ -86,6 +87,16 @@ function Admin() {
     event.preventDefault();
     setIsAddingDoctor(true);
 
+    const formData = new FormData();
+    formData.append("name", doctor.name);
+    formData.append("username", doctor.username);
+    formData.append("password", doctor.password);
+    formData.append("specialize", doctor.specialize);
+
+    if (doctorImage) {
+      formData.append("image", doctorImage);
+    }
+
     try {
       const response = await fetch(
         "https://mhiproject.onrender.com/auth/signupDoctor",
@@ -94,7 +105,7 @@ function Admin() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(doctor),
+          body: JSON.stringify(formData),
         }
       );
 
@@ -260,6 +271,13 @@ function Admin() {
                 name="specialize"
                 value={doctor.specialize}
                 onChange={handleDoctorChange}
+              />
+              <Input
+                id="doctorImage"
+                label="صورة شخصية"
+                type="file"
+                name="image"
+                onChange={(e) => setDoctorImage(e.target.files[0])}
               />
               {doctorError && <p className="text-center text-red-500"></p>}
               <button
