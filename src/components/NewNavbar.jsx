@@ -141,7 +141,7 @@ function NewNavbar() {
           {token && (
             <li
               className={`hidden md:block list-none text-[23px] hover:animate-pulse p-6 ${
-                isScrolled ? "text-emerald-800" : "text-slate-100"
+                isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
               <Form action="/logout" method="post">
