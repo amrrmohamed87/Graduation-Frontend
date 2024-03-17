@@ -64,6 +64,7 @@ export function DocSearch() {
     async function submitBook(e) {
         e.preventDefault()
         let { data } = await axios.post("https://mhiproject.onrender.com/patient/book", BookTime)
+        console.log(data==null);
     }
     return (
         <>
@@ -82,10 +83,10 @@ export function DocSearch() {
                     <div className='flex flex-column justify-content-evenly justify-content-center align-items-center text-center'>
                         <div className=' '>
                             <h2 className="text-black text-[80px] mb-3"> الاطباء </h2>
-                            <form class="input-group mb-3">
-                                <button class="btn btn-outline-secondary" type="button" onClick={submitSearch}>ابحث</button>
-                                <input type="text" class="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
-                                <input type="text" class="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
+                            <form className="input-group mb-3">
+                                <button className="btn btn-outline-secondary" type="button" onClick={submitSearch}>ابحث</button>
+                                <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
+                                <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
                             </form>
                         </div>
                         {/* this div for result of the search  */}
