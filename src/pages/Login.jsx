@@ -28,7 +28,56 @@ function Login() {
     event.preventDefault();
     setShowPassword(false);
     setIsLoading(true);
-    // Login logic here...
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("أسم المستخدم أو كلمة المرور خطأ");
+      }
+
+      const data = await response.json();
+      const name = data.user.name;
+      const role = data.user.role;
+      const token = data.token;
+      const specialize = data.user.specialize;
+      const hospital = data.user.address;
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("name", name);
+      localStorage.setItem("specialize", specialize);
+      localStorage.setItem("hospital", hospital);
+      switch (role) {
+        case "doctor":
+          navigate("/doctor");
+          break;
+        case "admin":
+          navigate("/admin");
+          break;
+        case "hospital":
+          navigate("/hospital");
+          break;
+        case "patient":
+          navigate("/");
+          break;
+        default:
+          console.error("Unexpected role:", role);
+          setError("Unauthorized access");
+      }
+      console.log(data);
+      setIsLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setIsLoading(false);
+    }
   };
 
   function handleShowPassword() {
