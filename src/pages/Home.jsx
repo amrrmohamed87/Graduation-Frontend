@@ -61,7 +61,7 @@ export default function Home() {
           {features.map((feature) => (
             <div
               key={feature.src}
-              className="p-4 w-[290px] h-[290px] bg-white shadow-2xl rounded-lg md:p-12 flex flex-col justify-center items-end text-right"
+              className="p-4 w-[290px] h-[290px] bg-white shadow-md rounded-lg md:p-12 flex flex-col justify-center items-end text-right"
             >
               <img src={feature.src} className="w-[70px] mt-8 mb-3" />
               <h2 className="text-black md:text-[25px] mb-2">
