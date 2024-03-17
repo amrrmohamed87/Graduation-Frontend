@@ -23,7 +23,6 @@ export function DocSearch() {
         name: "",
         id: ''
     })
-console.log(docDetail.id);
     let [errorForSearch, setErrorForSearch] = useState("d-none")
     let [trueBook, setTrueBook] = useState("d-none")
     const [error, setError] = useState('');
@@ -74,15 +73,13 @@ console.log(docDetail.id);
         let myBook = { ...BookTime }
         myBook[e.target.name] = e.target.value
         setBookTime(myBook)
-        console.log(myBook);
     }
     async function submitBook(e,IdDoc) {
         e.preventDefault()
-        setDocDetail({
-            id: IdDoc,
+        setBookTime({...BookTime,
+            doctorID : IdDoc
         }
         )
-        console.log(docDetail.id);
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/book", BookTime)
             setClassName("d-none")
