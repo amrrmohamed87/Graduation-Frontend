@@ -13,6 +13,7 @@ export function DocSearch() {
     let [DocData, setDocData] = useState([])
     let [showResult, setShowResult] = useState([])
     let [docIDForBook, setDocIDForBook] = useState()
+    let[docNAme , setDocName] = useState("")
     let [BookTime, setBookTime] = useState({
         day: "",
         time: "",
@@ -41,9 +42,10 @@ export function DocSearch() {
         setShowResult(data.search)
 
     }
-    function ShowBookSection(IDdoc) {
+    function ShowBookSection(IDdoc , DocName) {
         setClassName("w-50 position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
         setDocIDForBook(IDdoc)
+        setDocName(DocName)
     }
 
     function setBookForPatient(e) {
@@ -99,7 +101,7 @@ export function DocSearch() {
                                 <h1 className='fs-3 mb-2'>{element.name}</h1>
                                 <h6 className='fs-6 mb-2'> {element._id} </h6>
                                 <h3 className='fs-5 mb-2'>{element.specialize} </h3>
-                                <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
+                                <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id,element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                             </div>
                         </div>)}
                     </div>
@@ -108,6 +110,7 @@ export function DocSearch() {
             {/* da section al7gz */}
             <section>
                 <div className={ClassNamee}>
+                <p className=" ms-4 text-lg">{docNAme}</p>
                     <form className="py-3">
                         <label htmlFor="day" className="me-3  text-end d-block col-form-label mt-2" >
                             احجز التاريخ
@@ -124,7 +127,7 @@ export function DocSearch() {
                         <label htmlFor="doctorID" className="me-3 d-block col-form-label text-end">
                             doctor
                         </label>
-                        <input onBlur={setBookForPatient} type="text" className="form-control w-75 ms-3" name="doctorID"  value={docIDForBook}/> 
+                        <input onBlur={setBookForPatient} type="text" className=" form-control w-75 ms-3" name="doctorID"  value={docIDForBook}/> 
                         <button onClick={submitBook} type="submit" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
                         <button onClick={() => closeBookSection()} type="button" className="btn btn-danger text-black mt-3 ms-3">اغلاق</button>
                     </form>
