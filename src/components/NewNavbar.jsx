@@ -3,6 +3,19 @@ import { navLinks } from "../data/constants";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { useEffect, useState } from "react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { TbLogout2 } from "react-icons/tb";
+
 import logo1 from "../assets/images/MHI.png";
 import logo2 from "../assets/images/MHI-Emerald.svg";
 
@@ -29,11 +42,7 @@ function NewNavbar() {
   }, []);
 
   function logoutHandler() {
-    const proceed = window.confirm("هل أنت متأكد؟");
-
-    if (proceed) {
-      submit(null, { action: "/logout", method: "post" });
-    }
+    submit(null, { action: "/logout", method: "post" });
   }
 
   return (
@@ -144,9 +153,37 @@ function NewNavbar() {
                 isScrolled ? "text-white" : "text-slate-100"
               }`}
             >
-              <Form action="/logout" method="post">
-                <button onClick={logoutHandler}>تسجيل الخروج</button>
-              </Form>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button>تسجيل الخروج</button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-white">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-[#056558]">
+                      هل أنت متأكد؟
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
+                      سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن تعد
+                      متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول مرة
+                      أخرى
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="flex items-center gap-3">
+                    <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
+                      إلغاء
+                    </AlertDialogCancel>
+                    <Form
+                      action="/logout"
+                      method="post"
+                      onClick={logoutHandler}
+                      className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
+                    >
+                      <TbLogout2 size={20} className="text-emerald-950" />
+                      <button className="text-emerald-950">تسجيل الخروج</button>
+                    </Form>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </li>
           )}
         </div>
@@ -245,9 +282,39 @@ function NewNavbar() {
             )}
             {token && (
               <li className="list-none text-right text-[23px] mr-6 mt-12">
-                <Form action="/logout" method="post">
-                  <button onClick={logoutHandler}>تسجيل الخروج</button>
-                </Form>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button>تسجيل الخروج</button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="bg-white p-4">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="text-[#056558]">
+                        هل أنت متأكد؟
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
+                        سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن
+                        تعد متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول
+                        مرة أخرى
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="flex flex-row justify-center items-center gap-3">
+                      <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
+                        إلغاء
+                      </AlertDialogCancel>
+                      <Form
+                        action="/logout"
+                        method="post"
+                        onClick={logoutHandler}
+                        className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
+                      >
+                        <TbLogout2 size={20} className="text-emerald-950" />
+                        <button className="text-emerald-950">
+                          تسجيل الخروج
+                        </button>
+                      </Form>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </li>
             )}
           </ul>
