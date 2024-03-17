@@ -4,7 +4,7 @@ import download from "../assets/images/download.png";
 function DownLoadApp() {
   return (
     <section className="md:h-screen">
-      <div className="bg-white shadow-2xl rounded-2xl p-4 m-4">
+      <div className="bg-white shadow-xl rounded-2xl p-4 m-4">
         <h1 className="text-emerald-950 text-center text-[20px] mb-6 md:text-[40px]">
           قم بتحميل برنامج مصر للتأمين الصحي
         </h1>
