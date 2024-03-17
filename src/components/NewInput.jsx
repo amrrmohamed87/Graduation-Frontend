@@ -1,9 +1,9 @@
 function Input({ id, label, icon, showPassword, ...props }) {
   return (
-    <div className="flex flex-col mb-8">
+    <div className="flex flex-col mb-4 md:mb-8">
       <label
         htmlFor={id}
-        className="text-right text-white mb-2 text-[23px] md:text-[26px]"
+        className="text-right text-[#056550] mb-1 md:mb-2 text-[20px] md:text-[23px] lg:text-[26px]"
       >
         {label}
       </label>
@@ -12,22 +12,17 @@ function Input({ id, label, icon, showPassword, ...props }) {
           id={id}
           required
           {...props}
-          className={`h-[30px] border-2  border-emerald-700 focus:border-gray-950 rounded-lg pl-2
-        md:h-[40px]`}
+          className={`w-full rounded-lg h-[28px] md:h-[35px] lg:h-[40px] border-2 border-gray-400 focus:border-gray-950 pl-2 md:pl-3`}
         />
         {icon && (
           <div
             onClick={showPassword}
-            className="absolute inset-y-0 right-0 md:pr-3 flex items-center cursor-pointer w-8"
+            className="absolute inset-y-0 right-0 pr-2 md:pr-3 flex items-center cursor-pointer"
           >
-            {icon}
+            <div className="text-sm md:text-base">{icon}</div>
           </div>
         )}
       </div>
-      {/* <div className="mt-2">
-      ${error && "border-red-500 border-[2px]"}
-        {error && <p className="text-[red] text-right">{error}</p>}
-      </div> */}
     </div>
   );
 }
