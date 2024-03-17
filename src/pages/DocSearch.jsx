@@ -3,8 +3,15 @@ import "../css/Search.css";
 import Footer from "../components/Footer";
 import SearchPhoto from "../assets/images/search.jpg";
 import axios from "axios";
-import { data } from "autoprefixer";
+import {jwtDecode} from "jwt-decode";
+// import { data } from "autoprefixer";
 export function DocSearch() {
+    const Token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(Token);
+    // name of user 
+    const UserNameOfLogin = decodedToken.email
+    const UserIdOfLogin = decodedToken.userId
+    // -------------------------------------------------
     let [searchUser, setSearchUser] = useState({
         name: "sayed",
         specialize: "sayed",
@@ -87,7 +94,7 @@ export function DocSearch() {
 
                             <h2 className="text-black textStyleForH2">  {element.name}  </h2>
                             <p className="mt-2 md:mt-0 textStyleForP"> {element.specialize}  </p>
-
+                            <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id,element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                         </div>)}
 
                     </div>
@@ -123,8 +130,8 @@ export function DocSearch() {
                         <label htmlFor="patientID" className="me-3 d-block col-form-label text-end">
                            : اسم المريض
                         </label>
-                        <h1 className="text-xxl-center fs-3 "> محمد السيد بخة  </h1>
-                        <input onChange={setBookForPatient} type="text" className="form-control w-75 ms-3" name="patientID" />
+                        <h1 className="text-xxl-center fs-3 "> {UserNameOfLogin} </h1>
+                        <input onBlur={setBookForPatient} type="text" className="form-control w-75 ms-3" name="patientID"  value={UserIdOfLogin}/>
                         <label htmlFor="doctorID" className="me-3 d-block col-form-label text-end">
                             : اسم الدكتور
                         </label>
