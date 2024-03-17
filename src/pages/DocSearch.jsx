@@ -110,7 +110,7 @@ export function DocSearch() {
             {/* da section al7gz */}
             <section>
                 <div className={ClassNamee}>
-                <p className=" ms-4 text-lg">{docNAme}</p>
+                
                     <form className="py-3">
                         <label htmlFor="day" className="me-3  text-end d-block col-form-label mt-2" >
                             احجز التاريخ
@@ -121,12 +121,14 @@ export function DocSearch() {
                         </label>
                         <input onChange={setBookForPatient} type="time" className="form-control w-25 ms-3" name="time" />
                         <label htmlFor="patientID" className="me-3 d-block col-form-label text-end">
-                            patient
+                           : اسم المريض
                         </label>
+                        <h1 className="text-xxl-center fs-3 "> محمد السيد بخة  </h1>
                         <input onChange={setBookForPatient} type="text" className="form-control w-75 ms-3" name="patientID" />
                         <label htmlFor="doctorID" className="me-3 d-block col-form-label text-end">
-                            doctor
+                            : اسم الدكتور
                         </label>
+                        <h1 className="text-xxl-center fs-3 "> {docNAme} </h1>
                         <input onBlur={setBookForPatient} type="text" className=" form-control w-75 ms-3" name="doctorID"  value={docIDForBook}/> 
                         <button onClick={submitBook} type="submit" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
                         <button onClick={() => closeBookSection()} type="button" className="btn btn-danger text-black mt-3 ms-3">اغلاق</button>
