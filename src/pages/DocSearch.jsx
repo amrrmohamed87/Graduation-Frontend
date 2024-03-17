@@ -64,7 +64,6 @@ export function DocSearch() {
     async function submitBook(e) {
         e.preventDefault()
         let { data } = await axios.post("https://mhiproject.onrender.com/patient/book", BookTime)
-        console.log(data);
     }
     return (
         <>
