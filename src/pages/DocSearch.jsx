@@ -23,6 +23,7 @@ export function DocSearch() {
         name: "",
         id: ''
     })
+    let[errorGetDoc,setErrorGetDoc]=useState("d-none")
     let [errorForSearch, setErrorForSearch] = useState("d-none")
     let [trueBook, setTrueBook] = useState("d-none")
     const [error, setError] = useState('');
@@ -45,6 +46,9 @@ export function DocSearch() {
     async function getDoctors() {
         let { data } = await axios.get('https://mhiproject.onrender.com/patient/getDoctors')
         setDocData(data.userD)
+        if(data.userD == null){
+            setErrorGetDoc("text-center fs-1")
+        }
     }
     function searchForDoctor(e) {
         let MyUser = { ...searchUser }
@@ -138,7 +142,8 @@ export function DocSearch() {
             <section className='py-8 bg-white'>
                 <div className="container">
                     <div className="row py-3 gap-3">
-                        {DocData == null ? <div> <h1 className="text-center text-lg-center"> loading data</h1> </div> : DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
+                    <h1 className={errorGetDoc}>جارى التحميل</h1>
+                         {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
                             <div className='py-3 text-end'>
                                 <h1 className='fs-3 mb-2'>{element.name}</h1>
                                 <h6 className='fs-6 mb-2'> {element._id} </h6>
