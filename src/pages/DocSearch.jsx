@@ -159,7 +159,7 @@ export function DocSearch() {
                 <div className={ClassNamee}>
                     <h1 className="text-center fs-1 mt-3">للحجز يرجى ادخال الوقت كل ربع ساعة </h1>
                     <p className="text-right ">: مثال </p>
-                    <p className="text-center">7:00 - 7:15 - 7:30 - 7:45 - 8:00 - 8:15 - 8:30 - 8:45 - 9:00 - 9:15 - 9:30 - 9:45 - 10:00 </p>
+                    <p className="text-center text-muted">7:00 - 7:15 - 7:30 - 7:45 - 8:00 - 8:15 - 8:30 - 8:45 - 9:00 - 9:15 - 9:30 - 9:45 - 10:00 </p>
                     <form className="py-3">
                         <label htmlFor="day" className="me-3  text-end d-block col-form-label mt-2" >
                           :  احجز التاريخ
@@ -173,11 +173,13 @@ export function DocSearch() {
                         <label htmlFor="patientID" className="me-3 d-block col-form-label text-end">
                             : اسم المريض
                         </label>
-                        <h1 className="text-xxl-center fs-3 "> {UserNameOfLogin} </h1>
+                        <h1 className="text-xxl-center fs-3 "> محمد السيد بخه </h1>
+                        {/* {UserNameOfLogin} */}
                         <label htmlFor="doctorID" className="me-3 d-block col-form-label text-end">
                             : اسم الدكتور
                         </label>
-                        <h1 className="text-xxl-center fs-3 "> {docDetail.name} </h1>
+                        <h1 className="text-xxl-center fs-3 "> محمد حسانين السيد </h1>
+                        {/* {docDetail.name} */}
                         <p className="text-center text-danger fs-5">{error2}</p>
                         <button onClick={(e)=>submitBook(e,docDetail.id)} type="button" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
                         <button onClick={() => closeBookSection()} type="button" className="btn btn-danger text-black mt-3 ms-3">اغلاق</button>
