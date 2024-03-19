@@ -65,7 +65,6 @@ export function DocSearch() {
         e.preventDefault()
         let { data } = await axios.post("https://mhiproject.onrender.com/patient/search", searchUser)
         setShowResult(data.search)
-        console.log(data.search );
         if (data.search == null) {
             setErrorForSearch("text-center fs-1 mt-5")
         }
@@ -107,6 +106,15 @@ export function DocSearch() {
                 setClassOfError("text-center fs-5 text-danger")
             } else {
                 setError('يرجى اختيار موعد حجز أخر');
+                setErrorButton("btn btn-success me-5")
+                setClassOfError("text-center fs-5 text-danger")
+            }
+            if (error.data && error.data.status === 404) {
+                setError('يرجى اختيار موعد حجز أخر');
+                setErrorButton("btn btn-success me-5")
+                setClassOfError("text-center fs-5 text-danger")
+            } else {
+                setError('يرجى المحاولة بعد مرور ساعة');
                 setErrorButton("btn btn-success me-5")
                 setClassOfError("text-center fs-5 text-danger")
             }
@@ -155,10 +163,10 @@ export function DocSearch() {
                         </div>
                         <h1 className={errorForSearch}>No input please write name or specialize</h1>
                         {/* this div for result of the search  */}
-                        {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-black rounded-5'>
-                            <h2 className="text-black textStyleForH2">  {element.name}  </h2>
-                            <p className="mt-2 md:mt-0 textStyleForP"> {element.specialize}  </p>
-                            <p className="mt-2 md:mt-0 textStyleForP fs-3"> {element.hospitalID?.name}  </p>
+                        {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-success rounded-5'>
+                            <h2 className="text-black fs-1 text-muted">د/{element.name}  </h2>
+                            <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"> التخصص: </span>{element.specialize} </p>
+                            <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name}  </p>
                             <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                         </div>)}
 
@@ -172,9 +180,9 @@ export function DocSearch() {
                     <h1 className={errorGetDoc}>جارى التحميل</h1>
                          {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
                             <div className='py-3 text-end'>
-                                <h1 className='fs-2 mb-2 text-[#056558]'>{element.name}</h1>
-                                <h3 className='fs-3 mb-2'>{element.specialize} </h3>
-                                <h6 className='fs-5'> {element.hospitalID?.name} </h6>
+                                <h1 className='fs-2 mb-2 text-[#056558]'> د/ {element.name}</h1>
+                                <h3 className='fs-3 mb-2'><span className="fs-3 text-black"> التخصص: </span> {element.specialize} </h3>
+                                <h6 className='fs-5'>  {element.hospitalID?.name} </h6>
                                 <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                             </div>
                         </div>)}
@@ -184,6 +192,7 @@ export function DocSearch() {
             {/* da section al7gz */}
             <section>
                 <div className={ClassNamee}>
+                    <p className="text-center UnderLineAfterP fs-1 mt-4">أحجز الأن</p>
                     <form className="py-3">
                         <label htmlFor="day" className="me-3 fs-2 text-end d-block col-form-label mt-2" >
                           :  احجز التاريخ

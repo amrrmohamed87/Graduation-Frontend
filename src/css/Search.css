@@ -1,9 +1,9 @@
-.textStyleForH2{
+/* .textStyleForH2{
     font-size: 50px ;
 }
 .textStyleForP{
     font-size: 40px ;
-}
+} */
 @media (min-width:414px) and (max-width: 750px) {
     .textStyleForH2{
      font-size: 30px;
@@ -75,8 +75,15 @@
     border-bottom: 5px solid rgb(32, 134, 32);
     width: 70%;
     border-radius: 20%;
-    -webkit-border-radius: 20%;
-    -moz-border-radius: 20%;
-    -ms-border-radius: 20%;
-    -o-border-radius: 20%;
+}
+.UnderLineAfterP::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    right: 0;
+    top: 15%;
+    border-bottom: 5px solid rgb(32, 134, 32);
+    width: 70%;
+    border-radius: 20%;
 }
