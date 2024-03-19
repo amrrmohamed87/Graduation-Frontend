@@ -49,9 +49,9 @@
     align-items: center;
  }
  .sureBook{
-    top: 25%;
+    top: 30%;
     left: 28%;
-    height: 400px;
+    height: 55%;
     z-index: 155;
  }
  .wordSureBook::after{
@@ -73,7 +73,7 @@
     right: 0;
     bottom: -2px;
     border-bottom: 5px solid rgb(32, 134, 32);
-    width: 70%;
+    width: 55%;
     border-radius: 20%;
 }
 .UnderLineAfterP::after{

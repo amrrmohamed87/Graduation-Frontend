@@ -119,12 +119,12 @@ export function DocSearch() {
                 setClassOfError("text-center fs-5 text-danger")
             }
 
-        //     if (error.data && error.data.status === 400) {
-        //         setError2('يرجى المحاولة مره اخرى');
+            if (error.data && error.data.status === 400) {
+                setError('يرجى المحاولة مره اخرى');
 
-        //     } else {
-        //         setError2('يرجى المحاولة مره اخرى');
-        //     }
+            } else {
+                setError('يرجى ادخال بيانات صحيحة ');
+            }
 
         }
     }
