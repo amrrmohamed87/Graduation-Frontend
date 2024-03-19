@@ -119,7 +119,7 @@ export function DocSearch() {
     }
     function BackStep(){
         setSureBookSection("d-none")
-        setClassName("position-fixed w-50 sureBook bg-white rounded-5 shadow-lg")
+        setClassName("w-50 position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
     }
     return (
         <>
