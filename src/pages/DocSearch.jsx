@@ -16,7 +16,7 @@ export function DocSearch() {
         name: "",
         specialize: "",
     })
-    let [sureBookSection, setSureBookSection] = useState("d-none")
+    let[sureBookSection , setSureBookSection] = useState("d-none")
     const [ClassNamee, setClassName] = useState("d-none w-50 position-fixed z-1 secBook rounded-5 shadow-lg bg-white");
     let [DocData, setDocData] = useState([])
     let [showResult, setShowResult] = useState([])
@@ -24,9 +24,9 @@ export function DocSearch() {
         name: "",
         id: ''
     })
-    let [errorGetDoc, setErrorGetDoc] = useState("d-none")
+    let[errorGetDoc,setErrorGetDoc]=useState("d-none")
     let [errorForSearch, setErrorForSearch] = useState("d-none")
-    let [errorButton, setErrorButton] = useState("d-none")
+    let[errorButton , setErrorButton] = useState("d-none")
     let [trueBook, setTrueBook] = useState("d-none")
     const [error, setError] = useState('');
     // const [error2, setError2] = useState('');
@@ -48,7 +48,7 @@ export function DocSearch() {
     async function getDoctors() {
         let { data } = await axios.get('https://mhiproject.onrender.com/patient/getDoctors')
         setDocData(data.userD)
-        if (data.userD == null) {
+        if(data.userD == null){
             setErrorGetDoc("text-center fs-1")
         }
     }
@@ -57,7 +57,7 @@ export function DocSearch() {
         MyUser[e.target.name] = e.target.value
         setSearchUser(MyUser)
     }
-    function HideSureBoook() {
+    function HideSureBoook(){
         setSureBookSection("d-none")
     }
     async function submitSearch(e) {
@@ -73,8 +73,8 @@ export function DocSearch() {
     function ShowBookSection(IDdoc, DocName) {
         setClassName("w-50 position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
         setDocDetail({
-            name: DocName,
-            id: IDdoc
+            name:DocName,
+            id:IDdoc
         })
     }
 
@@ -83,10 +83,9 @@ export function DocSearch() {
         myBook[e.target.name] = e.target.value
         setBookTime(myBook)
     }
-    function FirstSubmitBook(IdDoc) {
-        setBookTime({
-            ...BookTime,
-            doctorID: IdDoc
+    function FirstSubmitBook(IdDoc){
+        setBookTime({...BookTime,
+            doctorID : IdDoc
         }
         )
         setClassName("d-none")
@@ -94,7 +93,7 @@ export function DocSearch() {
     }
     async function submitBook(e) {
         e.preventDefault()
-
+        
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/book", BookTime)
             // setClassName("d-none")
@@ -109,18 +108,18 @@ export function DocSearch() {
                 setErrorButton("btn btn-success me-5")
             }
 
-            //     if (error.data && error.data.status === 400) {
-            //         setError2('يرجى المحاولة مره اخرى');
+        //     if (error.data && error.data.status === 400) {
+        //         setError2('يرجى المحاولة مره اخرى');
 
-            //     } else {
-            //         setError2('يرجى المحاولة مره اخرى');
-            //     }
+        //     } else {
+        //         setError2('يرجى المحاولة مره اخرى');
+        //     }
 
         }
     }
-    function BackStep() {
+    function BackStep(){
         setSureBookSection("d-none")
-        setClassName("w-50 position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
+        setClassName("position-fixed w-50 sureBook bg-white rounded-5 shadow-lg")
     }
     return (
         <>
@@ -160,8 +159,8 @@ export function DocSearch() {
             <section className='py-8 bg-white'>
                 <div className="container">
                     <div className="row py-3 gap-3">
-                        <h1 className={errorGetDoc}>جارى التحميل</h1>
-                        {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
+                    <h1 className={errorGetDoc}>جارى التحميل</h1>
+                         {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
                             <div className='py-3 text-end'>
                                 <h1 className='fs-3 mb-2'>{element.name}</h1>
                                 <h6 className='fs-6 mb-2'> {element._id} </h6>
@@ -180,11 +179,11 @@ export function DocSearch() {
                     <p className="text-center text-muted">7:00 - 7:15 - 7:30 - 7:45 - 8:00 - 8:15 - 8:30 - 8:45 - 9:00 - 9:15 - 9:30 - 9:45 - 10:00 </p>
                     <form className="py-3">
                         <label htmlFor="day" className="me-3  text-end d-block col-form-label mt-2" >
-                            :  احجز التاريخ
+                          :  احجز التاريخ
                         </label>
                         <input onChange={setBookForPatient} name="day" type="date" className="form-control d-block text-end w-50 ms-3"></input>
                         <label htmlFor="time" className="me-3 d-block col-form-label text-end">
-                            : احجز الوقت
+                           : احجز الوقت
                         </label>
                         <input onChange={setBookForPatient} type="time" className="form-control w-25 ms-3" name="time" />
                         <label htmlFor="patientID" className="me-3 d-block col-form-label text-end">
@@ -198,7 +197,7 @@ export function DocSearch() {
                         <h1 className="text-xxl-center fs-3 "> محمد حسانين السيد </h1>
                         {/* {docDetail.name} */}
                         {/* <p className="text-center text-danger fs-5">{error2}</p> */}
-                        <button onClick={() => FirstSubmitBook(docDetail.id)} type="button" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
+                        <button onClick={()=>FirstSubmitBook(docDetail.id)} type="button" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
                         <button onClick={() => closeBookSection()} type="button" className="btn btn-danger text-black mt-3 ms-3">اغلاق</button>
                     </form>
                 </div>
@@ -235,7 +234,7 @@ export function DocSearch() {
                     <button onClick={HideSureBoook} className="btn btn-danger">الغاء الحجز</button>
                 </div>
             </section>
-            {/* تم الحجز بنجاااح  */}
+                {/* تم الحجز بنجاااح  */}
             <div className={trueBook}>
                 <h1 className="fs-1 w-100  text-center">تم الحجز بنجاح </h1>
                 <button onClick={() => closeTrueBook()} type="button" className="btn btn-danger text-black ms-3 ">اغلاق</button>
