@@ -1,6 +1,6 @@
 import Dashboard from "../components/Dashboard";
 import Input from "../components/AdminInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Admin() {
   const [patient, setPatient] = useState({
@@ -18,9 +18,12 @@ function Admin() {
     username: "",
     password: "",
     specialize: "",
+    id: "",
   });
   const [isAddingDoctor, setIsAddingDoctor] = useState(false);
   const [doctorError, setDoctorError] = useState("");
+  const [hospitalInfo, setHospitalInfo] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const [hospital, setHospital] = useState({
     name: "",
@@ -31,6 +34,26 @@ function Admin() {
   const [isAddingHospital, setIsAddingHospital] = useState(false);
   const [hospitalError, setHospitalError] = useState("");
   const [doctorImage, setDoctorImage] = useState(null);
+
+  useEffect(() => {
+    async function loadHospitals() {
+      setIsFetching(true);
+
+      try {
+        const response = await fetch(
+          "https://mhiproject.onrender.com/auth/getHospitals"
+        );
+        const resData = await response.json();
+        console.log(resData.allHospitals);
+        setHospitalInfo(resData.allHospitals);
+        setIsFetching(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadHospitals();
+  }, []);
 
   function handlePatientChange(event) {
     const { name, value } = event.target;
@@ -77,25 +100,40 @@ function Admin() {
 
   function handleDoctorChange(event) {
     const { name, value } = event.target;
-    setDoctor({
-      ...doctor,
-      [name]: value,
-    });
+
+    if (name === "hospitalID" && value) {
+      const selectedHospital = hospitalInfo.find(
+        (hospital) => hospital.name === value
+      );
+
+      setDoctor((prev) => ({
+        ...prev,
+        id: selectedHospital ? selectedHospital._id : "",
+        [name]: value,
+      }));
+
+      console.log(selectedHospital._id);
+    } else {
+      setDoctor((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+      console.log(doctor);
+    }
   }
 
   const handleAddDoctor = async (event) => {
     event.preventDefault();
     setIsAddingDoctor(true);
 
-    const formData = new FormData();
-    formData.append("name", doctor.name);
-    formData.append("username", doctor.username);
-    formData.append("password", doctor.password);
-    formData.append("specialize", doctor.specialize);
-
-    if (doctorImage) {
-      formData.append("image", doctorImage);
-    }
+    const data = {
+      username: doctor.username,
+      password: doctor.password,
+      name: doctor.name,
+      specialize: doctor.specialize,
+      hospitalID: doctor.id,
+    };
+    console.log(data);
 
     try {
       const response = await fetch(
@@ -105,12 +143,17 @@ function Admin() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(data),
         }
       );
 
-      if (response.status === 400) {
-        throw new Error("doctor is already exists");
+      const resData = await response.json();
+
+      if (!response.ok) {
+        const errorMessage = resData.message || "Failed to create doctor";
+        console.log(errorMessage);
+        setIsAddingDoctor(false);
+        return;
       }
 
       setIsAddingDoctor(false);
@@ -120,8 +163,10 @@ function Admin() {
         username: "",
         password: "",
         specialize: "",
+        hospitalID: "",
       });
     } catch (error) {
+      console.log("Unexpected error");
       setDoctorError(error.message);
       setIsAddingDoctor(false);
     }
@@ -272,22 +317,37 @@ function Admin() {
                 value={doctor.specialize}
                 onChange={handleDoctorChange}
               />
-              <Input
-                id="doctorImage"
-                label="صورة شخصية"
-                type="file"
-                name="image"
-                onChange={(e) => setDoctorImage(e.target.files[0])}
-              />
-              {doctorError && <p className="text-center text-red-500"></p>}
-              <button
-                type="submit"
-                onClick={handleAddDoctor}
-                disabled={isAddingDoctor}
-                className="bg-white px-4 py-2 text-[20px] text-emerald-950 rounded-[20px]"
-              >
-                {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
-              </button>
+              <div className="flex flex-col justify-center items-center">
+                {isFetching ? (
+                  <p>Loading...</p>
+                ) : (
+                  <select
+                    id="hospital"
+                    label="المستشفي"
+                    name="hospitalID"
+                    value={doctor.id}
+                    onChange={handleDoctorChange}
+                    className="h-[30px] w-full text-right border-2 border-emerald-700 focus:border-gray-950 rounded-lg pl-2
+        md:h-[40px]"
+                  >
+                    <option value="">اختر المستشفى</option>
+                    {hospitalInfo.map((hospital) => (
+                      <option key={hospital._id} value={hospital.name}>
+                        {hospital.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                {doctorError && <p className="text-center text-red-500"></p>}
+                <button
+                  type="submit"
+                  onClick={handleAddDoctor}
+                  disabled={isAddingDoctor}
+                  className="bg-white px-4 py-2 text-[20px] text-emerald-950 rounded-[20px] mt-4"
+                >
+                  {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
+                </button>
+              </div>
             </div>
           </form>
           <form method="post">
