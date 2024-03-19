@@ -29,6 +29,7 @@ export function DocSearch() {
     let[errorButton , setErrorButton] = useState("d-none")
     let [trueBook, setTrueBook] = useState("d-none")
     const [error, setError] = useState('');
+    const[classOfError , setClassOfError] = useState("text-center fs-5 text-danger")
     // const [error2, setError2] = useState('');
     let [BookTime, setBookTime] = useState({
         day: "",
@@ -103,9 +104,11 @@ export function DocSearch() {
             if (error.data && error.data.status === 406) {
                 setError('يرجى اختيار موعد حجز أخر');
                 setErrorButton("btn btn-success me-5")
+                setClassOfError("text-center fs-5 text-danger")
             } else {
                 setError('يرجى اختيار موعد حجز أخر');
                 setErrorButton("btn btn-success me-5")
+                setClassOfError("text-center fs-5 text-danger")
             }
 
         //     if (error.data && error.data.status === 400) {
@@ -120,6 +123,8 @@ export function DocSearch() {
     function BackStep(){
         setSureBookSection("d-none")
         setClassName("w-50 position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
+        setErrorButton("d-none")
+        setClassOfError("d-none")
     }
     return (
         <>
@@ -227,7 +232,7 @@ export function DocSearch() {
                         </div>
                     </div>
                 </div>
-                <p className="text-center fs-5 text-danger">{error}</p>
+                <p className={classOfError}>{error}</p>
                 <div className="d-flex justify-content-center py-3">
                     <button onClick={submitBook} className="btn btn-success me-5">تأكيد الحجز</button>
                     <button onClick={BackStep} className={errorButton}>الرجوع للصفحة السابقة </button>
