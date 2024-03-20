@@ -175,7 +175,7 @@ export function DocSearch() {
                 </div>
             </section>
             {/* section get doctors */}
-            <section className='py-8 bg-white'>
+            <section className='py-8'>
                 <div className="container">
                     <div className="row py-3 gap-3 justify-content-center">
                         <h1 className={errorGetDoc}>جارى التحميل</h1>
@@ -184,10 +184,12 @@ export function DocSearch() {
                                 <h1 className='text-center fs-2 mb-2 text-[#056558]'>د/ {element.name}</h1>
                                 <h3 className='fs-3 mb-2'>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
                                 <div className="d-flex gap-2 flex-row justify-content-end">
-                                <h6 className='fs-5'>  {element.hospitalID?.name} : </h6>
-                                <i class=" fa-solid text-success fs-5 fa-truck-medical"></i>
+                                    <h6 className='fs-5'>  {element.hospitalID?.name} : </h6>
+                                    <i class=" fa-solid text-success fs-5 fa-truck-medical"></i>
                                 </div>
-                                <div className="d-flex mt-3 justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success w-100 text-dark">احجز الان</button></div>
+                                <div className="d-flex mt-3 justify-content-center">
+                                    <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn bg-success  w-100 text-dark">احجز الان</button>
+                                </div>
                             </div>
                         </div>)}
                     </div>
