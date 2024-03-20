@@ -16,7 +16,7 @@ export function DocSearch() {
         name: "",
         specialize: "",
     })
-    const[sureBookSection , setSureBookSection] = useState("d-none");
+    const [sureBookSection, setSureBookSection] = useState("d-none");
     const [ClassNamee, setClassName] = useState("d-none position-fixed z-1 secBook rounded-5 shadow-lg bg-white");
     let [DocData, setDocData] = useState([])
     let [showResult, setShowResult] = useState([])
@@ -24,12 +24,12 @@ export function DocSearch() {
         name: "",
         id: ''
     })
-    let[errorGetDoc,setErrorGetDoc]=useState("d-none")
+    let [errorGetDoc, setErrorGetDoc] = useState("d-none")
     let [errorForSearch, setErrorForSearch] = useState("d-none")
-    let[errorButton , setErrorButton] = useState("d-none")
+    let [errorButton, setErrorButton] = useState("d-none")
     let [trueBook, setTrueBook] = useState("d-none")
     const [error, setError] = useState('');
-    const[classOfError , setClassOfError] = useState("text-center fs-5 text-danger")
+    const [classOfError, setClassOfError] = useState("text-center fs-5 text-danger")
     // const [error2, setError2] = useState('');
     let [BookTime, setBookTime] = useState({
         day: "",
@@ -49,7 +49,7 @@ export function DocSearch() {
     async function getDoctors() {
         let { data } = await axios.get('https://mhiproject.onrender.com/patient/getDoctors')
         setDocData(data.userD)
-        if(data.userD == null){
+        if (data.userD == null) {
             setErrorGetDoc("text-center fs-1")
         }
     }
@@ -58,7 +58,7 @@ export function DocSearch() {
         MyUser[e.target.name] = e.target.value
         setSearchUser(MyUser)
     }
-    function HideSureBoook(){
+    function HideSureBoook() {
         setSureBookSection("d-none")
     }
     async function submitSearch(e) {
@@ -73,8 +73,8 @@ export function DocSearch() {
     function ShowBookSection(IDdoc, DocName) {
         setClassName(" position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
         setDocDetail({
-            name:DocName,
-            id:IDdoc
+            name: DocName,
+            id: IDdoc
         })
     }
 
@@ -83,9 +83,10 @@ export function DocSearch() {
         myBook[e.target.name] = e.target.value
         setBookTime(myBook)
     }
-    function FirstSubmitBook(IdDoc){
-        setBookTime({...BookTime,
-            doctorID : IdDoc
+    function FirstSubmitBook(IdDoc) {
+        setBookTime({
+            ...BookTime,
+            doctorID: IdDoc
         }
         )
         setClassName("d-none")
@@ -93,7 +94,7 @@ export function DocSearch() {
     }
     async function submitBook(e) {
         e.preventDefault()
-        
+
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/book", BookTime)
             // setClassName("d-none")
@@ -128,13 +129,13 @@ export function DocSearch() {
 
         }
     }
-    function BackStep(){
+    function BackStep() {
         setSureBookSection("d-none")
         setClassName("position-fixed z-3 secBook rounded-5 shadow-lg bg-white")
         setErrorButton("d-none")
         setClassOfError("d-none")
     }
-   
+
     return (
         <>
             <header className="relative h-screen w-full ">
@@ -153,20 +154,20 @@ export function DocSearch() {
                     <div className='flex flex-row flex-wrap justify-content-evenly justify-content-center align-items-center text-center'>
                         <div className=' w-100 justify-content-center d-flex'>
                             <div className="w-50 ">
-                            <h2 className="text-black text-[80px] mb-3"> الأطباء </h2>
-                            <form className="input-group mb-3">
-                                <button className="btn btn-outline-secondary" type="button" onClick={submitSearch}>ابحث</button>
-                                <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
-                                <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
-                            </form>
+                                <h2 className="text-black text-[80px] mb-3"> الأطباء </h2>
+                                <form className="input-group mb-3">
+                                    <button className="btn btn-outline-secondary" type="button" onClick={submitSearch}>ابحث</button>
+                                    <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
+                                    <input type="text" className="form-control text-right " onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
+                                </form>
                             </div>
                         </div>
                         <h1 className={errorForSearch}>No input please write name or specialize</h1>
                         {/* this div for result of the search  */}
                         {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-success rounded-5'>
-                            <h2 className="text-black fs-1 text-muted">د/{element.name}  </h2>
-                            <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"> التخصص: </span>{element.specialize} </p>
-                            <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name}  </p>
+                            <h2 className="text-center fs-1 text-muted">د/{element.name}  </h2>
+                            <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i></p>
+                            <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name} : <i class=" fa-solid text-success fs-5 fa-truck-medical"></i> </p>
                             <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                         </div>)}
 
@@ -177,12 +178,15 @@ export function DocSearch() {
             <section className='py-8 bg-white'>
                 <div className="container">
                     <div className="row py-3 gap-3 justify-content-center">
-                    <h1 className={errorGetDoc}>جارى التحميل</h1>
-                         {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
+                        <h1 className={errorGetDoc}>جارى التحميل</h1>
+                        {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
                             <div className='py-3 text-end'>
-                                <h1 className='fs-2 mb-2 text-[#056558]'> د/ {element.name}</h1>
-                                <h3 className='fs-3 mb-2'><span className="fs-3 text-black"> التخصص: </span> {element.specialize} </h3>
-                                <h6 className='fs-5'>  {element.hospitalID?.name} </h6>
+                                <h1 className='text-center fs-2 mb-2 text-[#056558]'>د/ {element.name}</h1>
+                                <h3 className='fs-3 mb-2'>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
+                                <div className="d-flex gap-2 flex-row justify-content-end">
+                                <h6 className='fs-5'>  {element.hospitalID?.name} : </h6>
+                                <i class=" fa-solid text-success fs-5 fa-truck-medical"></i>
+                                </div>
                                 <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
                             </div>
                         </div>)}
@@ -194,224 +198,224 @@ export function DocSearch() {
                 <div className={ClassNamee}>
                     <p className="text-center UnderLineAfterP fs-1 mt-4">أحجز الأن</p>
                     <form className="py-3">
-                        <label htmlFor="day" className="me-3 fs-2 text-end d-block col-form-label mt-2" >
-                          :  احجز التاريخ
+                        <label htmlFor="day" className="me-3 text-success fs-2 text-end d-block col-form-label mt-2" >
+                            :  احجز التاريخ
                         </label>
                         <input onChange={setBookForPatient} name="day" type="date" className="form-control d-block text-end w-50 ms-3"></input>
-                        <label htmlFor="time" className="me-3 d-block col-form-label fs-2 text-end">
-                           : احجز الوقت
+                        <label htmlFor="time" className="me-3 text-success d-block col-form-label fs-2 text-end">
+                            : احجز الوقت
                         </label>
                         <div className="container ">
                             <div className="row justify-content-center border-4 py-3 rounded-3">
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:00"} />
                                 </div>
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100 " name="time" value={"8:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 " name="time" value={"8:15"} />
                                 </div>
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:30"} />
                                 </div>
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"8:45"} />
                                 </div>
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:00"} />
                                 </div>
                                 <div className="col-md-1">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:15"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:30"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"9:45"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:00"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:15"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:30"} />
                                 </div>
                                 <div className="col-md-1 ">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"10:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:45"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:00"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:00"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:15"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:15"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:30"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:30"} />
                                 </div>
                                 <div className="col-md-1 mt-3">
-                                <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:45"}/>
+                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:45"} />
                                 </div>
                             </div>
                         </div>
-                        <label htmlFor="patientID" className="me-3 d-block col-form-label fs-2 text-end">
+                        <label htmlFor="patientID" className="me-3 text-success d-block col-form-label fs-2 text-end">
                             : اسم المريض
                         </label>
-                        <h1 className="text-xxl-center fs-3 "> محمد السيد بخه </h1>
-                        {/* {UserNameOfLogin} */}
-                        <label htmlFor="doctorID" className="me-3 d-block col-form-label fs-2 text-end">
+                        <h1 className="text-xxl-center fs-3 "> {UserNameOfLogin}</h1>
+                        {/*  */}
+                        <label htmlFor="doctorID" className="me-3 text-success d-block col-form-label fs-2 text-end">
                             : اسم الدكتور
                         </label>
-                        <h1 className="text-xxl-center fs-3 "> محمد حسانين السيد </h1>
+                        <h1 className="text-xxl-center fs-3 ">{docDetail.name}</h1>
                         {/* <label htmlFor="doctorID" className="me-3 d-block col-form-label fs-2 text-end">
                             : اسم المستشفى
                         </label>
                         <h1 className="text-xxl-center fs-3 ">   </h1> */}
                         {/* <p className="text-center text-danger fs-5">{error2}</p> */}
-                        <button onClick={()=>FirstSubmitBook(docDetail.id)} type="button" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
+                        <button onClick={() => FirstSubmitBook(docDetail.id)} type="button" className="btn btn-success text-black mt-3 ms-3">احجز الان</button>
                         <button onClick={() => closeBookSection()} type="button" className="btn btn-danger text-black mt-3 ms-3">اغلاق</button>
                     </form>
                 </div>
@@ -423,13 +427,11 @@ export function DocSearch() {
                     <div className="row gap-1 justify-content-evenly">
                         <div className="col-md-5 d-flex">
                             <p className="text-right fs-4 me-3 text-success">Patient :</p>
-                            <p className="fs-5 text-right">مد السيد بخه </p>
-                            {/* {UserNameOfLogin} */}
+                            <p className="fs-5 text-right"> {UserNameOfLogin} </p>
                         </div>
                         <div className="col-md-5 d-flex">
                             <p className="text-right fs-4 me-3 text-success">Doctor :</p>
-                            <p className="fs-5 text-right"> محمد حسانين السي  </p>
-                            {/* {docDetail.name} */}
+                            <p className="fs-5 text-right"> {docDetail.name}</p>
                         </div>
                         <div className="col-md-5 d-flex mt-3">
                             <p className="text-right fs-4 me-3 text-success">Date :</p>
@@ -448,7 +450,7 @@ export function DocSearch() {
                     <button onClick={HideSureBoook} className="btn btn-danger">الغاء الحجز</button>
                 </div>
             </section>
-                {/* تم الحجز بنجاااح  */}
+            {/* تم الحجز بنجاااح  */}
             <div className={trueBook}>
                 <h1 className="fs-1 w-100  text-center">تم الحجز بنجاح </h1>
                 <button onClick={() => closeTrueBook()} type="button" className="btn btn-danger text-black ms-3 ">اغلاق</button>
