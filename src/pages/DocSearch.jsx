@@ -168,7 +168,7 @@ export function DocSearch() {
                             <h2 className="text-center fs-1 text-muted">د/{element.name}  </h2>
                             <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i></p>
                             <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name} : <i class=" fa-solid text-success fs-5 fa-truck-medical"></i> </p>
-                            <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
+                            <div className="d-flex justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn w-100 btn-success text-dark">احجز الان</button></div>
                         </div>)}
 
                     </div>
@@ -187,7 +187,7 @@ export function DocSearch() {
                                 <h6 className='fs-5'>  {element.hospitalID?.name} : </h6>
                                 <i class=" fa-solid text-success fs-5 fa-truck-medical"></i>
                                 </div>
-                                <div className="d-flex justify-content-start"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success text-dark">احجز الان</button></div>
+                                <div className="d-flex mt-3 justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn btn-success w-100 text-dark">احجز الان</button></div>
                             </div>
                         </div>)}
                     </div>
