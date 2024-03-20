@@ -4,22 +4,22 @@
 .textStyleForP{
     font-size: 40px ;
 } */
-@media (min-width:414px) and (max-width: 750px) {
+/* @media (min-width:414px) and (max-width: 750px) {
     .textStyleForH2{
      font-size: 30px;
     }
      .textStyleForP{
      font-size: 20px;
     }
- }
-@media (min-width:360px) and (max-width: 414px) {
+ } */
+/* @media (min-width:360px) and (max-width: 414px) {
     .textStyleForH2{
      font-size: 30px;
     }
      .textStyleForP{
      font-size: 18px;
     }
- }
+ } */
  .secBook{
     width: 70%;
     top: 15%;
