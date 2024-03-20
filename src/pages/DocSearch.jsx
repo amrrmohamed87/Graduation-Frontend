@@ -44,6 +44,9 @@ export function DocSearch() {
         setTrueBook("d-none")
     }
     function closeBookSection() {
+        // let newBook = { ...BookTime, day: "", time: "" };
+        // setBookTime(newBook)
+        // console.log(newBook);
         setClassName("d-none");
     }
     async function getDoctors() {
@@ -164,11 +167,11 @@ export function DocSearch() {
                         </div>
                         <h1 className={errorForSearch}>No input please write name or specialize</h1>
                         {/* this div for result of the search  */}
-                        {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-success rounded-5'>
+                        {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-success rounded-4'>
                             <h2 className="text-center fs-1 text-muted">د/{element.name}  </h2>
                             <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i></p>
                             <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name} : <i class=" fa-solid text-success fs-5 fa-truck-medical"></i> </p>
-                            <div className="d-flex justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn w-100 btn-success text-dark">احجز الان</button></div>
+                            <div className="d-flex justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn w-100 bg-success text-white border-3">احجز الان</button></div>
                         </div>)}
 
                     </div>
@@ -179,7 +182,7 @@ export function DocSearch() {
                 <div className="container">
                     <div className="row py-3 gap-3 justify-content-center">
                         <h1 className={errorGetDoc}>جارى التحميل</h1>
-                        {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-5 border-4 mt-3">
+                        {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-4 border-4 mt-3">
                             <div className='py-3 text-end'>
                                 <h1 className='text-center fs-2 mb-2 text-[#056558]'>د/ {element.name}</h1>
                                 <h3 className='fs-3 mb-2'>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
@@ -188,7 +191,7 @@ export function DocSearch() {
                                     <i class=" fa-solid text-success fs-5 fa-truck-medical"></i>
                                 </div>
                                 <div className="d-flex mt-3 justify-content-center">
-                                    <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn bg-success  w-100 text-dark">احجز الان</button>
+                                    <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn bg-success  w-100 text-white border-3">احجز الان</button>
                                 </div>
                             </div>
                         </div>)}
