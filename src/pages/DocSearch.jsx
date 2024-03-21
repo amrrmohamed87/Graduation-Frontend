@@ -183,7 +183,7 @@ export function DocSearch() {
                             <h1 className={errorGetDoc}>جارى التحميل</h1>
                             {DocData.map((element, i) => <div key={i} className="col-md-3 rounded-4 border-4 mt-3">
                                 <div className='py-3 text-end'>
-                                    <h1 className='text-center fs-2 mb-2 text-[#056558]'>د/ {element.name}</h1>
+                                    <h1 className='text-center fs-3 mb-2 text-[#056558]'>د/ {element.name}</h1>
                                     <h3 className='fs-3 mb-2'>{element.specialize} : <i className="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
                                     <div className="d-flex gap-2 flex-row justify-content-end">
                                         <h6 className='fs-5'>  {element.hospitalID?.name} : </h6>
