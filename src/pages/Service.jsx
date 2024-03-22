@@ -16,7 +16,7 @@ export function Service() {
       imgSrc: FirstSectionPhoto,
       buttonContent: "احجز الآن",
       alt: "first",
-      to: "/book",
+      to: "/docsearch",
     },
     {
       title: "معلومات طبية",
