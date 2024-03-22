@@ -2,6 +2,7 @@ import React from 'react'
 import "../css/Search.css"
 import Footer from '../components/Footer'
 import SearchPhoto from "../assets/images/search.jpg"
+import SectionPhoto from "../assets/images/Search-Drug-Monitoring-Checker.jpg"
 export function MedSearch() {
   return (
     <>
@@ -15,26 +16,28 @@ export function MedSearch() {
           <p className="text-slate-300 text-[40px] mt-2 md:mt-0 opacity-50"> توفير معرفة أعمق تساعد الأشخاص في جميع المعلومات التي يحتاجونها </p>
         </div>
       </header>
-      <section className='py-8 flex justify-content-center align-items-center bg-white'>
-        <div className='container-xxl'>
-          <div className='flex flex-column justify-content-center align-items-center text-center'>
-            <div>
-            <h2 className="text-black text-[80px]"> الأدوية </h2>
-            <div class="input-group mb-3">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">ابحث</button>
-                                <input type="text" class="form-control text-right" placeholder="...بحث" aria-label="Example text with button addon" aria-describedby="button-addon1" />
-                            </div>
-            </div>
-            {/* this div for result of the search  */}
-            <div className='w-50 text-left mt-4 p-4 border-3 border-black rounded-5 '> 
-            <h2 className="text-black textStyleForH2"> panadol </h2>
-            <p className="mt-2 md:mt-0 textStyleForP">Paracetamol (Panadol, Calpol, Alvedon) is an analgesic and antipyretic drug that is used to temporarily relieve mild-to-moderate pain and fever. It is commonly included as an ingredient in cold and flu medications and is also used on its own. </p>
-              </div>
+      <section>
+          {/* header alsf7a */}
+        <div className='container'>
+          <div className='w-100 flex-wrap d-flex justify-content-center'>
+          <div className='w-100 d-flex justify-content-center'>
+          <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px] w-50">البحث عن الأدوية يمثل </h1>
           </div>
+          <h1 className="text-center mt-4 text-[22px] md:text-[30px] w-50">"رحلة  من التفاؤل و الثقة ،حيث تمكن فى كل قرار صحي حكمة واهتمام بالصحة الشخصية"</h1>
+          </div>
+            <div className='d-flex w-100 gap-5 mt-5  py-3 justify-content-around'>
+            <div className=' DivSoraSearchMed rounded-4 shadow-lg'> 
+              <img src={SectionPhoto} alt="sora" className='rounded-4'/>
+              </div>
+              <div className='w-50 shadow-lg p-4 rounded-4'>
+                <h1 className='text-end fs-1'>هدفنا هو التوعية <i className="fa-solid fs-3 text-success fa-magnifying-glass"></i></h1>
+                <p className='fs-3 mt-5 text-end '>قم بتنزيل تطبيقنا الآن، حيث تجتمع الراحة مع التكنولوجيا المتطورة! افتح عالمًا من الإمكانيات من خلال تطبيقنا سهل الاستخدام الذي يلبي جميع احتياجاتك. سواء كنت أثناء التنقل أو مسترخي في المنزل، فقد تم تصميم تطبيقنا لجعل تجربتك سلسة وممتعة
+                </p>
+              </div>
+            </div>
+          
         </div>
       </section>
-      
-     
       <Footer />
     </>
   )
