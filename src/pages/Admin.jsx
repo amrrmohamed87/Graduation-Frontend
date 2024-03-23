@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "../components/Dashboard";
 import Input from "../components/AdminInput";
-import { useEffect, useState } from "react";
+import TextArea from "@/components/AdminTextArea";
 
 function Admin() {
+  //Sign up patient states
   const [patient, setPatient] = useState({
     name: "",
     username: "",
@@ -13,6 +17,7 @@ function Admin() {
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [patientError, setPatientError] = useState("");
 
+  //Sign up doctor states
   const [doctor, setDoctor] = useState({
     name: "",
     username: "",
@@ -25,6 +30,7 @@ function Admin() {
   const [hospitalInfo, setHospitalInfo] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
+  //Sign up hospital states
   const [hospital, setHospital] = useState({
     name: "",
     username: "",
@@ -35,6 +41,17 @@ function Admin() {
   const [hospitalError, setHospitalError] = useState("");
   const [doctorImage, setDoctorImage] = useState(null);
 
+  //Create medicine states
+  const [medicines, setMedicines] = useState({
+    name: "",
+    description: "",
+    howToUse: "",
+    components: "",
+    tradeMark: "",
+  });
+  const [isAddingMedicine, setIsAddingMedicine] = useState(false);
+
+  //fetch hospitals
   useEffect(() => {
     async function loadHospitals() {
       setIsFetching(true);
@@ -55,6 +72,7 @@ function Admin() {
     loadHospitals();
   }, []);
 
+  //Sign up patient API
   function handlePatientChange(event) {
     const { name, value } = event.target;
     setPatient({
@@ -77,14 +95,15 @@ function Admin() {
           body: JSON.stringify(patient),
         }
       );
+      const resData = await response.json();
 
-      if (response.status === 400) {
-        throw new Error("user is already existed");
+      if (!response.ok) {
+        const errorMessage = resData.message || "فشل في إضافة المريض";
+        toast.error(errorMessage);
+        setIsAddingPatient(false);
+        return;
       }
-      setIsAddingPatient(false);
-
-      window.alert("Done");
-      setIsAddingPatient(false);
+      toast.success("تمت إضافة المريض بنجاح");
       setPatient({
         name: "",
         username: "",
@@ -92,12 +111,14 @@ function Admin() {
         address: "",
         birthday: "",
       });
+      setIsAddingPatient(false);
     } catch (error) {
-      setPatientError(error.message);
+      toast.error("Unexpected Error");
       setIsAddingPatient(false);
     }
   };
 
+  //Sign up Doctor API
   function handleDoctorChange(event) {
     const { name, value } = event.target;
 
@@ -151,13 +172,13 @@ function Admin() {
 
       if (!response.ok) {
         const errorMessage = resData.message || "Failed to create doctor";
-        console.log(errorMessage);
+        toast.error(errorMessage);
         setIsAddingDoctor(false);
         return;
       }
 
+      toast.success("تمت إضافة الدكتور بنجاح");
       setIsAddingDoctor(false);
-      window.alert("Done");
       setDoctor({
         name: "",
         username: "",
@@ -166,12 +187,12 @@ function Admin() {
         hospitalID: "",
       });
     } catch (error) {
-      console.log("Unexpected error");
-      setDoctorError(error.message);
+      toast.error("Unexpected Error");
       setIsAddingDoctor(false);
     }
   };
 
+  //Sign up Hospital API
   function handleAddHospitalChange(event) {
     const { name, value } = event.target;
     setHospital({
@@ -195,36 +216,87 @@ function Admin() {
           body: JSON.stringify(hospital),
         }
       );
+      const resData = await response.json();
 
-      if (response.status === 400) {
-        throw new Error("user is already exists");
+      if (!response.ok) {
+        const errorMessage = resData.message || "فشل في إضافة المستشفي";
+        toast.error(errorMessage);
+        setIsAddingHospital(false);
+        return;
       }
-
-      setIsAddingHospital(false);
-      window.alert("Done");
+      toast.success("تمت إضافة المستشفي بنجاح");
       setHospital({
         name: "",
         username: "",
         password: "",
         address: "",
       });
-    } catch (error) {
-      setHospitalError(error.message);
       setIsAddingHospital(false);
+    } catch (error) {
+      toast.error("Unexpected Error");
+      setIsAddingHospital(false);
+    }
+  };
+
+  //Create Medicine API
+  function handleCreateMedicineChange(event) {
+    const { name, value } = event.target;
+    setMedicines({
+      ...medicines,
+      [name]: value,
+    });
+  }
+
+  const handleCreateMedicine = async (event) => {
+    event.preventDefault();
+    setIsAddingMedicine(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/auth/createMedicine",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(medicines),
+        }
+      );
+      const resData = await response.json();
+
+      if (!response.ok) {
+        const errorMessage = resData.message || "فشل في إضافة الدواء";
+        toast.error(errorMessage);
+        setIsAddingMedicine(false);
+        return;
+      }
+      toast.success("تمت إضافة الدواء بنجاح");
+      setMedicines({
+        name: "",
+        description: "",
+        howToUse: "",
+        components: "",
+        tradeMark: "",
+      });
+      setIsAddingMedicine(false);
+    } catch (error) {
+      toast.error("Unexpected Error");
+      setIsAddingMedicine(false);
     }
   };
 
   return (
     <main>
+      <ToastContainer />
       <Dashboard />
       <h1 className="text-center mt-16 text-[25px] text-emerald-950 md:mb-8 md:text-[50px]">
         منظمة التأمين الصحي
       </h1>
       <section className="">
-        <div className="flex flex-col md:flex-row justify-center items-start md:mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 place-items-start gap-8 md:ml-8 md:mt-4">
           <form method="post">
-            <div className="bg-emerald-950 shadow-2xl rounded-[20px] p-4 m-4">
-              <h1 className="text-center text-white text-[25px] mb-2">
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-[25px] mb-4">
                 إضافة مريض
               </h1>
               <Input
@@ -274,15 +346,16 @@ function Admin() {
                 type="submit"
                 disabled={isAddingPatient}
                 onClick={handleAddPatient}
-                className="bg-white px-4 py-2 text-[20px] text-emerald-950 rounded-[20px]"
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
               >
                 {isAddingPatient ? "جاري إضافة المريض" : "إضافة مريض"}
               </button>
             </div>
           </form>
+
           <form method="post">
-            <div className="bg-emerald-950 shadow-2xl rounded-[20px] p-4 m-4">
-              <h1 className="text-center text-white text-[25px] mb-2">
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-[25px] mb-4">
                 إضافة طبيب
               </h1>
               <Input
@@ -317,43 +390,42 @@ function Admin() {
                 value={doctor.specialize}
                 onChange={handleDoctorChange}
               />
-              <div className="flex flex-col justify-center items-center">
-                {isFetching ? (
-                  <p>Loading...</p>
-                ) : (
-                  <select
-                    id="hospital"
-                    label="المستشفي"
-                    name="hospitalID"
-                    value={doctor.id}
-                    onChange={handleDoctorChange}
-                    className="h-[30px] w-full text-right border-2 border-emerald-700 focus:border-gray-950 rounded-lg pl-2
-        md:h-[40px]"
-                  >
-                    <option value="">اختر المستشفى</option>
-                    {hospitalInfo.map((hospital) => (
-                      <option key={hospital._id} value={hospital.name}>
-                        {hospital.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {doctorError && <p className="text-center text-red-500"></p>}
-                <button
-                  type="submit"
-                  onClick={handleAddDoctor}
-                  disabled={isAddingDoctor}
-                  className="bg-white px-4 py-2 text-[20px] text-emerald-950 rounded-[20px] mt-4"
+
+              {isFetching ? (
+                <p>Loading...</p>
+              ) : (
+                <select
+                  id="hospital"
+                  label="المستشفي"
+                  name="hospitalID"
+                  value={doctor.id}
+                  onChange={handleDoctorChange}
+                  className="h-[30px] w-full border-2 mb-4 text-right border-gray-300 focus:border-gray-950 rounded-lg pl-2 md:h-[40px]"
                 >
-                  {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
-                </button>
-              </div>
+                  <option value="">اختر المستشفى</option>
+                  {hospitalInfo.map((hospital) => (
+                    <option key={hospital._id} value={hospital.name}>
+                      {hospital.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {doctorError && <p className="text-center text-red-500"></p>}
+              <button
+                type="submit"
+                onClick={handleAddDoctor}
+                disabled={isAddingDoctor}
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
+              >
+                {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
+              </button>
             </div>
           </form>
+
           <form method="post">
-            <div className="bg-emerald-950 shadow-2xl rounded-[20px] p-4 m-4">
-              <h1 className="text-center text-white text-[25px] mb-2">
-                إضافة مستشفى
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-[25px] mb-4">
+                إضافة مستشفي
               </h1>
               <Input
                 id="hospitalName"
@@ -391,9 +463,65 @@ function Admin() {
                 type="submit"
                 onClick={handleAddHospital}
                 disabled={isAddingHospital}
-                className="bg-white px-4 py-2 text-[20px] text-emerald-950 rounded-[20px]"
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
               >
                 {isAddingHospital ? "جاري إضافة المستشفى" : "إضافة مستشفى"}
+              </button>
+            </div>
+          </form>
+
+          <form method="post">
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-[25px] mb-4">
+                إضافة دواء
+              </h1>
+              <Input
+                id="medicineName"
+                label="أسم الدواء"
+                type="text"
+                name="name"
+                value={medicines.name}
+                onChange={handleCreateMedicineChange}
+              />
+              <Input
+                id="description"
+                label="الوصف"
+                type="text"
+                name="description"
+                value={medicines.description}
+                onChange={handleCreateMedicineChange}
+              />
+              <TextArea
+                id="prescription"
+                label="كيفية الاستخدام"
+                type="text"
+                name="howToUse"
+                value={medicines.howToUse}
+                onChange={handleCreateMedicineChange}
+              />
+              <TextArea
+                id="components"
+                label="المكونات"
+                type="text"
+                name="components"
+                value={medicines.components}
+                onChange={handleCreateMedicineChange}
+              />
+              <Input
+                id="tradeMark"
+                label="العلامة تجارية"
+                type="text"
+                name="tradeMark"
+                value={medicines.tradeMark}
+                onChange={handleCreateMedicineChange}
+              />
+              <button
+                type="submit"
+                onClick={handleCreateMedicine}
+                disabled={isAddingMedicine}
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
+              >
+                {isAddingMedicine ? "جاري إضافة الدواء" : "إضافة دواء"}
               </button>
             </div>
           </form>
