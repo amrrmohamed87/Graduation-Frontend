@@ -105,7 +105,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
   height: auto;
   background-color: transparent;
 }
@@ -113,10 +113,9 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   border-radius: 8px;
   height: 30px;
-  background-color: rgba(131, 6, 6, 0.274);
+  background-color: #056558;
 }
 
 body::-webkit-scrollbar-track {
   display: none; /* Hide the scrollbar track */
-  
 }
