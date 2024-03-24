@@ -96,6 +96,20 @@
     display: none; /* Hide the scrollbar track */
     
 }
+.SHowMedicines::-webkit-scrollbar {
+    width: 8px;
+    height: auto;
+    background-color: transparent;
+}
+.SHowMedicines::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    height: 30px;
+    background-color: rgba(0, 139, 0, 0.856);
+}
+.SHowMedicines::-webkit-scrollbar-track {
+    display: none; /* Hide the scrollbar track */
+    
+}
 .searchSection{
     height: 280px;
     left: -100%;
@@ -161,4 +175,28 @@ left: -5%;
 /* medication search */
 .DivSoraSearchMed{
     width: 35%;
+}
+.StyleLayerOfCardOfMedi{
+    opacity: 80%;
+    top: 100%;
+    transition: all 1.5s;
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+}
+.StyleLayerOfCardOfMedi.active{
+    top: 0%;
+}
+.SHowMedicines{
+    height: 700px;
+}
+.buttonToShowHowToUse.active{
+    background-color: white !important;
+    color: rgba(0, 0, 0, 0.658) !important;
+}
+.styleCardOfShowMed{
+    border-radius: 50%;
+    border: 2px solid #056558a4;
+    padding: 8%;
 }
