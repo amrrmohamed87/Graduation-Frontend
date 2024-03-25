@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import SearchPhoto from "../assets/images/search.jpg";
 import firstSectionPhoto from "../assets/images/Concept Médical Médecin Et Patient Dans La Salle Intérieure De L'hôpital _ Vecteur Premium.jfif"
 import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor Pointing at Heart Diagram for free.jfif"
+import BookingSectionPhoto from "../assets/images/book-doctor-appointment-card-template_151150-11155.avif"
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 // import { data } from "autoprefixer";
@@ -76,7 +77,6 @@ export function DocSearch() {
         let MyUser = { ...searchUser }
         MyUser[e.target.name] = e.target.value
         setSearchUser(MyUser)
-        console.log(MyUser);
     }
     function HideSureBoook() {
         setSureBookSection("d-none")
@@ -181,6 +181,30 @@ export function DocSearch() {
         setShowDiv2(!showDiv2);
     };
     // -----------------------------------------------
+    // booking section
+    const [hospitalsInfo , setHospitalsInfo] = useState([]) 
+    const [hospitalSearchValue , sethospitalSearchValue] = useState({
+        _id :'',
+    })
+    console.log(hospitalSearchValue);
+    useEffect(()=>{
+        getHospitals()
+    },[])
+    async function getHospitals (){
+        let{data} = await axios.get("https://mhiproject.onrender.com/patient/getHospitals")
+        setHospitalsInfo(data.findHospitals)
+    }
+    function getHospitalID (hospiID){
+        sethospitalSearchValue({
+            ...hospitalSearchValue,
+            _id : hospiID
+        })
+    }
+    async function searchDocINHospi(){
+        let {data} = await axios.post("https://mhiproject.onrender.com/patient/searchHospital",hospitalSearchValue)
+        console.log(data.searchName);
+    }
+    // ----------------------------------
     return (
         <>
             <header className="relative h-screen w-full ">
@@ -516,14 +540,14 @@ export function DocSearch() {
                     <div className="w-75 shadow rounded-4 p-4">
                         <h1 className="fs-4 text-center">يمكنك بسهوله عرض جميع الأطباء بالضغط على هذا الزر</h1>
                         <div className="w-100 d-flex gap-5 justify-content-center mt-5">
-                            <button type="button" onClick={()=>{
-                                toggleDivPosition2()
-                                toggleDivPosition3()
-                            } } className="btn text-white bg-success">أعرض الأطباء</button>
                             <button type="button" onClick={() => {
                                 toggleDivPosition2()
                                 toggleDivPosition3()
-                                
+                            }} className="btn text-white bg-success">أعرض الأطباء</button>
+                            <button type="button" onClick={() => {
+                                toggleDivPosition2()
+                                toggleDivPosition3()
+
                             }} className="btn text-white bg-success">أخفاء الأطباء</button>
                         </div>
                     </div>
@@ -544,6 +568,31 @@ export function DocSearch() {
                             </div>
                         </div>)}
                     </div>
+                </div>
+            </section>
+            {/* section Booking */}
+            <section>
+                <div className="container mt-5">
+                    <div className="d-flex justify-content-evenly">
+                        <div className="w-25 shadow rounded-4">
+                            <img src={BookingSectionPhoto} alt="sa" className="rounded-4"/>
+                        </div>
+                        <div className="w-50 shadow rounded-4 p-4 text-end">
+                            <h1 className="text-end fs-1">يمكنك حجز موعد</h1>
+                            <p className="text-end mt-3 fs-4"> من خلال الضغط على اسم المستشفى سيتم عرض جميع الاطباء و تخصصاتهم المتاحين بها .</p>
+                            <i className="fa-solid fa-arrow-down text-success fs-5 mt-3  "><span className="fs-5 ms-2 text-black fw-medium">المستشفيات المتاحة <i className="fa-regular fa-hospital text-success"></i></span></i>
+
+                            <div className="d-flex gap-3 justify-content-evenly">
+                                {hospitalsInfo.map((element , i)=><h1 key={i} onClick={()=>{
+                                    getHospitalID(element._id);
+                                    searchDocINHospi()
+                                }}  className="w-25 mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="container mt-5">
+                    
                 </div>
             </section>
             <Footer />

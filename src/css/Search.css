@@ -110,6 +110,20 @@
     display: none; /* Hide the scrollbar track */
     
 }
+.SHowSearchMedicines::-webkit-scrollbar {
+    width: 8px;
+    height: auto;
+    background-color: transparent;
+}
+.SHowSearchMedicines::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    height: 30px;
+    background-color: rgba(0, 139, 0, 0.856);
+}
+.SHowSearchMedicines::-webkit-scrollbar-track {
+    display: none; /* Hide the scrollbar track */
+    
+}
 .searchSection{
     height: 280px;
     left: -100%;
@@ -159,6 +173,14 @@ left: -5%;
 .StyleSoraGetSection.active{
     opacity: 0;
 }
+.buttonOnBooking{
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.buttonOnBooking:hover{
+    background-color: rgba(0, 128, 0, 0.89);
+    color: white;
+}
 
 
 
@@ -177,7 +199,7 @@ left: -5%;
     width: 35%;
 }
 .StyleLayerOfCardOfMedi{
-    opacity: 80%;
+    opacity: 100%;
     top: 100%;
     transition: all 1.5s;
     -webkit-transition: all 1.5s;
@@ -191,6 +213,9 @@ left: -5%;
 .SHowMedicines{
     height: 700px;
 }
+.SHowSearchMedicines{
+    height: 475px;
+}
 .buttonToShowHowToUse.active{
     background-color: white !important;
     color: rgba(0, 0, 0, 0.658) !important;
@@ -199,4 +224,7 @@ left: -5%;
     border-radius: 50%;
     border: 2px solid #056558a4;
     padding: 8%;
+}
+.StyleOfCloseX{
+    cursor: pointer;
 }

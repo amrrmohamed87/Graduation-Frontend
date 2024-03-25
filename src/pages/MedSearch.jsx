@@ -6,16 +6,23 @@ import SectionPhoto from "../assets/images/Search-Drug-Monitoring-Checker.jpg"
 import SectionPhoto2 from "../assets/images/shutterstock-huge-file.avif"
 import axios from 'axios'
 export function MedSearch() {
-  // get doctor 
+  // get medicines
   const [getMedicine, setGetMedicine] = useState([]);
   const [showDiv, setShowDiv] = useState();
   const [showDivGetMed, setShowDivGetMed] = useState("d-none")
+  const [error, setError] = useState("d-none")
   useEffect(() => {
     GetMedicines()
   }, [])
   async function GetMedicines() {
-    let { data } = await axios.get('https://mhiproject.onrender.com/patient/getMedicines')
-    setGetMedicine(data.findMedicines)
+    try {
+      let { data } = await axios.get('https://mhiproject.onrender.com/patient/getMedicines')
+      setGetMedicine(data.findMedicines)
+    } catch (error) {
+      if (error.data & error.data.status == null) {
+        setError("text-center fs-1 fw-bold mt-3")
+      }
+    }
   }
   const toggleDivPosition2 = (index) => {
 
@@ -30,12 +37,52 @@ export function MedSearch() {
     setShowDivGetMed("d-none")
   }
   // ------------------------
+
+
+  // search medicines
+  const [ShowDivSearch, setShowDivSearch] = useState("d-none")
+  const [error2, setError2] = useState("")
+  const [classError2 ,setClassError2] = useState("d-none") 
+  const [ValueOfSearch, setValueOfSearch] = useState({
+    name: '',
+  })
+  const [resultOfSearch, setResultOfSearch] = useState([])
   function showThing() {
-    alert("hello")
+    setShowDivSearch('container mt-5 position-relative')
+  }
+  function closeDivShowSearch() {
+    setShowDivSearch('d-none')
   }
   function readthing(e) {
-    console.log(e.target.value);
+    let NewValueOfSearch = { ...ValueOfSearch }
+    NewValueOfSearch[e.target.name] = e.target.value
+    setValueOfSearch(NewValueOfSearch)
   }
+  async function getResponseOfSearch(e) {
+    e.preventDefault();
+    try {
+      let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchMedicine", ValueOfSearch);
+      setResultOfSearch(data.searchName);
+      setError2("");
+      setClassError2("d-none");
+    } catch (error2) {
+      if (error2.response && error2.response.status === 404) {
+        setError2("Not Found");
+        setClassError2("text-center fs-1 fw-bold mt-3");
+        setResultOfSearch([]);
+      }else if (error2.response && error2.response.status === 422) {
+        setError2("من فضلك أدخل أسم الدواء");
+        setClassError2("text-center fs-1 fw-bold mb-3 mt-3");
+        setResultOfSearch([]);
+      } else {
+        setError2("");
+        setClassError2("d-none");
+      }
+    }
+  }
+  
+  // ------------------------
+
   return (
     <>
       <header className="relative h-screen w-full">
@@ -72,14 +119,48 @@ export function MedSearch() {
       {/* search aladwya */}
       <section className='py-5'>
         <div className='container'>
-          <form >
+          <form onClick={getResponseOfSearch}>
             <div className='d-flex w-100 justify-content-center '>
               <button type='button' className='btn btn-info rounded-5'>
                 <i className="fa-solid fs-3 text-info fa-magnifying-glass"></i>
               </button>
-              <input onChange={readthing} onClick={showThing} type="text" className='w-50 form-control text-end  rounded-5' placeholder='.....ابحث عن الادوية' />
+              <input onChange={readthing} onClick={showThing} type="text" className='w-50 form-control text-end  rounded-5' name='name' placeholder='.....ابحث عن الادوية' />
             </div>
           </form>
+        </div>
+        {/* 3rd ntegt alsearch */}
+        <div className={ShowDivSearch}>
+          <div onClick={closeDivShowSearch} className='position-absolute StyleOfCloseX end-0 top-0'> <i className="fa-regular fs-3 text-dark opacity-75 fa-circle-xmark"></i></div>
+          <div className='container '>
+            <div className='container '>
+              <div className={classError2}>{error2}</div>
+              <div className="row SHowSearchMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
+                {resultOfSearch == null ? "" : resultOfSearch.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden">
+                  <div className='d-flex mt-2 justify-content-center '>
+                    <div className="d-flex justify-content-center w-50 styleCardOfShowMed">
+                      <h1 className='fs-2 text-muted opacity-75'>{element.name}</h1>
+                    </div>
+                  </div>
+                  <div className='d-flex justify-content-evenly mt-3'>
+                    <p className='text-end mt-3 fs-5'>  {element.description}</p>
+                    <span className='mt-3 me-1 ms-1 fs-4'> : </span>
+                    <i className="fa-solid fa-file-medical mt-3 text-success fs-3 ms-2"></i>
+                  </div>
+                  <p className='text-end mt-2 fs-4'> {element.components} : <i className="fa-solid fa-mortar-pestle fs-4 text-success"></i></p>
+                  <div className='d-flex justify-content-evenly'>
+                    <p className='mt-3 text-end fs-6 w-75'>  {element.tradeMark} </p>
+                    <span className='text-success text-end fs-5 mt-3 w-50 '>: اسم الشركات</span>
+                  </div>
+                  <button type='button' onClick={() => toggleDivPosition2(i)} className={`btn bg-success text-white mb-3 mt-3 z-2 position-relative buttonToShowHowToUse ${showDiv === i ? 'active' : ''}`}>طريقة الاستعمال</button>
+                  <div className={`bg-success StyleLayerOfCardOfMedi w-100 h-100 position-absolute start-0 rounded-4 ${showDiv === i ? 'active' : ''}`} >
+                    <div className='h-100 p-4 text-center d-flex justify-content-center'>
+                      <p className='text-white fs-5 fw-bold align-self-center'>{element.howToUse}</p>
+                    </div>
+                  </div>
+                </div>)}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       {/* 3rd aladwya kolha */}
@@ -88,7 +169,7 @@ export function MedSearch() {
           <div className='container p-4 rounded-4 shadow'>
             <div className='d-flex gap-5 justify-content-evenly'>
               <div className='w-25 shadow rounded-4'>
-                <img src={SectionPhoto2} alt="" className='w-100 rounded-4'/>
+                <img src={SectionPhoto2} alt="" className='w-100 rounded-4' />
               </div>
               <div className='shadow p-4 rounded-4 w-50'>
                 <h1 className='text-center fs-2'> يمكنك عرض جميع الادوية </h1>
@@ -103,6 +184,7 @@ export function MedSearch() {
         <div className={showDivGetMed}>
           <div className='container'>
             <div className='container'>
+              <div className={error}>Loading Page</div>
               <div className="row SHowMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
                 {getMedicine.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden">
                   <div className='d-flex mt-2 justify-content-center '>
@@ -113,9 +195,9 @@ export function MedSearch() {
                   <div className='d-flex justify-content-evenly mt-3'>
                     <p className='text-end mt-3 fs-5'>  {element.description}</p>
                     <span className='mt-3 me-1 ms-1 fs-4'> : </span>
-                    <i class="fa-solid fa-file-medical mt-3 text-success fs-3 ms-2"></i>
+                    <i className="fa-solid fa-file-medical mt-3 text-success fs-3 ms-2"></i>
                   </div>
-                  <p className='text-end mt-2 fs-4'> {element.components} : <i class="fa-solid fa-mortar-pestle fs-4 text-success"></i></p>
+                  <p className='text-end mt-2 fs-4'> {element.components} : <i className="fa-solid fa-mortar-pestle fs-4 text-success"></i></p>
                   <div className='d-flex justify-content-evenly'>
                     <p className='mt-3 text-end fs-6 w-75'>  {element.tradeMark} </p>
                     <span className='text-success text-end fs-5 mt-3 w-50 '>: اسم الشركات</span>
