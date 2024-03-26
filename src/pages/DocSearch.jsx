@@ -186,7 +186,7 @@ export function DocSearch() {
     const [hospitalSearchValue , sethospitalSearchValue] = useState({
         _id :'',
     })
-    console.log(hospitalSearchValue);
+    
     useEffect(()=>{
         getHospitals()
     },[])
@@ -201,8 +201,9 @@ export function DocSearch() {
         })
     }
     async function searchDocINHospi(){
-        let {data} = await axios.post("https://mhiproject.onrender.com/patient/searchHospital",hospitalSearchValue)
-        console.log(data.searchName);
+            let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchHospital", hospitalSearchValue);
+            console.log(data.searchName);
+          
     }
     // ----------------------------------
     return (
@@ -585,14 +586,14 @@ export function DocSearch() {
                             <div className="d-flex gap-3 justify-content-evenly">
                                 {hospitalsInfo.map((element , i)=><h1 key={i} onClick={()=>{
                                     getHospitalID(element._id);
-                                    searchDocINHospi()
                                 }}  className="w-25 mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="container mt-5">
-                    
+                    <button onClick={searchDocINHospi}>sssss</button>
+                    <p>{hospitalSearchValue._id}</p>
                 </div>
             </section>
             <Footer />
