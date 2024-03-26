@@ -182,29 +182,39 @@ export function DocSearch() {
     };
     // -----------------------------------------------
     // booking section
-    const [hospitalsInfo , setHospitalsInfo] = useState([]) 
-    const [hospitalSearchValue , sethospitalSearchValue] = useState({
-        _id :'',
-    })
-    
-    useEffect(()=>{
+    const [hospitalsInfo, setHospitalsInfo] = useState([])
+    const [classShowResultOfhospi, setclassShowResultOfhospi] = useState("d-none")
+    // const [hospitalSearchValue, sethospitalSearchValue] = useState({
+    //     hospitalID: '',
+    // })
+    const [ShowResultFromHospi, setShowResultFromHospi] = useState([])
+    useEffect(() => {
         getHospitals()
-    },[])
-    async function getHospitals (){
-        let{data} = await axios.get("https://mhiproject.onrender.com/patient/getHospitals")
+    }, [])
+    async function getHospitals() {
+        let { data } = await axios.get("https://mhiproject.onrender.com/patient/getHospitals")
         setHospitalsInfo(data.findHospitals)
     }
-    function getHospitalID (hospiID){
-        sethospitalSearchValue({
-            ...hospitalSearchValue,
-            _id : hospiID
-        })
-    }
-    async function searchDocINHospi(){
-            let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchHospital", hospitalSearchValue);
+    // function getHospitalID(hospiID) {
+    //     sethospitalSearchValue({
+    //         ...hospitalSearchValue,
+    //         hospitalID: hospiID
+    //     })
+    // }
+    async function searchDocINHospi(hospiID) {
+        try {
+            let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchHospital", { hospitalID: hospiID });
+            setShowResultFromHospi(data.searchName);
+            setclassShowResultOfhospi("container shadow rounded-4 HightForSlidedown position-relative styleScrollOfHospitalSection overflow-scroll mt-5")
             console.log(data.searchName);
-          
+        } catch (error) {
+            console.error("Error searching for hospital:", error);
+        }
     }
+    function closeHospitalSection() {
+        setclassShowResultOfhospi("d-none")
+    }
+
     // ----------------------------------
     return (
         <>
@@ -576,7 +586,7 @@ export function DocSearch() {
                 <div className="container mt-5">
                     <div className="d-flex justify-content-evenly">
                         <div className="w-25 shadow rounded-4">
-                            <img src={BookingSectionPhoto} alt="sa" className="rounded-4"/>
+                            <img src={BookingSectionPhoto} alt="sa" className="rounded-4" />
                         </div>
                         <div className="w-50 shadow rounded-4 p-4 text-end">
                             <h1 className="text-end fs-1">يمكنك حجز موعد</h1>
@@ -584,16 +594,29 @@ export function DocSearch() {
                             <i className="fa-solid fa-arrow-down text-success fs-5 mt-3  "><span className="fs-5 ms-2 text-black fw-medium">المستشفيات المتاحة <i className="fa-regular fa-hospital text-success"></i></span></i>
 
                             <div className="d-flex gap-3 justify-content-evenly">
-                                {hospitalsInfo.map((element , i)=><h1 key={i} onClick={()=>{
-                                    getHospitalID(element._id);
-                                }}  className="w-25 mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
+                                {hospitalsInfo.map((element, i) => <h1 key={i} onClick={() => {
+                                    // getHospitalID(element._id);
+                                    searchDocINHospi(element._id);
+                                }} className="w-25 mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="container mt-5">
-                    <button onClick={searchDocINHospi}>sssss</button>
-                    <p>{hospitalSearchValue._id}</p>
+                <div className={classShowResultOfhospi}>
+                    <div className="w-100 d-flex justify-content-end">
+                        <i onClick={closeHospitalSection} className="fa-regular fa-circle-xmark text-end  p-2 fs-3 text-success styleOFCloseCircleInHospital"></i>
+                    </div>
+                    <div className="d-flex  position-absolute start-0 end-0 gap-2 flex-wrap justify-content-evenly">
+                        {ShowResultFromHospi.map((element, i) => <div key={i} className="w-25 rounded-4 border-4 mt-3">
+                            <div className='py-3 text-end'>
+                                <h1 className='text-center fs-3 mb-2 text-[#056558]'>د/ {element.name}</h1>
+                                <h3 className='fs-3 mb-2'> {element.specialize} : <i className="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
+                                <div className="d-flex mt-3 justify-content-center">
+                                    <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn bg-success  w-100 text-white border-3">احجز الان</button>
+                                </div>
+                            </div>
+                        </div>)}
+                    </div>
                 </div>
             </section>
             <Footer />
