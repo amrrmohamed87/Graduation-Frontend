@@ -206,7 +206,6 @@ export function DocSearch() {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchHospital", { hospitalID: hospiID });
             setShowResultFromHospi(data.searchName);
             setclassShowResultOfhospi("container shadow rounded-4 HightForSlidedown position-relative styleScrollOfHospitalSection overflow-scroll mt-5")
-            console.log(data.searchName);
         } catch (error) {
             console.error("Error searching for hospital:", error);
         }
