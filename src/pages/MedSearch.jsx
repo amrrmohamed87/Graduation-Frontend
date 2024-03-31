@@ -67,12 +67,12 @@ export function MedSearch() {
       setClassError2("d-none");
     } catch (error2) {
       if (error2.response && error2.response.status === 404) {
-        setError2("Not Found");
-        setClassError2("text-center fs-1 fw-bold mt-3");
+        setError2("غير متوفر");
+        setClassError2("text-center fs-1 w-50 alert  alert-warning fw-bold mt-3");
         setResultOfSearch([]);
       }else if (error2.response && error2.response.status === 422) {
         setError2("من فضلك أدخل أسم الدواء");
-        setClassError2("text-center fs-1 fw-bold mb-3 mt-3");
+        setClassError2("text-center w-50 alert alert-light fs-1 fw-bold mb-3 mt-3");
         setResultOfSearch([]);
       } else {
         setError2("");
@@ -133,7 +133,9 @@ export function MedSearch() {
           <div onClick={closeDivShowSearch} className='position-absolute StyleOfCloseX end-0 top-0'> <i className="fa-regular fs-3 text-dark opacity-75 fa-circle-xmark"></i></div>
           <div className='container '>
             <div className='container '>
+              <div className='d-flex w-100 justify-content-center'>
               <div className={classError2}>{error2}</div>
+              </div>
               <div className="row SHowSearchMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
                 {resultOfSearch == null ? "" : resultOfSearch.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden">
                   <div className='d-flex mt-2 justify-content-center '>
