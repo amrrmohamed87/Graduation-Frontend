@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import AboutUs from "../components/AboutUs";
 import Services from "../components/Services";
 import TopDoctors from "../components/TopDoctors";
@@ -11,9 +13,61 @@ import { PiTelegramLogo } from "react-icons/pi";
 import { RiMentalHealthLine } from "react-icons/ri";
 
 export default function Home() {
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw", // Starts off-screen to the left, 'vw' stands for viewport width
+    },
+    visible: {
+      opacity: 1,
+      x: 0, // Ends at its natural position
+      transition: {
+        duration: 0.9,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 200, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.4, // Adjust the bounce effect, if spring type is used
+        duration: 3,
+      },
+    },
+  };
+
+  const fadeInMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 60,
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.4, // Adjust the bounce effect, if spring type is used
+        duration: 5,
+      },
+    },
+  };
+
   return (
     <main>
-      <section className="relative h-screen w-full">
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="relative h-screen w-full"
+      >
         <div className="absolute w-full h-screen">
           <img
             src={hero}
@@ -49,8 +103,13 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
-      <section>
+      </motion.section>
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariants}
+      >
         <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px]">
           مميزاتنا
         </h1>
@@ -73,8 +132,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
-      <AboutUs />
+      </motion.section>
+      <motion.div
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={fadeInMotionVariants}
+      >
+        <AboutUs />
+      </motion.div>
       <Services />
       <DownLoadApp />
       <Footer />
