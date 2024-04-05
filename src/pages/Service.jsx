@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../css/Service.css";
 import Footer from "../components/Footer";
 import heroPhoto from "../assets/images/hero-background.jpg";
@@ -7,6 +7,7 @@ import SecoundPhoto from "../assets/images/medical-information.jpeg";
 import SecoundSectionPhoto from "../assets/images/doctor-name.jpg";
 import SecoundPhotoSecoundSection from "../assets/images/specialization.jpg";
 import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 export function Service() {
   const cards = [
     {
@@ -46,15 +47,25 @@ export function Service() {
       to: "/docsearch",
     },
   ];
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 2000); // Delay setting isLoaded to true by 1 second
+    return () => clearTimeout(timer);
+  }, []);
+  
   const token = localStorage.getItem("token");
   return (
     <>
+      <div className={`opacity-transition ${isLoaded ? "opacity-transition visible" : ""}`}>
       <header className="relative h-screen w-full">
         <div className=" w-full h-screen">
           <img
             src={heroPhoto}
             className="object-cover object-center h-screen w-full"
+            onLoad={() => setIsLoaded(true)}
           />
         </div>
         <div className="absolute inset-0 bg-black opacity-80"></div>
@@ -102,6 +113,7 @@ export function Service() {
           </div>
         </div>
       </section>
+      </div>
       <Footer />
     </>
   );
