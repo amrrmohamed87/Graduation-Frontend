@@ -52,7 +52,7 @@ export function Service() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 2000); // Delay setting isLoaded to true by 1 second
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
   
