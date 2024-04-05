@@ -9,11 +9,12 @@
 
 }
 .textForH2{
-   font-size: 80px;
+   margin-top: 8% !important;
+   font-size: 60px;
     padding: 1%;
 }
 .textForP{
-    font-size: 25px;
+    font-size: 20px;
     padding: 1%;
     
 }
