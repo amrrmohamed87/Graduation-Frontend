@@ -109,8 +109,8 @@ export function MedSearch() {
               <img src={SectionPhoto} alt="sora" className='rounded-4 h-100' />
             </div>
             <div className=' textForSearchMed shadow-lg p-4 rounded-4'>
-              <h1 className='text-end fs-1'>هدفنا هو التوعية <i className="fa-solid fs-3 text-success fa-magnifying-glass"></i></h1>
-              <p className='fs-3 mt-5  text-end '>هدفنا هو توفير معلومات شاملة ومفصلة عن الأدوية والمواد الفعالة فيها، بحيث يمكن للمستخدم الحصول على معرفة عميقة حول استخدامات الأدوية وطرق استعمالها والأمراض التي تعالجها، دون الحاجة إلى قراءة الروشتة الطبية. يهدف (الويب سايت) إلى تمكين الأفراد من فهم الأدوية التي يتناولونها والتوعية بشكل أفضل وتحسين تجربتهم الطبية دون بذل جهد إضافي في البحث عن المعلومات.  
+              <h1 className='text-end textForSearchMEdH1 fs-1'>هدفنا هو التوعية <i className="fa-solid fs-3 text-success fa-magnifying-glass"></i></h1>
+              <p className='fs-3 mt-5  text-end textForSearchMEdP'>هدفنا هو توفير معلومات شاملة ومفصلة عن الأدوية والمواد الفعالة فيها، بحيث يمكن للمستخدم الحصول على معرفة عميقة حول استخدامات الأدوية وطرق استعمالها والأمراض التي تعالجها، دون الحاجة إلى قراءة الروشتة الطبية. يهدف (الويب سايت) إلى تمكين الأفراد من فهم الأدوية التي يتناولونها والتوعية بشكل أفضل وتحسين تجربتهم الطبية دون بذل جهد إضافي في البحث عن المعلومات.  
               </p>
             </div>
           </div>
