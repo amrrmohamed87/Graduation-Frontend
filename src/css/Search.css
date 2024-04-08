@@ -176,7 +176,7 @@ left: -5%;
 }
 .StyleSoraGetSection{
     height: 70%;
-    bottom: -5%;
+    bottom: -7%;
     opacity: 1;
     transition:all 1.8s ;
     -webkit-transition:all 1.8s ;
@@ -199,7 +199,16 @@ left: -5%;
     cursor: pointer;
     
 }
-
+.searchfordocBar{
+    width: 25% !important;
+}
+.BookingSectionSora{
+    width: 25%;
+}
+.BookingSectionText{
+    width: 50%;
+}
+ 
 
 
 

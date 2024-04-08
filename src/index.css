@@ -119,3 +119,73 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track {
   display: none; /* Hide the scrollbar track */
 }
+@media (min-width:300px) and (max-width:385px) {
+  .searchfordocBar{
+      width: 40% !important;
+  }
+  .searchCloseSection{
+      left: 90%;
+  }
+  .cardInIphoneX{
+      width:80% !important;
+  }
+  .StyleSoraGetSection{
+      bottom: -11%;
+      
+  }
+  .styleOfBoxGetUsers{
+      bottom: -12% !important;
+  }
+  .widthForDivInGetUser{
+      width: 90%;
+  }
+  .BookingSectionSora{
+      width: 100%;
+      margin-bottom: 15%;
+      margin-top: 40%;
+  }
+  .SectionBookingInIphone{
+      flex-wrap: wrap;
+  }
+  .BookingSectionText{
+      width: 100%;
+      margin-top: 3%;
+  }
+  .forH1InBooking{
+      width: 40%;
+  }
+  .showDocInHospitals{
+      width: 90% !important;
+  }
+  .containerBookSection{
+    padding: 0% !important;
+  }
+  .secBook{
+    top: 11%;
+    height: 88%;
+    width: 95%;
+    left: 2.5%;
+  }
+  .UnderLineAfterP{
+    margin-top: 2% !important;
+  }
+  .firstDivInBookSection{
+    margin-top: 0% !important;
+  }
+  .LabelForNameBookSection{
+    margin-right: 0% !important;
+  }.UnderLineAfterP::after{
+    top: 9%;
+  }.wordSureBook{
+    margin-top: 5% !important;
+  }.sureBook{
+    width: 90% !important;
+    left: 5%;
+    height: 65%;
+    top: 22%;
+  }.secBook2{
+    width: 80% !important;
+    height: 30% !important;
+    left: 10%;
+  }
+}

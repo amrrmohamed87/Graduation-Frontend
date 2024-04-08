@@ -229,18 +229,18 @@ export function DocSearch() {
                 <div className={ClassNamee}>
                     <p className="text-center UnderLineAfterP fs-1 mt-4">أحجز الأن</p>
                     <form className="py-3">
-                        <div className="container py-5">
+                        <div className="container py-5 containerBookSection">
                             <div className="row justify-content-evenly">
-                                <div className="col-md-5 mt-5">
+                                <div className="col-md-5 firstDivInBookSection mt-5">
                                     <div className="d-flex gap-3 py-3 flex-row justify-content-center">
                                         <h1 className="fs-3"> {UserNameOfLogin}</h1>
-                                        <label htmlFor="patientID" className="me-3 text-success fs-2 text-end">
+                                        <label htmlFor="patientID" className="me-3 LabelForNameBookSection text-success fs-2 text-end">
                                             : اسم المريض
                                         </label>
                                     </div>
                                     <div className="d-flex gap-3 py-3 flex-row justify-content-center">
                                         <h1 className="fs-3">{docDetail.name}</h1>
-                                        <label htmlFor="doctorID" className="me-3 text-success fs-2 text-end">
+                                        <label htmlFor="doctorID" className="me-3 text-success fs-2 LabelForNameBookSection text-end">
                                             : اسم الدكتور
                                         </label>
                                     </div>
@@ -498,7 +498,7 @@ export function DocSearch() {
                 <h1 className="fs-1 w-100  text-center">تم الحجز بنجاح </h1>
                 <button onClick={() => closeTrueBook()} type="button" className="btn btn-danger text-black ms-3 ">اغلاق</button>
             </div>
-            {/* ------------------------------------------------- */}
+            {/* ----------------------- choose the doctor ---------------- */}
             <section className="container mt-5">
                 <div className="row  justify-content-center">
                     <div className="col-md-5 layerfixed rounded-4 position-relative">
@@ -519,7 +519,7 @@ export function DocSearch() {
             {/* section search and response of search  */}
             <section className={showDivSearch}>
 
-                <button onClick={CloseSectionSearch} className="btn btn-close position-absolute fs-5 end-0"></button>
+                <button onClick={CloseSectionSearch} className="btn btn-close position-absolute  fs-5 end-0 searchCloseSection"></button>
                 <form className="mt-5">
                     <div className='d-flex w-100 justify-content-center '>
                         <button onClick={(e) => {
@@ -528,14 +528,14 @@ export function DocSearch() {
                         }} type='button' className='btn btn-info rounded-5'>
                             <i className="fa-solid fs-3 text-info fa-magnifying-glass"></i>
                         </button>
-                        <input type="text" className='w-25 form-control text-end  rounded-5' onChange={searchForDoctor} placeholder=".....بحث باسم الدكتور" name='name' />
-                        <input type="text" className='w-25 form-control text-end  rounded-5' onChange={searchForDoctor} placeholder=".....بحث بالتخصص" name='specialize' />
+                        <input type="text" className=' searchfordocBar InResponsiveForIphonex form-control text-end  rounded-5' onChange={searchForDoctor} placeholder="..بحث باسم الدكتور" name='name' />
+                        <input type="text" className='searchfordocBar InResponsiveForIphonex form-control text-end  rounded-5' onChange={searchForDoctor} placeholder="..بحث بالتخصص" name='specialize' />
                     </div>
                 </form>
                 {/* result of search */}
                 <h1 className={errorForSearch}>No input please write name or specialize</h1>
                 {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : <div className={`d-flex justify-content-center mt-3 flex-wrap gap-3 overflow-scroll w-100 searchSection position-relative ${isSearchActive ? 'active' : ''}`}
-                > {showResult.map((element, i) => <div key={i} className=' w-25 mt-4 text-right p-4 border-3 border-success rounded-4'>
+                > {showResult.map((element, i) => <div key={i} className='  mt-4 text-right p-4 cardInIphoneX border-3 border-success rounded-4'>
                     <h2 className="text-center fs-3 text-muted">د/{element.name}  </h2>
                     <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i></p>
                     <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name} : <i className=" fa-solid text-success fs-5 fa-truck-medical"></i> </p>
@@ -583,20 +583,20 @@ export function DocSearch() {
             {/* section Booking */}
             <section>
                 <div className="container mt-5">
-                    <div className="d-flex justify-content-evenly">
-                        <div className="w-25 shadow rounded-4">
+                    <div className="d-flex SectionBookingInIphone justify-content-evenly">
+                        <div className=" BookingSectionSora shadow rounded-4">
                             <img src={BookingSectionPhoto} alt="sa" className="rounded-4" />
                         </div>
-                        <div className="w-50 shadow rounded-4 p-4 text-end">
+                        <div className=" BookingSectionText shadow rounded-4 p-4 text-end">
                             <h1 className="text-end fs-1">يمكنك حجز موعد</h1>
                             <p className="text-end mt-3 fs-4"> من خلال الضغط على اسم المستشفى سيتم عرض جميع الاطباء و تخصصاتهم المتاحين بها .</p>
                             <i className="fa-solid fa-arrow-down text-success fs-5 mt-3  "><span className="fs-5 ms-2 text-black fw-medium">المستشفيات المتاحة <i className="fa-regular fa-hospital text-success"></i></span></i>
 
-                            <div className="d-flex gap-3 justify-content-evenly">
+                            <div className="d-flex flex-wrap gap-3 justify-content-evenly">
                                 {hospitalsInfo.map((element, i) => <h1 key={i} onClick={() => {
                                     // getHospitalID(element._id);
                                     searchDocINHospi(element._id);
-                                }} className="w-25 mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
+                                }} className="forH1InBooking mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success">{element.name}</h1>)}
                             </div>
                         </div>
                     </div>
@@ -606,7 +606,7 @@ export function DocSearch() {
                         <i onClick={closeHospitalSection} className="fa-regular fa-circle-xmark text-end  p-2 fs-3 text-success styleOFCloseCircleInHospital"></i>
                     </div>
                     <div className="d-flex  position-absolute start-0 end-0 gap-2 flex-wrap justify-content-evenly">
-                        {ShowResultFromHospi.map((element, i) => <div key={i} className="w-25 rounded-4 border-4 mt-3">
+                        {ShowResultFromHospi.map((element, i) => <div key={i} className="w-25 showDocInHospitals rounded-4 border-4 mt-3">
                             <div className='py-3 text-end'>
                                 <h1 className='text-center fs-3 mb-2 text-[#056558]'>د/ {element.name}</h1>
                                 <h3 className='fs-3 mb-2'> {element.specialize} : <i className="fa-solid text-success fs-5 fa-stethoscope"></i>  </h3>
