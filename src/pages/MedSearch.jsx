@@ -177,7 +177,7 @@ export function MedSearch() {
               <div className='w-25 soraShowAllMed shadow rounded-4'>
                 <img src={SectionPhoto2} alt="" className='w-100 rounded-4' />
               </div>
-              <div className='shadow soraShowAllMed p-4 rounded-4 w-50'>
+              <div className='shadow TextShowAllMed p-4 rounded-4 w-50'>
                 <h1 className='text-center fs-2'> يمكنك عرض جميع الادوية </h1>
                 <div className='d-flex justify-content-center gap-5 mt-5'>
                   <button type='button' onClick={ShowDiv} className='btn bg-success text-white'>عرض</button>
