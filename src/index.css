@@ -202,5 +202,11 @@ body::-webkit-scrollbar-track {
     width: 100% !important;
   }.ShowResultOfSearchMed{
     width: 100%;
+  }.widthSection{
+    width: 100% !important;
+  }.WidthOfResultCard{
+    width: 100% !important;
+  }.soraShowAllMed{
+    width: 100% !important;
   }
 }

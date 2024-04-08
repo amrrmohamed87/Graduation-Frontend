@@ -31,7 +31,7 @@ export function MedSearch() {
 
   };
   function ShowDiv() {
-    setShowDivGetMed('container');
+    setShowDivGetMed('w-100');
   }
   function HideDiv() {
     setShowDivGetMed("d-none")
@@ -173,11 +173,11 @@ export function MedSearch() {
       <section>
         <div className='container'>
           <div className='container p-4 rounded-4 shadow'>
-            <div className='d-flex gap-5 justify-content-evenly'>
-              <div className='w-25 shadow rounded-4'>
+            <div className='d-flex flex-wrap gap-5 justify-content-evenly'>
+              <div className='w-25 soraShowAllMed shadow rounded-4'>
                 <img src={SectionPhoto2} alt="" className='w-100 rounded-4' />
               </div>
-              <div className='shadow p-4 rounded-4 w-50'>
+              <div className='shadow soraShowAllMed p-4 rounded-4 w-50'>
                 <h1 className='text-center fs-2'> يمكنك عرض جميع الادوية </h1>
                 <div className='d-flex justify-content-center gap-5 mt-5'>
                   <button type='button' onClick={ShowDiv} className='btn bg-success text-white'>عرض</button>
@@ -188,11 +188,11 @@ export function MedSearch() {
           </div>
         </div>
         <div className={showDivGetMed}>
-          <div className='container'>
-            <div className='container'>
+          <div className='widthSection'>
+            <div className='container widthSection'>
               <div className={error}>Loading Page</div>
               <div className="row SHowMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
-                {getMedicine.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden">
+                {getMedicine.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden WidthOfResultCard">
                   <div className='d-flex mt-2 justify-content-center '>
                     <div className="d-flex justify-content-center w-50 styleCardOfShowMed">
                       <h1 className='fs-2 text-muted opacity-75'>{element.name}</h1>
