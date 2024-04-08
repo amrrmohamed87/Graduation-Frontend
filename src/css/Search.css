@@ -222,7 +222,7 @@ left: -5%;
 
 /* medication search */
 .DivSoraSearchMed{
-    width: 35%;
+    width: 30%;
 }
 .StyleLayerOfCardOfMedi{
     opacity: 100%;
@@ -253,4 +253,10 @@ left: -5%;
 }
 .StyleOfCloseX{
     cursor: pointer;
+}
+.textForSearchMed{
+    width: 60%;
+}
+.ShowResultOfSearchMed{
+    width: 30%;
 }

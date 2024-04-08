@@ -48,7 +48,7 @@ export function MedSearch() {
   })
   const [resultOfSearch, setResultOfSearch] = useState([])
   function showThing() {
-    setShowDivSearch('container mt-5 position-relative')
+    setShowDivSearch(' mt-5 w-100  position-relative')
   }
   function closeDivShowSearch() {
     setShowDivSearch('d-none')
@@ -68,11 +68,11 @@ export function MedSearch() {
     } catch (error2) {
       if (error2.response && error2.response.status === 404) {
         setError2("غير متوفر");
-        setClassError2("text-center fs-1 w-50 alert  alert-warning fw-bold mt-3");
+        setClassError2("text-center fs-1 w-50 alert ClassError2Width alert-warning fw-bold mt-3");
         setResultOfSearch([]);
       }else if (error2.response && error2.response.status === 422) {
         setError2("من فضلك أدخل أسم الدواء");
-        setClassError2("text-center w-50 alert alert-light fs-1 fw-bold mb-3 mt-3");
+        setClassError2("text-center w-50 ClassError2Width alert alert-light fs-1 fw-bold mb-3 mt-3");
         setResultOfSearch([]);
       } else {
         setError2("");
@@ -102,15 +102,15 @@ export function MedSearch() {
             <div className='w-100 d-flex justify-content-center'>
               <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px] w-50">البحث عن الأدوية يمثل </h1>
             </div>
-            <h1 className="text-center mt-4 text-[22px] md:text-[30px] w-50">"رحلة  من التفاؤل و الثقة ،حيث تمكن فى كل قرار صحي حكمة واهتمام بالصحة الشخصية"</h1>
+            <h1 className="text-center textInUpper mt-4 text-[22px] md:text-[30px] w-50">"رحلة  من التفاؤل و الثقة ،حيث تمكن فى كل قرار صحي حكمة واهتمام بالصحة الشخصية"</h1>
           </div>
-          <div className='d-flex w-100 gap-5 mt-5  py-3 justify-content-around'>
+          <div className='d-flex w-100 flex-wrap gap-5 mt-5  py-3 justify-content-around'>
             <div className=' DivSoraSearchMed rounded-4 shadow-lg'>
               <img src={SectionPhoto} alt="sora" className='rounded-4 h-100' />
             </div>
-            <div className='w-75 shadow-lg p-4 rounded-4'>
+            <div className=' textForSearchMed shadow-lg p-4 rounded-4'>
               <h1 className='text-end fs-1'>هدفنا هو التوعية <i className="fa-solid fs-3 text-success fa-magnifying-glass"></i></h1>
-              <p className='fs-3 mt-5 text-end '>هدفنا هو توفير معلومات شاملة ومفصلة عن الأدوية والمواد الفعالة فيها، بحيث يمكن للمستخدم الحصول على معرفة عميقة حول استخدامات الأدوية وطرق استعمالها والأمراض التي تعالجها، دون الحاجة إلى قراءة الروشتة الطبية. يهدف (الويب سايت) إلى تمكين الأفراد من فهم الأدوية التي يتناولونها والتوعية بشكل أفضل وتحسين تجربتهم الطبية دون بذل جهد إضافي في البحث عن المعلومات.  
+              <p className='fs-3 mt-5  text-end '>هدفنا هو توفير معلومات شاملة ومفصلة عن الأدوية والمواد الفعالة فيها، بحيث يمكن للمستخدم الحصول على معرفة عميقة حول استخدامات الأدوية وطرق استعمالها والأمراض التي تعالجها، دون الحاجة إلى قراءة الروشتة الطبية. يهدف (الويب سايت) إلى تمكين الأفراد من فهم الأدوية التي يتناولونها والتوعية بشكل أفضل وتحسين تجربتهم الطبية دون بذل جهد إضافي في البحث عن المعلومات.  
               </p>
             </div>
           </div>
@@ -131,29 +131,33 @@ export function MedSearch() {
         {/* 3rd ntegt alsearch */}
         <div className={ShowDivSearch}>
           <div onClick={closeDivShowSearch} className='position-absolute StyleOfCloseX end-0 top-0'> <i className="fa-regular fs-3 text-dark opacity-75 fa-circle-xmark"></i></div>
-          <div className='container '>
-            <div className='container '>
+          <div className=' w-100'>
+            <div className='container'>
               <div className='d-flex w-100 justify-content-center'>
               <div className={classError2}>{error2}</div>
               </div>
-              <div className="row SHowSearchMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
-                {resultOfSearch == null ? "" : resultOfSearch.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden">
+              <div className="d-flex SHowSearchMedicines overflow-scroll justify-content-center gap-3 shadow-lg p-4 rounded-4">
+                {resultOfSearch == null ? "" : resultOfSearch.map((element, i) => <div key={i} className="ShowResultOfSearchMed rounded-4 mt-3 shadow position-relative overflow-hidden ">
                   <div className='d-flex mt-2 justify-content-center '>
                     <div className="d-flex justify-content-center w-50 styleCardOfShowMed">
                       <h1 className='fs-2 text-muted opacity-75'>{element.name}</h1>
                     </div>
                   </div>
                   <div className='d-flex justify-content-evenly mt-3'>
-                    <p className='text-end mt-3 fs-5'>  {element.description}</p>
-                    <span className='mt-3 me-1 ms-1 fs-4'> : </span>
-                    <i className="fa-solid fa-file-medical mt-3 text-success fs-3 ms-2"></i>
+                    <p className='text-end mt-3 fs-5'> {element.description}</p>
+                    <span className='mt-3 fs-4'>:</span>
+                    <i className="fa-solid fa-file-medical mt-3 text-success fs-3 "></i>
                   </div>
-                  <p className='text-end mt-2 fs-4'> {element.components} : <i className="fa-solid fa-mortar-pestle fs-4 text-success"></i></p>
+                  <div className='d-flex justify-content-evenly mt-3'>
+                    <p className='text-end mt-3 fs-4 w-75'> {element.components}</p>
+                    <span className='mt-3 fs-4'>:</span>
+                    <i className="fa-solid mt-3 fa-mortar-pestle me-4 fs-4 text-success"></i>
+                  </div>
                   <div className='d-flex justify-content-evenly'>
-                    <p className='mt-3 text-end fs-6 w-75'>  {element.tradeMark} </p>
+                    <p className='mt-3 text-end fs-6 w-100'>{element.tradeMark}</p>
                     <span className='text-success text-end fs-5 mt-3 w-50 '>: اسم الشركات</span>
                   </div>
-                  <button type='button' onClick={() => toggleDivPosition2(i)} className={`btn bg-success text-white mb-3 mt-3 z-2 position-relative buttonToShowHowToUse ${showDiv === i ? 'active' : ''}`}>طريقة الاستعمال</button>
+                  <button type='button' onClick={() => toggleDivPosition2(i)} className={`btn bg-success text-white  ms-2 mt-5 z-2 position-relative buttonToShowHowToUse ${showDiv === i ? 'active' : ''}`}>طريقة الاستعمال</button>
                   <div className={`bg-success StyleLayerOfCardOfMedi w-100 h-100 position-absolute start-0 rounded-4 ${showDiv === i ? 'active' : ''}`} >
                     <div className='h-100 p-4 text-center d-flex justify-content-center'>
                       <p className='text-white fs-5 fw-bold align-self-center'>{element.howToUse}</p>

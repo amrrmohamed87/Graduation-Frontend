@@ -189,3 +189,18 @@ body::-webkit-scrollbar-track {
     left: 10%;
   }
 }
+@media (min-width:300px) and (max-width:385px) {
+  .DivSoraSearchMed{
+      width: 100%;
+  }
+  .textForSearchMed{
+      width: 100%;
+  }.ClassError2Width{
+    width: 100% !important;
+    font-size: 20px !important;
+  }.textInUpper{
+    width: 100% !important;
+  }.ShowResultOfSearchMed{
+    width: 100%;
+  }
+}
