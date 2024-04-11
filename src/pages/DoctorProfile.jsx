@@ -44,6 +44,7 @@ function DoctorProfile() {
 
         const resData = await response.json();
         console.log(resData);
+        console.log(resData.userR);
 
         setMedicalRecords(resData.userR);
         setIsLoadingRecords(false);
@@ -69,7 +70,6 @@ function DoctorProfile() {
 
   //creating new medical record
 
-  function handleShowMedicalRecords() {}
   const name = localStorage.getItem("name");
   const specialize = localStorage.getItem("specialize");
   return (
@@ -98,7 +98,7 @@ function DoctorProfile() {
                   <TableHead className="text-white">Date</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              {/*  <TableBody>
                 {medicalRecords.map((record) => (
                   <TableRow key={record._id}>
                     <TableCell>{record.patient.name}</TableCell>
@@ -193,7 +193,7 @@ function DoctorProfile() {
                     <TableCell>{formDate(record.date)}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
+              </TableBody> */}
             </Table>
           </div>
         )}
