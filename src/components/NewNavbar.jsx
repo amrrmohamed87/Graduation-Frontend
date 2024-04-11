@@ -49,9 +49,7 @@ function NewNavbar() {
     <header className="z-10 absolute">
       <nav
         className={`fixed w-full h-[4rem] md:h-[5.5rem] max-w-[1536px] transition-all duration-300 ${
-          isScrolled
-            ? "bg-emerald-950 shadow-2xl"
-            : "bg-transparent shadow-none"
+          isScrolled ? "bg-emerald-950 shadow-md" : "bg-transparent shadow-none"
         }`}
       >
         <div className="md:flex md:justify-between md:items-center">
