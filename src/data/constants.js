@@ -166,10 +166,10 @@ export const healthcare = [
         title: 'صحةالمرأة',
         description: 'صحة المرأة واجبه علي كل مرأة و يجب اتبع الارشادات التالية للحفاظ علي صحة المرأة',
         list: [
-            { item: 'صحة المرأة قبل الحمل', to: '/before-pregnancy', icon:checkMark },
-            { item: 'صحة المرأة خلال الحمل', to: '/during-pregnancy', icon:checkMark },
+            { item: 'قبل الحمل', to: '/before-pregnancy', icon:checkMark },
+            { item: 'خلال الحمل', to: '/during-pregnancy', icon:checkMark },
             { item: 'الولادة', to: '/birth', icon:checkMark },
-            { item: 'صحة المرأة بعد الولادة', to: '/after-pregnancy' , icon:checkMark},
+            { item: 'بعد الولادة', to: '/after-pregnancy' , icon:checkMark},
         ]
     },
     {
