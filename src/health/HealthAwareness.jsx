@@ -57,16 +57,16 @@ function HealthAwareness() {
         <div className="md:flex md:items-center md:gap-8 md:mx-8">
           <img
             src={patternImage}
-            className="p-4 rounded-lg  shadow-sm md:w-[770px] md:h-[450px]"
+            className="p-4 rounded-lg  shadow-sm md:w-[770px] md:h-[400px]"
           />
           <div className="flex flex-col">
             <div className="flex justify-end items-center mx-8">
-              <h1 className="text-right text-[30px] text-emerald-700  mb-3  md:text-[60px] md:mb-16">
+              <h1 className="text-right text-[30px] text-emerald-700  mb-3  md:text-[40px] md:mb-16">
                 نمط الحياة الصحية
               </h1>
               <img src={healthawareness} className="w-[60px] mb-3" />
             </div>
-            <p className="bg-white shadow-2xl p-4 text-right text-emerald-950 text-[22px] md:text-[28px]">
+            <p className="bg-white shadow-md p-4 text-right text-emerald-950 text-[19px] md:text-[21px]">
               إن تبني نمط حياة صحي هو رحلة شخصية، وقد تختلف التوصيات المحددة لكل
               فرد. وهو ينطوي على إجراء تغييرات تدريجية ومستدامة على العادات
               والسلوكيات اليومية لتعزيز الصحة والرفاهية على المدى الطويل
@@ -79,26 +79,28 @@ function HealthAwareness() {
           {healthcare.map((health) => (
             <div
               key={health.src}
-              className="bg-white shadow-2xl rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
+              className="bg-white shadow-md rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
             >
-              <img src={health.src} className="shadow-md" />
+              <img src={health.src} className="shadow-sm" />
               <div className="p-4">
                 <div className="flex justify-end items-center gap-1 mb-2">
-                  <img src={health.icon} className="w-[30px] mb-2" />
-                  <h2 className="text-[25px] text-right text-[#056558]">
+                  <img src={health.icon} className="w-[28px] mb-2" />
+                  <h2 className="text-[24px] text-right text-[#056558]">
                     {health.title}
                   </h2>
                 </div>
-                <p className="text-[22px] text-right mb-4 text-gray-800">
+                <p className="text-[19px] text-right mb-4 text-gray-800">
                   {health.description}
                 </p>
                 <ul className="grid grid-flow-row grid-cols-2 gap-6 text-center place-items-center">
                   {health.list.map((item) => (
-                    <div key={item.item} className="flex items-center">
-                      <button className="rounded-[30px] text-[#056558] w-[170px] py-1 text-[18px]  hover:bg-emerald-900 hover:text-white transition-all duration-300">
+                    <div
+                      key={item.item}
+                      className="flex items-center py-1 px-3 text-[#056558] rounded-[30px] hover:bg-emerald-900 hover:text-white transition-all duration-300"
+                    >
+                      <button className="w-[100px] text-[18px]">
                         {item.item}
                       </button>
-                      <img src={item.icon} className="w-[20px]" />
                     </div>
                   ))}
                 </ul>
@@ -109,50 +111,50 @@ function HealthAwareness() {
       </section>
 
       <section className="mb-24">
-        <div className="md:mx-24 bg-white shadow-2xl">
+        <div className="md:mx-24 bg-white shadow-md pt-4">
           {/* <div className="flex flex-col items-end mr-4 p-4">
             <h1 className="text-[30px] text-emerald-700 md:text-[45px]">
               من اهم عناصر تطوير الصحة
             </h1>
             <hr className="border-t-2 border-emerald-900 w-72 mt-2" />
           </div> */}
-          <h1 className="text-[30px] text-center mt-4 text-emerald-700 md:text-[45px]">
+          <h1 className="text-[30px] text-center mt-4 text-emerald-700 md:text-[40px]">
             من اهم عناصر تطوير الصحة
           </h1>
-          <div className="text-right p-4 md:flex md:items-start md:gap-8">
+          <div className="text-right p-4 md:flex md:items-center md:gap-8">
             <img
               src={nutritionImage}
-              className="rounded-[30px] shadow-2xl md:w-[650px]"
+              className="rounded-[30px] shadow-md md:w-[550px]"
             />
             <div>
-              <div className="bg-white shadow-2xl p-4 mb-4">
+              <div className="bg-white shadow-md p-4 mb-4">
                 <div className="flex items-center justify-end gap-2">
-                  <img src={workout} className="w-[30px]" />
-                  <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[35px]">
+                  <img src={workout} className="w-[31px]" />
+                  <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[32px]">
                     الرياضة
                   </h1>
                 </div>
 
-                <p className="text-[22px] text-emerald-950 mb-2 md:text-[21px]">
+                <p className="text-[17px] text-emerald-950 mb-2 md:text-[19px] mt-2">
                   يعد النشاط البدني أمرًا بالغ الأهمية للحفاظ على وزن صحي،
                   وتقوية نظام القلب والأوعية الدموية، وتعزيز اللياقة البدنية
                   بشكل عام
                 </p>
               </div>
-              <div className="bg-white shadow-2xl p-4 mb-4">
+              <div className="bg-white shadow-md p-4 mb-4">
                 <div className="flex items-center justify-end gap-2">
-                  <img src={diet} className="w-[30px]" />
-                  <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[35px]">
+                  <img src={diet} className="w-[31px]" />
+                  <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[32px]">
                     التغذية
                   </h1>
                 </div>
-                <p className="text-[22px] text-emerald-950 mb-2 md:text-[21px]">
+                <p className="text-[17px] text-emerald-950 mb-2 md:text-[19px]">
                   و يساعد تناول مجموعة متنوعة من الأطعمة الغنية بالمغذيات، بما
                   في ذلك الفواكه والخضروات والحبوب الكاملة والبروتينات الخالية
                   من الدهون والدهون الصحية، على تزويد الجسم بالفيتامينات
                   والمعادن الأساسية
                 </p>
-                <button className="bg-[#056558] flex px-6 py-[2px] rounded-lg text-slate-100 md:text-[21px] md:px-6 hover:bg-emerald-950">
+                <button className="bg-[#056558] flex px-6 py-[2px] mt-2 rounded-lg text-slate-100 md:text-[21px] md:px-6 hover:bg-emerald-950 transition-all duration-300">
                   <NavLink to="/ca">التغذية الصحية</NavLink>
                 </button>
               </div>
