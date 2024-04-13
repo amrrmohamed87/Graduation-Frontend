@@ -20,8 +20,8 @@ function Dashboard() {
   }
 
   return (
-    <header className="bg-emerald-950">
-      <div className="flex justify-between items-center cursor-pointr p-4">
+    <header className="bg-emerald-950 flex justify-end w-100">
+      <div className="flex  w-4/6 justify-between items-center cursor-pointr p-4">
         <h1 className="text-white text-[25px] md:text-[40px]">
           مصر للتأمين الصحي
         </h1>
