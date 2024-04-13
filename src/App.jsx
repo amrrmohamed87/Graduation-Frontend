@@ -35,6 +35,7 @@ import Login from "./pages/Login.jsx";
 import { useEffect } from "react";
 import Contact from "./pages/Contact.jsx";
 import { Booking } from "./pages/Booking";
+import { DoctorDashBoard } from './pages/DoctorDashBoard';
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -124,7 +125,7 @@ export default function App() {
       path: "/doctor",
       element: (
         <PrivateRoutes roles={["doctor"]}>
-          <DoctorProfile />
+          <DoctorDashBoard/>
         </PrivateRoutes>
       ),
     },

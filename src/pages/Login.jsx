@@ -49,11 +49,13 @@ function Login() {
       const role = data.user.role;
       const token = data.token;
       const specialize = data.user.specialize;
+      const DoctorId = data.user._id;
       const hospital = data.user.address;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("name", name);
       localStorage.setItem("specialize", specialize);
+      localStorage.setItem("DoctorId", DoctorId);
       localStorage.setItem("hospital", hospital);
       switch (role) {
         case "doctor":
