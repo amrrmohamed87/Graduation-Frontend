@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Footer from './../components/Footer';
 import Dashboard from "../components/Dashboard";
+import "../css/DoctorDashboard.css"
 import axios from 'axios'
 
 export function DoctorDashBoard() {
@@ -33,6 +34,7 @@ export function DoctorDashBoard() {
     }, [])
 
     // filter and page count
+    // two arrows
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(5);
     const indexOfLastRow = currentPage * rowsPerPage;
@@ -46,26 +48,34 @@ export function DoctorDashBoard() {
             setCurrentPage(currentPage + 1);
         }
     };
-
+    // ------------------------------------
     const [showFilter, setShowFilter] = useState(false);
     const [idFilter, setIdFilter] = useState("");
     const [nameFilter, setNameFilter] = useState("");
-
+    const [showResult, setShowResult] = useState("d-none");
+    const [currentResult, setcurrentResult] = useState("");
     const toggleFilter = () => {
         setShowFilter(!showFilter);
+        setShowResult("d-none")
+        setcurrentResult("")
     };
 
     const handleIdFilter = (value) => {
         setIdFilter(value);
+        setShowResult("")
+        setcurrentResult("d-none")
     };
 
     const handleNameFilter = (value) => {
         setNameFilter(value);
+        setShowResult("")
+        setcurrentResult("d-none")
     };
 
-    const filteredRows = currentRows.filter((element) => {
+    const filteredRows = getBookForDoct.filter((element) => {
         return element.patientID._id.includes(idFilter) && element.patientID.name.includes(nameFilter);
     });
+    console.log(filteredRows);
 
     // --------------------------------
     return (
@@ -81,9 +91,8 @@ export function DoctorDashBoard() {
                                 <button className='btn btn-success' onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
                                 </button>
                             </div>
-                            {showFilter && (
-                                <div className='d-flex justify-content-evenly'>
-                                    {/* Your filter content here */}
+                            {(
+                                <div className={`d-flex justify-content-evenly filter-content ${showFilter ? 'active' : ''}`}>
                                     <div className="mb-3">
                                         <input type="text" className="form-control text-end" placeholder='ادخل رقم التأمين' id="idFilter" onChange={(e) => handleIdFilter(e.target.value)} />
                                     </div>
@@ -92,6 +101,7 @@ export function DoctorDashBoard() {
                                     </div>
                                 </div>
                             )}
+
                             <div className="table-responsive w-100">
                                 <table className={ClassForTable}>
                                     <thead>
@@ -103,12 +113,29 @@ export function DoctorDashBoard() {
                                             <th scope="col">اسم المريض</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className={showResult}>
                                         {filteredRows.map((element, i) => (
                                             <tr key={i}>
                                                 <td>
-                                                    <button className='btn btn-danger me-2'>الغاء</button>
-                                                    <button className='btn btn-success'>حضور</button>
+                                                    <button className='btn btn-danger me-2 widthForButton'>الغاء</button>
+                                                    <button className='btn btn-success widthForButton'>حضور</button>
+                                                </td>
+                                                <td>
+                                                    <p>{element.day.slice(0, 10)}</p>
+                                                    <p>{element.time}</p>
+                                                </td>
+                                                <td>i</td>
+                                                <td>{element.patientID._id}</td>
+                                                <td>{element.patientID.name}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                    <tbody className={currentResult}>
+                                        {currentRows.map((element, i) => (
+                                            <tr key={i}>
+                                                <td>
+                                                    <button className='btn btn-danger me-2 widthForButton'>الغاء</button>
+                                                    <button className='btn btn-success widthForButton'>حضور</button>
                                                 </td>
                                                 <td>
                                                     <p>{element.day.slice(0, 10)}</p>
@@ -121,6 +148,7 @@ export function DoctorDashBoard() {
                                         ))}
                                     </tbody>
                                 </table>
+
                             </div>
                             {/* two arrows to go between pages */}
                             <div className="d-flex justify-content-center">
@@ -147,7 +175,10 @@ export function DoctorDashBoard() {
                     </div>
                 </div>
             </section>
-            <Footer/>
+            <Footer />
         </>
     )
 }
+
+
+

@@ -1,0 +1,13 @@
+.filter-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+}
+
+.filter-content.active {
+    max-height: 12%;
+}

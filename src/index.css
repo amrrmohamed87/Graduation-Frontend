@@ -322,3 +322,8 @@ body::-webkit-scrollbar-track {
     padding: 6px !important;
   }
 }
+
+/* doctor dashboard */
+.widthForButton{
+  width: 30% !important;
+}
