@@ -206,8 +206,13 @@ export function DoctorDashBoard() {
                                         {filteredRows.map((element, i) => (
                                             <tr key={i}>
                                                 <td>
-                                                    <button className='btn btn-danger me-2 widthForButton'>الغاء</button>
-                                                    <button className='btn btn-success widthForButton'>حضور</button>
+                                                    <button onClick={() => {
+                                                        setStatusOfPatientIfCancel(element._id);
+
+                                                    }} className='btn btn-danger me-2 widthForButton'>الغاء</button>
+                                                    <button onClick={() => {
+                                                        StatusOfPatient(element._id)
+                                                    }} className='btn btn-success widthForButton'>حضور</button>
                                                 </td>
                                                 <td className='d-flex flex-row'>
                                                     <p className='w-75'>{element.day.slice(0, 10)}</p>
