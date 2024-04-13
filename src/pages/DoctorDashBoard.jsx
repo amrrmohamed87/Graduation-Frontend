@@ -169,8 +169,8 @@ export function DoctorDashBoard() {
                         </div>
 
                         <div className='col-md-2 text-end'>
-                            <h1 className='fs-4 py-3'>د/ {name}</h1>
-                            <p className='text-muted'>{specialize}</p>
+                            <h1 className='fs-3 py-3'>د/ {name}</h1>
+                            <p className='text-muted fs-5'>{specialize}</p>
                         </div>
                     </div>
                 </div>
