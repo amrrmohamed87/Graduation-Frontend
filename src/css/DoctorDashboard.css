@@ -11,3 +11,6 @@
 .filter-content.active {
     max-height: 30%;
 }
+.widthForCard{
+    width: 24%;
+}

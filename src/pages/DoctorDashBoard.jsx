@@ -7,15 +7,61 @@ import axios from 'axios'
 export function DoctorDashBoard() {
     // get doctor id
     const doctorId = localStorage.getItem("DoctorId")
+    // console.log(doctorId);
     const name = localStorage.getItem("name");
     const specialize = localStorage.getItem("specialize");
     // ------------------
+    // getcount bta3t aldoctor fy kol 7aga
+    const [countOfEverythingTodoc, setcountOfEverythingTodoc] = useState({})
+    async function showAllCountAboutDic() {
+        try {
+            let { data } = await axios.get(`https://mhiproject.onrender.com/doctor/countBooks/${doctorId}`)
+            setcountOfEverythingTodoc(data)
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setError("لا يوجد حجوزات")
+                setErrorClass("fs-1 text-center mt-5 mb-5")
+                setClassForTable("d-none")
+            }
+        }
+    }
+    async function StatusOfPatient(bookingIds) {
+        let newStatus = {
+            bookingID: bookingIds,
+            status: "Done"
+        };
+
+        try {
+            let { data } = await axios.patch("https://mhiproject.onrender.com/doctor/changeBookingStatus", newStatus);
+            console.log(data);
+            showAllCountAboutDic();
+            getBooking();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    async function setStatusOfPatientIfCancel(status) {
+        let newStatus = {
+            bookingID: status,
+            status: "Cancelled"
+        };
+
+        try {
+            let { data } = await axios.patch("https://mhiproject.onrender.com/doctor/changeBookingStatus", newStatus);
+            console.log(data);
+            showAllCountAboutDic();
+            getBooking();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    // --------------------------
     // get booking 
     const [getBookForDoct, setgetBookForDoct] = useState([])
     const [error, setError] = useState("")
     const [errorClass, setErrorClass] = useState("d-none")
     const [ClassForTable, setClassForTable] = useState("table shadow")
-
+    const [classOfFilterButton, setclassOfFilterButton] = useState('btn btn-success')
     async function getBooking() {
         try {
             let { data } = await axios.get(`https://mhiproject.onrender.com/doctor/showBooking/${doctorId}`)
@@ -25,12 +71,14 @@ export function DoctorDashBoard() {
                 setError("لا يوجد حجوزات")
                 setErrorClass("fs-1 text-center mt-5 mb-5")
                 setClassForTable("d-none")
+                setclassOfFilterButton("d-none")
             }
         }
     }
 
     useEffect(() => {
-        getBooking()
+        getBooking();
+        showAllCountAboutDic();
     }, [])
 
     // filter and page count
@@ -75,7 +123,6 @@ export function DoctorDashBoard() {
     const filteredRows = getBookForDoct.filter((element) => {
         return element.patientID._id.includes(idFilter) && element.patientID.name.includes(nameFilter);
     });
-    console.log(filteredRows);
 
     // --------------------------------
     return (
@@ -85,10 +132,51 @@ export function DoctorDashBoard() {
             <section className='py-4'>
                 <div className='container'>
                     <div className='row'>
+
                         <div className='col-md-10 text-center bg-muted rounded-4 p-4'>
+                            <div className='d-flex gap-3 justify-content-evenly mb-4'>
+                                <div className='widthForCard  shadow rounded-3 p-3'>
+                                    <div className='d-flex align-items-center justify-content-end'>
+                                        <h1 className='fs-1'>العمليات</h1>
+                                        <i className="fa-solid fs-5 fa-stethoscope ms-4 me-1 text-success"></i>
+                                    </div>
+                                    <div className='justify-content-center d-flex'>
+                                        <h1 className='fs-2 text-muted mt-3'>50</h1>
+                                    </div>
+                                </div>
+                                <div className='widthForCard  shadow rounded-3 p-3'>
+                                    <div className='d-flex align-items-center justify-content-end'>
+                                        <h1 className='fs-1'>المواعيد الملغاه</h1>
+                                        <i className="text-success fs-5 fa-solid fa-ban ms-3 me-1"></i>
+                                    </div>
+                                    <div className='justify-content-center d-flex'>
+                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.cancelledCounter}</h1>
+                                    </div>
+                                </div>
+                                <div className='widthForCard  shadow rounded-3 p-3'>
+                                    <div className='d-flex align-items-center justify-content-end'>
+                                        <h1 className='fs-1'> المواعيد المقبولة</h1>
+                                        <i className="text-success fs-5 fa-regular fa-circle-check ms-2 "></i>
+                                    </div>
+                                    <div className='justify-content-center d-flex'>
+                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.doneCounter}</h1>
+                                    </div>
+                                </div>
+                                <div className='widthForCard  shadow rounded-3 p-3'>
+                                    <div className='d-flex align-items-center justify-content-end'>
+                                        <h1 className='fs-1'> المواعيد الجديدة</h1>
+                                        <i className="text-success fs-5 fa-regular fa-square-plus ms-2 "></i>
+                                    </div>
+                                    <div className='justify-content-center d-flex'>
+                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.waitingCounter}</h1>
+                                    </div>
+                                </div>
+
+
+                            </div>
                             <h1 className={errorClass}>{error}</h1>
                             <div className='d-flex justify-content-start mb-2'>
-                                <button className='btn btn-success' onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
+                                <button className={classOfFilterButton} onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
                                 </button>
                             </div>
                             {(
@@ -108,6 +196,7 @@ export function DoctorDashBoard() {
                                         <tr className='table-success'>
                                             <th scope="col">تعليقات</th>
                                             <th scope="col">التاريخ</th>
+                                            <th scope="col">الوقت</th>
                                             <th scope="col">سجله الطبى</th>
                                             <th scope="col">رقم التأمين</th>
                                             <th scope="col">اسم المريض</th>
@@ -120,9 +209,9 @@ export function DoctorDashBoard() {
                                                     <button className='btn btn-danger me-2 widthForButton'>الغاء</button>
                                                     <button className='btn btn-success widthForButton'>حضور</button>
                                                 </td>
-                                                <td>
-                                                    <p>{element.day.slice(0, 10)}</p>
-                                                    <p>{element.time}</p>
+                                                <td className='d-flex flex-row'>
+                                                    <p className='w-75'>{element.day.slice(0, 10)}</p>
+                                                    <p className='w-25'>{element.time}</p>
                                                 </td>
                                                 <td>i</td>
                                                 <td>{element.patientID._id}</td>
@@ -134,11 +223,18 @@ export function DoctorDashBoard() {
                                         {currentRows.map((element, i) => (
                                             <tr key={i}>
                                                 <td>
-                                                    <button className='btn btn-danger me-2 widthForButton'>الغاء</button>
-                                                    <button className='btn btn-success widthForButton'>حضور</button>
+                                                    <button onClick={() => {
+                                                        setStatusOfPatientIfCancel(element._id);
+
+                                                    }} className='btn btn-danger me-2 widthForButton'>الغاء</button>
+                                                    <button onClick={() => {
+                                                        StatusOfPatient(element._id)
+                                                    }} className='btn btn-success widthForButton'>حضور</button>
                                                 </td>
                                                 <td>
                                                     <p>{element.day.slice(0, 10)}</p>
+                                                </td>
+                                                <td>
                                                     <p>{element.time}</p>
                                                 </td>
                                                 <td>i</td>
@@ -172,6 +268,7 @@ export function DoctorDashBoard() {
                             <h1 className='fs-3 py-3'>د/ {name}</h1>
                             <p className='text-muted fs-5'>{specialize}</p>
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -179,6 +276,4 @@ export function DoctorDashBoard() {
         </>
     )
 }
-
-
 
