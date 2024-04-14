@@ -56,6 +56,7 @@ export function DoctorDashBoard() {
     }
     // --------------------------
     // get booking 
+    const [isLoading, setIsLoading] = useState(true)
     const [getBookForDoct, setgetBookForDoct] = useState([])
     const [error, setError] = useState("")
     const [errorClass, setErrorClass] = useState("d-none")
@@ -65,6 +66,7 @@ export function DoctorDashBoard() {
         try {
             let { data } = await axios.get(`https://mhiproject.onrender.com/doctor/showBooking/${doctorId}`)
             setgetBookForDoct(data.getbook)
+            setIsLoading(false)
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 setError("لا يوجد حجوزات")
@@ -179,7 +181,7 @@ export function DoctorDashBoard() {
                             <p className='text-muted fs-5'>{specialize}</p>
                         </div>
                         <div className='mt-3 col-md-10 text-center bg-muted rounded-4 p-5'>
-
+                            {isLoading == true ? <h1 className='fs-1 text-center fw-bold '> جارى التحميل</h1> : ""}
                             <h1 className={errorClass}>{error}</h1>
                             <div className='d-flex justify-content-start mb-2'>
                                 <button className={classOfFilterButton} onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
