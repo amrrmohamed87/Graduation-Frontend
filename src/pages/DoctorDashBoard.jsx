@@ -131,7 +131,7 @@ export function DoctorDashBoard() {
             <section className='py-4'>
                 <div className='container-fluid'>
                     <div className='row mt-4'>
-                        <div className='col-md-10 mb-5 '>
+                        <div className='col-md-10 p-5 mb-5 '>
                             <div className='d-flex gap-3 justify-content-evenly mb-4'>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
@@ -178,7 +178,7 @@ export function DoctorDashBoard() {
                             <h1 className='fs-3 py-1 '>د/ {name}</h1>
                             <p className='text-muted fs-5'>{specialize}</p>
                         </div>
-                        <div className='mt-3 col-md-10 text-center bg-muted rounded-4 p-4'>
+                        <div className='mt-3 col-md-10 text-center bg-muted rounded-4 p-5'>
 
                             <h1 className={errorClass}>{error}</h1>
                             <div className='d-flex justify-content-start mb-2'>
