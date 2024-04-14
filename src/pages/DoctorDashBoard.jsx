@@ -129,9 +129,9 @@ export function DoctorDashBoard() {
             <Dashboard />
             {/* section show booking */}
             <section className='py-4'>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-10 mb-5'>
+                <div className='container-fluid'>
+                    <div className='row mt-4'>
+                        <div className='col-md-10 mb-5 '>
                             <div className='d-flex gap-3 justify-content-evenly mb-4'>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
