@@ -54,89 +54,6 @@ export function DoctorDashBoard() {
     let newStatus = {
       bookingID: bookingIds,
       status: "Done",
-    async function StatusOfPatient(bookingIds) {
-        let newStatus = {
-            bookingID: bookingIds,
-            status: "Done"
-        };
-
-        try {
-            let { data } = await axios.patch("https://mhiproject.onrender.com/doctor/changeBookingStatus", newStatus);
-            console.log(data);
-            showAllCountAboutDic();
-            getBooking();
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    async function setStatusOfPatientIfCancel(status) {
-        let newStatus = {
-            bookingID: status,
-            status: "Cancelled"
-        };
-
-        try {
-            let { data } = await axios.patch("https://mhiproject.onrender.com/doctor/changeBookingStatus", newStatus);
-            console.log(data);
-            showAllCountAboutDic();
-            getBooking();
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    // --------------------------
-    // get booking 
-    const [isLoading, setIsLoading] = useState(true)
-    const [getBookForDoct, setgetBookForDoct] = useState([])
-    const [error, setError] = useState("")
-    const [errorClass, setErrorClass] = useState("d-none")
-    const [ClassForTable, setClassForTable] = useState("table shadow")
-    const [classOfFilterButton, setclassOfFilterButton] = useState('btn btn-success')
-    async function getBooking() {
-        try {
-            let { data } = await axios.get(`https://mhiproject.onrender.com/doctor/showBooking/${doctorId}`)
-            setgetBookForDoct(data.getbook)
-            setIsLoading(false)
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                setError("لا يوجد حجوزات")
-                setErrorClass("fs-1 text-center mt-5 mb-5")
-                setClassForTable("d-none")
-                setclassOfFilterButton("d-none")
-            }
-        }
-    }
-
-    useEffect(() => {
-        getBooking();
-        showAllCountAboutDic();
-    }, [])
-
-    // filter and page count
-    // two arrows
-    const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage] = useState(5);
-    const indexOfLastRow = currentPage * rowsPerPage;
-    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = getBookForDoct.slice(indexOfFirstRow, indexOfLastRow);
-
-    const paginate = (direction) => {
-        if (direction === 'prev' && currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        } else if (direction === 'next' && currentPage < Math.ceil(getBookForDoct.length / rowsPerPage)) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-    // ------------------------------------
-    const [showFilter, setShowFilter] = useState(false);
-    const [idFilter, setIdFilter] = useState("");
-    const [nameFilter, setNameFilter] = useState("");
-    const [showResult, setShowResult] = useState("d-none");
-    const [currentResult, setcurrentResult] = useState("");
-    const toggleFilter = () => {
-        setShowFilter(!showFilter);
-        setShowResult("d-none")
-        setcurrentResult("")
     };
 
     try {
@@ -260,27 +177,6 @@ export function DoctorDashBoard() {
 
   const [diagnoseOptions, setDiagnoseOptions] = useState([]);
   const [diagnoseFilter, setDiagnoseFilter] = useState("");
-                        <div className='col-md-2 text-end'>
-                            <h1 className='fs-3 py-1 '>د/ {name}</h1>
-                            <p className='text-muted fs-5'>{specialize}</p>
-                        </div>
-                        <div className='mt-3 col-md-10 text-center bg-muted rounded-4 p-5'>
-                            {isLoading == true ? <h1 className='fs-1 text-center fw-bold '> جارى التحميل</h1> : ""}
-                            <h1 className={errorClass}>{error}</h1>
-                            <div className='d-flex justify-content-start mb-2'>
-                                <button className={classOfFilterButton} onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
-                                </button>
-                            </div>
-                            {(
-                                <div className={`d-flex justify-content-evenly filter-content ${showFilter ? 'active' : ''}`}>
-                                    <div className="mb-3">
-                                        <input type="text" className="form-control text-end" placeholder='ادخل رقم التأمين' id="idFilter" onChange={(e) => handleIdFilter(e.target.value)} />
-                                    </div>
-                                    <div className="mb-3">
-                                        <input type="text" placeholder='ادخل الاسم' className="form-control text-end" id="nameFilter" onChange={(e) => handleNameFilter(e.target.value)} />
-                                    </div>
-                                </div>
-                            )}
 
   const [medicineOptions, setMedicineOptions] = useState([]);
   const [medicineFilter, setMedicineFilter] = useState("");
@@ -315,9 +211,10 @@ export function DoctorDashBoard() {
         ...new Set(resData.userR.map((medicine) => medicine.medicine)),
       ].map((medicine) => ({ label: medicine, value: medicine }));
 
-      const date = [
-        ...new Set(resData.userR.map((date) => formateDate(date.date))),
-      ].map((date) => ({ label: date, value: date }));
+      const date = resData.userR.map((date) => {
+        const formattedDate = formateDate(date.date);
+        return { label: formattedDate, value: formattedDate };
+      });
 
       setDoctorOptions(name);
       setDiagnoseOptions(diagnose);
