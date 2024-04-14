@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { IoOpenOutline } from "react-icons/io5";
+import { TfiWrite } from "react-icons/tfi";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -184,6 +185,14 @@ export function DoctorDashBoard() {
   const [dateOptions, setDateOptions] = useState([]);
   const [dateFilter, setDateFilter] = useState("");
 
+  const [createRecord, setCreateRecord] = useState({
+    patientID: "",
+    doctorID: "",
+    medicine: "",
+    diagnose: "",
+  });
+  const [isCreating, setIsCreating] = useState(false);
+
   const handleFetchingPatientRecord = async (id) => {
     setIsLoadingPatientRecord(true);
     try {
@@ -273,6 +282,61 @@ export function DoctorDashBoard() {
 
   const handleFirstPagination = () => {
     setCurrentRecordPage(1);
+  };
+
+  //handle create medical record
+  const handlePassingIds = (id) => {
+    setCreateRecord((prev) => ({
+      ...prev,
+      doctorID: doctorId,
+      patientID: id,
+    }));
+    toast.success("Doctor and Patient IDS are successfully added");
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCreateRecord((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    console.log(createRecord);
+  };
+
+  //Create medical record api
+  const handleCreateMedicalRecord = async () => {
+    setIsCreating(true);
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/doctor/createRecord",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(createRecord),
+        }
+      );
+      const resData = response.json();
+
+      if (!response.ok) {
+        toast.error(resData.message || "Failed to Create");
+        setIsCreating(false);
+        return;
+      }
+
+      toast.success("Record Created Successfully");
+      setCreateRecord({
+        patientID: "",
+        doctorID: "",
+        medicine: "",
+        diagnose: "",
+      });
+      setIsCreating(false);
+    } catch (error) {
+      toast.error("Unexpected error occurred");
+      setIsCreating(false);
+    }
   };
 
   //Pagination component
@@ -460,29 +524,7 @@ export function DoctorDashBoard() {
                           <p className="w-25">{element.time}</p>
                         </td>
 
-                        <td>
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="outline">
-                                <IoOpenOutline size={20} />
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px]">
-                              <DialogHeader>
-                                <DialogTitle>Edit profile</DialogTitle>
-                                <DialogDescription>
-                                  Make changes to your profile here. Click save
-                                  when you're done.
-                                </DialogDescription>
-                              </DialogHeader>
-
-                              <h1>Hi</h1>
-                              <DialogFooter>
-                                <Button type="submit">Save changes</Button>
-                              </DialogFooter>
-                            </DialogContent>
-                          </Dialog>
-                        </td>
+                        <td>i</td>
                         <td>{element.patientID._id}</td>
                         <td>{element.patientID.name}</td>
                       </tr>
@@ -518,198 +560,283 @@ export function DoctorDashBoard() {
 
                         {/* Medical Records - Amr */}
                         <td>
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button
-                                variant="outline-none"
-                                onClick={() =>
-                                  handleGetPatientId(element.patientID._id)
-                                }
-                              >
-                                <IoOpenOutline size={20} />
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-5xl mx-auto p-4">
-                              <DialogHeader>
-                                <DialogTitle>Patient Information</DialogTitle>
-                                <DialogDescription>
-                                  You can easily create a new medical record for
-                                  by pressing on The button "Create" Below the
-                                  table
-                                </DialogDescription>
-                              </DialogHeader>
-
-                              <div className="flex flex-col p-6 bg-white rounded-lg shadow-xl w-full mx-auto">
-                                <div className="flex justify-between items-center">
-                                  <button
-                                    className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
-                                    onClick={() => {
-                                      setFilter(!filter);
-                                    }}
-                                  >
-                                    Filter
-                                    <motion.span
-                                      animate={{ rotate: filter ? -180 : 0 }}
-                                      transition={{ duration: 0.4 }}
-                                    >
-                                      <MdKeyboardArrowDown size={20} />
-                                    </motion.span>
-                                  </button>
-                                </div>
-
-                                <AnimatePresence>
-                                  {filter && (
-                                    <motion.div
-                                      initial={{ opacity: 0, height: 0 }}
-                                      animate={{ opacity: 1, height: "auto" }}
-                                      exit={{ opacity: 0, height: 0 }}
-                                      transition={{ duration: 0.4 }}
-                                    >
-                                      {filter && (
-                                        <div className="flex justify-between items-center my-6 px-1">
-                                          <Select
-                                            options={dateOptions}
-                                            onChange={(date) =>
-                                              setDateFilter(
-                                                date ? date.value : ""
-                                              )
-                                            }
-                                            value={dateOptions.find(
-                                              (date) =>
-                                                date.value === dateFilter
-                                            )}
-                                            isClearable
-                                            className="custom-select"
-                                            classNamePrefix="react-select"
-                                            placeholder="Date..."
-                                          />
-                                          <Select
-                                            options={medicineOptions}
-                                            onChange={(medicine) =>
-                                              setMedicineFilter(
-                                                medicine ? medicine.value : ""
-                                              )
-                                            }
-                                            value={medicineOptions.find(
-                                              (medicine) =>
-                                                medicine.value ===
-                                                medicineFilter
-                                            )}
-                                            isClearable
-                                            className="custom-select"
-                                            classNamePrefix="react-select"
-                                            placeholder="Medicine..."
-                                          />
-
-                                          <Select
-                                            options={diagnoseOptions}
-                                            onChange={(diagnose) =>
-                                              setDiagnoseFilter(
-                                                diagnose ? diagnose.value : ""
-                                              )
-                                            }
-                                            value={diagnoseOptions.find(
-                                              (diagnose) =>
-                                                diagnose.value ===
-                                                diagnoseFilter
-                                            )}
-                                            isClearable
-                                            className="custom-select"
-                                            classNamePrefix="react-select"
-                                            placeholder="Diagnose..."
-                                          />
-
-                                          <Select
-                                            options={doctorOptions}
-                                            onChange={(name) =>
-                                              setDoctorFilter(
-                                                name ? name.value : ""
-                                              )
-                                            }
-                                            value={doctorOptions.find(
-                                              (name) =>
-                                                name.value === doctorFilter
-                                            )}
-                                            isClearable
-                                            className="custom-select"
-                                            classNamePrefix="react-select"
-                                            placeholder="Doctor's Name..."
-                                          />
-                                        </div>
-                                      )}
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
-
-                                <div className="overflow-x-auto rounded-[5px]">
-                                  <table className="min-w-full divide-y divide-gray-300">
-                                    <thead className="bg-emerald-600">
-                                      <tr>
-                                        <th
-                                          scope="col"
-                                          className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                        >
-                                          التاريخ
-                                        </th>
-                                        <th
-                                          scope="col"
-                                          className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                        >
-                                          الدواء
-                                        </th>
-                                        <th
-                                          scope="col"
-                                          className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                        >
-                                          التشخيص
-                                        </th>
-                                        <th
-                                          scope="col"
-                                          className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                        >
-                                          أسم الدكتور
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    {isLoadingPatientRecord ? (
-                                      <p>Loading...</p>
-                                    ) : (
-                                      <tbody className="bg-white divide-y divide-gray-300">
-                                        {currentData.map((record, index) => (
-                                          <tr
-                                            key={index}
-                                            className="hover:bg-gray-50"
-                                          >
-                                            <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
-                                              {formateDate(record.date)}
-                                            </td>
-                                            <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                              {record.medicine}
-                                            </td>
-                                            <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                              {record.diagnose}
-                                            </td>
-                                            <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                              {record.doctor.name}
-                                            </td>
-                                          </tr>
-                                        ))}
-                                      </tbody>
-                                    )}
-                                  </table>
-                                </div>
-                                <Pagination />
-                              </div>
-                              <DialogFooter>
+                          <div>
+                            <Dialog>
+                              <DialogTrigger asChild>
                                 <Button
-                                  type="submit"
-                                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                  variant="outline-none"
+                                  onClick={() =>
+                                    handleGetPatientId(element.patientID._id)
+                                  }
                                 >
-                                  Save changes
+                                  <IoOpenOutline size={20} />
                                 </Button>
-                              </DialogFooter>
-                            </DialogContent>
-                          </Dialog>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-5xl mx-auto p-4">
+                                <DialogHeader>
+                                  <DialogTitle>Patient Information</DialogTitle>
+                                  <DialogDescription>
+                                    You can easily create a new medical record
+                                    for by pressing on The button "Create" Below
+                                    the table
+                                  </DialogDescription>
+                                </DialogHeader>
+
+                                <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
+                                  <div className="flex justify-between items-center">
+                                    <button
+                                      className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
+                                      onClick={() => {
+                                        setFilter(!filter);
+                                      }}
+                                    >
+                                      Filter
+                                      <motion.span
+                                        animate={{ rotate: filter ? -180 : 0 }}
+                                        transition={{ duration: 0.4 }}
+                                      >
+                                        <MdKeyboardArrowDown size={20} />
+                                      </motion.span>
+                                    </button>
+                                  </div>
+
+                                  <AnimatePresence>
+                                    {filter && (
+                                      <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.4 }}
+                                      >
+                                        {filter && (
+                                          <div className="flex justify-between items-center my-6 px-1">
+                                            <Select
+                                              options={dateOptions}
+                                              onChange={(date) =>
+                                                setDateFilter(
+                                                  date ? date.value : ""
+                                                )
+                                              }
+                                              value={dateOptions.find(
+                                                (date) =>
+                                                  date.value === dateFilter
+                                              )}
+                                              isClearable
+                                              className="custom-select"
+                                              classNamePrefix="react-select"
+                                              placeholder="Date..."
+                                            />
+                                            <Select
+                                              options={medicineOptions}
+                                              onChange={(medicine) =>
+                                                setMedicineFilter(
+                                                  medicine ? medicine.value : ""
+                                                )
+                                              }
+                                              value={medicineOptions.find(
+                                                (medicine) =>
+                                                  medicine.value ===
+                                                  medicineFilter
+                                              )}
+                                              isClearable
+                                              className="custom-select"
+                                              classNamePrefix="react-select"
+                                              placeholder="Medicine..."
+                                            />
+
+                                            <Select
+                                              options={diagnoseOptions}
+                                              onChange={(diagnose) =>
+                                                setDiagnoseFilter(
+                                                  diagnose ? diagnose.value : ""
+                                                )
+                                              }
+                                              value={diagnoseOptions.find(
+                                                (diagnose) =>
+                                                  diagnose.value ===
+                                                  diagnoseFilter
+                                              )}
+                                              isClearable
+                                              className="custom-select"
+                                              classNamePrefix="react-select"
+                                              placeholder="Diagnose..."
+                                            />
+
+                                            <Select
+                                              options={doctorOptions}
+                                              onChange={(name) =>
+                                                setDoctorFilter(
+                                                  name ? name.value : ""
+                                                )
+                                              }
+                                              value={doctorOptions.find(
+                                                (name) =>
+                                                  name.value === doctorFilter
+                                              )}
+                                              isClearable
+                                              className="custom-select"
+                                              classNamePrefix="react-select"
+                                              placeholder="Doctor's Name..."
+                                            />
+                                          </div>
+                                        )}
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+
+                                  <div className="overflow-x-auto rounded-[5px]">
+                                    <table className="min-w-full divide-y divide-gray-300">
+                                      <thead className="bg-emerald-600">
+                                        <tr>
+                                          <th
+                                            scope="col"
+                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                          >
+                                            التاريخ
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                          >
+                                            الدواء
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                          >
+                                            التشخيص
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                          >
+                                            أسم الدكتور
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      {isLoadingPatientRecord ? (
+                                        <p>Loading...</p>
+                                      ) : (
+                                        <tbody className="bg-white divide-y divide-gray-300">
+                                          {currentData.map((record, index) => (
+                                            <tr
+                                              key={index}
+                                              className="hover:bg-gray-50"
+                                            >
+                                              <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
+                                                {formateDate(record.date)}
+                                              </td>
+                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                {record.medicine}
+                                              </td>
+                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                {record.diagnose}
+                                              </td>
+                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                {record.doctor.name}
+                                              </td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      )}
+                                    </table>
+                                  </div>
+                                  <Pagination />
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="outline-none"
+                                  onClick={() =>
+                                    handlePassingIds(element.patientID._id)
+                                  }
+                                >
+                                  <TfiWrite size={20} />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[650px]">
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    Create New Medical Records
+                                  </DialogTitle>
+                                  <DialogDescription>
+                                    You can easily create a new medical record
+                                    by pressing on The button "Create" after
+                                    filling the form.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div>
+                                  <form method="post">
+                                    <h1 className="text-center text-[18px] mb-2">
+                                      The following is a list of items you
+                                      should not include in the medical entry
+                                    </h1>
+                                    <p className="text-left pl-4 mb-2">
+                                      (Financial or health insurance
+                                      information, Subjective opinions,
+                                      Speculations, Blame of others or
+                                      self-doubt, Legal information such as
+                                      narratives provided to your professional
+                                      liability carrier or correspondence with
+                                      your defense attorney)
+                                    </p>
+                                    <div className="flex flex-col bg-white shadow-lg p-6">
+                                      <div className="flex flex-col justify-start">
+                                        <label
+                                          htmlFor="diagnose"
+                                          className="mb-2 text-[18px]"
+                                        >
+                                          Diagnose
+                                        </label>
+                                        <textarea
+                                          id="diagnose"
+                                          type="text"
+                                          name="diagnose"
+                                          placeholder="Write your diagnose..."
+                                          value={createRecord.diagnose}
+                                          onChange={handleChange}
+                                          className="w-full pl-2 py-2 border rounde-lg"
+                                        />
+                                      </div>
+                                      <div className="flex flex-col justify-start mt-4">
+                                        <label
+                                          htmlFor="medicine"
+                                          className="mb-2 text-[18px]"
+                                        >
+                                          Medicine
+                                        </label>
+                                        <textarea
+                                          id="medicine"
+                                          type="text"
+                                          name="medicine"
+                                          placeholder="Write the prescription medication..."
+                                          value={createRecord.medicine}
+                                          onChange={handleChange}
+                                          className="w-full pl-2 py-2 border rounde-lg"
+                                        />
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                                <DialogFooter>
+                                  <Button
+                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                      isCreating
+                                        ? "bg-blue-600"
+                                        : "bg-emerald-700"
+                                    }`}
+                                    type="submit"
+                                    disabled={isCreating}
+                                    onClick={handleCreateMedicalRecord}
+                                  >
+                                    {isCreating ? "Creating..." : "Create"}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          </div>
                         </td>
                         {/* End */}
 
