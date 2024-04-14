@@ -132,48 +132,55 @@ export function DoctorDashBoard() {
             <section className='py-4'>
                 <div className='container'>
                     <div className='row'>
-
-                        <div className='col-md-10 text-center bg-muted rounded-4 p-4'>
+                        <div className='col-md-10'>
                             <div className='d-flex gap-3 justify-content-evenly mb-4'>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
-                                        <h1 className='fs-1'>العمليات</h1>
-                                        <i className="fa-solid fs-5 fa-stethoscope ms-4 me-1 text-success"></i>
+                                        <h1 className='fs-4'>العمليات</h1>
+                                        <i className="fa-solid fa-stethoscope ms-4 me-1 text-muted"></i>
                                     </div>
                                     <div className='justify-content-center d-flex'>
-                                        <h1 className='fs-2 text-muted mt-3'>50</h1>
+                                        <h1 className='fs-5 text-muted mt-3'>50</h1>
                                     </div>
                                 </div>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
-                                        <h1 className='fs-1'>المواعيد الملغاه</h1>
-                                        <i className="text-success fs-5 fa-solid fa-ban ms-3 me-1"></i>
+                                        <h1 className='fs-4'>المواعيد الملغاه</h1>
+                                        <i className="text-danger fs-5 fa-solid fa-ban ms-3 me-1"></i>
                                     </div>
                                     <div className='justify-content-center d-flex'>
-                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.cancelledCounter}</h1>
+                                        <h1 className='fs-5 text-muted mt-3'>{countOfEverythingTodoc.cancelledCounter}</h1>
                                     </div>
                                 </div>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
-                                        <h1 className='fs-1'> المواعيد المقبولة</h1>
+                                        <h1 className='fs-4'> المواعيد المقبولة</h1>
                                         <i className="text-success fs-5 fa-regular fa-circle-check ms-2 "></i>
                                     </div>
                                     <div className='justify-content-center d-flex'>
-                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.doneCounter}</h1>
+                                        <h1 className='fs-5 text-muted mt-3'>{countOfEverythingTodoc.doneCounter}</h1>
                                     </div>
                                 </div>
                                 <div className='widthForCard  shadow rounded-3 p-3'>
                                     <div className='d-flex align-items-center justify-content-end'>
-                                        <h1 className='fs-1'> المواعيد الجديدة</h1>
-                                        <i className="text-success fs-5 fa-regular fa-square-plus ms-2 "></i>
+                                        <h1 className='fs-4'> المواعيد الجديدة</h1>
+                                        <i className="text-primary fs-5 fa-regular fa-square-plus ms-2 "></i>
                                     </div>
                                     <div className='justify-content-center d-flex'>
-                                        <h1 className='fs-2 text-muted mt-3'>{countOfEverythingTodoc.waitingCounter}</h1>
+                                        <h1 className='fs-5 text-muted mt-3'>{countOfEverythingTodoc.waitingCounter}</h1>
                                     </div>
                                 </div>
 
 
                             </div>
+                        </div>
+
+                        <div className='col-md-2 text-end'>
+                            <h1 className='fs-3 py-3'>د/ {name}</h1>
+                            <p className='text-muted fs-5'>{specialize}</p>
+                        </div>
+                        <div className='col-md-10 text-center bg-muted rounded-4 p-4'>
+
                             <h1 className={errorClass}>{error}</h1>
                             <div className='d-flex justify-content-start mb-2'>
                                 <button className={classOfFilterButton} onClick={toggleFilter}> Filter {showFilter ? <i className="fa-solid fa-arrow-up "></i> : <i className="fa-solid fa-arrow-down"></i>}
@@ -269,10 +276,6 @@ export function DoctorDashBoard() {
                             </div>
                         </div>
 
-                        <div className='col-md-2 text-end'>
-                            <h1 className='fs-3 py-3'>د/ {name}</h1>
-                            <p className='text-muted fs-5'>{specialize}</p>
-                        </div>
 
                     </div>
                 </div>
