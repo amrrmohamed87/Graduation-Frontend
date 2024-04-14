@@ -241,6 +241,8 @@ export function DoctorDashBoard() {
                                                     <button onClick={() => {
                                                         StatusOfPatient(element._id)
                                                     }} className='btn btn-success widthForButton'>حضور</button>
+                                                    {/* zorar almlf altby  */}
+                                                    <button className='btn btn-primary ms-2 widthForButton'>الملف الطبى</button>
                                                 </td>
                                                 <td>
                                                     <p>{element.day.slice(0, 10)}</p>
