@@ -121,141 +121,147 @@ body::-webkit-scrollbar-track {
 }
 /* search doc */
 
-@media (min-width:300px) and (max-width:385px) {
-  .searchfordocBar{
-      width: 40% !important;
+@media (min-width: 300px) and (max-width: 385px) {
+  .searchfordocBar {
+    width: 40% !important;
   }
-  .searchCloseSection{
-      left: 90%;
+  .searchCloseSection {
+    left: 90%;
   }
-  .cardInIphoneX{
-      width:80% !important;
+  .cardInIphoneX {
+    width: 80% !important;
   }
-  .StyleSoraGetSection{
-      bottom: -11%;
-      
+  .StyleSoraGetSection {
+    bottom: -11%;
   }
-  .styleOfBoxGetUsers{
-      bottom: -12% !important;
+  .styleOfBoxGetUsers {
+    bottom: -12% !important;
   }
-  .widthForDivInGetUser{
-      width: 90%;
+  .widthForDivInGetUser {
+    width: 90%;
   }
-  .BookingSectionSora{
-      width: 100%;
-      margin-bottom: 15%;
-      margin-top: 40%;
+  .BookingSectionSora {
+    width: 100%;
+    margin-bottom: 15%;
+    margin-top: 40%;
   }
-  .SectionBookingInIphone{
-      flex-wrap: wrap;
+  .SectionBookingInIphone {
+    flex-wrap: wrap;
   }
-  .BookingSectionText{
-      width: 100%;
-      margin-top: 3%;
+  .BookingSectionText {
+    width: 100%;
+    margin-top: 3%;
   }
-  .forH1InBooking{
-      width: 40%;
+  .forH1InBooking {
+    width: 40%;
   }
-  .showDocInHospitals{
-      width: 90% !important;
+  .showDocInHospitals {
+    width: 90% !important;
   }
-  .containerBookSection{
+  .containerBookSection {
     padding: 0% !important;
   }
-  .secBook{
+  .secBook {
     top: 11%;
     height: 88%;
     width: 95%;
     left: 2.5%;
   }
-  .UnderLineAfterP{
+  .UnderLineAfterP {
     margin-top: 2% !important;
   }
-  .firstDivInBookSection{
+  .firstDivInBookSection {
     margin-top: 0% !important;
   }
-  .LabelForNameBookSection{
+  .LabelForNameBookSection {
     margin-right: 0% !important;
-  }.UnderLineAfterP::after{
+  }
+  .UnderLineAfterP::after {
     top: 9%;
-  }.wordSureBook{
+  }
+  .wordSureBook {
     margin-top: 5% !important;
-  }.sureBook{
+  }
+  .sureBook {
     width: 90% !important;
     left: 5%;
     height: 65%;
     top: 22%;
-  }.secBook2{
+  }
+  .secBook2 {
     width: 80% !important;
     height: 30% !important;
     left: 10%;
   }
 }
-@media (min-width:160px) and (max-width:299px) {
-  .searchfordocBar{
-      width: 40% !important;
+@media (min-width: 160px) and (max-width: 299px) {
+  .searchfordocBar {
+    width: 40% !important;
   }
-  .searchCloseSection{
-      left: 90%;
+  .searchCloseSection {
+    left: 90%;
   }
-  .cardInIphoneX{
-      width:80% !important;
+  .cardInIphoneX {
+    width: 80% !important;
   }
-  .StyleSoraGetSection{
-      bottom: -11%;
-      
+  .StyleSoraGetSection {
+    bottom: -11%;
   }
-  .styleOfBoxGetUsers{
-      bottom: -14% !important;
+  .styleOfBoxGetUsers {
+    bottom: -14% !important;
   }
-  .widthForDivInGetUser{
-      width: 90%;
+  .widthForDivInGetUser {
+    width: 90%;
   }
-  .BookingSectionSora{
-      width: 100%;
-      margin-bottom: 15%;
-      margin-top: 40%;
+  .BookingSectionSora {
+    width: 100%;
+    margin-bottom: 15%;
+    margin-top: 40%;
   }
-  .SectionBookingInIphone{
-      flex-wrap: wrap;
+  .SectionBookingInIphone {
+    flex-wrap: wrap;
   }
-  .BookingSectionText{
-      width: 100%;
-      margin-top: 3%;
+  .BookingSectionText {
+    width: 100%;
+    margin-top: 3%;
   }
-  .forH1InBooking{
-      width: 40%;
+  .forH1InBooking {
+    width: 40%;
   }
-  .showDocInHospitals{
-      width: 90% !important;
+  .showDocInHospitals {
+    width: 90% !important;
   }
-  .containerBookSection{
+  .containerBookSection {
     padding: 0% !important;
   }
-  .secBook{
+  .secBook {
     top: 11%;
     height: 88%;
     width: 95%;
     left: 2.5%;
   }
-  .UnderLineAfterP{
+  .UnderLineAfterP {
     margin-top: 2% !important;
   }
-  .firstDivInBookSection{
+  .firstDivInBookSection {
     margin-top: 0% !important;
   }
-  .LabelForNameBookSection{
+  .LabelForNameBookSection {
     margin-right: 0% !important;
-  }.UnderLineAfterP::after{
+  }
+  .UnderLineAfterP::after {
     top: 9%;
-  }.wordSureBook{
+  }
+  .wordSureBook {
     margin-top: 5% !important;
-  }.sureBook{
+  }
+  .sureBook {
     width: 90% !important;
     left: 5%;
     height: 65%;
     top: 22%;
-  }.secBook2{
+  }
+  .secBook2 {
     width: 80% !important;
     height: 30% !important;
     left: 10%;
@@ -263,67 +269,80 @@ body::-webkit-scrollbar-track {
 }
 
 /* medication search */
-@media (min-width:300px) and (max-width:385px) {
-  .DivSoraSearchMed{
-      width: 100%;
+@media (min-width: 300px) and (max-width: 385px) {
+  .DivSoraSearchMed {
+    width: 100%;
   }
-  .textForSearchMed{
-      width: 100%;
-  }.ClassError2Width{
+  .textForSearchMed {
+    width: 100%;
+  }
+  .ClassError2Width {
     width: 100% !important;
     font-size: 20px !important;
-  }.textInUpper{
+  }
+  .textInUpper {
     width: 100% !important;
-  }.ShowResultOfSearchMed{
+  }
+  .ShowResultOfSearchMed {
     width: 100%;
-  }.widthSection{
+  }
+  .widthSection {
     width: 100% !important;
-  }.WidthOfResultCard{
+  }
+  .WidthOfResultCard {
     width: 100% !important;
-  }.soraShowAllMed{
+  }
+  .soraShowAllMed {
     width: 100% !important;
-  }.TextShowAllMed{
+  }
+  .TextShowAllMed {
     width: 100% !important;
   }
 }
-@media (min-width:160px) and (max-width:299px) {
-  .DivSoraSearchMed{
-      width: 100%;
+@media (min-width: 160px) and (max-width: 299px) {
+  .DivSoraSearchMed {
+    width: 100%;
   }
-  .textForSearchMed{
-      width: 100%;
-  }.textForSearchMEdH1{
+  .textForSearchMed {
+    width: 100%;
+  }
+  .textForSearchMEdH1 {
     font-size: 20px !important;
   }
-  .textForSearchMEdP{
+  .textForSearchMEdP {
     font-size: 15px !important;
   }
-  .ClassError2Width{
+  .ClassError2Width {
     width: 100% !important;
     font-size: 20px !important;
-  }.textInUpper{
+  }
+  .textInUpper {
     width: 100% !important;
-  }.SHowSearchMedicines{
+  }
+  .SHowSearchMedicines {
     padding: 5px !important;
   }
-  .ShowResultOfSearchMed{
+  .ShowResultOfSearchMed {
     width: 100%;
-    
-  }.widthSection{
-    width: 100% !important;
-  }.WidthOfResultCard{
-    width: 100% !important;
-  }.soraShowAllMed{
-    width: 100% !important;
-  }.TextShowAllMed{
+  }
+  .widthSection {
     width: 100% !important;
   }
-  .SHowMedicines{
+  .WidthOfResultCard {
+    width: 100% !important;
+  }
+  .soraShowAllMed {
+    width: 100% !important;
+  }
+  .TextShowAllMed {
+    width: 100% !important;
+  }
+  .SHowMedicines {
     padding: 6px !important;
   }
 }
 
 /* doctor dashboard */
-.widthForButton{
+.widthForButton {
   width: 30% !important;
 }
