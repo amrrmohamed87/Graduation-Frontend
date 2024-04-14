@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Footer from './../components/Footer';
 import Dashboard from "../components/Dashboard";
 import "../css/DoctorDashboard.css"
 import axios from 'axios'
@@ -280,7 +279,6 @@ export function DoctorDashBoard() {
                     </div>
                 </div>
             </section>
-            <Footer />
         </>
     )
 }
