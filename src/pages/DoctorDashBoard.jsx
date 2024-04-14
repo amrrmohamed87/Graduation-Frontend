@@ -169,7 +169,7 @@ export function DoctorDashBoard() {
   const [isLoadingPatientRecord, setIsLoadingPatientRecord] = useState(false);
 
   const [currentRecordPage, setCurrentRecordPage] = useState(1);
-  const [rowsPerRecordPage, setRowsPerRecordPage] = useState(4);
+  const [rowsPerRecordPage, setRowsPerRecordPage] = useState(3);
   const [filter, setFilter] = useState(false);
 
   const [doctorOptions, setDoctorOptions] = useState([]);
@@ -211,17 +211,14 @@ export function DoctorDashBoard() {
         ...new Set(resData.userR.map((medicine) => medicine.medicine)),
       ].map((medicine) => ({ label: medicine, value: medicine }));
 
-      const date = resData.userR.map((date) => {
-        const formattedDate = formateDate(date.date);
-        return { label: formattedDate, value: formattedDate };
-      });
+      const date = [
+        ...new Set(resData.userR.map((date) => formateDate(date.date))),
+      ].map((date) => ({ label: date, value: date }));
 
       setDoctorOptions(name);
       setDiagnoseOptions(diagnose);
       setMedicineOptions(medicine);
       setDateOptions(date);
-      console.log(resData);
-      toast.success("Done");
       setIsLoadingPatientRecord(false);
     } catch (error) {
       toast.error("حدث خطأ");
@@ -266,7 +263,7 @@ export function DoctorDashBoard() {
 
   //handle pagination
   const handleRowsPerPage = (event) => {
-    setCurrentRecordPage(event.target.value);
+    setRowsPerRecordPage(event.target.value);
     setCurrentRecordPage(1);
   };
 
@@ -542,7 +539,7 @@ export function DoctorDashBoard() {
                                 </DialogDescription>
                               </DialogHeader>
 
-                              <div className="flex flex-col p-6 bg-white rounded-lg shadow-xl w-full mx-auto mb-12">
+                              <div className="flex flex-col p-6 bg-white rounded-lg shadow-xl w-full mx-auto">
                                 <div className="flex justify-between items-center">
                                   <button
                                     className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
