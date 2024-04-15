@@ -106,6 +106,7 @@ export function DoctorDashBoard() {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError("لا يوجد حجوزات");
+        setIsLoading(false)
         setErrorClass("fs-1 text-center mt-5 mb-5");
         setClassForTable("d-none");
         setclassOfFilterButton("d-none");
