@@ -89,6 +89,7 @@ export function DoctorDashBoard() {
   }
   // --------------------------
   // get booking
+  const [isLoading , setIsLoading] = useState(true)
   const [getBookForDoct, setgetBookForDoct] = useState([]);
   const [error, setError] = useState("");
   const [errorClass, setErrorClass] = useState("d-none");
@@ -101,6 +102,7 @@ export function DoctorDashBoard() {
         `https://mhiproject.onrender.com/doctor/showBooking/${doctorId}`
       );
       setgetBookForDoct(data.getbook);
+      setIsLoading(false)
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError("لا يوجد حجوزات");
@@ -448,6 +450,7 @@ export function DoctorDashBoard() {
             </div>
             <div className="mt-3 col-md-10 text-center bg-muted rounded-4 p-5">
               <h1 className={errorClass}>{error}</h1>
+              {isLoading == true ? <h1 className="text-center fs-1 m-5">جارى التحميل</h1>:""} 
               <div className="d-flex justify-content-start mb-2">
                 <button className={classOfFilterButton} onClick={toggleFilter}>
                   {" "}
