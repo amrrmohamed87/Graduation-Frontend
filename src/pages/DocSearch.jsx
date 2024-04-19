@@ -128,33 +128,21 @@ export function DocSearch() {
             // setClassName("d-none")
             setSureBookSection("d-none")
             setTrueBook("w-50 position-fixed secBook2 rounded-5 shadow-lg bg-white d-flex flex-wrap")
-        } catch (error) {
-            if (error.data && error.data.status === 406) {
+        }
+        catch (error) {
+            if (error.response && error.response.status === 406) {
                 setError('يرجى اختيار موعد حجز أخر');
                 setErrorButton("btn btn-success me-5")
                 setClassOfError("text-center fs-5 text-danger")
-            } else {
-                setError('يرجى اختيار موعد حجز أخر');
-                setErrorButton("btn btn-success me-5")
-                setClassOfError("text-center fs-5 text-danger")
-            }
-            if (error.data && error.data.status === 400) {
+            } else if (error.response && error.response.status === 400) {
                 setError('يرجى ادخال بيانات صحيحة ');
-
-            } else {
-                setError('يرجى ادخال بيانات صحيحة ');
-            }
-            if (error.data && error.data.status === 404) {
+                setErrorButton("btn btn-success me-5")
+                setClassOfError("text-center fs-5 text-danger")
+            } else if (error.response && error.response.status === 404) {
                 setError('يرجى اختيار موعد حجز أخر');
                 setErrorButton("btn btn-success me-5")
                 setClassOfError("text-center fs-5 text-danger")
-            } else {
-                setError('يرجى المحاولة لاحقا');
-                setErrorButton("btn btn-success me-5")
-                setClassOfError("text-center fs-5 text-danger")
             }
-
-
         }
     }
     function BackStep() {
@@ -566,7 +554,7 @@ export function DocSearch() {
                     </div>
                     <img src={secondSectionPhoto} className={`position-absolute StyleSoraGetSection rounded-4 ${showDiv ? 'active' : ''}`} alt="sora" />
                     <div className={`w-75 shadow rounded-4 z-3 bottom-0  d-flex flex-wrap justify-content-around gap-4 position-absolute overflow-scroll styleOfBoxGetUsers ${showDiv ? 'active' : ''}`}>
-                    {isLoading == true ? <h1 className='fs-1 mt-5 text-center fw-bold '> جارى التحميل</h1> : ""}
+                        {isLoading == true ? <h1 className='fs-1 mt-5 text-center fw-bold '> جارى التحميل</h1> : ""}
                         <h1 className={errorGetDoc}>جارى التحميل</h1>
                         {DocData.map((element, i) => <div key={i} className="widthForDivInGetUser rounded-4 border-4 mt-3">
                             <div className='py-3 text-end'>
@@ -597,7 +585,7 @@ export function DocSearch() {
                             <i className="fa-solid fa-arrow-down text-success fs-5 mt-3  "><span className="fs-5 ms-2 text-black fw-medium">المستشفيات المتاحة <i className="fa-regular fa-hospital text-success"></i></span></i>
 
                             <div className="d-flex flex-wrap gap-3 justify-content-evenly">
-                            {isLoading == true ? <h1 className='fs-1 text-center fw-bold '> جارى التحميل</h1> : ""}
+                                {isLoading == true ? <h1 className='fs-1 text-center fw-bold '> جارى التحميل</h1> : ""}
                                 {hospitalsInfo.map((element, i) => <h1 key={i} onClick={() => {
                                     // getHospitalID(element._id);
                                     searchDocINHospi(element._id);
