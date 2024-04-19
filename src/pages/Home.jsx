@@ -118,18 +118,17 @@ export default function Home() {
         </p>
         <div className="flex flex-col justify-center items-center gap-8 sm:flex sm:flex-row sm:justify-center sm:gap-16 sm:p-4 sm:mt-4">
           {features.map((feature) => (
-            <div
-              key={feature.src}
-              className="p-4 w-[290px] h-[290px] bg-white shadow-md rounded-lg md:p-12 flex flex-col justify-center items-end text-right"
-            >
-              <img src={feature.src} className="w-[70px] mt-8 mb-3" />
-              <h2 className="text-black md:text-[25px] mb-2">
-                {feature.label}
-              </h2>
-              <p className="text-gray-800 md:text-[18px]">
-                {feature.description}
-              </p>
-            </div>
+            <Link key={feature.src} to={feature.link}>
+              <div className="p-4 w-[290px] h-[290px] bg-white shadow-md rounded-lg md:p-12 flex flex-col justify-center items-end text-right">
+                <img src={feature.src} className="w-[70px] mt-8 mb-3" />
+                <h2 className="text-black md:text-[25px] mb-2">
+                  {feature.label}
+                </h2>
+                <p className="text-gray-800 md:text-[18px]">
+                  {feature.description}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </motion.section>
