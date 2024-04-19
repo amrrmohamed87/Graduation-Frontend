@@ -529,7 +529,7 @@ export function DocSearch() {
                             submitSearch(e);
                             toggleDivPosition()
                         }} type='button' className='btn btn-info rounded-5'>
-                            <i className="fa-solid fs-3 text-info fa-magnifying-glass"></i>
+                            <i className="fa-solid fs-3 text-white fa-magnifying-glass"></i>
                         </button>
                         <input type="text" className=' searchfordocBar InResponsiveForIphonex form-control text-end  rounded-5' onChange={searchForDoctor} placeholder="..بحث باسم الدكتور" name='name' />
                         <input type="text" className='searchfordocBar InResponsiveForIphonex form-control text-end  rounded-5' onChange={searchForDoctor} placeholder="..بحث بالتخصص" name='specialize' />

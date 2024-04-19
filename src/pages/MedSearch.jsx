@@ -122,7 +122,7 @@ export function MedSearch() {
           <form onClick={getResponseOfSearch}>
             <div className='d-flex w-100 justify-content-center '>
               <button type='button' className='btn btn-info rounded-5'>
-                <i className="fa-solid fs-3 text-info fa-magnifying-glass"></i>
+                <i className="fa-solid fs-3 text-white fa-magnifying-glass"></i>
               </button>
               <input onChange={readthing} onClick={showThing} type="text" className='w-50 form-control text-end  rounded-5' name='name' placeholder='.....ابحث عن الادوية' />
             </div>
