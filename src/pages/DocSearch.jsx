@@ -174,9 +174,6 @@ export function DocSearch() {
     // booking section
     const [hospitalsInfo, setHospitalsInfo] = useState([])
     const [classShowResultOfhospi, setclassShowResultOfhospi] = useState("d-none")
-    // const [hospitalSearchValue, sethospitalSearchValue] = useState({
-    //     hospitalID: '',
-    // })
     const [ShowResultFromHospi, setShowResultFromHospi] = useState([])
     useEffect(() => {
         getHospitals()
@@ -186,12 +183,6 @@ export function DocSearch() {
         setHospitalsInfo(data.findHospitals)
         setIsLoading(false)
     }
-    // function getHospitalID(hospiID) {
-    //     sethospitalSearchValue({
-    //         ...hospitalSearchValue,
-    //         hospitalID: hospiID
-    //     })
-    // }
     async function searchDocINHospi(hospiID) {
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/searchHospital", { hospitalID: hospiID });
@@ -241,14 +232,16 @@ export function DocSearch() {
                                 <div className="col-md-5">
                                     <p className="text-center fs-3 py-2">أختر التاريخ و الوقت</p>
                                     <div className="d-flex justify-content-center">
-                                        <input onChange={setBookForPatient} name="day" type="date" className="form-control w-50 border-success border-3"></input>
+                                        <input onChange={setBookForPatient} name="day" type="date" 
+                                        className="form-control w-50 border-success border-3"></input>
                                     </div>
 
                                     <div className="container d-flex justify-content-center">
                                         <div className="d-flex toChangeStyleTime overflow-scroll position-relative justify-content-center border-3 border-success py-3 rounded-3">
                                             <div className="position-absolute ">
                                                 <div>
-                                                    <input onClick={setBookForPatient} type="button" className=" form-control w-100" name="time" value={"8:00"} />
+                                                    <input onClick={setBookForPatient} type="button" 
+                                                    className=" form-control w-100" name="time" value={"8:00"} />
                                                 </div>
                                                 <div>
                                                     <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"8:15"} />
