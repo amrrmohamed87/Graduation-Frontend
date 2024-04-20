@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      appearance: {
+        none: 'none', // Enables using 'appearance-none'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
