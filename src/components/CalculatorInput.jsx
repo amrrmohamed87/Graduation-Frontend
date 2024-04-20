@@ -1,18 +1,44 @@
-function CalculatorInput({ label, id, ...props }) {
+import { useEffect, useRef } from "react";
+
+function CalculatorInput({ label, placeholder, id, ...props }) {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const currentInput = inputRef.current;
+    const preventScroll = (event) => {
+      event.preventDefault();
+    };
+
+    if (currentInput) {
+      currentInput.addEventListener("wheel", preventScroll);
+    }
+
+    return () => {
+      if (currentInput) {
+        currentInput.removeEventListener("wheel", preventScroll);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col mb-6 mx-2">
       <label
         htmlFor={id}
-        className="text-right text-slate-100 mb-2 md:text-[28px]"
+        className="text-right text-emerald-700 mb-2 md:text-[20px]"
       >
         {label}
       </label>
       <input
         id={id}
-        required
+        placeholder={placeholder}
+        ref={inputRef}
         {...props}
-        className="bg-white text-right pr-2 h-[30px] w-[180px] border border-gray-500 focus:border-gray-950 rounded-lg
-        md:w-[250px] md:h-[35px]"
+        style={{
+          WebkitAppearance: "none",
+          MozAppearance: "textfield",
+        }}
+        className="appearance-none bg-white text-right pr-4 h-[25px] w-full border border-gray-500 focus:border-gray-950 rounded-lg
+         md:h-[30px]"
       />
     </div>
   );
