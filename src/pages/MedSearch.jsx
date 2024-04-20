@@ -11,6 +11,7 @@ export function MedSearch() {
   const [showDiv, setShowDiv] = useState();
   const [showDivGetMed, setShowDivGetMed] = useState("d-none")
   const [error, setError] = useState("d-none")
+const [isLoading,setIsLoading] =useState(true) 
   useEffect(() => {
     GetMedicines()
   }, [])
@@ -18,10 +19,9 @@ export function MedSearch() {
     try {
       let { data } = await axios.get('https://mhiproject.onrender.com/patient/getMedicines')
       setGetMedicine(data.findMedicines)
+      setIsLoading(false)
     } catch (error) {
-      if (error.data & error.data.status == null) {
-        setError("text-center fs-1 fw-bold mt-3")
-      }
+      
     }
   }
   const toggleDivPosition2 = (index) => {
@@ -192,6 +192,7 @@ export function MedSearch() {
             <div className='container widthSection'>
               <div className={error}>Loading Page</div>
               <div className="row SHowMedicines overflow-scroll justify-content-evenly gap-3 shadow-lg p-4 rounded-4">
+              {isLoading == true ? <h1 className='fs-1 mt-5 text-center fw-bold '> جارى التحميل</h1> : ""}
                 {getMedicine.map((element, i) => <div key={i} className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden WidthOfResultCard">
                   <div className='d-flex mt-2 justify-content-center '>
                     <div className="d-flex justify-content-center w-50 styleCardOfShowMed">
