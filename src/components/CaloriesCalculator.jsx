@@ -1,13 +1,18 @@
 import { useState } from "react";
 import CalculatorInput from "./CalculatorInput";
 
+import calculator from "../assets/images/calculator.png";
+import salad from "../assets/images/salad.png";
+
 function CaloriesCalculator() {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [age, setAge] = useState("");
-  const [gender, setGender] = useState("ذكر");
+  const [gender, setGender] = useState("");
   const [activityLevel, setActivityLevel] = useState("كَسُول");
   const [result, setResult] = useState(null);
+  const [male, setIsMale] = useState(false);
+  const [female, setIsFemale] = useState(false);
 
   function calculate() {
     //convert inputs to numbers by using parseFloat
@@ -54,9 +59,7 @@ function CaloriesCalculator() {
       case "نشيط جدا":
         totalCalories = bmr * 1.725;
         break;
-      case "نشط جدًا جدًا":
-        totalCalories = bmr * 1.9;
-        break;
+
       default:
         totalCalories = 0;
     }
@@ -66,6 +69,13 @@ function CaloriesCalculator() {
         totalCalories
       )} سعره `
     );
+    setWeight("");
+    setHeight("");
+    setAge("");
+    setGender("");
+    setActivityLevel("كَسُول");
+    setIsMale(false);
+    setIsFemale(false);
   }
 
   function handleSubmit(event) {
@@ -74,40 +84,71 @@ function CaloriesCalculator() {
 
   return (
     <section className="md:h-[700px]">
-      <h1 className="text-center mt-8 text-[40px] text-emerald-800 mb-4 md:mt-12 md:mb-8 md:text-[60px]">
-        احسب سعراتك الحرارية
-      </h1>
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <form onSubmit={handleSubmit}>
-          <div className="bg-[#0c3430] rounded-[30px] shadow-2xl py-4 mx-4 md:ml-16 md:py-16 md:px-8">
-            <div className="flex md:gap-4">
-              <CalculatorInput
-                label="الطول(سم)"
-                type="number"
-                id="height"
-                value={height}
-                onChange={(e) => setHeight(e.target.value)}
-              />
-              <CalculatorInput
-                label="الوزن(كم)"
-                type="number"
-                id="weight"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
-              />
-            </div>
-            <div className="flex gap-2 md:gap-6">
-              <CalculatorInput
-                label="العمر"
-                type="number"
-                id="age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-              <div className="flex flex-col md:mt-[0.01rem]">
+      <div className="flex justify-center">
+        <div className="flex flex-col md:flex-row items-center p-8 bg-white rounded-[15px] shadow-sm md:border w-[1200px] md:h-[550px]">
+          <form onSubmit={handleSubmit}>
+            <div className="bg-white border max-w-[550px] mt-6 rounded-[10px] shadow-md py-4 md:py-16 md:px-8">
+              <div className="flex justify-center">
+                <img src={salad} className="w-[60px]" />
+              </div>
+              <div className="flex justify-center items-center gap-3 mt-4 mb-2">
+                <button
+                  onClick={() => {
+                    setIsMale(true);
+                    setIsFemale(false);
+                    setGender("ذكر");
+                  }}
+                  className={`shadow-sm rounded-[20px] py-4 px-20 text-[20px] ${
+                    male
+                      ? "bg-blue-300 border-none"
+                      : "bg-transparent border border-gray-600"
+                  }`}
+                >
+                  ذكر
+                </button>
+                <button
+                  onClick={() => {
+                    setIsFemale(true);
+                    setIsMale(false);
+                    setGender("أنثى");
+                  }}
+                  className={`shadow-sm rounded-[20px] py-4 px-20 text-[20px] transition-all duration-300 ${
+                    female
+                      ? "bg-pink-400 border-none"
+                      : "bg-transparent border border-gray-600"
+                  }`}
+                >
+                  أنثى
+                </button>
+              </div>
+              <div className="flex md:gap-4">
+                <CalculatorInput
+                  placeholder="الطول(سم)"
+                  type="number"
+                  id="height"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                />
+                <CalculatorInput
+                  placeholder="الوزن(كم)"
+                  type="number"
+                  id="weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                />
+                <CalculatorInput
+                  placeholder="العمر"
+                  type="number"
+                  id="age"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </div>
+              <div className="flex gap-2 md:gap-4">
+                {/* <div className="flex flex-col">
                 <label
                   htmlFor="gender"
-                  className="text-right text-slate-100 mb-2 md:text-[28px]"
+                  className="text-right text-emerald-700 mb-2 md:text-[20px]"
                 >
                   الجنس
                 </label>
@@ -121,20 +162,12 @@ function CaloriesCalculator() {
                   <option value="ذكر">ذكر</option>
                   <option value="أنثى">أنثى</option>
                 </select>
+              </div> */}
               </div>
-            </div>
-            <div className="flex justify-center items-center gap-16 md:gap-4 mx-4 md:mr-2 md:items-center">
-              <button
-                onClick={calculate}
-                className="w-[120px] h-[30px] text-center mt-8 text-emerald-600 bg-white  border border-gray-500 rounded-lg
-                  md:ml-[4.5rem] md:w-[150px] md:h-[45px] hover:bg-[#dddd94] md:text-[28px]"
-              >
-                احسب
-              </button>
               <div className="flex flex-col">
                 <label
                   htmlFor="activityLevel"
-                  className="text-right mb-2 text-slate-100"
+                  className="text-right mb-2 text-emerald-700"
                 >
                   مستوى النشاط
                 </label>
@@ -142,8 +175,8 @@ function CaloriesCalculator() {
                   id="activityLevel"
                   value={activityLevel}
                   onChange={(e) => setActivityLevel(e.target.value)}
-                  className="w-[180px] h-[30px] text-right bg-white  border border-gray-500 focus:border-gray-950 rounded-lg pr-2
-                  md:w-full md:h-[35px]"
+                  className="h-[30px] text-right bg-white  border border-gray-500 focus:border-gray-950 rounded-lg pr-2
+                 md:w-full md:h-[35px] mx-2"
                 >
                   <option value="كَسُول">
                     كَسُول (القليل من التمارين أو عدم ممارسة الرياضة)
@@ -164,19 +197,40 @@ function CaloriesCalculator() {
                   </option>
                 </select>
               </div>
+              <div className="p-2 md:p-0">
+                <button
+                  onClick={calculate}
+                  className={`py-2 w-full text-center mt-8 text-white   border border-gray-500 rounded-lg
+                     transition-all duration-300 md:text-[20px] ${
+                       female
+                         ? "bg-pink-400 hover:bg-pink-600"
+                         : "bg-emerald-500"
+                     } ${
+                    male ? "bg-blue-300 hover:bg-blue-500" : "bg-emerald-500"
+                  }`}
+                >
+                  احسب
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
-        <div className="m-4 md:m-0">
-          <p className="text-[25px] text-right mx-4 mb-4 md:text-[35px] md:mr-16 md:ml-28">
-            أدخل معلوماتك في النموذج أدناه وانقر على "احسب" لتحديد كمية السعرات
-            الحرارية اليومية التي تتناولها
-          </p>
-          {result && (
-            <p className="text-center text-[23px] text-emerald-600 mt-8 mb-8 md:text-right md:mr-16 md:text-[30px]">
-              {result}
+          </form>
+          <div className="m-4 md:m-0">
+            <div className="flex items-center justify-center gap-2">
+              <h1 className="text-center text-emerald-700 text-[22px]  md:text-[40px]">
+                احسب سعراتك الحرارية
+              </h1>
+              <img src={calculator} className="w-[25px] md:w-[40px]" />
+            </div>
+            <p className="text-[17px] text-right mt-2 mb-4 md:text-[20px]">
+              أدخل معلوماتك في النموذج أدناه وانقر على "احسب" لتحديد كمية
+              السعرات الحرارية اليومية التي تتناولها
             </p>
-          )}
+            {result && (
+              <p className="text-center text-[17px] text-emerald-600 mt-8 mb-8 md:text-right md:text-[30px]">
+                {result}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </section>
