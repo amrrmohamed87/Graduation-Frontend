@@ -18,6 +18,12 @@ import health from "../assets/images/healthy.png";
 import food from "../assets/images/healthy-food.png";
 import awareness from "../assets/images/education.png";
 
+import vegetables from "../assets/images/vegetables.png";
+import fruits from "../assets/images/fruits.png";
+import bread from "../assets/images/bread.png";
+import protein from "../assets/images/proteins.png";
+import nuts from "../assets/images/nuts.png";
+
 // Navbar Links
 export const navLinks = [
     { to: "/contact-us", label: "التواصل معنا" },
@@ -186,4 +192,37 @@ export const healthcare = [
         ]
     }
 ];
+
+//Healthy Food
+
+export const healthyFood = [
+    {
+        src: vegetables ,
+        label: "الخضروات",
+        description: "الخضروات مثل السبانخ واللفت والسلق مليئة بالفيتامينات والمعادن والألياف ومضادات الأكسدة. فهي منخفضة السعرات الحرارية وتحتوي على نسبة عالية من العناصر الغذائية التي يمكن أن تفيد صحتك بعدة طرق",
+    },
+    {
+        src: fruits ,
+        label: "الفاكهة",
+        description: "مجموعة متنوعة من الفواكه توفر الفيتامينات والمعادن المختلفة. التوت، على سبيل المثال، يحتوي على نسبة عالية من مضادات الأكسدة والألياف، في حين أن الحمضيات مليئة بفيتامين C وهو أمر مهم لوظيفة المناعة",
+    },
+    {
+        src: bread ,
+        label: "الحبوب الكاملة",
+        description: "توفر الأطعمة مثل الكينوا والأرز البني والشوفان والقمح الكامل العناصر الغذائية الأساسية مثل الألياف والبروتين وفيتامينات ب. على عكس الحبوب المكررة، تحتوي الحبوب الكاملة على مؤشر نسبة السكر في الدم أقل وتوفر طاقة مستدامة",
+    }
+]
+
+export const healthyFoodTwo = [
+    {
+        src: protein ,
+        label: "البروتين الخالية من الدهون",
+        description: "بما في ذلك اللحوم الخالية من الدهون مثل الدجاج والديك الرومي، والأسماك مثل السلمون والماكريل، والمصادر النباتية مثل العدس والحمص، تعتبر البروتينات الخالية من الدهون ضرورية لصيانة العضلات وإصلاحها. كما أنها تجعلك تشعر بالشبع لفترة أطول"
+    },
+    {
+        src: nuts,
+        label: "المكسرات والبذور",
+        description: "يعد اللوز والجوز وبذور الكتان وبذور الشيا مصادر رائعة للدهون الصحية والبروتينات والألياف. أنها تحتوي على الأحماض الدهنية الأساسية ويمكن أن تساعد في إدارة الجوع، ودعم صحة القلب، وتحقيق الاستقرار في مستويات السكر في الدم"
+    }
+]
 
