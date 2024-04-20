@@ -39,7 +39,7 @@ function HealthAwareness() {
           {guide.map((feature) => (
             <div
               key={feature.src}
-              className="p-4 w-[300px] h-[300px] bg-white shadow-2xl rounded-lg md:p-12 flex flex-col justify-center items-end text-right"
+              className="p-4 w-[300px] h-[300px] bg-white shadow-md border rounded-lg md:p-12 flex flex-col justify-center items-end text-right"
             >
               <img src={feature.src} className="w-[70px] mt-8 mb-3" />
               <h2 className="text-black md:text-[25px] mb-2">
@@ -66,7 +66,7 @@ function HealthAwareness() {
               </h1>
               <img src={healthawareness} className="w-[60px] mb-3" />
             </div>
-            <p className="bg-white shadow-md p-4 text-right text-emerald-950 text-[19px] md:text-[21px]">
+            <p className="bg-white border rounded-[5px] shadow-md p-4 text-right text-emerald-950 text-[19px] md:text-[21px]">
               إن تبني نمط حياة صحي هو رحلة شخصية، وقد تختلف التوصيات المحددة لكل
               فرد. وهو ينطوي على إجراء تغييرات تدريجية ومستدامة على العادات
               والسلوكيات اليومية لتعزيز الصحة والرفاهية على المدى الطويل
@@ -79,7 +79,7 @@ function HealthAwareness() {
           {healthcare.map((health) => (
             <div
               key={health.src}
-              className="bg-white shadow-md rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
+              className="bg-white border shadow-md rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
             >
               <img src={health.src} className="shadow-sm" />
               <div className="p-4">
@@ -111,7 +111,7 @@ function HealthAwareness() {
       </section>
 
       <section className="mb-24">
-        <div className="md:mx-24 bg-white shadow-md pt-4">
+        <div className="md:mx-24 bg-white border shadow-md rounded-[15px] pt-4">
           {/* <div className="flex flex-col items-end mr-4 p-4">
             <h1 className="text-[30px] text-emerald-700 md:text-[45px]">
               من اهم عناصر تطوير الصحة
@@ -124,10 +124,10 @@ function HealthAwareness() {
           <div className="text-right p-4 md:flex md:items-center md:gap-8">
             <img
               src={nutritionImage}
-              className="rounded-[30px] shadow-md md:w-[550px]"
+              className="rounded-[15px] shadow-md md:w-[550px]"
             />
             <div>
-              <div className="bg-white shadow-md p-4 mb-4">
+              <div className="bg-white border rounded-[5px] shadow-md p-4 mb-4">
                 <div className="flex items-center justify-end gap-2">
                   <img src={workout} className="w-[31px]" />
                   <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[32px]">
@@ -141,7 +141,7 @@ function HealthAwareness() {
                   بشكل عام
                 </p>
               </div>
-              <div className="bg-white shadow-md p-4 mb-4">
+              <div className="bg-white border rounded-[5px] shadow-md p-4 mb-4">
                 <div className="flex items-center justify-end gap-2">
                   <img src={diet} className="w-[31px]" />
                   <h1 className="mt-1 text-[26px] text-emerald-950 md:text-[32px]">
