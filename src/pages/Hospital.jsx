@@ -1,13 +1,16 @@
 import Dashboard from "../components/Dashboard";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../css/DoctorDashboard.css"
+import "../css/DoctorDashboard.css";
 function Hospital() {
+  // returning the name, location, and id of the logged hospital - amr
   const name = localStorage.getItem("name");
   const hsopital = localStorage.getItem("hospital");
 
+  const hospitalID = localStorage.getItem("hospitalID");
+
   // ramez work get hospitals
- 
+
   // ------------------------
   // search for doctors in hospitals
   // ---------------------------
@@ -22,9 +25,11 @@ function Hospital() {
           <p className="text-emerald-950 text-[20px] md:text-[28px] text-end">
             للعنوان اضغط هنا {hsopital}
           </p>
+          <p className="text-emerald-950 text-[20px] md:text-[28px] text-end">
+            {hospitalID}
+          </p>
         </div>
       </section>
-      
     </>
   );
 }
