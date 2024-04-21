@@ -45,18 +45,21 @@ function Login() {
       }
 
       const data = await response.json();
+      console.log(data);
       const name = data.user.name;
       const role = data.user.role;
       const token = data.token;
       const specialize = data.user.specialize;
       const DoctorId = data.user._id;
       const hospital = data.user.address;
+      const hospitalID = data.user._id;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("name", name);
       localStorage.setItem("specialize", specialize);
       localStorage.setItem("DoctorId", DoctorId);
       localStorage.setItem("hospital", hospital);
+      localStorage.setItem("hospitalID", hospitalID);
       switch (role) {
         case "doctor":
           navigate("/doctor");
