@@ -100,7 +100,7 @@ function CaloriesCalculator() {
                   }}
                   className={`shadow-sm rounded-[20px] py-4 px-20 text-[20px] ${
                     male
-                      ? "bg-blue-400 border-none"
+                      ? "bg-blue-300 border-none"
                       : "bg-transparent border border-gray-600"
                   }`}
                 >
@@ -206,7 +206,7 @@ function CaloriesCalculator() {
                          ? "bg-pink-400 hover:bg-pink-600"
                          : "bg-emerald-500"
                      } ${
-                    male ? "bg-blue-400 hover:bg-blue-500" : "bg-emerald-500"
+                    male ? "bg-blue-300 hover:bg-blue-500" : "bg-emerald-500"
                   }`}
                 >
                   احسب
