@@ -16,5 +16,19 @@
 }
 /* hospital dashboard */
 .widthforfirstSection{
+    width: 90% !important;
+}
+.StyleDivToPutDayAndTime{
     width: 90%;
+    left: 5%;
+    top: 10%;
+}
+.styleOfButtonOfTime{
+    width: 30% !important;
+}
+.heightOfTimeDiv{
+    height: 250px;
+}
+.ButtonStyleForHospital{
+    width: 6% !important;
 }
