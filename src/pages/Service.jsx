@@ -86,23 +86,23 @@ export function Service() {
             {cards.map((element, i) => (
               <div
                 key={i}
-                className="col-md-6 mb-10 rounded-2xl relative overflow-hidden"
+                className="col-md-6 mb-10 rounded-3 relative overflow-hidden"
               >
                 <img
                   src={element.imgSrc}
                   alt="first"
-                  className="w-100 h-full rounded-2xl"
+                  className="w-100 h-full rounded-3"
                 />
-                <div className="absolute styleCard opacity-50 rounded-2xl "></div>
+                <div className="absolute styleCard opacity-50 rounded-3 "></div>
                 <div className="absolute w-full h-full top-0 rounded-2xl">
-                  <h2 className="text-white text-right textForH2 pe-10 pb-10">
+                  <h2 className="text-white text-right textForH2 pe-4 pb-10">
                     {element.title}
                   </h2>
                   <p className="text-white text-right textForP pe-5 ">
                     {element.pragrapgh}
                   </p>
                   <NavLink to={token ? element.to : "/login"}>
-                    <button className="absolute start-0 bottom-1  bg-red-950 ms-12 mt-4 px-2 py-2  hover:bg-black text-white rounded-full w-38 text-xl font-bold buttonResponsive">
+                    <button className="absolute start-5 bottom-5  btn btn-primary buttonResponsive">
                       {" "}
                       {element.buttonContent}
                     </button>

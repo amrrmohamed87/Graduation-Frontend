@@ -29,6 +29,7 @@ export function DocSearch() {
     // -----------------------------new code ------------------------
     let [DocData, setDocData] = useState([])
     let [showResult, setShowResult] = useState([])
+    let [handleForSearch, setHandleForSearch] = useState('  mt-4 text-right p-4 cardInIphoneX border-3 border-success rounded-4')
     let [docDetail, setDocDetail] = useState({
         name: "",
         id: ''
@@ -89,10 +90,12 @@ export function DocSearch() {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/search", searchUser)
             setShowResult(data.search)
         } catch (errorForSearch) {
-            if (errorForSearch.data.search === 404) {
+            if (errorForSearch.response && errorForSearch.response.status === 404) {
                 setErrorForSearch("text-center fs-1 mt-5")
-            } else {
-                setErrorForSearch("text-center fs-1 mt-5")
+                setHandleForSearch('d-none')
+
+            }else if (errorForSearch.response && errorForSearch.response.status === 204) {
+                alert("لا يوجد هذا التخصص")
             }
         }
 
@@ -157,6 +160,7 @@ export function DocSearch() {
     }
     function CloseSectionSearch() {
         setShowDivSearch('d-none')
+        setErrorForSearch('d-none')
     }
     const toggleDivPosition = () => {
         if (!isSearchActive) {
@@ -232,16 +236,16 @@ export function DocSearch() {
                                 <div className="col-md-5">
                                     <p className="text-center fs-3 py-2">أختر التاريخ و الوقت</p>
                                     <div className="d-flex justify-content-center">
-                                        <input onChange={setBookForPatient} name="day" type="date" 
-                                        className="form-control w-50 border-success border-3"></input>
+                                        <input onChange={setBookForPatient} name="day" type="date"
+                                            className="form-control w-50 border-success border-3"></input>
                                     </div>
 
                                     <div className="container d-flex justify-content-center">
                                         <div className="d-flex toChangeStyleTime overflow-scroll position-relative justify-content-center border-3 border-success py-3 rounded-3">
                                             <div className="position-absolute ">
                                                 <div>
-                                                    <input onClick={setBookForPatient} type="button" 
-                                                    className=" form-control w-100" name="time" value={"8:00"} />
+                                                    <input onClick={setBookForPatient} type="button"
+                                                        className=" form-control w-100" name="time" value={"8:00"} />
                                                 </div>
                                                 <div>
                                                     <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"8:15"} />
@@ -504,7 +508,10 @@ export function DocSearch() {
             <section className={showDivSearch}>
 
                 <button onClick={CloseSectionSearch} className="btn btn-close position-absolute  fs-5 end-0 searchCloseSection"></button>
-                <form className="mt-5">
+                <form className="mt-5" onSubmit={(e) => {
+                    submitSearch(e);
+                    toggleDivPosition();
+                }}>
                     <div className='d-flex w-100 justify-content-center '>
                         <button onClick={(e) => {
                             submitSearch(e);
@@ -519,9 +526,9 @@ export function DocSearch() {
                 {/* result of search */}
                 <h1 className={errorForSearch}>No input please write name or specialize</h1>
                 {showResult == null ? <div className="alert alert-danger text-center text-lg-center">not found</div> : <div className={`d-flex justify-content-center mt-3 flex-wrap gap-3 overflow-scroll w-100 searchSection position-relative ${isSearchActive ? 'active' : ''}`}
-                > {showResult.map((element, i) => <div key={i} className='  mt-4 text-right p-4 cardInIphoneX border-3 border-success rounded-4'>
+                > {showResult.map((element, i) => <div key={i} className={handleForSearch}>
                     <h2 className="text-center fs-3 text-muted">د/{element.name}  </h2>
-                    <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i class="fa-solid text-success fs-5 fa-stethoscope"></i></p>
+                    <p className="mt-2 md:mt-0 fs-4 text-muted"><span className="fs-3 text-black"></span>{element.specialize} : <i className="fa-solid text-success fs-5 fa-stethoscope"></i></p>
                     <p className="mt-2 md:mt-0 fs-4 text-muted"> {element.hospitalID?.name} : <i className=" fa-solid text-success fs-5 fa-truck-medical"></i> </p>
                     <div className="d-flex justify-content-center"> <button onClick={() => ShowBookSection(element._id, element.name)} type="button" className="btn mt-3 w-100 bg-success text-white border-3">احجز الان</button></div>
                 </div>)}

@@ -158,7 +158,7 @@ function Hospital() {
           <div className="w-25 shadow text-end p-4 rounded-4">
             <h1 className="fs-4">أختر اليوم</h1>
             <div className="d-flex justify-content-center mt-3">
-              <input type="date" className="form-control" onChange={putDay} />
+              <input type="date" className="form-control" onChange={putDay} name="day"/>
             </div>
           </div>
           <div className="w-50 shadow text-end p-4 rounded-4">
