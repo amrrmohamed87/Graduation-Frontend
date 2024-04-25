@@ -93,7 +93,7 @@ export function Service() {
                   alt="first"
                   className="w-100 h-full rounded-2xl"
                 />
-                <div className="absolute styleCard rounded-2xl "></div>
+                <div className="absolute styleCard opacity-50 rounded-2xl "></div>
                 <div className="absolute w-full h-full top-0 rounded-2xl">
                   <h2 className="text-white text-right textForH2 pe-10 pb-10">
                     {element.title}
