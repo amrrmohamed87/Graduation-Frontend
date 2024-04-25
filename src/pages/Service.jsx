@@ -95,7 +95,7 @@ export function Service() {
                 />
                 <div className="absolute styleCard opacity-50 rounded-3 "></div>
                 <div className="absolute w-full h-full top-0 rounded-2xl">
-                  <h2 className="text-white text-right textForH2 pe-4 pb-10">
+                  <h2 className="text-white text-right textForH2 pe-4">
                     {element.title}
                   </h2>
                   <p className="text-white text-right textForP pe-5 ">
