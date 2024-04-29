@@ -80,15 +80,9 @@ function Hospital() {
     );
   }
   function putDay(e) {
-<<<<<<< HEAD
     setConfirmOperation("d-none")
     let theDay = e.target.value
     setDocInformation({ ...docInformation, day: theDay , time :[] })
-=======
-    setConfirmOperation("d-none");
-    let theDay = e.target.value;
-    setDocInformation({ ...docInformation, day: theDay });
->>>>>>> 8033a102e7d59875a0bc298489ea030d4700f74b
   }
   function putTime(e) {
     const selectedTime = e.target.value;
