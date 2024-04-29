@@ -1,28 +1,29 @@
+import React from "react";
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
+  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-
 import { useSubmit, Form } from "react-router-dom";
 import { TbLogout2 } from "react-icons/tb";
 
 function Dashboard() {
   const submit = useSubmit();
+
   function logoutHandler() {
     submit(null, { action: "/logout", method: "post" });
   }
 
   return (
-    <header className="bg-emerald-950 flex justify-end w-100">
-      <div className="flex  w-4/6 justify-between items-center cursor-pointr p-4">
-        <h1 className="text-white text-[25px] md:text-[40px]">
+    <header className="bg-emerald-950 flex justify-end">
+      <div className="flex w-full justify-between items-center p-4 flex-row-reverse">
+        <h1 className="text-white text-[25px] md:text-[40px] ml-4">
           مصر للتأمين الصحي
         </h1>
         <AlertDialog>
@@ -39,7 +40,7 @@ function Dashboard() {
               </AlertDialogTitle>
               <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
                 سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن تعد
-                متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول مرة أخرى
+                متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول مرة أخرى.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex items-center gap-3">

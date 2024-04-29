@@ -4,6 +4,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "../components/Dashboard";
 import Input from "../components/AdminInput";
 import TextArea from "@/components/AdminTextArea";
+import { TiDeleteOutline } from "react-icons/ti";
+import { FaDeleteLeft } from "react-icons/fa6";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 function Admin() {
   //Sign up patient states
@@ -50,6 +53,11 @@ function Admin() {
     tradeMark: "",
   });
   const [isAddingMedicine, setIsAddingMedicine] = useState(false);
+
+  //Hospital filter
+  const [hospitalQuery, setHospitalQuery] = useState("");
+  const [currentHospitalPage, setCurrentHospitalPage] = useState(1);
+  const [hospitalRowsPerPage, setHospitalRowsPerPage] = useState(4);
 
   //fetch hospitals
   useEffect(() => {
@@ -292,8 +300,64 @@ function Admin() {
       <h1 className="text-center mt-16 text-[25px] text-emerald-950 md:mb-8 md:text-[50px]">
         منظمة التأمين الصحي
       </h1>
-      <section className="">
+      <section className="mb-8 md:mb-20">
         <div className="grid grid-cols-1 md:grid-cols-3 place-items-start gap-8 md:ml-8 md:mt-4">
+          <form method="post">
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-[25px] mb-4">
+                إضافة دواء
+              </h1>
+              <Input
+                id="medicineName"
+                label="أسم الدواء"
+                type="text"
+                name="name"
+                value={medicines.name}
+                onChange={handleCreateMedicineChange}
+              />
+              <Input
+                id="description"
+                label="الوصف"
+                type="text"
+                name="description"
+                value={medicines.description}
+                onChange={handleCreateMedicineChange}
+              />
+              <TextArea
+                id="prescription"
+                label="كيفية الاستخدام"
+                type="text"
+                name="howToUse"
+                value={medicines.howToUse}
+                onChange={handleCreateMedicineChange}
+              />
+              <TextArea
+                id="components"
+                label="المكونات"
+                type="text"
+                name="components"
+                value={medicines.components}
+                onChange={handleCreateMedicineChange}
+              />
+              <Input
+                id="tradeMark"
+                label="العلامة تجارية"
+                type="text"
+                name="tradeMark"
+                value={medicines.tradeMark}
+                onChange={handleCreateMedicineChange}
+              />
+              <button
+                type="submit"
+                onClick={handleCreateMedicine}
+                disabled={isAddingMedicine}
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
+              >
+                {isAddingMedicine ? "جاري إضافة الدواء" : "إضافة دواء"}
+              </button>
+            </div>
+          </form>
+
           <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
               <h1 className="text-center text-gray-800 text-[25px] mb-4">
@@ -325,7 +389,7 @@ function Admin() {
               />
               <Input
                 id="patientAddress"
-                label="المستشفي"
+                label="العنوان"
                 type="text"
                 name="address"
                 value={patient.address}
@@ -353,7 +417,7 @@ function Admin() {
             </div>
           </form>
 
-          <form method="post">
+          {/* <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
               <h1 className="text-center text-gray-800 text-[25px] mb-4">
                 إضافة طبيب
@@ -420,7 +484,7 @@ function Admin() {
                 {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
               </button>
             </div>
-          </form>
+          </form> */}
 
           <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
@@ -469,62 +533,57 @@ function Admin() {
               </button>
             </div>
           </form>
-
-          <form method="post">
-            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
-              <h1 className="text-center text-gray-800 text-[25px] mb-4">
-                إضافة دواء
-              </h1>
-              <Input
-                id="medicineName"
-                label="أسم الدواء"
-                type="text"
-                name="name"
-                value={medicines.name}
-                onChange={handleCreateMedicineChange}
-              />
-              <Input
-                id="description"
-                label="الوصف"
-                type="text"
-                name="description"
-                value={medicines.description}
-                onChange={handleCreateMedicineChange}
-              />
-              <TextArea
-                id="prescription"
-                label="كيفية الاستخدام"
-                type="text"
-                name="howToUse"
-                value={medicines.howToUse}
-                onChange={handleCreateMedicineChange}
-              />
-              <TextArea
-                id="components"
-                label="المكونات"
-                type="text"
-                name="components"
-                value={medicines.components}
-                onChange={handleCreateMedicineChange}
-              />
-              <Input
-                id="tradeMark"
-                label="العلامة تجارية"
-                type="text"
-                name="tradeMark"
-                value={medicines.tradeMark}
-                onChange={handleCreateMedicineChange}
-              />
-              <button
-                type="submit"
-                onClick={handleCreateMedicine}
-                disabled={isAddingMedicine}
-                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
-              >
-                {isAddingMedicine ? "جاري إضافة الدواء" : "إضافة دواء"}
-              </button>
+        </div>
+      </section>
+      <section>
+        <div className="flex flex-col mt-8">
+          <div className="overflow-x-auto p-4">
+            <div className="py-2 inline-block w-full lg:w-1/2 sm:px-6 lg:px-8">
+              <div className="overflow-hidden bg-white rounded-md shadow-md p-4 border">
+                <div className="flex justify-between items-center mb-3">
+                  <input
+                    type="text"
+                    placeholder="...أبحث عن أسم المستشفي"
+                    className="w-[220px] border rounded-md h-9 text-right p-2"
+                  />
+                  <h1 className="text-right text-[25px]">قائمة المستشفيات</h1>
+                </div>
+                <table className="w-full">
+                  <thead className="bg-gray-100 border-b">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-right w-4"
+                      >
+                        حدف
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-right"
+                      >
+                        الأسم
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hospitalInfo.map((hospital, index) => (
+                      <tr key={index} className="border-b text-right">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex justify-end items-center">
+                          <RiDeleteBin5Fill
+                            size={20}
+                            className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {hospital.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </section>
     </main>
