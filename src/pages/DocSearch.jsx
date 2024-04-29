@@ -48,7 +48,6 @@ export function DocSearch() {
         patientID: UserIdOfLogin,
         doctorID: docDetail.id,
     })
-    // console.log(BookTime);
     useEffect(() => {
         getDoctors()
     }, [])
@@ -56,10 +55,12 @@ export function DocSearch() {
         setTrueBook("d-none")
     }
     function closeBookSection() {
-        // let newBook = { ...BookTime, day: "", time: "" };
-        // setBookTime(newBook)
+        let newBook = { ...BookTime, day: "", time: "" };
+        setBookTime(newBook)
         // console.log(newBook);
         setClassName("d-none");
+        setClassOfDocTime("d-none")
+
     }
     async function getDoctors() {
         try {
@@ -114,12 +115,16 @@ export function DocSearch() {
     function setDayOfBook(e) {
         setBookTime({ ...BookTime, day: e.target.value })
         GetTimeToDoctor(e.target.value)
+        setClassOfDocTime("col-md-5")
     }
-    function setBookForPatient(e) {
-        let myBook = { ...BookTime }
-        myBook[e.target.name] = e.target.value
-        setBookTime(myBook)
+    function setTimeOfBook(e) {
+        setBookTime({ ...BookTime, time: e.target.value })
     }
+    // function setBookForPatient(e) {
+    //     let myBook = { ...BookTime }
+    //     myBook[e.target.name] = e.target.value
+    //     setBookTime(myBook)
+    // }
     function FirstSubmitBook(IdDoc) {
         setBookTime({
             ...BookTime,
@@ -219,10 +224,12 @@ export function DocSearch() {
     }
     // show time 
     let [docTimes, setDocTimes] = useState([])
+    const[classOfDocTime , setClassOfDocTime] = useState("d-none")
     async function GetTimeToDoctor(DayOfWork) {
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/getTime", { doctorID: docDetail.id, day: DayOfWork })
-            setDocTimes(data.getTime);
+            setDocTimes(data);
+            
         } catch (error) {
 
         }
@@ -284,18 +291,25 @@ export function DocSearch() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-5">
+                                <div className={classOfDocTime}>
                                     <div className="container flex-column d-flex justify-content-center">
                                         <div className="w-100 text-center border border-primary rounded-3 p-2">
                                             <p>{BookTime.day}</p>
                                         </div>
 
-                                        <div className="d-flex w-100  toChangeStyleTime overflow-scroll position-relative justify-content-center  border py-3 rounded-3">
-                                            <div className="position-absolute ">
-                                                {docTimes.map((element , i)=><div key={i} className="w-100">
-                                                    <input onClick={setBookForPatient} type="button"
-                                                        className=" form-control w-100" name="time" value={element.time} />
-                                                </div>)}
+                                        <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border py-3 rounded-3">
+                                            <div className="position-absolute">
+                                                {docTimes && docTimes.length > 0 && docTimes[0].map((element, i) => (
+                                                    <div key={i} className="w-100">
+                                                        <input
+                                                            onClick={setTimeOfBook}
+                                                            type="button"
+                                                            className="mt-2 form-control w-100"
+                                                            name="time"
+                                                            value={element}
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
@@ -435,7 +449,7 @@ export function DocSearch() {
                 <div className="container mt-5">
                     <div className="d-flex SectionBookingInIphone justify-content-evenly">
                         <div className=" BookingSectionSora shadow rounded-4">
-                            <img src={BookingSectionPhoto} alt="sa" className="rounded-4" />
+                            <img src={BookingSectionPhoto} alt="sa" className="rounded-4 h-100" />
                         </div>
                         <div className=" BookingSectionText shadow rounded-4 p-4 text-end">
                             <h1 className="text-end fs-1">يمكنك حجز موعد</h1>

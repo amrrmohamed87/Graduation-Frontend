@@ -76,7 +76,7 @@ function Hospital() {
   function putDay(e) {
     setConfirmOperation("d-none")
     let theDay = e.target.value
-    setDocInformation({ ...docInformation, day: theDay })
+    setDocInformation({ ...docInformation, day: theDay , time :[] })
   }
   function putTime(e) {
     const selectedTime = e.target.value;
