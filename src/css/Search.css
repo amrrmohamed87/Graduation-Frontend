@@ -46,7 +46,7 @@
     transform: translateX(-50%);
     right: 0;
     top: 15%;
-    border-bottom: 5px solid rgb(32, 134, 32);
+    border-bottom: 5px solid rgb(12, 111, 192);
     width: 70%;
     border-radius: 20%;
 }
@@ -62,7 +62,7 @@
 .toChangeStyleTime::-webkit-scrollbar-thumb {
     border-radius: 8px;
     height: 30px;
-    background-color: #198754;
+    background-color: rgba(128, 128, 128, 0.384);
 }
 .toChangeStyleTime::-webkit-scrollbar-track {
     display: none; 

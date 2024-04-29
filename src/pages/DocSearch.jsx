@@ -7,6 +7,7 @@ import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor P
 import BookingSectionPhoto from "../assets/images/book-doctor-appointment-card-template_151150-11155.avif"
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
     const Token = localStorage.getItem('token');
@@ -47,6 +48,7 @@ export function DocSearch() {
         patientID: UserIdOfLogin,
         doctorID: docDetail.id,
     })
+    // console.log(BookTime);
     useEffect(() => {
         getDoctors()
     }, [])
@@ -94,7 +96,7 @@ export function DocSearch() {
                 setErrorForSearch("text-center fs-1 mt-5")
                 setHandleForSearch('d-none')
 
-            }else if (errorForSearch.response && errorForSearch.response.status === 204) {
+            } else if (errorForSearch.response && errorForSearch.response.status === 204) {
                 alert("لا يوجد هذا التخصص")
             }
         }
@@ -107,8 +109,12 @@ export function DocSearch() {
             name: DocName,
             id: IDdoc
         })
+        GetDaysToDoctor(IDdoc)
     }
-
+    function setDayOfBook(e) {
+        setBookTime({ ...BookTime, day: e.target.value })
+        GetTimeToDoctor(e.target.value)
+    }
     function setBookForPatient(e) {
         let myBook = { ...BookTime }
         myBook[e.target.name] = e.target.value
@@ -201,6 +207,27 @@ export function DocSearch() {
     }
 
     // ----------------------------------
+    // doctor day and time work
+    const [docDays, setDocDays] = useState([])
+    async function GetDaysToDoctor(DocId) {
+        try {
+            let { data } = await axios.post("https://mhiproject.onrender.com/patient/getDays", { doctorID: DocId })
+            setDocDays(data.getDays)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    // show time 
+    let [docTimes, setDocTimes] = useState([])
+    async function GetTimeToDoctor(DayOfWork) {
+        try {
+            let { data } = await axios.post("https://mhiproject.onrender.com/patient/getTime", { doctorID: docDetail.id, day: DayOfWork })
+            setDocTimes(data.getTime);
+        } catch (error) {
+
+        }
+    }
+    // -------------------
     return (
         <>
             <header className="relative h-screen w-full ">
@@ -213,235 +240,66 @@ export function DocSearch() {
             {/* da section al7gz */}
             <section>
                 <div className={ClassNamee}>
-                    <p className="text-center UnderLineAfterP fs-1 mt-4">أحجز الأن</p>
+                    <p className="text-center UnderLineAfterP fs-1 mt-2">أحجز الأن</p>
                     <form className="py-3">
-                        <div className="container py-5 containerBookSection">
-                            <div className="row justify-content-evenly">
-                                <div className="col-md-5 firstDivInBookSection mt-5">
-                                    <div className="d-flex gap-3 py-3 flex-row justify-content-center">
-                                        <h1 className="fs-3"> {UserNameOfLogin}</h1>
-                                        <label htmlFor="patientID" className="me-3 LabelForNameBookSection text-success fs-2 text-end">
-                                            : اسم المريض
-                                        </label>
-                                    </div>
-                                    <div className="d-flex gap-3 py-3 flex-row justify-content-center">
-                                        <h1 className="fs-3">{docDetail.name}</h1>
-                                        <label htmlFor="doctorID" className="me-3 text-success fs-2 LabelForNameBookSection text-end">
-                                            : اسم الدكتور
-                                        </label>
-                                    </div>
-
-
+                        <div className="container py-4 containerBookSection">
+                            <div className="d-flex justify-content-evenly mb-4">
+                                <div className="d-flex gap-2 justify-content-center">
+                                    <h1 className="fs-3"> {UserNameOfLogin}</h1>
+                                    <label htmlFor="patientID" className=" LabelForNameBookSection text-success fs-2 text-end">
+                                        : اسم المريض
+                                    </label>
                                 </div>
-                                <div className="col-md-5">
-                                    <p className="text-center fs-3 py-2">أختر التاريخ و الوقت</p>
-                                    <div className="d-flex justify-content-center">
-                                        <input onChange={setBookForPatient} name="day" type="date"
-                                            className="form-control w-50 border-success border-3"></input>
+                                <div className="d-flex gap-2 justify-content-center">
+                                    <h1 className="fs-3">{docDetail.name}</h1>
+                                    <label htmlFor="doctorID" className=" text-success fs-2 LabelForNameBookSection text-end">
+                                        : اسم الدكتور
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row justify-content-evenly">
+                                <div className="col-md-5 rounded-3">
+                                    <div className="d-flex shadow rounded-3 justify-content-evenly bg-primary gap-3 pt-5">
+                                        <i className="fa-regular text-white mt-2 fs-6 fa-calendar-days"></i>
+                                        <p className="text-end mb-1 fs-4 text-white">أختر الوقت</p>
                                     </div>
-
-                                    <div className="container d-flex justify-content-center">
-                                        <div className="d-flex toChangeStyleTime overflow-scroll position-relative justify-content-center border-3 border-success py-3 rounded-3">
-                                            <div className="position-absolute ">
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button"
-                                                        className=" form-control w-100" name="time" value={"8:00"} />
-                                                </div>
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"8:15"} />
-                                                </div>
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"8:30"} />
-                                                </div>
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"8:45"} />
-                                                </div>
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"9:00"} />
-                                                </div>
-                                                <div>
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"9:15"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"9:30"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"9:45"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"10:00"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"10:15"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"10:30"} />
-                                                </div>
-                                                <div className=" ">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100 mt-3" name="time" value={"10:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"11:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"12:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"13:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"14:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"15:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"16:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"17:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"18:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"19:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"20:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"21:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"22:45"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:00"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:15"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:30"} />
-                                                </div>
-                                                <div className=" mt-3">
-                                                    <input onClick={setBookForPatient} type="button" className="form-control w-100" name="time" value={"23:45"} />
-                                                </div>
-                                            </div>
+                                    <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border border-primary py-3 rounded-3">
+                                        <div className="position-absolute">
+                                            {docDays.map((element, i) => {
+                                                const date = new Date(element.day);
+                                                const formattedDate = date.toISOString().split('T')[0];
+                                                return (
+                                                    <div key={i}>
+                                                        <input
+                                                            onClick={setDayOfBook}
+                                                            name="day"
+                                                            type="button"
+                                                            value={formattedDate}
+                                                            className="form-control w-100  bg-muted mt-2"
+                                                        />
+                                                    </div>
+                                                );
+                                            })}
 
                                         </div>
                                     </div>
                                 </div>
+                                <div className="col-md-5">
+                                    <div className="container flex-column d-flex justify-content-center">
+                                        <div className="w-100 text-center border border-primary rounded-3 p-2">
+                                            <p>{BookTime.day}</p>
+                                        </div>
 
+                                        <div className="d-flex w-100  toChangeStyleTime overflow-scroll position-relative justify-content-center  border py-3 rounded-3">
+                                            <div className="position-absolute ">
+                                                {docTimes.map((element , i)=><div key={i} className="w-100">
+                                                    <input onClick={setBookForPatient} type="button"
+                                                        className=" form-control w-100" name="time" value={element.time} />
+                                                </div>)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="d-flex mt-4 justify-content-center gap-5">
