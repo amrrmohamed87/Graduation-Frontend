@@ -53,6 +53,7 @@ function Login() {
       const DoctorId = data.user._id;
       const hospital = data.user.address;
       const hospitalID = data.user._id;
+      const hospitalAdminHospitalID = data.user.hospitalID;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
       localStorage.setItem("name", name);
@@ -60,6 +61,7 @@ function Login() {
       localStorage.setItem("DoctorId", DoctorId);
       localStorage.setItem("hospital", hospital);
       localStorage.setItem("hospitalID", hospitalID);
+      localStorage.setItem("hospitalAdminHospitalID", hospitalAdminHospitalID);
       switch (role) {
         case "doctor":
           navigate("/doctor");
@@ -72,6 +74,9 @@ function Login() {
           break;
         case "patient":
           navigate("/");
+          break;
+        case "HospitalAdmin":
+          navigate("/hospitalAdmin");
           break;
         default:
           console.error("Unexpected role:", role);
