@@ -34,7 +34,8 @@ import Hospital from "./pages/Hospital.jsx";
 import Login from "./pages/Login.jsx";
 import { useEffect } from "react";
 import Contact from "./pages/Contact.jsx";
-import { DoctorDashBoard } from './pages/DoctorDashBoard';
+import { DoctorDashBoard } from "./pages/DoctorDashBoard";
+import HospitalAdmin from "./pages/HospitalAdmin";
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -123,7 +124,7 @@ export default function App() {
       path: "/doctor",
       element: (
         <PrivateRoutes roles={["doctor"]}>
-          <DoctorDashBoard/>
+          <DoctorDashBoard />
         </PrivateRoutes>
       ),
     },
@@ -140,6 +141,14 @@ export default function App() {
       element: (
         <PrivateRoutes roles={["hospital"]}>
           <Hospital />
+        </PrivateRoutes>
+      ),
+    },
+    {
+      path: "/hospitalAdmin",
+      element: (
+        <PrivateRoutes roles={["HospitalAdmin"]}>
+          <HospitalAdmin />
         </PrivateRoutes>
       ),
     },
