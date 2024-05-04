@@ -42,13 +42,45 @@ function PrivateRoutes({ roles, children }) {
   const isAuthenticated = localStorage.getItem("token");
   const userRole = localStorage.getItem("role");
 
+  const publicRoutes = [
+    "/",
+    "/health-awareness",
+    "/ca",
+    "/service",
+    "/searchmed",
+    "/docsearch",
+    "/contact-us",
+    "/child-safety",
+    "/vaccinations",
+    "/school-health",
+    "/baby-nutrition",
+    "/before-pregnancy",
+    "/during-pregnancy",
+    "/after-pregnancy",
+    "/care-of-the-elderly",
+    "/alzheimers",
+    "/birth",
+  ];
+
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (!roles.includes(userRole)) {
-    return <Navigate to="/" replace />;
+  if (!roles.includes(userRole) && publicRoutes.includes(location.pathname)) {
+    switch (userRole) {
+      case "doctor":
+        return <Navigate to="/doctor" replace />;
+      case "admin":
+        return <Navigate to="/admin" replace />;
+      case "hospital":
+        return <Navigate to="/hospital" replace />;
+      case "HospitalAdmin":
+        return <Navigate to="/hospitalAdmin" replace />;
+      default:
+        return <Navigate to="/" replace />;
+    }
   }
+
   return children;
 }
 

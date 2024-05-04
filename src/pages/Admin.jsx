@@ -142,13 +142,13 @@ function Admin() {
         setAdminsData(resData);
         setIsFetchingAdmins(false);
       } catch (error) {
-        toast.error("Unexpected error");
+        toast.error("Unexpected error during fetching admins");
         setIsFetchingAdmins();
         return;
       }
     }
     loadAdmins();
-  }, [isDeletingAdmin]);
+  }, [isDeletingAdmin || isAddingAdminHospital]);
 
   function handleHospitalAdminChange(event) {
     const { name, value } = event.target;
@@ -214,13 +214,14 @@ function Admin() {
         setHospitalInfo(resData.allHospitals);
         setIsFetching(false);
       } catch (error) {
+        toast.error("unexpected error during fetching hospitals");
         setIsFetching(false);
         return;
       }
     }
 
     loadHospitals();
-  }, [isDeletingHospital]);
+  }, [isDeletingHospital, isAddingHospital]);
 
   //fetch patients
   useEffect(() => {
@@ -241,13 +242,13 @@ function Admin() {
         setPatientsInfo(resData);
         setIsFetchingPatiens(false);
       } catch (error) {
-        toast.error("Unexpected error");
+        toast.error("Unexpected error during fetching patients");
         setIsFetchingPatiens(false);
         return;
       }
     }
     loadPatients();
-  }, [isDeletingPatient]);
+  }, [isDeletingPatient, isAddingPatient]);
 
   //Sign up patient API
   function handlePatientChange(event) {
@@ -290,7 +291,7 @@ function Admin() {
       });
       setIsAddingPatient(false);
     } catch (error) {
-      toast.error("Unexpected Error");
+      toast.error("Unexpected Error during signup patient");
       setIsAddingPatient(false);
     }
   };
@@ -439,8 +440,8 @@ function Admin() {
   }; */
 
   //Delete patient
-  const handleDeletePatient = async (event) => {
-    event.preventDefault();
+  const handleDeletePatient = async () => {
+    //event.preventDefault();
     setIsDeletingPatient(true);
     try {
       const response = await fetch(
@@ -471,8 +472,8 @@ function Admin() {
   };
 
   //Delete Hospital
-  const handleDeleteHospital = async (event) => {
-    event.preventDefault();
+  const handleDeleteHospital = async () => {
+    //event.preventDefault();
     setIsDeletingHospital(true);
     try {
       const response = await fetch(
@@ -503,8 +504,8 @@ function Admin() {
   };
 
   //Delete Hospital
-  const handleDeleteAdmin = async (event) => {
-    event.preventDefault();
+  const handleDeleteAdmin = async () => {
+    //event.preventDefault(); removed to close the dialoge automatically
     setIsDeletingAdmin(true);
 
     try {
@@ -1144,6 +1145,8 @@ function Admin() {
                 label="أسم المستخدم"
                 type="text"
                 name="username"
+                value={patient.username}
+                onChange={handlePatientChange}
               />
               <Input
                 id="patientPassword"
@@ -1184,6 +1187,7 @@ function Admin() {
           </form>
         </div>
       </section>
+
       <section>
         <div className="flex flex-col mt-8 lg:flex-row">
           <div className="overflow-x-auto p-4 w-full lg:w-1/2">
@@ -1226,60 +1230,66 @@ function Admin() {
                       </th>
                     </tr>
                   </thead>
-                  {hospitalInfo.length <= 0 ? (
-                    <p>You have zero hospitals</p>
-                  ) : (
-                    <tbody>
-                      {currentHospitalData.map((hospital, index) => (
-                        <tr key={index} className="border text-right">
-                          <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <p>
-                                  <RiDeleteBin5Fill
-                                    onClick={() => {
-                                      setHospitalId({
-                                        hospitalID: hospital._id,
-                                      });
-                                    }}
-                                    size={20}
-                                    className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
-                                  />
-                                </p>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    هل أنت متأكد؟
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                    حساب المريض الخاص به/لها نهائيًا وإزالته من
-                                    خدمتنا
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <form method="delete">
-                                    <button onClick={handleDeleteHospital}>
-                                      Continue
-                                    </button>
-                                  </form>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                            {hospital.code}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                            {hospital.name}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
+
+                  <tbody>
+                    {currentHospitalData.map((hospital, index) => (
+                      <tr key={index} className="border text-right">
+                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <p>
+                                <RiDeleteBin5Fill
+                                  onClick={() => {
+                                    setHospitalId({
+                                      hospitalID: hospital._id,
+                                    });
+                                  }}
+                                  size={20}
+                                  className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                                />
+                              </p>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  هل أنت متأكد؟
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
+                                  حساب المريض الخاص به/لها نهائيًا وإزالته من
+                                  خدمتنا
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <form method="delete">
+                                  <AlertDialogAction>
+                                    <p
+                                      type="submit"
+                                      disabled={isDeletingHospital}
+                                      onClick={handleDeleteHospital}
+                                    >
+                                      {isDeletingHospital
+                                        ? "...جاري الحذف"
+                                        : "تأكيد"}
+                                    </p>
+                                  </AlertDialogAction>
+                                </form>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                          {hospital.code}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                          {hospital.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
+                {hospitalInfo.length <= 0 && <p>You have zero hospitals</p>}
                 <HospitalPagination />
               </div>
             </div>
@@ -1324,58 +1334,64 @@ function Admin() {
                       </th>
                     </tr>
                   </thead>
-                  {patientsInfo.length <= 0 ? (
-                    <p>You have zero patients</p>
-                  ) : (
-                    <tbody>
-                      {currentPatientData.map((patient, index) => (
-                        <tr key={index} className="border text-right">
-                          <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <p>
-                                  <RiDeleteBin5Fill
-                                    onClick={() => {
-                                      setPatientId({ patientID: patient._id });
-                                    }}
-                                    size={20}
-                                    className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
-                                  />
-                                </p>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    هل أنت متأكد؟
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                    حساب المريض الخاص به/لها نهائيًا وإزالته من
-                                    خدمتنا
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <form method="delete">
-                                    <button onClick={handleDeletePatient}>
-                                      Continue
-                                    </button>
-                                  </form>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                            {patient.code}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                            {patient.name}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
+
+                  <tbody>
+                    {currentPatientData.map((patient, index) => (
+                      <tr key={index} className="border text-right">
+                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <p>
+                                <RiDeleteBin5Fill
+                                  onClick={() => {
+                                    setPatientId({ patientID: patient._id });
+                                  }}
+                                  size={20}
+                                  className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                                />
+                              </p>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  هل أنت متأكد؟
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
+                                  حساب المريض الخاص به/لها نهائيًا وإزالته من
+                                  خدمتنا
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <form method="delete">
+                                  <AlertDialogAction>
+                                    <p
+                                      type="submit"
+                                      disabled={isDeletingPatient}
+                                      onClick={handleDeletePatient}
+                                    >
+                                      {isDeletingPatient
+                                        ? "...جاري الحذف"
+                                        : "تأكيد"}
+                                    </p>
+                                  </AlertDialogAction>
+                                </form>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                          {patient.code}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                          {patient.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
+                {patientsInfo.length <= 0 && <p>You have zero patients</p>}
                 <PatientPagination />
               </div>
             </div>
@@ -1400,7 +1416,7 @@ function Admin() {
                   <GrUserAdmin size={20} className="text-emerald-500" />
                 </div>
               </div>
-              {isFetching && <p>Loading...</p>}
+
               <table className="w-full">
                 <thead className="bg-emerald-600 border">
                   <tr>
@@ -1424,63 +1440,66 @@ function Admin() {
                     </th>
                   </tr>
                 </thead>
-                {adminsData.length <= 0 ? (
-                  <p>You have zero Admins</p>
-                ) : (
-                  <tbody>
-                    {currentAdminData.map((admin, index) => (
-                      <tr key={index} className="border text-right">
-                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <p>
-                                <RiDeleteBin5Fill
-                                  onClick={() => {
-                                    setAdminId({
-                                      adminID: admin._id,
-                                    });
-                                  }}
-                                  size={20}
-                                  className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
-                                />
-                              </p>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  هل أنت متأكد؟
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                  حساب المريض الخاص به/لها نهائيًا وإزالته من
-                                  خدمتنا
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
 
+                <tbody>
+                  {currentAdminData.map((admin, index) => (
+                    <tr key={index} className="border text-right">
+                      <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <p>
+                              <RiDeleteBin5Fill
+                                onClick={() => {
+                                  setAdminId({
+                                    adminID: admin._id,
+                                  });
+                                }}
+                                size={20}
+                                className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                              />
+                            </p>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>هل أنت متأكد؟</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف حساب
+                                الأدمن الخاص به/لها نهائيًا وإزالته من خدمتنا
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>إلغاء</AlertDialogCancel>
+
+                              <form method="delete">
                                 <AlertDialogAction>
-                                  <form method="delete">
-                                    <button onClick={handleDeleteAdmin}>
-                                      Delete
-                                    </button>
-                                  </form>
+                                  <p
+                                    type="submit"
+                                    disabled={isDeletingAdmin}
+                                    onClick={handleDeleteAdmin}
+                                  >
+                                    {isDeletingAdmin
+                                      ? "...جاري الحذف"
+                                      : "تأكيد"}
+                                  </p>
                                 </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {admin.code}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {admin.name}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                )}
+                              </form>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                        {admin.code}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                        {admin.name}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
+              {adminsData.length <= 0 && (
+                <p className="text-center">You have zero Admins</p>
+              )}
               <AdminPagination />
             </div>
           </div>
