@@ -31,15 +31,15 @@ export default function Home() {
   const upwardMotionVariants = {
     offscreen: {
       opacity: 0,
-      y: 200, // Start below the natural position
+      y: 500, // Start below the natural position
     },
     onscreen: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring", // Optional, for a spring-like effect
-        bounce: 0.4, // Adjust the bounce effect, if spring type is used
-        duration: 3,
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
       },
     },
   };
@@ -63,9 +63,10 @@ export default function Home() {
   return (
     <main>
       <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariants}
         className="relative h-screen w-full"
       >
         <div className="absolute w-full h-screen">
