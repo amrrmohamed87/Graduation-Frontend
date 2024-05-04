@@ -99,7 +99,7 @@ function HealthAwareness() {
                       className="flex items-center py-1 px-3 text-[#056558] rounded-[30px] hover:bg-emerald-900 hover:text-white transition-all duration-300"
                     >
                       <button className="w-[100px] text-[18px]">
-                        {item.item}
+                        <NavLink to={item.to}>{item.item} </NavLink>
                       </button>
                     </div>
                   ))}
