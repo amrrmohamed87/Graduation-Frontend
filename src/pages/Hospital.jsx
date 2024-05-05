@@ -223,6 +223,9 @@ function Hospital() {
       </section>
       {/* adaft m3ad lkol doctor */}
       <section className={ShowDivOfPutTime}>
+        <div className="d-flex justify-content-end">
+          <i onClick={closeDiv} class="fa-solid fa-circle-xmark fs-3 text-danger closeOfHospitalPutTime"></i>
+        </div>
         <div className="d-flex flex-row flex-wrap w-100 justify-content-evenly">
           <div className="w-4/12 shadow text-end p-4 rounded-4">
             <h1 className="fs-4">أختر اليوم</h1>
@@ -236,7 +239,7 @@ function Hospital() {
               <p className="mt-4 text-muted">المواعيد اللتى تم أختيارها </p>
             </div>
             <div className="d-flex justify-content-evenly gap-1 flex-wrap mt-4">
-              {docInformation.time.map((element , i)=><p className="w-12 mt-2 bg-primary text-center p-2 rounded-3 text-white">{element}</p>)}
+              {docInformation.time.map((element, i) => <p className="w-12 mt-2 bg-primary text-center p-2 rounded-3 text-white">{element}</p>)}
             </div>
           </div>
           <div className="w-50 shadow text-end p-4 rounded-4">

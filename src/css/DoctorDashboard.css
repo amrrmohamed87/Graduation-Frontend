@@ -21,7 +21,7 @@
 .StyleDivToPutDayAndTime{
     width: 90%;
     left: 5%;
-    top: 13%;
+    top: 14%;
 }
 .styleOfButtonOfTime{
     width: 30% !important;
@@ -31,4 +31,7 @@
 }
 .ButtonStyleForHospital{
     width: 6% !important;
+}
+.closeOfHospitalPutTime{
+    cursor: pointer;
 }
