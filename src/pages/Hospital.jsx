@@ -175,13 +175,13 @@ function Hospital() {
             >
               <input
                 type="text"
-                className=" opacity-75 w-25 text-end"
+                className=" opacity-75 w-25 text-end form-control"
                 placeholder="التخصص"
                 onChange={(e) => filterDoctors(e.target.value)}
               />
               <input
                 type="text"
-                className=" opacity-75 w-25 text-end"
+                className=" opacity-75 w-25 text-end form-control"
                 placeholder="بالأسم"
                 onChange={(e) => docNameFilter(e.target.value)}
               />
