@@ -261,28 +261,28 @@ export function DocSearch() {
                 <div className={ClassNamee}>
                     <p className="text-center UnderLineAfterP fs-1 mt-2">أحجز الأن</p>
                     <form className="py-3">
-                        <div className="container py-4 containerBookSection">
+                        <div className="container py-4">
                             <div className="d-flex justify-content-evenly mb-4">
-                                <div className="d-flex gap-2 justify-content-center">
-                                    <h1 className="fs-3"> {UserNameOfLogin}</h1>
-                                    <label htmlFor="patientID" className=" LabelForNameBookSection text-success fs-2 text-end">
+                                <div className="d-flex gap-2 justify-content-center ">
+                                    <h1 className="fs-3 fontSizeINSmallScreen"> {UserNameOfLogin}</h1>
+                                    <label htmlFor="patientID" className="  fontSizeINSmallScreen text-success fs-2 text-end">
                                         : اسم المريض
                                     </label>
                                 </div>
                                 <div className="d-flex gap-2 justify-content-center">
-                                    <h1 className="fs-3">{docDetail.name}</h1>
-                                    <label htmlFor="doctorID" className=" text-success fs-2 LabelForNameBookSection text-end">
+                                    <h1 className="fs-3 fontSizeINSmallScreen">{docDetail.name}</h1>
+                                    <label htmlFor="doctorID" className=" text-success fontSizeINSmallScreen fs-2  text-end">
                                         : اسم الدكتور
                                     </label>
                                 </div>
                             </div>
                             <div className="row justify-content-evenly">
-                                <div className="col-md-5 rounded-3">
-                                    <div className="d-flex shadow rounded-3 justify-content-evenly bg-primary gap-3 pt-5">
+                                <div className="col-md-5 rounded-3 ">
+                                    <div className="d-flex shadow rounded-3 justify-content-evenly bg-primary gap-3 hieghtInSmallScreen pt-5">
                                         <i className="fa-regular text-white mt-2 fs-6 fa-calendar-days"></i>
                                         <p className="text-end mb-1 fs-4 text-white">أختر الوقت</p>
                                     </div>
-                                    <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border border-primary py-3 rounded-3">
+                                    <div className="d-flex w-100  toChangeStyleTime overflow-scroll position-relative justify-content-center border border-primary py-3 rounded-3 hieghtInSmallScreenForDate">
                                         <div className="position-absolute">
                                             {docDays.map((element, i) => {
                                                 const date = new Date(element.day);
@@ -312,7 +312,7 @@ export function DocSearch() {
                                             <p>{BookTime.day}</p>
                                         </div>
 
-                                        <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border py-3 rounded-3">
+                                        <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border py-3 rounded-3 hieghtInSmallScreenForDate">
                                             <div className="position-absolute">
                                                 {docTimes && docTimes.length > 0 && docTimes[0].map((element, i) => (
                                                     <div key={i} className="w-100">

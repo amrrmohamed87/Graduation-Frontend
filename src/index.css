@@ -356,3 +356,17 @@ body::-webkit-scrollbar-track {
 .widthForButton {
   width: 30% !important;
 }
+/* responsive for book */
+@media (min-width:270px) and (max-width: 590px) {
+  .fontSizeINSmallScreen{
+      font-size: 9px !important;
+  }
+  .hieghtInSmallScreen{
+    height: 35px !important;
+    padding: 2px !important;
+  }
+  .hieghtInSmallScreenForDate{
+    height: 120px;
+    margin-bottom: 2px;
+  }
+  }
