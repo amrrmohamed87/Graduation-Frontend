@@ -224,7 +224,7 @@ function Hospital() {
       {/* adaft m3ad lkol doctor */}
       <section className={ShowDivOfPutTime}>
         <div className="d-flex justify-content-end">
-          <i onClick={closeDiv} class="fa-solid fa-circle-xmark fs-3 text-danger closeOfHospitalPutTime"></i>
+          <i onClick={closeDiv} class="fa-regular fa-circle-xmark fs-3 text-danger closeOfHospitalPutTime"></i>
         </div>
         <div className="d-flex flex-row flex-wrap w-100 justify-content-evenly">
           <div className="w-4/12 shadow text-end p-4 rounded-4">
