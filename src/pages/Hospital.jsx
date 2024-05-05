@@ -59,9 +59,11 @@ function Hospital() {
         "https://mhiproject.onrender.com/clinicsDirector/doctorSchedule",
         docInformation
       );
+      setDocInformation({ ...docInformation, day: "", time: [] })
       setConfirmOperation("d-flex justify-content-center");
       setRefOperation("d-none");
       setWhenTheAdminChooseSameTime("d-none");
+      setActiveIndex(null)
     } catch (error) {
       if (error.response && error.response.status === 422) {
         setRefOperation("d-flex justify-content-center");
@@ -81,13 +83,13 @@ function Hospital() {
   }
   function putDay(e) {
     setConfirmOperation("d-none")
+    setWhenTheAdminChooseSameTime("d-none")
     let theDay = e.target.value
-    setDocInformation({ ...docInformation, day: theDay , time :[] })
+    setDocInformation({ ...docInformation, day: theDay, time: [] })
   }
   function putTime(e) {
     const selectedTime = e.target.value;
     const isTimeSelected = docInformation.time.includes(selectedTime);
-
     if (isTimeSelected) {
       // If the time is already selected, remove it from the array
       const updatedTime = docInformation.time.filter(
@@ -109,7 +111,33 @@ function Hospital() {
     setRefOperation("d-none");
     setWhenTheAdminChooseSameTime("d-none");
     setDocInformation({ ...docInformation, doctorID: "", day: "", time: [] });
+    setActiveIndex(null)
   }
+  const timesValues = [
+    { value: "8:00" }, { value: "8:15" }, { value: "8:30" }, { value: "8:45" },
+    { value: "9:00" }, { value: "9:15" }, { value: "9:30" }, { value: "9:45" },
+    { value: "10:00" }, { value: "10:15" }, { value: "10:30" }, { value: "10:45" },
+    { value: "11:00" }, { value: "11:15" }, { value: "11:30" }, { value: "11:45" },
+    { value: "12:00" }, { value: "12:15" }, { value: "12:30" }, { value: "12:45" },
+    { value: "13:00" }, { value: "13:15" }, { value: "13:30" }, { value: "13:45" },
+    { value: "14:00" }, { value: "14:15" }, { value: "14:30" }, { value: "14:45" },
+    { value: "15:00" }, { value: "15:15" }, { value: "15:30" }, { value: "15:45" },
+    { value: "16:00" }, { value: "16:15" }, { value: "16:30" }, { value: "16:45" },
+    { value: "17:00" }, { value: "17:15" }, { value: "17:30" }, { value: "17:45" },
+    { value: "18:00" }, { value: "18:15" }, { value: "18:30" }, { value: "18:45" },
+    { value: "19:00" }, { value: "19:15" }, { value: "19:30" }, { value: "19:45" },
+    { value: "20:00" }, { value: "20:15" }, { value: "20:30" }, { value: "20:45" },
+    { value: "21:00" }, { value: "21:15" }, { value: "21:30" }, { value: "21:45" },
+    { value: "22:00" }, { value: "22:15" }, { value: "22:30" }, { value: "22:45" },
+    { value: "23:00" }, { value: "23:15" }, { value: "23:30" }, { value: "23:45" },
+    { value: "24:00" }, { value: "24:15" }, { value: "24:30" }, { value: "24:45" }
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleActiveButton = (index) => {
+    setActiveIndex(index === activeIndex ? null : index);
+  };
   // ---------------------------
   return (
     <>
@@ -142,9 +170,8 @@ function Hospital() {
             }}
           >
             <div
-              className={`d-flex justify-content-evenly ${
-                isDivVisible ? "active" : "d-none"
-              } `}
+              className={`d-flex justify-content-evenly ${isDivVisible ? "active" : "d-none"
+                } `}
             >
               <input
                 type="text"
@@ -197,429 +224,41 @@ function Hospital() {
       {/* adaft m3ad lkol doctor */}
       <section className={ShowDivOfPutTime}>
         <div className="d-flex flex-row flex-wrap w-100 justify-content-evenly">
-          <div className="w-25 shadow text-end p-4 rounded-4">
+          <div className="w-4/12 shadow text-end p-4 rounded-4">
             <h1 className="fs-4">أختر اليوم</h1>
-            <div className="d-flex justify-content-center mt-3">
+            <div className="d-flex justify-content-center flex-wrap mt-3">
               <input
                 type="date"
                 className="form-control"
                 onChange={putDay}
                 name="day"
               />
+              <p className="mt-4 text-muted">المواعيد اللتى تم أختيارها </p>
+            </div>
+            <div className="d-flex justify-content-evenly gap-1 flex-wrap mt-4">
+              {docInformation.time.map((element , i)=><p className="w-12 mt-2 bg-primary text-center p-2 rounded-3 text-white">{element}</p>)}
             </div>
           </div>
           <div className="w-50 shadow text-end p-4 rounded-4">
             <h1 className="fs-4">أختر مواعيد العمل</h1>
             <div className=" position-relative overflow-scroll w-100 heightOfTimeDiv mt-3">
               <div className="position-absolute w-100 d-flex justify-content-evenly flex-wrap">
-                <input
-                  type="button"
-                  className="opacity-75 btn btn-success  styleOfButtonOfTime"
-                  value={"8:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime"
-                  value={"8:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime"
-                  value={"8:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"8:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"9:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"9:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"9:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"9:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"10:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"10:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"10:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"10:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"11:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"11:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"11:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"11:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"12:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"12:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"12:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"12:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"13:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"13:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"13:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"13:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"14:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"14:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"14:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"14:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"15:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"15:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"15:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"15:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"16:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"16:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"16:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"16:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"17:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"17:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"17:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"17:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"18:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"18:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"18:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"18:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"19:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"19:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"19:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"19:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"20:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"20:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"20:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"20:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"21:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"21:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"21:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"21:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"22:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"22:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"22:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"22:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"23:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"23:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"23:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"23:45"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"24:00"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"24:15"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"24:30"}
-                  onClick={putTime}
-                />
-                <input
-                  type="button"
-                  className=" opacity-75 btn btn-success  styleOfButtonOfTime mt-3"
-                  value={"24:45"}
-                  onClick={putTime}
-                />
+
+                <div className="position-absolute  w-100 d-flex justify-content-evenly flex-wrap">
+                  {timesValues.map((element, index) => (
+                    <input
+                      key={index}
+                      type="button"
+                      className={`opacity-75 mt-3 btn btn-success styleOfButtonOfTime ${activeIndex === index ? "bg-primary" : ""}`}
+                      value={element.value}
+                      onClick={(e) => {
+                        putTime(e);
+                        toggleActiveButton(index);
+                      }}
+                    />
+                  ))}
+                </div>
+
               </div>
             </div>
           </div>
