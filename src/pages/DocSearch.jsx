@@ -53,6 +53,7 @@ export function DocSearch() {
     }, [])
     function closeTrueBook() {
         setTrueBook("d-none")
+        setActiveIndexOfTime(null)
     }
     function closeBookSection() {
         let newBook = { ...BookTime, day: "", time: "" };
@@ -60,7 +61,8 @@ export function DocSearch() {
         // console.log(newBook);
         setClassName("d-none");
         setClassOfDocTime("d-none")
-
+        setActiveIndexOfDate(null)
+        setActiveIndexOfTime(null)
     }
     async function getDoctors() {
         try {
@@ -113,6 +115,7 @@ export function DocSearch() {
         GetDaysToDoctor(IDdoc)
     }
     function setDayOfBook(e) {
+        setActiveIndexOfTime(null)
         setBookTime({ ...BookTime, day: e.target.value })
         GetTimeToDoctor(e.target.value)
         setClassOfDocTime("col-md-5")
@@ -142,6 +145,7 @@ export function DocSearch() {
             // setClassName("d-none")
             setSureBookSection("d-none")
             setTrueBook("w-50 position-fixed secBook2 rounded-5 shadow-lg bg-white d-flex flex-wrap")
+
         }
         catch (error) {
             if (error.response && error.response.status === 406) {
@@ -210,7 +214,15 @@ export function DocSearch() {
     function closeHospitalSection() {
         setclassShowResultOfhospi("d-none")
     }
+    const [activeIndexOfDate, setActiveIndexOfDate] = useState(null);
+    const [activeIndexOfTime, setActiveIndexOfTime] = useState(null);
 
+    const toggleActiveButtonOfDate = (index) => {
+        setActiveIndexOfDate(index === activeIndexOfDate ? null : index);
+    };
+    const toggleActiveButtonOfTime = (index) => {
+        setActiveIndexOfTime(index === activeIndexOfTime ? null : index);
+    };
     // ----------------------------------
     // doctor day and time work
     const [docDays, setDocDays] = useState([])
@@ -224,12 +236,12 @@ export function DocSearch() {
     }
     // show time 
     let [docTimes, setDocTimes] = useState([])
-    const[classOfDocTime , setClassOfDocTime] = useState("d-none")
+    const [classOfDocTime, setClassOfDocTime] = useState("d-none")
     async function GetTimeToDoctor(DayOfWork) {
         try {
             let { data } = await axios.post("https://mhiproject.onrender.com/patient/getTime", { doctorID: docDetail.id, day: DayOfWork })
             setDocTimes(data);
-            
+
         } catch (error) {
 
         }
@@ -278,11 +290,14 @@ export function DocSearch() {
                                                 return (
                                                     <div key={i}>
                                                         <input
-                                                            onClick={setDayOfBook}
+                                                            onClick={(e) => {
+                                                                setDayOfBook(e);
+                                                                toggleActiveButtonOfDate(i)
+                                                            }}
                                                             name="day"
                                                             type="button"
                                                             value={formattedDate}
-                                                            className="form-control w-100  bg-muted mt-2"
+                                                            className={`form-control w-100   mt-2 ${activeIndexOfDate === i ? "text-white bg-primary" : "bg-muted"}`} 
                                                         />
                                                     </div>
                                                 );
@@ -302,9 +317,12 @@ export function DocSearch() {
                                                 {docTimes && docTimes.length > 0 && docTimes[0].map((element, i) => (
                                                     <div key={i} className="w-100">
                                                         <input
-                                                            onClick={setTimeOfBook}
+                                                            onClick={(e)=>{
+                                                                setTimeOfBook(e);
+                                                                toggleActiveButtonOfTime(i)
+                                                            }}
                                                             type="button"
-                                                            className="mt-2 form-control w-100"
+                                                            className={`mt-2 form-control w-100 ${activeIndexOfTime === i ? " text-white bg-primary " : " bg-muted "}}`} 
                                                             name="time"
                                                             value={element}
                                                         />
