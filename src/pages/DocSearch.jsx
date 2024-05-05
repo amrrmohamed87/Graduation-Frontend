@@ -54,6 +54,7 @@ export function DocSearch() {
     function closeTrueBook() {
         setTrueBook("d-none")
         setActiveIndexOfTime(null)
+        setActiveIndexOfDate(null)
     }
     function closeBookSection() {
         let newBook = { ...BookTime, day: "", time: "" };
