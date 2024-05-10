@@ -46,22 +46,42 @@ function Login() {
 
       const data = await response.json();
       console.log(data);
-      const name = data.user.name;
+
       const role = data.user.role;
       const token = data.token;
-      const specialize = data.user.specialize;
-      const DoctorId = data.user._id;
-      const hospital = data.user.address;
       const hospitalID = data.user._id;
-      const hospitalAdminHospitalID = data.user.hospitalID;
+      if (
+        role === "hospitalManager" ||
+        role === "HospitalAdmin" ||
+        role === "doctor"
+      ) {
+        const name = data.user.name;
+        const DoctorId = data.user._id;
+
+        const specialize = data.user.specialize;
+        const hospital = data.user.address;
+        const hospitalAdminHospitalID = data.hospitalDetails._id;
+        const hospitalNameFromHospitaldDetails = data.hospitalDetails.name;
+
+        localStorage.setItem("name", name);
+        localStorage.setItem("DoctorId", DoctorId);
+
+        localStorage.setItem("specialize", specialize);
+        localStorage.setItem("hospital", hospital);
+        localStorage.setItem(
+          "hospitalNameFromHospitaldDetails",
+          hospitalNameFromHospitaldDetails
+        );
+        localStorage.setItem(
+          "hospitalAdminHospitalID",
+          hospitalAdminHospitalID
+        );
+      }
+
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("name", name);
-      localStorage.setItem("specialize", specialize);
-      localStorage.setItem("DoctorId", DoctorId);
-      localStorage.setItem("hospital", hospital);
       localStorage.setItem("hospitalID", hospitalID);
-      localStorage.setItem("hospitalAdminHospitalID", hospitalAdminHospitalID);
+
       switch (role) {
         case "doctor":
           navigate("/doctor");
@@ -78,6 +98,10 @@ function Login() {
         case "HospitalAdmin":
           navigate("/hospitalAdmin");
           break;
+        case "hospitalManager":
+          navigate("/hospitalManager");
+          return;
+          break;
         default:
           console.error("Unexpected role:", role);
           setError("Unauthorized access");
@@ -86,6 +110,7 @@ function Login() {
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
+      console.log(error);
       setIsLoading(false);
     }
   };
