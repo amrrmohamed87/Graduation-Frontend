@@ -27,6 +27,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { TbEmergencyBed } from "react-icons/tb";
 
 export function DoctorDashBoard() {
   // get doctor id
@@ -89,7 +90,7 @@ export function DoctorDashBoard() {
   }
   // --------------------------
   // get booking
-  const [isLoading , setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [getBookForDoct, setgetBookForDoct] = useState([]);
   const [error, setError] = useState("");
   const [errorClass, setErrorClass] = useState("d-none");
@@ -102,11 +103,11 @@ export function DoctorDashBoard() {
         `https://mhiproject.onrender.com/doctor/showBooking/${doctorId}`
       );
       setgetBookForDoct(data.getbook);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setError("لا يوجد حجوزات");
-        setIsLoading(false)
+        setIsLoading(false);
         setErrorClass("fs-1 text-center mt-5 mb-5");
         setClassForTable("d-none");
         setclassOfFilterButton("d-none");
@@ -169,6 +170,7 @@ export function DoctorDashBoard() {
   });
 
   // --------------------------------
+  const hospitalId = localStorage.getItem("hospitalAdminHospitalID");
   const [patientRecord, setPatientRecord] = useState([]);
   const [isLoadingPatientRecord, setIsLoadingPatientRecord] = useState(false);
 
@@ -195,6 +197,76 @@ export function DoctorDashBoard() {
     diagnose: "",
   });
   const [isCreating, setIsCreating] = useState(false);
+  const [requestSurgery, setRequestSurgery] = useState({
+    doctor: "",
+    patient: "",
+    hospitalID: hospitalId,
+    specialize: "",
+    description: "",
+  });
+  const [isRequestingSurgery, setIsRequestingSurgery] = useState(false);
+  const surgeries = [
+    {
+      label: "جراحات القلب والأوعية الدموية",
+      value: "جراحات القلب والأوعية الدموية",
+    },
+    {
+      label: "جراحات الجهاز الهضمي",
+      value: "جراحات الجهاز الهضمي",
+    },
+    {
+      label: "جراحات العظام والمفاصل",
+      value: "جراحات العظام والمفاصل",
+    },
+    {
+      label: "جراحات العين",
+      value: "جراحات العين",
+    },
+    {
+      label: "جراحات الجهاز التناسلي",
+      value: "جراحات الجهاز التناسلي",
+    },
+    {
+      label: "جراحات الجهاز التنفسي",
+      value: "جراحات الجهاز التنفسي",
+    },
+    {
+      label: "جراحات العصبية",
+      value: "جراحات العصبية",
+    },
+    {
+      label: "جراحات الأسنان والفم",
+      value: "جراحات الأسنان والفم",
+    },
+    {
+      label: "جراحات النساء",
+      value: "جراحات النساء",
+    },
+    {
+      label: "جراحات الجهاز البولي",
+      value: "جراحات الجهاز البولي",
+    },
+    {
+      label: "جراحات الطوارئ والإصابات",
+      value: "جراحات الطوارئ والإصابات",
+    },
+    {
+      label: "جراحات الأورام الخبيثة",
+      value: "جراحات الأورام الخبيثة",
+    },
+    {
+      label: "جراحات العنق والرأس والوجه",
+      value: "جراحات العنق والرأس والوجه",
+    },
+    {
+      label: "جراحات التجميل والترميم الجلدي",
+      value: "جراحات التجميل والترميم الجلدي",
+    },
+    {
+      label: "جراحات الجهاز العصبي المركزي",
+      value: "جراحات الجهاز العصبي المركزي",
+    },
+  ];
 
   const handleFetchingPatientRecord = async (id) => {
     setIsLoadingPatientRecord(true);
@@ -342,6 +414,62 @@ export function DoctorDashBoard() {
     }
   };
 
+  //Request Surgery
+  function handleRequestSurgeryIds(id) {
+    setRequestSurgery((prev) => ({
+      ...prev,
+      doctor: doctorId,
+      patient: id,
+    }));
+    toast.success("Ids are passed to the body");
+  }
+
+  function handleRequestSurgeryChange(event) {
+    const { name, value } = event.target;
+    setRequestSurgery((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  const handleRequestSurgery = async (event) => {
+    // event.preventDefault();
+    setIsRequestingSurgery(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/doctor/requestSurgery",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestSurgery),
+        }
+      );
+      const resData = await response.json();
+
+      if (!response.ok) {
+        toast.error(resData.message);
+        setIsRequestingSurgery(false);
+        return;
+      }
+
+      toast.success("Successfully requested");
+      setRequestSurgery({
+        doctor: "",
+        patient: "",
+        specialize: "",
+        description: "",
+      });
+      setIsRequestingSurgery(false);
+    } catch (error) {
+      toast.error("unexpected error during requesting a surgery");
+      setIsRequestingSurgery(false);
+      return;
+    }
+  };
+
   //Pagination component
   const Pagination = () => {
     return (
@@ -451,7 +579,11 @@ export function DoctorDashBoard() {
             </div>
             <div className="mt-3 col-md-10 text-center bg-muted rounded-4 p-5">
               <h1 className={errorClass}>{error}</h1>
-              {isLoading == true ? <h1 className="text-center fs-1 m-5">جارى التحميل</h1>:""} 
+              {isLoading == true ? (
+                <h1 className="text-center fs-1 m-5">جارى التحميل</h1>
+              ) : (
+                ""
+              )}
               <div className="d-flex justify-content-start mb-2">
                 <button className={classOfFilterButton} onClick={toggleFilter}>
                   {" "}
@@ -573,7 +705,10 @@ export function DoctorDashBoard() {
                                     handleGetPatientId(element.patientID._id)
                                   }
                                 >
-                                  <IoOpenOutline size={20} />
+                                  <IoOpenOutline
+                                    size={20}
+                                    className="text-blue-800"
+                                  />
                                 </Button>
                               </DialogTrigger>
                               <DialogContent className="sm:max-w-5xl mx-auto p-4">
@@ -749,6 +884,7 @@ export function DoctorDashBoard() {
                                 </div>
                               </DialogContent>
                             </Dialog>
+
                             <Dialog>
                               <DialogTrigger asChild>
                                 <Button
@@ -757,7 +893,10 @@ export function DoctorDashBoard() {
                                     handlePassingIds(element.patientID._id)
                                   }
                                 >
-                                  <TfiWrite size={20} />
+                                  <TfiWrite
+                                    size={20}
+                                    className="text-emerald-700"
+                                  />
                                 </Button>
                               </DialogTrigger>
                               <DialogContent className="sm:max-w-[650px]">
@@ -836,6 +975,117 @@ export function DoctorDashBoard() {
                                     onClick={handleCreateMedicalRecord}
                                   >
                                     {isCreating ? "Creating..." : "Create"}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="outline-none"
+                                  onClick={() =>
+                                    handleRequestSurgeryIds(
+                                      element.patientID._id
+                                    )
+                                  }
+                                >
+                                  <TbEmergencyBed
+                                    size={20}
+                                    className="text-red-500"
+                                  />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[650px]">
+                                <DialogHeader>
+                                  <DialogTitle>Request a Surgery</DialogTitle>
+                                  <DialogDescription>
+                                    You can easily request a surgery by pressing
+                                    on The button "Create" after filling the
+                                    form.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div>
+                                  <form method="post">
+                                    <h1 className="text-center text-[18px] mb-2">
+                                      The following is a list of items you
+                                      should not include in the medical entry
+                                    </h1>
+                                    <p className="text-left pl-4 mb-2">
+                                      (Financial or health insurance
+                                      information, Subjective opinions,
+                                      Speculations, Blame of others or
+                                      self-doubt, Legal information such as
+                                      narratives provided to your professional
+                                      liability carrier or correspondence with
+                                      your defense attorney)
+                                    </p>
+                                    <div className="flex flex-col bg-white shadow-lg p-6">
+                                      <div className="flex flex-col justify-start items-end">
+                                        <label
+                                          htmlFor="diagnose"
+                                          className="mb-2 text-[18px]"
+                                        >
+                                          العملية
+                                        </label>
+                                        <Select
+                                          isClearable
+                                          id="diagnose"
+                                          type="text"
+                                          name="diagnose"
+                                          placeholder="Write your diagnose..."
+                                          options={surgeries}
+                                          onChange={(surgery) => {
+                                            setRequestSurgery((prev) => ({
+                                              ...prev,
+                                              specialize: surgery
+                                                ? surgery.value
+                                                : "",
+                                            }));
+                                            console.log(requestSurgery);
+                                          }}
+                                          value={surgeries.find(
+                                            (surgery) =>
+                                              surgery.label ===
+                                              requestSurgery.specialize
+                                          )}
+                                          className="w-full pl-2 py-2  rounde-lg"
+                                        />
+                                      </div>
+                                      <div className="flex flex-col justify-start items-end mt-4">
+                                        <label
+                                          htmlFor="description"
+                                          className="mb-2 text-[18px]"
+                                        >
+                                          التفصيل
+                                        </label>
+                                        <textarea
+                                          id="description"
+                                          type="text"
+                                          name="description"
+                                          placeholder="...اذكر أسبابك لطلب إجراء عملية جراحية"
+                                          value={requestSurgery.description}
+                                          onChange={handleRequestSurgeryChange}
+                                          className="w-full pl-2 py-2 border rounde-lg text-right pr-4"
+                                        />
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                                <DialogFooter>
+                                  <Button
+                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                      isRequestingSurgery
+                                        ? "bg-blue-600"
+                                        : "bg-emerald-700"
+                                    }`}
+                                    type="submit"
+                                    disabled={isRequestingSurgery}
+                                    onClick={handleRequestSurgery}
+                                  >
+                                    {isRequestingSurgery
+                                      ? "Requesting..."
+                                      : "Request"}
                                   </Button>
                                 </DialogFooter>
                               </DialogContent>

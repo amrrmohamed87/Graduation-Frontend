@@ -48,7 +48,7 @@ function NewNavbar() {
   return (
     <header className="z-10 absolute">
       <nav
-        className={`fixed w-full h-[4rem] md:h-[5.5rem] max-w-[1536px] transition-all duration-300 ${
+        className={`fixed w-full h-[4rem] md:h-[5.5rem] max-w-[2500px] transition-all duration-300 ${
           isScrolled
             ? "bg-emerald-950 bg-opacity-80 shadow-md"
             : "bg-transparent shadow-none"

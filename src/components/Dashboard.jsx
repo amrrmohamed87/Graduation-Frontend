@@ -10,7 +10,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { useSubmit, Form } from "react-router-dom";
+import { useSubmit } from "react-router-dom";
 import { TbLogout2 } from "react-icons/tb";
 
 function Dashboard() {
@@ -47,7 +47,7 @@ function Dashboard() {
               <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
                 إلغاء
               </AlertDialogCancel>
-              <Form
+              <form
                 action="/logout"
                 method="post"
                 onClick={logoutHandler}
@@ -55,7 +55,7 @@ function Dashboard() {
               >
                 <TbLogout2 size={20} className="text-emerald-950" />
                 <button className="text-emerald-950">تسجيل الخروج</button>
-              </Form>
+              </form>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

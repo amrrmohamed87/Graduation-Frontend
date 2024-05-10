@@ -36,6 +36,7 @@ import { useEffect } from "react";
 import Contact from "./pages/Contact.jsx";
 import { DoctorDashBoard } from "./pages/DoctorDashBoard";
 import HospitalAdmin from "./pages/HospitalAdmin";
+import HospitalManager from "./pages/HospitalManager";
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -76,6 +77,8 @@ function PrivateRoutes({ roles, children }) {
         return <Navigate to="/hospital" replace />;
       case "HospitalAdmin":
         return <Navigate to="/hospitalAdmin" replace />;
+      case "HospitalManager":
+        return <Navigate to="/hospitalManager" replace />;
       default:
         return <Navigate to="/" replace />;
     }
@@ -181,6 +184,14 @@ export default function App() {
       element: (
         <PrivateRoutes roles={["HospitalAdmin"]}>
           <HospitalAdmin />
+        </PrivateRoutes>
+      ),
+    },
+    {
+      path: "/hospitalManager",
+      element: (
+        <PrivateRoutes roles={["hospitalMananger"]}>
+          <HospitalManager />
         </PrivateRoutes>
       ),
     },
