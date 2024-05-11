@@ -137,7 +137,7 @@ export default function Home() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: true }}
-        variants={fadeInMotionVariants}
+        variants={upwardMotionVariants}
       >
         <AboutUs />
       </motion.div>

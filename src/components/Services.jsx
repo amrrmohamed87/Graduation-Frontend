@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import serviceImage from "../assets/images/service-section.png";
 import services from "../assets/images/puzzle.png";
@@ -10,9 +11,61 @@ export default function Services() {
   function navigateHandler() {
     navigate("/services");
   }
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      x: "100vw", // Starts off-screen to the left, 'vw' stands for viewport width
+    },
+    visible: {
+      opacity: 1,
+      x: 0, // Ends at its natural position
+      transition: {
+        duration: 0.9,
+        ease: "easeInOut",
+      },
+    },
+  };
+  const leftMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      x: "500", // Starts from the left side off-screen
+    },
+    onscreen: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 3,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 500, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
   return (
     <section className="lg:h-screen bg-white rounded-[30px] flex justify-between items-center max-lg:flex-col gap-10 w-full p-8  max-container mb-16">
-      <div className="flex flex-1 flex-col items-end text-right">
+      <motion.div
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={leftMotionVariants}
+        className="flex flex-1 flex-col items-end text-right"
+      >
         <h2 className="text-[35px] md:text-[45px] font-bold mb-1 text-[#056558] lg:max-w-lg">
           الخدمات
         </h2>
@@ -44,14 +97,20 @@ export default function Services() {
             الخدمات
           </button>
         </div> */}
-      </div>
-      <div className="flex flex-1 justify-center items-center">
+      </motion.div>
+      <motion.div
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariants}
+        className="flex flex-1 justify-center items-center"
+      >
         <img
           src={serviceImage}
           alt="service"
           className="object-contain rounded-3xl"
         />
-      </div>
+      </motion.div>
     </section>
   );
 }

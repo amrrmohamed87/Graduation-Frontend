@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import CalculatorInput from "./CalculatorInput";
 
 import calculator from "../assets/images/calculator.png";
@@ -82,11 +83,64 @@ function CaloriesCalculator() {
     event.preventDefault();
   }
 
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 500, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+  const upwardMotionVariantsPattern = {
+    offscreen: {
+      opacity: 0,
+      y: 200, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
+  const upwardMotionVariantsSecond = {
+    offscreen: {
+      opacity: 0,
+      y: 300, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
   return (
     <section className="md:h-[700px]">
       <div className="flex justify-center">
         <div className="flex flex-col md:flex-row items-center p-8 bg-white rounded-[15px] shadow-sm md:border w-[1200px] md:h-[550px]">
-          <form onSubmit={handleSubmit}>
+          <motion.form
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true }}
+            variants={upwardMotionVariants}
+            onSubmit={handleSubmit}
+          >
             <div className="bg-white border max-w-[550px] mt-6 rounded-[10px] shadow-md py-4 md:py-16 md:px-8">
               <div className="flex justify-center">
                 <img src={salad} className="w-[60px]" />
@@ -213,7 +267,7 @@ function CaloriesCalculator() {
                 </button>
               </div>
             </div>
-          </form>
+          </motion.form>
           <div className="m-4 md:m-0">
             <div className="flex items-center justify-center gap-2">
               <h1 className="text-center text-emerald-700 text-[22px]  md:text-[40px]">

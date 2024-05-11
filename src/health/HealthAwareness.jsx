@@ -29,6 +29,38 @@ function HealthAwareness() {
       },
     },
   };
+  const upwardMotionVariantsPattern = {
+    offscreen: {
+      opacity: 0,
+      y: 200, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
+  const upwardMotionVariantsSecond = {
+    offscreen: {
+      opacity: 0,
+      y: 300, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
   return (
     <main>
       <section className="relative">
@@ -62,7 +94,13 @@ function HealthAwareness() {
         </motion.div>
       </section>
 
-      <section className="mb-6 md:mb-36">
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariants}
+        className="mb-6 md:mb-60"
+      >
         <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px]">
           وفرنالك
         </h1>
@@ -85,15 +123,21 @@ function HealthAwareness() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      <section className="mb-8 md:mb-40 ">
-        <div className="md:flex md:items-center md:gap-8 md:mx-8">
+      <section className="mb-8 md:mb-48 ">
+        <motion.div className="md:flex md:items-center md:gap-8 md:mx-8">
           <img
             src={patternImage}
             className="p-4 rounded-lg  shadow-sm md:w-[770px] md:h-[400px]"
           />
-          <div className="flex flex-col">
+          <motion.div
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true }}
+            variants={upwardMotionVariantsPattern}
+            className="flex flex-col"
+          >
             <div className="flex justify-end items-center mx-8">
               <h1 className="text-right text-[30px] text-emerald-700  mb-3  md:text-[40px] md:mb-16">
                 نمط الحياة الصحية
@@ -105,13 +149,17 @@ function HealthAwareness() {
               فرد. وهو ينطوي على إجراء تغييرات تدريجية ومستدامة على العادات
               والسلوكيات اليومية لتعزيز الصحة والرفاهية على المدى الطويل
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
       <section className="mt-4 md:h-screen">
         <div className="p-4 md:flex md:justify-center md:items-start md:gap-6 md:m-16">
           {healthcare.map((health) => (
-            <div
+            <motion.div
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: true }}
+              variants={upwardMotionVariantsSecond}
               key={health.src}
               className="bg-white border shadow-md rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
             >
@@ -139,7 +187,7 @@ function HealthAwareness() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -156,7 +204,11 @@ function HealthAwareness() {
             من اهم عناصر تطوير الصحة
           </h1>
           <div className="text-right p-4 md:flex md:items-center md:gap-8">
-            <img
+            <motion.img
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: true }}
+              variants={upwardMotionVariantsSecond}
               src={nutritionImage}
               className="rounded-[15px] shadow-md md:w-[550px]"
             />

@@ -1,7 +1,24 @@
+import { motion } from "framer-motion";
+
 import app from "../assets/images/app.jpg";
 import play from "../assets/images/play.jpg";
 import download from "../assets/images/download.png";
 function DownLoadApp() {
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 500, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
   return (
     <section className="md:h-screen">
       <div className="bg-white shadow-xl rounded-2xl p-4 m-4">
@@ -21,9 +38,15 @@ function DownLoadApp() {
               <img src={play} className="w-[120px] md:w-[200px] rounded-2xl" />
             </div>
           </div>
-          <div className="mt-4">
+          <motion.div
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true }}
+            variants={upwardMotionVariants}
+            className="mt-4"
+          >
             <img src={download} className="h-[400px] rounded-xl md:h-[500px]" />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

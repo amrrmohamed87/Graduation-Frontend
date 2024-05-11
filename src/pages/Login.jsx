@@ -1,4 +1,5 @@
 import { Form, Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Input from "../components/NewInput";
 import { useState, useEffect } from "react";
 import { FaRegEyeSlash, FaRegEye, FaPhoneAlt } from "react-icons/fa";
@@ -122,6 +123,22 @@ function Login() {
     setShowPassword(!showPassword);
   }
 
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 300, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.3, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
   return (
     <section className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <div className="md:flex md:items-center md:justify-center md:gap-14 px-4">
@@ -129,7 +146,7 @@ function Login() {
           <h1 className="text-emerald-800 text-[23px] mb-4 md:text-[49px] md:mb-4">
             مصر للتأمين الصحي
           </h1>
-          <p className="text-emerald-700 text-[18px] px-8 md:text-[25px]">
+          <p className="text-emerald-700 text-[18px]  md:text-[25px]">
             مرحبًا! مجرد تذكير بأنه لكي تتمكن من تسجيل الدخول، يجب أن تكون
             مسجلاً في التأمين الصحي في مصر. إذا كانت لديك أي أسئلة حول حالة
             التسجيل الخاصة بك أو كنت بحاجة إلى المساعدة، فلا تتردد في التواصل
@@ -152,7 +169,13 @@ function Login() {
             </Link>
           </div>
         </div>
-        <div className="w-full mt-4 md:mt-0 max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={upwardMotionVariants}
+          className="w-full mt-4 md:mt-0 max-w-md p-8 bg-white rounded-lg shadow-lg"
+        >
           <h1 className="text-xl font-bold text-center text-emerald-800 mb-10">
             مصر للتأمين الصحي
           </h1>
@@ -190,7 +213,7 @@ function Login() {
               {loading ? "...جاري الدخول" : "تسجيل الدخول"}
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import heroImage from "../assets/images/nutrition-hero.jpg";
 import dietImage from "../assets/images/diet.jpg";
 import benefits from "../assets/images/diets.png";
@@ -6,22 +8,81 @@ import Footer from "@/components/Footer";
 import { healthyFood, healthyFoodTwo } from "@/data/constants";
 
 function Nutrition() {
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 500, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+  const upwardMotionVariantsPattern = {
+    offscreen: {
+      opacity: 0,
+      y: 200, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
+  const upwardMotionVariantsSecond = {
+    offscreen: {
+      opacity: 0,
+      y: 300, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
+
   return (
     <main>
       <section className="relative">
         <img
           src={heroImage}
-          className="object-cover object-center w-full h-[932px] md:h-[700px]"
+          className="object-cover object-center w-full h-[932px] md:h-[800px]"
         />
         <div className="absolute inset-0 bg-black bg-opacity-25"></div>
-        <div className="absolute inset-2 flex flex-col justify-center items-end mt-48 mr-2 md:mt-16 md:mr-4">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={upwardMotionVariants}
+          className="absolute inset-2 flex flex-col justify-center items-end mt-48 mr-2 md:mt-16 md:mr-4"
+        >
           <h1 className="text-emerald-700 text-[70px]">التغذية</h1>
           <h1 className="text-emerald-700 text-[40px]">
             وتخطيط النظام الغذائي
           </h1>
-        </div>
+        </motion.div>
       </section>
-      <section className="md:mb-36">
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariants}
+        className="md:mb-36"
+      >
         <h1 className="text-center text-emerald-700 text-[28px] mt-16 md:mb-10 md:mt-20 md:text-[45px]">
           التغذية الصحية
         </h1>
@@ -45,9 +106,15 @@ function Nutrition() {
             className="md:h-[380px] rounded-[10px] shadow-md"
           />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="mb-16">
+      <motion.section
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        variants={upwardMotionVariantsSecond}
+        className="mb-16"
+      >
         <div className="flex flex-col md:flex-row justify-center gap-12 p-4">
           {healthyFood.map((food) => (
             <div
@@ -81,7 +148,7 @@ function Nutrition() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       <section>
         <CaloriesCalculator />
