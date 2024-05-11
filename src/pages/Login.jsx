@@ -62,6 +62,7 @@ function Login() {
         const hospital = data.user.address;
         const hospitalAdminHospitalID = data.hospitalDetails._id;
         const hospitalNameFromHospitaldDetails = data.hospitalDetails.name;
+        const hospitalLocation = data.hospitalDetails.address;
 
         localStorage.setItem("name", name);
         localStorage.setItem("DoctorId", DoctorId);
@@ -76,6 +77,7 @@ function Login() {
           "hospitalAdminHospitalID",
           hospitalAdminHospitalID
         );
+        localStorage.setItem("hospitalLocation", hospitalLocation);
       }
 
       localStorage.setItem("token", token);

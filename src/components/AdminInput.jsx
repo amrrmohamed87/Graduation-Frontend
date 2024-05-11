@@ -8,7 +8,7 @@ function Input({ id, label, ...props }) {
         id={id}
         required
         {...props}
-        className="h-[30px] w-full border-2 border-gray-300 focus:border-gray-950 rounded-lg pl-2 pr-2
+        className="h-[30px] w-full border-2 border-gray-300 focus:border-gray-950 rounded-sm pl-2 pr-2
         md:h-[40px]"
       />
     </div>

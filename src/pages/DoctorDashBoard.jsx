@@ -190,6 +190,14 @@ export function DoctorDashBoard() {
   const [dateOptions, setDateOptions] = useState([]);
   const [dateFilter, setDateFilter] = useState("");
 
+  const [specializes, setSpecializes] = useState([]);
+  const [isFetchingSpecializes, setIsFetchingSpecializes] = useState(false);
+  const specializeOptions = specializes.map((specialize) => ({
+    label: specialize.name,
+    value: specialize._id,
+  }));
+  const [selectedSpecialize, setSelectedSpecialize] = useState(null);
+
   const [createRecord, setCreateRecord] = useState({
     patientID: "",
     doctorID: "",
@@ -309,6 +317,33 @@ export function DoctorDashBoard() {
       setIsLoadingPatientRecord(false);
     }
   };
+
+  useEffect(() => {
+    async function loadSpecializes() {
+      setIsFetchingSpecializes(true);
+
+      try {
+        const response = await fetch(
+          "https://mhiproject.onrender.com/hospitalAdmin/getSpecializes"
+        );
+        const resData = await response.json();
+
+        if (!response.ok) {
+          toast.error(resData.message);
+          setIsFetchingSpecializes(false);
+          return;
+        }
+
+        setSpecializes(resData);
+        setIsFetchingSpecializes(false);
+      } catch (error) {
+        toast.error("Unexpected error during fetching specializes");
+        setIsFetchingSpecializes(false);
+        return;
+      }
+    }
+    loadSpecializes();
+  }, []);
 
   //Send patient id to the API
   const handleGetPatientId = (id) => {
@@ -1029,6 +1064,25 @@ export function DoctorDashBoard() {
                                           العملية
                                         </label>
                                         <Select
+                                          id="doctorSpecialization"
+                                          isClearable
+                                          placeholder="...التخصص"
+                                          type="text"
+                                          name="specialize"
+                                          className="text-end w-full pl-2 py-2  rounde-lg"
+                                          options={specializeOptions}
+                                          value={selectedSpecialize}
+                                          onChange={(option) => {
+                                            setSelectedSpecialize(option);
+                                            setRequestSurgery((prev) => ({
+                                              ...prev,
+                                              specialize: option
+                                                ? option.value
+                                                : "",
+                                            }));
+                                          }}
+                                        />
+                                        {/* <Select
                                           isClearable
                                           id="diagnose"
                                           type="text"
@@ -1050,7 +1104,7 @@ export function DoctorDashBoard() {
                                               requestSurgery.specialize
                                           )}
                                           className="w-full pl-2 py-2  rounde-lg"
-                                        />
+                                        /> */}
                                       </div>
                                       <div className="flex flex-col justify-start items-end mt-4">
                                         <label

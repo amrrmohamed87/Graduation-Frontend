@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Dashboard from "@/components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
 import Input from "@/components/AdminInput";
+import Select from "react-select";
 
 import {
   AlertDialog,
@@ -65,6 +66,13 @@ const HospitalAdmin = () => {
   const [isFetchingDoctors, setIsFetchingDoctors] = useState(false);
   const [directorsList, setDirectorList] = useState([]);
   const [isFetchingDirectors, setIsFetchingDirectors] = useState(false);
+  const [specializes, setSpecializes] = useState([]);
+  const [isFetchingSpecializes, setIsFetchingSpecializes] = useState(false);
+  const specializeOptions = specializes.map((specialize) => ({
+    label: specialize.name,
+    value: specialize._id,
+  }));
+  const [selectedSpecialize, setSelectedSpecialize] = useState(null);
 
   //doctor filter search state
   const [doctorQuery, setDoctorQuery] = useState("");
@@ -198,6 +206,7 @@ const HospitalAdmin = () => {
         specialize: "",
         hospitalID: hospitalId,
       });
+      setSelectedSpecialize(null);
       setIsAddingDoctor(false);
     } catch (error) {
       toast.error("fucking error");
@@ -342,6 +351,35 @@ const HospitalAdmin = () => {
     }
     loadDirectors();
   }, [isAddingDirector, isDeletingDirector]);
+
+  //Fetch Specializes
+  useEffect(() => {
+    async function loadSpecializes() {
+      setIsFetchingSpecializes(true);
+
+      try {
+        const response = await fetch(
+          "https://mhiproject.onrender.com/hospitalAdmin/getSpecializes"
+        );
+        const resData = await response.json();
+
+        if (!response.ok) {
+          toast.error(resData.message);
+          setIsFetchingSpecializes(false);
+          return;
+        }
+
+        setSpecializes(resData);
+        setIsFetchingSpecializes(false);
+      } catch (error) {
+        toast.error("Unexpected error during fetching specializes");
+        setIsFetchingSpecializes(false);
+        return;
+      }
+    }
+    loadSpecializes();
+  }, []);
+  console.log(specializes);
 
   //Filter Doctor's List && Handle Pagination functions
   const filteredDoctors = doctorslist.filter(
@@ -543,13 +581,22 @@ const HospitalAdmin = () => {
                 value={doctor.password}
                 onChange={handleDoctorChange}
               />
-              <Input
+              <Select
                 id="doctorSpecialization"
-                label="التخصص"
+                isClearable
+                placeholder="...التخصص"
                 type="text"
                 name="specialize"
-                value={doctor.specialize}
-                onChange={handleDoctorChange}
+                className="text-end mb-4"
+                options={specializeOptions}
+                value={selectedSpecialize}
+                onChange={(option) => {
+                  setSelectedSpecialize(option);
+                  setDoctor((prev) => ({
+                    ...prev,
+                    specialize: option ? option.value : "",
+                  }));
+                }}
               />
 
               <button

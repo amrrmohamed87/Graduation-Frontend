@@ -62,13 +62,7 @@ export default function Home() {
 
   return (
     <main>
-      <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariants}
-        className="relative h-screen w-full"
-      >
+      <section className="relative h-screen w-full">
         <div className="absolute w-full h-screen">
           <img
             src={hero}
@@ -76,11 +70,17 @@ export default function Home() {
           />
         </div>
         <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="absolute inset-2 left-4 md:inset-4 md:mt-36 flex flex-1 flex-col justify-center text-right mr-2 md:mr-0 md:items-end">
-          <h2 className="text-white text-[65px] md:text-[80px]">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={upwardMotionVariants}
+          className="absolute inset-2 left-4 md:inset-4 md:mt-36 flex flex-1 flex-col justify-center text-right mr-2 md:mr-0 md:items-end"
+        >
+          <h2 className="text-white text-[40px] md:text-[70px]">
             مصر للتأمين الصحي
           </h2>
-          <p className="text-slate-300 text-[25px] md:text-[40px] mt-4 md:mt-0">
+          <p className="text-slate-300 text-[20px] md:text-[35px] mt-4 md:mt-0">
             أعظم ثروة هي الصحة، والحياة مع التأمين يخلق ثروة عظيمة
           </p>
           <div className="flex flex-col justify-center items-end mt-8 md:flex-row md:items-start md:gap-4">
@@ -103,8 +103,8 @@ export default function Home() {
               </button>
             </Link>
           </div>
-        </div>
-      </motion.section>
+        </motion.div>
+      </section>
       <motion.section
         initial="offscreen"
         whileInView="onscreen"

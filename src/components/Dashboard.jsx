@@ -44,17 +44,17 @@ function Dashboard() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex items-center gap-3">
-              <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
+              <AlertDialogCancel className="w-[150px] bg-red-600 text-white mb-1 text-[18px] font-bold hover:bg-red-900 transition-all duration-300">
                 إلغاء
               </AlertDialogCancel>
               <form
                 action="/logout"
                 method="post"
                 onClick={logoutHandler}
-                className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
+                className="flex items-center gap-2 w-[150px] bg-emerald-700 rounded-lg px-3 py-2 md:gap-8 cursor-pointer hover:bg-emerald-900 transition-all duration-300"
               >
-                <TbLogout2 size={20} className="text-emerald-950" />
-                <button className="text-emerald-950">تسجيل الخروج</button>
+                <TbLogout2 size={20} className="text-white" />
+                <button className="text-white">تسجيل الخروج</button>
               </form>
             </AlertDialogFooter>
           </AlertDialogContent>

@@ -1,7 +1,9 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import Footer from "../components/Footer.jsx";
 import { guide, healthcare } from "../data/constants.js";
+import { LuSalad } from "react-icons/lu";
 
 import heroImage from "../assets/images/health-awareness.jpg";
 import patternImage from "../assets/images/pattern-of-healthy-life3.jpg";
@@ -12,20 +14,52 @@ import workout from "../assets/images/person.png";
 
 function HealthAwareness() {
   const navigate = useNavigate();
+  const upwardMotionVariants = {
+    offscreen: {
+      opacity: 0,
+      y: 500, // Start below the natural position
+    },
+    onscreen: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring", // Optional, for a spring-like effect
+        bounce: 0.1, // Adjust the bounce effect, if spring type is used
+        duration: 2,
+      },
+    },
+  };
   return (
     <main>
       <section className="relative">
         <img
           src={heroImage}
-          className="object-cover object-center h-[932px] w-full md:h-[680px]"
+          className="object-cover object-center h-[932px] w-full md:h-[800px]"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="absolute inset-0 flex flex-col justify-center items-center">
-          <h1 className="text-[65px] md:text-[80px] text-slate-100">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={upwardMotionVariants}
+          className="absolute inset-0 flex flex-col justify-center items-center md:mt-16"
+        >
+          <h1 className="text-[35px] md:text-[70px] text-slate-100">
             التوعية الصحية
           </h1>
-          <p className="text-[45px] text-slate-300">لحياة افضل</p>
-        </div>
+          <p className="text-[20px] md:text-[35px] text-slate-300">
+            الصحة الأفضل تبدأ هنا، فنحن نعيد الصحة والعافية إلى المنزل
+          </p>
+          <Link
+            to="/ca"
+            className="mt-6 text-center bg-emerald-800 flex justify-center gap-1 w-[150px] py-2 rounded-lg mb-3 md:w-[200px] md:items-center hover:bg-emerald-950 transition-all duration-300"
+          >
+            <LuSalad size={23} className="text-white" />
+            <button className="text-[20px] md:text-[23px] text-white">
+              التغذية الصحية
+            </button>
+          </Link>
+        </motion.div>
       </section>
 
       <section className="mb-6 md:mb-36">

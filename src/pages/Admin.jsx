@@ -35,6 +35,7 @@ function Admin() {
     password: "",
     address: "",
     birthday: "",
+    mobileNumber: "",
   });
   const [isAddingPatient, setIsAddingPatient] = useState(false);
   const [patientError, setPatientError] = useState("");
@@ -288,6 +289,7 @@ function Admin() {
         password: "",
         address: "",
         birthday: "",
+        mobileNumber: "",
       });
       setIsAddingPatient(false);
     } catch (error) {
@@ -1172,6 +1174,14 @@ function Admin() {
                 value={patient.birthday}
                 onChange={handlePatientChange}
               />
+              <Input
+                id="mobileNumber"
+                label="رقم الهاتف"
+                type="text"
+                name="mobileNumber"
+                value={patient.mobileNumber}
+                onChange={handlePatientChange}
+              />
               {patientError && (
                 <p className="text-center text-red-500">{patientError}</p>
               )}
@@ -1256,14 +1266,16 @@ function Admin() {
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
                                   لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                  حساب المريض الخاص به/لها نهائيًا وإزالته من
+                                  حساب المستشفي الخاص بها نهائيًا وإزالتها من
                                   خدمتنا
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel className="bg-red-500 text-white trasnition-all duration-300 hover:bg-red-900">
+                                  إلغاء
+                                </AlertDialogCancel>
                                 <form method="delete">
-                                  <AlertDialogAction>
+                                  <AlertDialogAction className="mt-2 bg-emerald-600 text-white trasnition-all duration-300 hover:bg-emerald-900">
                                     <p
                                       type="submit"
                                       disabled={isDeletingHospital}
@@ -1363,9 +1375,11 @@ function Admin() {
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel className="bg-red-500 text-white trasnition-all duration-300 hover:bg-red-900">
+                                  إلغاء
+                                </AlertDialogCancel>
                                 <form method="delete">
-                                  <AlertDialogAction>
+                                  <AlertDialogAction className="mt-2 bg-emerald-600 text-white trasnition-all duration-300 hover:bg-emerald-900">
                                     <p
                                       type="submit"
                                       disabled={isDeletingPatient}
@@ -1468,10 +1482,12 @@ function Admin() {
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                              <AlertDialogCancel className="bg-red-500 text-white trasnition-all duration-300 hover:bg-red-900">
+                                إلغاء
+                              </AlertDialogCancel>
 
                               <form method="delete">
-                                <AlertDialogAction>
+                                <AlertDialogAction className="mt-2 bg-emerald-600 text-white trasnition-all duration-300 hover:bg-emerald-900">
                                   <p
                                     type="submit"
                                     disabled={isDeletingAdmin}
