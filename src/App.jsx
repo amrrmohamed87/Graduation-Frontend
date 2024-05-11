@@ -73,8 +73,8 @@ function PrivateRoutes({ roles, children }) {
         return <Navigate to="/doctor" replace />;
       case "admin":
         return <Navigate to="/admin" replace />;
-      case "hospital":
-        return <Navigate to="/hospital" replace />;
+      case "CLinicsDirector":
+        return <Navigate to="/clinicsDirector" replace />;
       case "HospitalAdmin":
         return <Navigate to="/hospitalAdmin" replace />;
       case "HospitalManager":
@@ -172,9 +172,9 @@ export default function App() {
       ),
     },
     {
-      path: "/hospital",
+      path: "/clinicsDirector",
       element: (
-        <PrivateRoutes roles={["hospital"]}>
+        <PrivateRoutes roles={["CLinicsDirector"]}>
           <Hospital />
         </PrivateRoutes>
       ),
