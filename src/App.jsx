@@ -6,6 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import ScrollBehavior from "./routes/ScrollBehavior";
+
 import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
 import Error from "./Error/Error";
@@ -206,6 +208,16 @@ export default function App() {
     { path: "care-of-the-elderly", element: <Elderly /> },
     { path: "alzheimers", element: <Alzheimers /> },
   ]);
+
+  /* useEffect(() => {
+    const unlisten = router.listen(({ location, action }) => {
+      if (action === "PUSH" || action === "REPLACE") {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    return () => unlisten(); // Clean up the listener when the component unmounts
+  }, [router]); */
 
   return <RouterProvider router={router} />;
 }
