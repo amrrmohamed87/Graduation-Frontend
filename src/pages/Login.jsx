@@ -49,11 +49,12 @@ function Login() {
 
       const role = data.user.role;
       const token = data.token;
-      const hospitalID = data.user._id;
+      //const hospitalID = data.user._id; no longer available will be deleted later
       if (
         role === "hospitalManager" ||
         role === "HospitalAdmin" ||
-        role === "doctor"
+        role === "doctor" ||
+        role === "CLinicsDirector"
       ) {
         const name = data.user.name;
         const DoctorId = data.user._id;
@@ -82,7 +83,7 @@ function Login() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("hospitalID", hospitalID);
+      //localStorage.setItem("hospitalID", hospitalID);
 
       switch (role) {
         case "doctor":
