@@ -91,8 +91,8 @@ function Login() {
         case "admin":
           navigate("/admin");
           break;
-        case "hospital":
-          navigate("/hospital");
+        case "CLinicsDirector":
+          navigate("/clinicsDirector");
           break;
         case "patient":
           navigate("/");
