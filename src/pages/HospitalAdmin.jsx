@@ -73,6 +73,7 @@ const HospitalAdmin = () => {
     value: specialize._id,
   }));
   const [selectedSpecialize, setSelectedSpecialize] = useState(null);
+  console.log(directorsList);
 
   //doctor filter search state
   const [doctorQuery, setDoctorQuery] = useState("");

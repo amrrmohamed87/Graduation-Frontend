@@ -62,8 +62,6 @@ function Admin() {
   //Sign up hospital states
   const [hospital, setHospital] = useState({
     name: "",
-    username: "",
-    password: "",
     address: "",
   });
   const [isAddingHospital, setIsAddingHospital] = useState(false);
@@ -1036,22 +1034,6 @@ function Admin() {
                 type="text"
                 name="name"
                 value={hospital.name}
-                onChange={handleAddHospitalChange}
-              />
-              <Input
-                id="hospitalUsername"
-                label="أسم المستخدم"
-                type="text"
-                name="username"
-                value={hospital.username}
-                onChange={handleAddHospitalChange}
-              />
-              <Input
-                id="hospitalPassword"
-                label="كلمة المرور"
-                type="password"
-                name="password"
-                value={hospital.password}
                 onChange={handleAddHospitalChange}
               />
               <Input

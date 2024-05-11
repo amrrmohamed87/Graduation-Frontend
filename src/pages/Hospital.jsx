@@ -7,7 +7,9 @@ function Hospital() {
   const name = localStorage.getItem("name");
   const hsopital = localStorage.getItem("hospital");
 
-  const hospitalID = localStorage.getItem("hospitalID");
+  // replacing the hospital Id, instead of fetching the Id from
+  //the hospital now you receive it from the hospitalDetails and it works the same - amr
+  const hospitalID = localStorage.getItem("hospitalAdminHospitalID");
   // --------------------------
   // ramez work get doctors in hospital logged in
   const [docInHospital, setDocInHospital] = useState([]);
