@@ -454,10 +454,10 @@ function HospitalManager() {
                                     {request.patient.name}{" "}
                                     <span>:أسم المريض</span>
                                   </h1>
-                                  <h1>
+                                  {/* <h1>
                                     {request.doctor.name}{" "}
                                     <span>:أسم الدكتور</span>
-                                  </h1>
+                                  </h1> */}
                                   <h1>
                                     {formateDate(request.date)}
                                     <span> :التاريخ</span>
@@ -479,9 +479,9 @@ function HospitalManager() {
                         <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                           {request.patient.name}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                        {/* <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                           {request.doctor.name}
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>
