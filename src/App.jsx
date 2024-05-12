@@ -6,8 +6,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import ScrollBehavior from "./routes/ScrollBehavior";
-
 import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
 import Error from "./Error/Error";
