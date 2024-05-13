@@ -13,6 +13,7 @@ function Hospital() {
   // --------------------------
   // ramez work get doctors in hospital logged in
   const [docInHospital, setDocInHospital] = useState([]);
+  console.log(docInHospital);
   useEffect(() => {
     getDoctorsInHospital();
   }, []);
@@ -199,7 +200,7 @@ function Hospital() {
       <section className="mt-16 ">
         <div className="pl-6 me-4">
           <h1 className="text-emerald-950 text-[25px] md:text-[35px] text-end ">
-            اسم المستشفي <span className="text-muted">:</span>{" "}
+            اسم المستخدم <span className="text-muted">:</span>{" "}
             <span className="text-muted">{name}</span>
           </h1>
           {/* <p className="text-emerald-950 text-[20px] md:text-[28px] text-end mt-2">
@@ -298,7 +299,10 @@ function Hospital() {
             </div>
             <div className="d-flex justify-content-evenly gap-1 flex-wrap mt-4">
               {docInformation.time.map((element, i) => (
-                <p className="w-12 mt-2 bg-primary text-center p-2 rounded-3 text-white">
+                <p
+                  key={i}
+                  className="w-12 mt-2 bg-primary text-center p-2 rounded-3 text-white"
+                >
                   {element}
                 </p>
               ))}

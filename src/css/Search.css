@@ -1,269 +1,254 @@
- .secBook{
-    width: 70%;
-    top: 15%;
-    left: 14%;
- }
- .secBook2{
-    height: 50%;
-    z-index: 156164 !important;
-    top: 25%;
-    left: 28%;
-    justify-content: center;
-    align-items: center;
- }
- .sureBook{
-    top: 30%;
-    left: 28%;
-    height: 55%;
-    z-index: 155;
- }
- .wordSureBook::after{
-        content: "";
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        right: 0;
-        bottom: -2px;
-        border-bottom: 4px solid rgb(32, 134, 32);
-        width: 50%;
-        border-radius: 15%;
+.secBook {
+  width: 70%;
+  top: 15%;
+  left: 14%;
 }
-.UnderLineBetweenSection::after{
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    right: 0;
-    bottom: -2px;
-    border-bottom: 5px solid rgb(32, 134, 32);
-    width: 55%;
-    border-radius: 20%;
+.secBook2 {
+  height: 50%;
+  z-index: 156164 !important;
+  top: 25%;
+  left: 28%;
+  justify-content: center;
+  align-items: center;
 }
-.UnderLineAfterP::after{
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    right: 0;
-    top: 15%;
-    border-bottom: 5px solid rgb(12, 111, 192);
-    width: 70%;
-    border-radius: 20%;
+.sureBook {
+  top: 30%;
+  left: 28%;
+  height: 55%;
+  z-index: 155;
 }
-.toChangeStyleTime{
-    width: 60%;
-    height: 200px;
+.wordSureBook::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 0;
+  bottom: -2px;
+  border-bottom: 4px solid rgb(32, 134, 32);
+  width: 50%;
+  border-radius: 15%;
+}
+.UnderLineBetweenSection::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 0;
+  bottom: -2px;
+  border-bottom: 5px solid rgb(32, 134, 32);
+  width: 55%;
+  border-radius: 20%;
+}
+.UnderLineAfterP::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 0;
+  top: 15%;
+  border-bottom: 5px solid rgb(12, 111, 192);
+  width: 70%;
+  border-radius: 20%;
+}
+.toChangeStyleTime {
+  width: 60%;
+  height: 200px;
 }
 .toChangeStyleTime::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .toChangeStyleTime::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: rgba(128, 128, 128, 0.384);
+  border-radius: 8px;
+  height: 30px;
+  background-color: rgba(128, 128, 128, 0.384);
 }
 .toChangeStyleTime::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
 .searchSection::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .searchSection::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: rgba(0, 139, 0, 0.884);
+  border-radius: 8px;
+  height: 30px;
+  background-color: rgba(0, 139, 0, 0.884);
 }
 .searchSection::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
 .styleOfBoxGetUsers::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .styleOfBoxGetUsers::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: #198754;
+  border-radius: 8px;
+  height: 30px;
+  background-color: #198754;
 }
 .styleOfBoxGetUsers::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
 .SHowMedicines::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .SHowMedicines::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: #198754;
+  border-radius: 8px;
+  height: 30px;
+  background-color: #198754;
 }
 .SHowMedicines::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
 .SHowSearchMedicines::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .SHowSearchMedicines::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: #198754;
+  border-radius: 8px;
+  height: 30px;
+  background-color: #198754;
 }
 .SHowSearchMedicines::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
 .styleScrollOfHospitalSection::-webkit-scrollbar {
-    width: 8px;
-    height: auto;
-    background-color: transparent;
+  width: 8px;
+  height: auto;
+  background-color: transparent;
 }
 .styleScrollOfHospitalSection::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    height: 30px;
-    background-color: #198754;
+  border-radius: 8px;
+  height: 30px;
+  background-color: #198754;
 }
 .styleScrollOfHospitalSection::-webkit-scrollbar-track {
-    display: none; 
-    
+  display: none;
 }
-.searchSection{
-    height: 400px;
-    left: -100%;
-    transition: all 1.5s;
+.searchSection {
+  height: 480px;
+  left: -100%;
+  transition: all 1.5s;
 }
-.styleOfBoxGetUsers{
-    height: 70%;
-    left: -100%;
-    transition: all 1.8s ;
-    -webkit-transition: all 1.8s ;
-    -moz-transition: all 1.8s ;
-    -ms-transition: all 1.8s ;
-    -o-transition: all 1.8s ;
+.styleOfBoxGetUsers {
+  height: 70%;
+  left: -100%;
+  transition: all 1.8s;
+  -webkit-transition: all 1.8s;
+  -moz-transition: all 1.8s;
+  -ms-transition: all 1.8s;
+  -o-transition: all 1.8s;
 }
-.HightForSlidedown{
-    height: 700px;
+.HightForSlidedown {
+  height: 700px;
 }
-.styleOfBoxGetUsers.active{
-    left: 13%;
+.styleOfBoxGetUsers.active {
+  left: 13%;
 }
-.widthForDivInGetUser{
-    width: 30%;
+.widthForDivInGetUser {
+  width: 30%;
+  height: 210px !important;
 }
-.searchSection.active{
-    left: 0%;
+.searchSection.active {
+  left: 0%;
 }
-.layerGoUp{
-    top: 0%;
-    left: 0%;
-    transition: all 0.5s;
-    
+.layerGoUp {
+  top: 0%;
+  left: 0%;
+  transition: all 0.5s;
 }
-.layerfixed:hover > .layerGoUp{
-top: -20%;
-left: -5%;
+.layerfixed:hover > .layerGoUp {
+  top: -20%;
+  left: -5%;
 }
-.StyleSoraGetSection{
-    height: 70%;
-    bottom: -7%;
-    opacity: 1;
-    transition:all 1.8s ;
-    -webkit-transition:all 1.8s ;
-    -moz-transition:all 1.8s ;
-    -ms-transition:all 1.8s ;
-    -o-transition:all 1.8s ;
+.StyleSoraGetSection {
+  height: 70%;
+  bottom: -7%;
+  opacity: 1;
+  transition: all 1.8s;
+  -webkit-transition: all 1.8s;
+  -moz-transition: all 1.8s;
+  -ms-transition: all 1.8s;
+  -o-transition: all 1.8s;
 }
-.StyleSoraGetSection.active{
-    opacity: 0;
+.StyleSoraGetSection.active {
+  opacity: 0;
 }
-.buttonOnBooking{
-    cursor: pointer;
-    transition: all 0.5s;
+.buttonOnBooking {
+  cursor: pointer;
+  transition: all 0.5s;
 }
-.buttonOnBooking:hover{
-    background-color: rgba(0, 128, 0, 0.89);
-    color: white;
+.buttonOnBooking:hover {
+  background-color: rgba(0, 128, 0, 0.89);
+  color: white;
 }
-.styleOFCloseCircleInHospital{
-    cursor: pointer;
-    
+.styleOFCloseCircleInHospital {
+  cursor: pointer;
 }
-.searchfordocBar{
-    width: 25% !important;
+.searchfordocBar {
+  width: 25% !important;
 }
-.BookingSectionSora{
+.BookingSectionSora {
+  width: 25%;
+}
+.BookingSectionText {
+  width: 50%;
+}
+
+.dropdown-menu {
+  max-height: 200px; /* Set the maximum height of the dropdown menu */
+  overflow-y: auto; /* Enable vertical scrolling if necessary */
+}
+.heightOfCardSearch{
     width: 25%;
+    height: 220px !important;
 }
-.BookingSectionText{
-    width: 50%;
-}
- 
-
-
-
-
-
-
-
-
-
-
-
 /* medication search */
-.DivSoraSearchMed{
-    width: 30%;
+.DivSoraSearchMed {
+  width: 30%;
 }
-.StyleLayerOfCardOfMedi{
-    opacity: 100%;
-    top: 100%;
-    transition: all 1.5s;
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
+.StyleLayerOfCardOfMedi {
+  opacity: 100%;
+  top: 100%;
+  transition: all 1.5s;
+  -webkit-transition: all 1.5s;
+  -moz-transition: all 1.5s;
+  -ms-transition: all 1.5s;
+  -o-transition: all 1.5s;
 }
-.StyleLayerOfCardOfMedi.active{
-    top: 0%;
+.StyleLayerOfCardOfMedi.active {
+  top: 0%;
 }
-.SHowMedicines{
-    height: 700px;
+.SHowMedicines {
+  height: 700px;
 }
-.SHowSearchMedicines{
-    height: 475px;
+.SHowSearchMedicines {
+  height: 475px;
 }
-.buttonToShowHowToUse.active{
-    background-color: white !important;
-    color: rgba(0, 0, 0, 0.658) !important;
+.buttonToShowHowToUse.active {
+  background-color: white !important;
+  color: rgba(0, 0, 0, 0.658) !important;
 }
-.styleCardOfShowMed{
-    border-radius: 50%;
-    border: 2px solid #056558a4;
-    padding: 8%;
+.styleCardOfShowMed {
+  border-radius: 50%;
+  border: 2px solid #056558a4;
+  padding: 8%;
 }
-.StyleOfCloseX{
-    cursor: pointer;
+.StyleOfCloseX {
+  cursor: pointer;
 }
-.textForSearchMed{
-    width: 60%;
+.textForSearchMed {
+  width: 60%;
 }
-.ShowResultOfSearchMed{
-    width: 30%;
+.ShowResultOfSearchMed {
+  width: 30%;
 }
-
-
-
 
 /* booking window */
-
-    
