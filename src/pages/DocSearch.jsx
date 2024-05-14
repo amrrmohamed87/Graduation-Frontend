@@ -7,7 +7,6 @@ import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor P
 import BookingSectionPhoto from "../assets/images/book-doctor-appointment-card-template_151150-11155.avif";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { data } from "autoprefixer";
 // import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
@@ -17,12 +16,12 @@ export function DocSearch() {
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
   // -------------------------------------------------
+  let [ NameSpecialize, setNameSpecialize] = useState("")
   let [searchUser, setSearchUser] = useState({
     name: "",
     specialize: "",
-    NameSpecialize: "",
   });
-//   console.log(searchUser);
+  console.log(searchUser);
   const [sureBookSection, setSureBookSection] = useState("d-none");
   const [ClassNamee, setClassName] = useState(
     "d-none position-fixed z-1 secBook rounded-5 shadow-lg bg-white"
@@ -98,11 +97,15 @@ export function DocSearch() {
   function searchForDoctor(e, idOfSpecializ, nameOfSpecialize) {
     let MyUser = {
       ...searchUser,
-      specialize: idOfSpecializ,
-      NameSpecialize: nameOfSpecialize,
+      specialize : idOfSpecializ
     };
     MyUser[e.target.name] = e.target.value;
     setSearchUser(MyUser);
+    if (MyUser.specialize == undefined) {
+      setNameSpecialize("التخصصات")
+    }else{
+      setNameSpecialize(nameOfSpecialize)
+    }
   }
   function HideSureBoook() {
     setSureBookSection("d-none");
@@ -115,10 +118,10 @@ export function DocSearch() {
         searchUser
       );
       setShowResult(data.search);
-      
+      setErrorForSearch("d-none")
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setErrorForSearch("text-center fs-1 mt-5");
+        setErrorForSearch("text-center text-muted fs-1 mt-5");
         setHandleForSearch("d-none");
       } 
     }
@@ -198,8 +201,11 @@ export function DocSearch() {
     setShowDivSearch("d-none");
     setErrorForSearch("d-none");
     setShowResult([]);
-    setSearchUser({ NameSpecialize: "التخصصات" });
-    setErrorForSear("d-none")
+    setNameSpecialize("التخصصات" );
+    setSearchUser({
+      name:"",
+      specialize:""
+    })
   }
   const toggleDivPosition = () => {
     if (!isSearchActive) {
@@ -259,6 +265,7 @@ export function DocSearch() {
   // ----------------------------------
   // doctor day and time work
   const [docDays, setDocDays] = useState([]);
+  const [NotHaveDays ,setNotHaveDays] = useState(false)
   //   console.log(docDays);
   async function GetDaysToDoctor(DocId) {
     try {
@@ -267,8 +274,12 @@ export function DocSearch() {
         { doctorID: DocId }
       );
       setDocDays(data);
+      setNotHaveDays(false)
     } catch (error) {
-      console.error(error);
+      if (error.response && error.response.status === 404) {
+        setNotHaveDays(true)
+        setDocDays([])
+      }
     }
   }
   // show time
@@ -346,6 +357,8 @@ export function DocSearch() {
                   </div>
                   <div className="d-flex w-100  toChangeStyleTime overflow-scroll position-relative justify-content-center border border-primary py-3 rounded-3 hieghtInSmallScreenForDate">
                     <div className="position-absolute">
+                      {NotHaveDays === false ? "" :<h1 className="text-center text-muted my-5">لا يعمل هذا الطبيب</h1> } 
+                      
                       {docDays.map((element, i) => {
                         const date = new Date(element);
                         const formattedDate = date.toISOString().split("T")[0];
@@ -552,9 +565,12 @@ export function DocSearch() {
                 aria-expanded="false"
                 onClick={getSpecializes}
               >
-                {searchUser.specialize == ""
+                <p className="d-inline" onClick={()=>{setNameSpecialize("");
+                  setSearchUser({specialize:""})
+                }}><i className="fa-solid fa-xmark "></i></p>
+                {NameSpecialize == ""
                   ? "التخصصات"
-                  : searchUser.NameSpecialize}
+                  : NameSpecialize}
               </button>
               <ul className="dropdown-menu w-100">
                 {specialize.map((element, i) => (
@@ -576,16 +592,16 @@ export function DocSearch() {
         <h1 className={errorForSearch}>
           No input please write name or specialize
         </h1>
-        {showResult == null ? 
-          ""
+        {showResult === null || showResult.length === 0  ? 
+         
+         ""
          : 
           <div className="d-flex justify-content-center">
             <div
-              className={`d-flex justify-content-center mt-3 flex-wrap gap-3  overflow-scroll w-100 searchSection position-relative ${
+              className={`d-flex justify-content-center mt-3 flex-wrap gap-3  overflow-scroll w-75 searchSection position-relative ${
                 isSearchActive ? "active" : ""
               }`}
             >
-              {" "}
               {showResult.map((element, i) => (
                 <div key={i} className={handleForSearch}>
                   <h2 className="text-center fs-3 text-muted">
@@ -616,7 +632,6 @@ export function DocSearch() {
             </div>
           </div>
         }
-
       </section>
       {/* section Get doctors */}
       <section className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden">
@@ -700,7 +715,7 @@ export function DocSearch() {
       </section>
       {/* section Booking */}
       <section>
-        <div className="container mt-5">
+        <div className="container mt-24">
           <div className="d-flex SectionBookingInIphone justify-content-evenly">
             <div className=" BookingSectionSora shadow rounded-4">
               <img
@@ -752,7 +767,7 @@ export function DocSearch() {
               className="fa-regular fa-circle-xmark text-end  p-2 fs-3 text-success styleOFCloseCircleInHospital"
             ></i>
           </div>
-          <div className="d-flex  position-absolute start-0 end-0 gap-2 flex-wrap justify-content-evenly">
+          <div className="d-flex  position-absolute start-0 end-0 gap-2 flex-wrap justify-content-evenly ">
             {ShowResultFromHospi.map((element, i) => (
               <div
                 key={i}

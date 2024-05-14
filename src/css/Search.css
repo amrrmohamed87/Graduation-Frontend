@@ -136,6 +136,10 @@
   height: 480px;
   left: -100%;
   transition: all 1.5s;
+  -webkit-transition: all 1.5s;
+  -moz-transition: all 1.5s;
+  -ms-transition: all 1.5s;
+  -o-transition: all 1.5s;
 }
 .styleOfBoxGetUsers {
   height: 70%;
