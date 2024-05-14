@@ -258,3 +258,33 @@
 height: 350px;
 }
 /* booking window */
+/* .forH1InBooking{
+  width: 20%;
+} */
+.designForButtonOfHospital{
+  background-color: #F9BB20;
+  width: 45px;
+  height: 45px;
+  margin-top: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 1s ease;
+  -webkit-transition: background-color 1s ease;
+  -moz-transition: background-color 1s ease;
+  -ms-transition: background-color 1s ease;
+  -o-transition: background-color 1s ease;
+}
+.FlexForButtonHospital{
+  width: 47%;
+}
+.clicked {
+  background-color: white;
+}
+.fa-location-dot {
+  transition: color 1s ease;
+  -webkit-transition: color 1s ease;
+  -moz-transition: color 1s ease;
+  -ms-transition: color 1s ease;
+  -o-transition: color 1s ease;
+}

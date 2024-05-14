@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import SearchPhoto from "../assets/images/search.jpg";
 import firstSectionPhoto from "../assets/images/Concept Médical Médecin Et Patient Dans La Salle Intérieure De L'hôpital _ Vecteur Premium.jfif";
 import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor Pointing at Heart Diagram for free.jfif";
-import BookingSectionPhoto from "../assets/images/book-doctor-appointment-card-template_151150-11155.avif";
+import BookingSectionPhoto from "../assets/images/Desk_calendar_with_marked_dates_3d_cartoon_style_icon-Photoroom.png-Photoroom.png";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 // import { Book } from "lucide-react";
@@ -17,7 +17,7 @@ export function DocSearch() {
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
   // -------------------------------------------------
-  let [ NameSpecialize, setNameSpecialize] = useState("")
+  let [NameSpecialize, setNameSpecialize] = useState("");
   let [searchUser, setSearchUser] = useState({
     name: "",
     specialize: "",
@@ -98,14 +98,14 @@ export function DocSearch() {
   function searchForDoctor(e, idOfSpecializ, nameOfSpecialize) {
     let MyUser = {
       ...searchUser,
-      specialize : idOfSpecializ
+      specialize: idOfSpecializ,
     };
     MyUser[e.target.name] = e.target.value;
     setSearchUser(MyUser);
     if (MyUser.specialize == undefined) {
-      setNameSpecialize("التخصصات")
-    }else{
-      setNameSpecialize(nameOfSpecialize)
+      setNameSpecialize("التخصصات");
+    } else {
+      setNameSpecialize(nameOfSpecialize);
     }
   }
   function HideSureBoook() {
@@ -119,12 +119,12 @@ export function DocSearch() {
         searchUser
       );
       setShowResult(data.search);
-      setErrorForSearch("d-none")
+      setErrorForSearch("d-none");
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorForSearch("text-center text-muted fs-1 mt-5");
         setHandleForSearch("d-none");
-      } 
+      }
     }
   }
   function ShowBookSection(IDdoc, DocName) {
@@ -185,8 +185,7 @@ export function DocSearch() {
         setError("يرجى اختيار موعد حجز أخر");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
-      }
-       else if (error.response && error.response.status === 422) {
+      } else if (error.response && error.response.status === 422) {
         setError("لقد حجزت مع هذا الطبيب من قبل");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
@@ -207,11 +206,11 @@ export function DocSearch() {
     setShowDivSearch("d-none");
     setErrorForSearch("d-none");
     setShowResult([]);
-    setNameSpecialize("التخصصات" );
+    setNameSpecialize("التخصصات");
     setSearchUser({
-      name:"",
-      specialize:""
-    })
+      name: "",
+      specialize: "",
+    });
   }
   const toggleDivPosition = () => {
     if (!isSearchActive) {
@@ -227,6 +226,7 @@ export function DocSearch() {
   };
   // -----------------------------------------------
   // booking section
+  const [clickedButtonId, setClickedButtonId] = useState(null);
   const [hospitalsInfo, setHospitalsInfo] = useState([]);
   const [classShowResultOfhospi, setclassShowResultOfhospi] =
     useState("d-none");
@@ -252,12 +252,14 @@ export function DocSearch() {
       setclassShowResultOfhospi(
         "container shadow rounded-4 HightForSlidedown position-relative styleScrollOfHospitalSection overflow-scroll mt-5"
       );
+      
     } catch (error) {
       console.error("Error searching for hospital:", error);
     }
   }
   function closeHospitalSection() {
     setclassShowResultOfhospi("d-none");
+    setClickedButtonId(null);
   }
   const [activeIndexOfDate, setActiveIndexOfDate] = useState(null);
   const [activeIndexOfTime, setActiveIndexOfTime] = useState(null);
@@ -271,7 +273,7 @@ export function DocSearch() {
   // ----------------------------------
   // doctor day and time work
   const [docDays, setDocDays] = useState([]);
-  const [NotHaveDays ,setNotHaveDays] = useState(false)
+  const [NotHaveDays, setNotHaveDays] = useState(false);
   //   console.log(docDays);
   async function GetDaysToDoctor(DocId) {
     try {
@@ -280,11 +282,11 @@ export function DocSearch() {
         { doctorID: DocId }
       );
       setDocDays(data);
-      setNotHaveDays(false)
+      setNotHaveDays(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setNotHaveDays(true)
-        setDocDays([])
+        setNotHaveDays(true);
+        setDocDays([]);
       }
     }
   }
@@ -363,8 +365,14 @@ export function DocSearch() {
                   </div>
                   <div className="d-flex w-100  toChangeStyleTime overflow-scroll position-relative justify-content-center border border-primary py-3 rounded-3 hieghtInSmallScreenForDate">
                     <div className="position-absolute">
-                      {NotHaveDays === false ? "" :<h1 className="text-center text-muted my-5">لا يعمل هذا الطبيب</h1> } 
-                      
+                      {NotHaveDays === false ? (
+                        ""
+                      ) : (
+                        <h1 className="text-center text-muted my-5">
+                          لا يعمل هذا الطبيب
+                        </h1>
+                      )}
+
                       {docDays.map((element, i) => {
                         const date = new Date(element);
                         const formattedDate = date.toISOString().split("T")[0];
@@ -571,12 +579,16 @@ export function DocSearch() {
                 aria-expanded="false"
                 onClick={getSpecializes}
               >
-                <p className="d-inline" onClick={()=>{setNameSpecialize("");
-                  setSearchUser({specialize:""})
-                }}><i className="fa-solid fa-xmark "></i></p>
-                {NameSpecialize == ""
-                  ? "التخصصات"
-                  : NameSpecialize}
+                <p
+                  className="d-inline"
+                  onClick={() => {
+                    setNameSpecialize("");
+                    setSearchUser({ specialize: "" });
+                  }}
+                >
+                  <i className="fa-solid fa-xmark "></i>
+                </p>
+                {NameSpecialize == "" ? "التخصصات" : NameSpecialize}
               </button>
               <ul className="dropdown-menu w-100">
                 {specialize.map((element, i) => (
@@ -598,10 +610,9 @@ export function DocSearch() {
         <h1 className={errorForSearch}>
           No input please write name or specialize
         </h1>
-        {showResult === null || showResult.length === 0  ? 
-         
-         ""
-         : 
+        {showResult === null || showResult.length === 0 ? (
+          ""
+        ) : (
           <div className="d-flex justify-content-center">
             <div
               className={`d-flex justify-content-center mt-3 flex-wrap gap-3  overflow-scroll w-75 searchSection position-relative ${
@@ -637,7 +648,7 @@ export function DocSearch() {
               ))}
             </div>
           </div>
-        }
+        )}
       </section>
       {/* section Get doctors */}
       <section className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden">
@@ -723,7 +734,7 @@ export function DocSearch() {
       <section>
         <div className="container mt-24">
           <div className="d-flex SectionBookingInIphone justify-content-evenly">
-            <div className=" BookingSectionSora shadow rounded-4">
+            <div className=" BookingSectionSora shado rounded-4">
               <img
                 src={BookingSectionPhoto}
                 alt="sa"
@@ -744,23 +755,46 @@ export function DocSearch() {
                 </span>
               </i>
 
-              <div className="d-flex flex-wrap gap-3 justify-content-evenly">
+              <div className="d-flex flex-wrap gap-2 justify-content-evenly mt-4">
                 {isLoading == true ? (
                   <h1 className="fs-1 text-center fw-bold "> جارى التحميل</h1>
                 ) : (
                   ""
                 )}
                 {hospitalsInfo.map((element, i) => (
-                  <h1
+                  <div
                     key={i}
                     onClick={() => {
-                      // getHospitalID(element._id);
+                      setClickedButtonId(element._id);
                       searchDocINHospi(element._id);
                     }}
-                    className="forH1InBooking mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success"
+                    className={`shadow FlexForButtonHospital  rounded-4 h-100 p-2 d-flex justify-content-between  gap-5 ${clickedButtonId === element._id ? "bg-warning":""}`}
                   >
-                    {element.name}
-                  </h1>
+                    <div>
+                      <div className={`designForButtonOfHospital rounded-3 ${clickedButtonId === element._id ? "clicked":""}`}>
+                        {clickedButtonId === element._id ? (
+                          <i className="fa-solid fa-caret-down fs-2"></i>
+                        ) : (
+                          <i className="fa-solid fa-caret-left fs-2"></i>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <h1 className="fs-5"> {element.name}</h1>
+                      <p className="d-inline text-muted"> الخيرية</p>
+                      <i class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${clickedButtonId === element._id ? "text-white" : ""}`}></i>
+                    </div>
+                  </div>
+                  // <h1
+                  //   key={i}
+                  //   onClick={() => {
+                  //       getHospitalID(element._id);
+                  //     searchDocINHospi(element._id);
+                  //   }}
+                  //   className="forH1InBooking mt-5 p-1 rounded-3 text-center border-2 buttonOnBooking  border-success"
+                  // >
+                  //   {element.name}
+                  // </h1>
                 ))}
               </div>
             </div>
