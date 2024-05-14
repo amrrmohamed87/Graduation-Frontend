@@ -354,7 +354,7 @@ body::-webkit-scrollbar-track {
 
 /* doctor dashboard */
 .widthForButton {
-  width: 30% !important;
+  width: 35% !important;
 }
 /* responsive for book */
 @media (min-width:270px) and (max-width: 590px) {
