@@ -56,25 +56,31 @@ function Hospital() {
   const [RefOperation, setRefOperation] = useState("d-none");
   const [whenTheAdminChooseSameTime, setWhenTheAdminChooseSameTime] =
     useState("d-none");
+  const [errorForTIme, seterrorForTIme] = useState(false);
   async function putDoctorInformation() {
-    try {
-      let { data } = await axios.post(
-        "https://mhiproject.onrender.com/clinicsDirector/doctorSchedule",
-        docInformation
-      );
-      setDocInformation({ ...docInformation, day: "", time: [] });
-      setConfirmOperation("d-flex justify-content-center");
-      setRefOperation("d-none");
-      setWhenTheAdminChooseSameTime("d-none");
-      setActiveIndex(null);
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        setRefOperation("d-flex justify-content-center");
-        setConfirmOperation("d-none");
-        setDocInformation({ ...docInformation, time: [] });
-      } else if (error.response && error.response.status === 424) {
-        setWhenTheAdminChooseSameTime("d-flex justify-content-center");
+    if (docInformation.time.length <= 0) {
+      seterrorForTIme(true);
+    } else {
+      try {
+        seterrorForTIme(false)
+        let { data } = await axios.post(
+          "https://mhiproject.onrender.com/clinicsDirector/doctorSchedule",
+          docInformation
+        );
+        setDocInformation({ ...docInformation, day: "", time: [] });
+        setConfirmOperation("d-flex justify-content-center");
         setRefOperation("d-none");
+        setWhenTheAdminChooseSameTime("d-none");
+        setActiveIndex(null);
+      } catch (error) {
+        if (error.response && error.response.status === 422) {
+          setRefOperation("d-flex justify-content-center");
+          setConfirmOperation("d-none");
+          setDocInformation({ ...docInformation, time: [] });
+        } else if (error.response && error.response.status === 424) {
+          setWhenTheAdminChooseSameTime("d-flex justify-content-center");
+          setRefOperation("d-none");
+        }
       }
     }
   }
@@ -92,6 +98,7 @@ function Hospital() {
     setDocInformation({ ...docInformation, day: theDay, time: [] });
   }
   function putTime(e) {
+    seterrorForTIme(false)
     const selectedTime = e.target.value;
     const isTimeSelected = docInformation.time.includes(selectedTime);
     if (isTimeSelected) {
@@ -116,6 +123,7 @@ function Hospital() {
     setWhenTheAdminChooseSameTime("d-none");
     setDocInformation({ ...docInformation, doctorID: "", day: "", time: [] });
     setActiveIndex(null);
+    seterrorForTIme(false)
   }
   const timesValues = [
     { value: "8:00" },
@@ -340,6 +348,18 @@ function Hospital() {
             تم تعين موعد العمل لدى هذا الطبيب فى اليوم المحدد
           </div>
         </div>
+        {errorForTIme == false? (
+          ""
+        ) : (
+          <div className="d-flex justify-content-center">
+            <div
+              className="alert alert-success text-center mt-4 w-50 fs-5"
+              role="alert"
+            >
+              يجب عليك اعطاء الطبيب مواعيد العمل{" "}
+            </div>
+          </div>
+        )}
         <div className={whenTheAdminChooseSameTime}>
           <div
             className="alert alert-danger text-center mt-4 w-50 fs-5"
