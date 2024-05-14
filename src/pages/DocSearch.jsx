@@ -12,6 +12,7 @@ import { jwtDecode } from "jwt-decode";
 export function DocSearch() {
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
+  console.log(decodedToken);
   // name of user
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
@@ -182,6 +183,11 @@ export function DocSearch() {
         setClassOfError("text-center fs-5 text-danger");
       } else if (error.response && error.response.status === 404) {
         setError("يرجى اختيار موعد حجز أخر");
+        setErrorButton("btn btn-success me-5");
+        setClassOfError("text-center fs-5 text-danger");
+      }
+       else if (error.response && error.response.status === 422) {
+        setError("لقد حجزت مع هذا الطبيب من قبل");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
       }

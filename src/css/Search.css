@@ -254,5 +254,7 @@
 .ShowResultOfSearchMed {
   width: 30%;
 }
-
+.WidthOfResultCard{
+height: 350px;
+}
 /* booking window */
