@@ -157,7 +157,7 @@ function PatientProfile() {
                   <p
                     className={`fs-4 cursor-pointer ${
                       activeTab === 1
-                        ? "bg-success py-1 px-4 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-3 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
@@ -170,7 +170,7 @@ function PatientProfile() {
                   <p
                     className={`fs-4 cursor-pointer ${
                       activeTab === 2
-                        ? "bg-success py-1 px-4 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-3 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
@@ -183,7 +183,7 @@ function PatientProfile() {
                   <p
                     className={`fs-4 cursor-pointer ${
                       activeTab === 3
-                        ? "bg-success py-1 px-4 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-3 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
