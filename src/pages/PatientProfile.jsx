@@ -162,7 +162,7 @@ function PatientProfile() {
                       getWattingBooks();
                     }}
                   >
-                    المواعيد النتظرة
+                    المواعيد المنتظرة
                   </p>
                   <p
                     className={`fs-3 cursor-pointer ${
