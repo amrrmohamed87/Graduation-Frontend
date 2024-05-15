@@ -54,6 +54,14 @@ function HospitalManager() {
   const [doctorQuery, setDoctorQuery] = useState("");
   const [currentDoctorPage, setCurrentDoctorPage] = useState(1);
   const [doctorRowsPerPage, setDoctorRowsPerPage] = useState(5);
+  const [requestSpecificDoctors, setRequestSpecificDoctors] = useState({
+    hospitalID: hospitalId,
+    specialize: "",
+  });
+  const [specializedDoctors, setSpecializedDoctors] = useState([]);
+  const [isFetchingSpecificDoctors, setIsFetchingSpecificDoctors] =
+    useState(false);
+  console.log(requestSpecificDoctors);
 
   //fetch surgeries
   useEffect(() => {
@@ -112,6 +120,41 @@ function HospitalManager() {
   }, []);
   console.log(doctorsList);
   console.log(requestedSurgeries);
+  console.log(specializedDoctors);
+
+  //return specific doctors based on the specialize
+
+  const handleGetSpecificDoctors = async (event) => {
+    event.preventDefault();
+    setIsFetchingSpecificDoctors(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/hospitalManager/getDoctors",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestSpecificDoctors),
+        }
+      );
+      const resData = await response.json();
+
+      if (!response.ok) {
+        toast.error(resData.message);
+        setIsFetchingSpecificDoctors(false);
+        return;
+      }
+
+      setSpecializedDoctors(resData);
+      setIsFetchingSpecificDoctors(false);
+    } catch (error) {
+      toast.error("unexpected error during fetching specialized doctors");
+      setIsFetchingSpecificDoctors(false);
+      return;
+    }
+  };
 
   //Date formate
   const formateDate = (dateString) => {
@@ -209,6 +252,7 @@ function HospitalManager() {
 
   return (
     <>
+      <ToastContainer />
       <Dashboard />
       <section className="mt-8 mr-6">
         <div className="flex flex-col md:flex-row justify-center items-center gap-4">
@@ -324,7 +368,7 @@ function HospitalManager() {
                               <div className="grid gap-4 py-4">hi</div>
                             </DialogContent>
                           </Dialog> */}
-                          {doctor.specialize}
+                          {doctor.specialize.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                           {doctor.code}
@@ -397,98 +441,128 @@ function HospitalManager() {
                     </tr>
                   </thead>
 
-                  <tbody>
-                    {requestedSurgeries.map((request, index) => (
-                      <tr key={index} className="border text-right">
-                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <p>
-                                <RxCalendar
-                                  size={20}
-                                  className="text-emerald-500 hover:text-emerald-700 transition-all duration-300 cursor-pointer"
-                                />
-                              </p>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  هل أنت متأكد؟
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                  حساب الأدمن الخاص به/لها نهائيًا وإزالته من
-                                  خدمتنا
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                  {requestedSurgeries.length <= 0 ? (
+                    <h1 className="text-center">You have zero surgeries</h1>
+                  ) : (
+                    <tbody>
+                      {isFetchingRequestedSurgeries ? (
+                        <h1 className="text-r text-2xl">...جار التحميل</h1>
+                      ) : (
+                        requestedSurgeries.map((request, index) => (
+                          <tr key={index} className="border text-right">
+                            <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <form
+                                    method="post"
+                                    onSubmit={handleGetSpecificDoctors}
+                                  >
+                                    <button
+                                      onClick={() => {
+                                        setRequestSpecificDoctors((prev) => ({
+                                          ...prev,
+                                          specialize: request.specialize,
+                                        }));
+                                      }}
+                                    >
+                                      <RxCalendar
+                                        size={20}
+                                        className="text-emerald-500 hover:text-emerald-700 transition-all duration-300 cursor-pointer"
+                                      />
+                                    </button>
+                                  </form>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                      هل أنت متأكد؟
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      لا يمكن التراجع عن هذا الإجراء. هذا سوف
+                                      حذف حساب الأدمن الخاص به/لها نهائيًا
+                                      وإزالته من خدمتنا
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel
+                                      onClick={() => {
+                                        setRequestSpecificDoctors({
+                                          hospitalID: hospitalId,
+                                          specialize: "",
+                                        });
+                                      }}
+                                    >
+                                      إلغاء
+                                    </AlertDialogCancel>
 
-                                <form method="post">
-                                  <AlertDialogAction>
-                                    <p>تأكيد</p>
-                                  </AlertDialogAction>
-                                </form>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <HiOutlineClipboardDocumentList
-                                size={22}
-                                className="text-blue-600 ml-4"
-                              />
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px]">
-                              <DialogHeader>
-                                <DialogTitle>وثائق الجراحة</DialogTitle>
-                                <DialogDescription>
-                                  توثيق كامل وأسباب طلب الجراحة
-                                </DialogDescription>
-                              </DialogHeader>
-                              <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-1 items-center gap-4 text-end">
-                                  <h1>
-                                    {request.patient.name}{" "}
-                                    <span>:أسم المريض</span>
-                                  </h1>
-                                  {/* <h1>
-                                    {request.doctor.name}{" "}
-                                    <span>:أسم الدكتور</span>
-                                  </h1> */}
-                                  <h1>
-                                    {formateDate(request.date)}
-                                    <span> :التاريخ</span>
-                                  </h1>
-                                  <h1>
-                                    <span> التخصص:</span> {request.specialize}
-                                  </h1>
-                                  <h1>
-                                    {request.description} <span>:الأسباب</span>
-                                  </h1>
-                                </div>
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {formateDate(request.date)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {request.patient.name}
-                        </td>
-                        {/* <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {request.doctor.name}
-                        </td> */}
-                      </tr>
-                    ))}
-                  </tbody>
+                                    <form method="post">
+                                      <AlertDialogAction>
+                                        <p>تأكيد</p>
+                                      </AlertDialogAction>
+                                    </form>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <>
+                                    <HiOutlineClipboardDocumentList
+                                      size={22}
+                                      className="text-blue-600 ml-4"
+                                    />
+                                  </>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                  <DialogHeader>
+                                    <DialogTitle>وثائق الجراحة</DialogTitle>
+                                    <DialogDescription>
+                                      توثيق كامل وأسباب طلب الجراحة
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-1 items-center gap-4 text-end">
+                                      <h1>
+                                        {request.patient.name}{" "}
+                                        <span>:أسم المريض</span>
+                                      </h1>
+                                      <h1>
+                                        {request.doctor.name}{" "}
+                                        <span>:أسم الدكتور</span>
+                                      </h1>
+                                      <h1>
+                                        {formateDate(request.date)}
+                                        <span> :التاريخ</span>
+                                      </h1>
+                                      <h1>
+                                        <span> التخصص:</span>{" "}
+                                        {request.specialize}
+                                      </h1>
+                                      <h1>
+                                        {request.description}{" "}
+                                        <span>:الأسباب</span>
+                                      </h1>
+                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                              {formateDate(request.date)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                              {request.patient.name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                              {request.doctor.name}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  )}
                 </table>
-                {requestedSurgeries.length <= 0 && (
-                  <p className="text-center">You have zero surgeries</p>
-                )}
               </div>
             </div>
           </div>
