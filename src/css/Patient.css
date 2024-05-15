@@ -1,0 +1,36 @@
+.bgForPatient{
+    /* background-color: rgba(0, 116, 0, 0.733); */
+    width: 100%;
+    height: 88px;
+}
+.forPatient{
+    width: 95%;
+}
+.StyleOfCardPatient{
+    /* background-color: rgba(0, 116, 0, 0.733); */
+    width: 30%;
+}
+.Rsmabt3tIcon{
+    width: 25%;
+    background-color: black;
+    height: 55px;
+    border-radius: 15%;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    -ms-border-radius: 15%;
+    -o-border-radius: 15%;
+}
+.StyleForSecondPartOfUSerInfo{
+    width: 72%;
+}
+.styleForScroll{
+    overflow-y:scroll ;
+    height: 580px;
+}
+.classForHeight{
+    height: 400px;
+}
+.cursor-pointer {
+    transition: background-color 0.3s, padding 0.3s, border-radius 0.3s, color 0.3s;
+  }
+  
