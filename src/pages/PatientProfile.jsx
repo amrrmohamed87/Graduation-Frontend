@@ -162,7 +162,7 @@ function PatientProfile() {
                       getWattingBooks();
                     }}
                   >
-                    المواعد النتظرة
+                    المواعيد النتظرة
                   </p>
                   <p
                     className={`fs-3 cursor-pointer ${
@@ -175,7 +175,7 @@ function PatientProfile() {
                       getAcceptBooks();
                     }}
                   >
-                    المواعد المقبولة
+                    المواعيد المقبولة
                   </p>
                   <p
                     className={`fs-3 cursor-pointer ${
