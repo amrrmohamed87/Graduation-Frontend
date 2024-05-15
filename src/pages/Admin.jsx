@@ -886,6 +886,7 @@ function Admin() {
     );
   };
   console.log(patientsId);
+  console.log(adminsData);
 
   return (
     <main>
