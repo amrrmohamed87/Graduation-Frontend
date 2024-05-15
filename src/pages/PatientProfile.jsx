@@ -83,13 +83,40 @@ function PatientProfile() {
   return (
     <>
       <NewNavbar />
-      <div className="bgForPatient bg-success"></div>
+      <div className="bgForPatient "></div>
       <section className="container-fluid">
         <div className="row">
           <div className="col-md-10">
             {/* m3lomat 3n al patient asmo w sno w kda  */}
             <div className="d-flex justify-content-center w-100 mt-5 ">
               <div className="forPatient d-flex flex-row flex-wrap rounded-3 shadow">
+                
+
+                <div className="row gap-2 StyleForSecondPartOfUSerInfo justify-content-end">
+                  
+                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
+                    <div className="mt-4 h-50 w-100 d-flex justify-content-center flex-wrap ">
+                      <h2 className="text-right text-muted w-100">البريد الالكترونى</h2>
+                      <p className="w-100 text-right mb-3">
+                        {UserNameOfLogin}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
+                    <div className="mt-4 w-100 d-flex justify-content-center flex-wrap">
+                      <h2 className="text-center text-muted w-100">
+                        رقم الهاتف
+                      </h2>
+                      <p className="w-100 text-center">01062321845</p>
+                    </div>
+                    <div className=" d-flex justify-content-center flex-wrap">
+                      <h2 className="text-center text-muted w-100">
+                        كود المريض
+                      </h2>
+                      <p className=" text-center">PT-3e548e</p>
+                    </div>
+                  </div>
+                </div>
                 <div className="d-flex justify-content-between p-3 StyleOfCardPatient bg-success rounded-3 flex-wrap">
                   <div className="w-25 Rsmabt3tIcon">
                     <img
@@ -119,42 +146,18 @@ function PatientProfile() {
                     </div>
                   </div>
                 </div>
-
-                <div className="row gap-2 StyleForSecondPartOfUSerInfo ">
-                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
-                    <div className="mt-4 w-100 d-flex justify-content-center flex-wrap">
-                      <h2 className="text-center text-muted w-100">
-                        رقم الهاتف
-                      </h2>
-                      <p className="w-100 text-center">01062321845</p>
-                    </div>
-                    <div className=" d-flex justify-content-center flex-wrap">
-                      <h2 className="text-center text-muted w-100">
-                        كود المريض
-                      </h2>
-                      <p className=" text-center">PT-3e548e</p>
-                    </div>
-                  </div>
-                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
-                    <div className="mt-4 h-50 w-100 d-flex justify-content-center flex-wrap">
-                      <h2 className="text-left text-muted w-100">email</h2>
-                      <p className="w-100 text-left mb-3">
-                        {UserNameOfLogin}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             {/* ------------------------------------ end ----------------- */}
 
             <div className="w-100 d-flex justify-content-center">
               <div className="mt-4 shadow forPatient rounded-3 classForHeight">
-                <div className="d-flex justify-content-center gap-4 mt-3">
+                <div className="d-flex justify-content-center w-100">
+                <div className="d-flex justify-content-center gap-4 mt-3 shadow rounded-3 py-2 px-3">
                   <p
-                    className={`fs-3 cursor-pointer ${
+                    className={`fs-4 cursor-pointer ${
                       activeTab === 1
-                        ? "bg-success p-2 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-5 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
@@ -165,9 +168,9 @@ function PatientProfile() {
                     المواعيد المنتظرة
                   </p>
                   <p
-                    className={`fs-3 cursor-pointer ${
+                    className={`fs-4 cursor-pointer ${
                       activeTab === 2
-                        ? "bg-success p-2 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-5 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
@@ -178,9 +181,9 @@ function PatientProfile() {
                     المواعيد المقبولة
                   </p>
                   <p
-                    className={`fs-3 cursor-pointer ${
+                    className={`fs-4 cursor-pointer ${
                       activeTab === 3
-                        ? "bg-success p-2 rounded-5 text-white"
+                        ? "bg-success py-1 px-4 rounded-5 text-white"
                         : "text-muted"
                     }`}
                     onClick={() => {
@@ -190,6 +193,7 @@ function PatientProfile() {
                   >
                     السجلات الطبية
                   </p>
+                </div>
                 </div>
                 <div className="w-100 d-flex justify-content-center">
                   {/* 3rd mwa3ed montzra */}
