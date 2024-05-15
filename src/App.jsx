@@ -37,6 +37,7 @@ import Contact from "./pages/Contact.jsx";
 import { DoctorDashBoard } from "./pages/DoctorDashBoard";
 import HospitalAdmin from "./pages/HospitalAdmin";
 import HospitalManager from "./pages/HospitalManager";
+import PatientProfile from "./pages/PatientProfile";
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -71,6 +72,8 @@ function PrivateRoutes({ roles, children }) {
     switch (userRole) {
       case "doctor":
         return <Navigate to="/doctor" replace />;
+      case "patient":
+        return <Navigate to="/profile" replace />;
       case "admin":
         return <Navigate to="/admin" replace />;
       case "CLinicsDirector":
@@ -155,6 +158,14 @@ export default function App() {
       ],
     },
     { path: "/login", element: <Login /> },
+    {
+      path: "/profile",
+      element: (
+        <PrivateRoutes roles={["patient"]}>
+          <PatientProfile />
+        </PrivateRoutes>
+      ),
+    },
     {
       path: "/doctor",
       element: (
