@@ -6,6 +6,10 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import axios from "axios";
 function PatientProfile() {
+  //patient code -> amr
+  const code = localStorage.getItem("patientCode");
+  //-----------------------------
+
   // tfasel aluser aly d5l
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
@@ -75,7 +79,7 @@ function PatientProfile() {
         `https://mhiproject.onrender.com/patient/getRecords/${UserIdOfLogin}`
       );
       console.log(data);
-      setSetRecords(data)
+      setSetRecords(data);
     } catch (error) {}
   }
 
@@ -90,16 +94,13 @@ function PatientProfile() {
             {/* m3lomat 3n al patient asmo w sno w kda  */}
             <div className="d-flex justify-content-center w-100 mt-5 ">
               <div className="forPatient d-flex flex-row flex-wrap rounded-3 shadow">
-                
-
                 <div className="row gap-2 StyleForSecondPartOfUSerInfo justify-content-end">
-                  
                   <div className="col-md-4 justify-content-center flex-wrap d-flex ">
                     <div className="mt-4 h-50 w-100 d-flex justify-content-center flex-wrap ">
-                      <h2 className="text-right text-muted w-100">البريد الالكترونى</h2>
-                      <p className="w-100 text-right mb-3">
-                        {UserNameOfLogin}
-                      </p>
+                      <h2 className="text-right text-muted w-100">
+                        البريد الالكترونى
+                      </h2>
+                      <p className="w-100 text-right mb-3">{UserNameOfLogin}</p>
                     </div>
                   </div>
                   <div className="col-md-4 justify-content-center flex-wrap d-flex ">
@@ -126,8 +127,7 @@ function PatientProfile() {
                     />
                   </div>
                   <div className="w-75 mt-1 pe-2">
-                    <h1 className="text-right  text-white fs-5">
-                      {name}                    </h1>
+                    <h1 className="text-right  text-white fs-5">{name} </h1>
                     <p className="text-white-50 text-right">25 سنة</p>
                   </div>
 
@@ -153,47 +153,47 @@ function PatientProfile() {
             <div className="w-100 d-flex justify-content-center">
               <div className="mt-4 shadow forPatient rounded-3 classForHeight">
                 <div className="d-flex justify-content-center w-100">
-                <div className="d-flex justify-content-center gap-4 mt-3 shadow rounded-3 py-2 px-3">
-                  <p
-                    className={`fs-4 cursor-pointer ${
-                      activeTab === 1
-                        ? "bg-success py-1 px-4 rounded-3 text-white"
-                        : "text-muted"
-                    }`}
-                    onClick={() => {
-                      handleClick(1);
-                      getWattingBooks();
-                    }}
-                  >
-                    المواعيد المنتظرة
-                  </p>
-                  <p
-                    className={`fs-4 cursor-pointer ${
-                      activeTab === 2
-                        ? "bg-success py-1 px-4 rounded-3 text-white"
-                        : "text-muted"
-                    }`}
-                    onClick={() => {
-                      handleClick(2);
-                      getAcceptBooks();
-                    }}
-                  >
-                    المواعيد المقبولة
-                  </p>
-                  <p
-                    className={`fs-4 cursor-pointer ${
-                      activeTab === 3
-                        ? "bg-success py-1 px-4 rounded-3 text-white"
-                        : "text-muted"
-                    }`}
-                    onClick={() => {
-                      handleClick(3);
-                      getRecords();
-                    }}
-                  >
-                    السجلات الطبية
-                  </p>
-                </div>
+                  <div className="d-flex justify-content-center gap-4 mt-3 shadow rounded-3 py-2 px-3">
+                    <p
+                      className={`fs-4 cursor-pointer ${
+                        activeTab === 1
+                          ? "bg-success py-1 px-4 rounded-3 text-white"
+                          : "text-muted"
+                      }`}
+                      onClick={() => {
+                        handleClick(1);
+                        getWattingBooks();
+                      }}
+                    >
+                      المواعيد المنتظرة
+                    </p>
+                    <p
+                      className={`fs-4 cursor-pointer ${
+                        activeTab === 2
+                          ? "bg-success py-1 px-4 rounded-3 text-white"
+                          : "text-muted"
+                      }`}
+                      onClick={() => {
+                        handleClick(2);
+                        getAcceptBooks();
+                      }}
+                    >
+                      المواعيد المقبولة
+                    </p>
+                    <p
+                      className={`fs-4 cursor-pointer ${
+                        activeTab === 3
+                          ? "bg-success py-1 px-4 rounded-3 text-white"
+                          : "text-muted"
+                      }`}
+                      onClick={() => {
+                        handleClick(3);
+                        getRecords();
+                      }}
+                    >
+                      السجلات الطبية
+                    </p>
+                  </div>
                 </div>
                 <div className="w-100 d-flex justify-content-center">
                   {/* 3rd mwa3ed montzra */}
