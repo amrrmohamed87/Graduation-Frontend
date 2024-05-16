@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Dashboard from "@/components/Dashboard";
+import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Calendar } from "@/components/ui/calendar";
 
 import { BsPersonVcard } from "react-icons/bs";
 import { BsHospital } from "react-icons/bs";
@@ -62,7 +64,27 @@ function HospitalManager() {
   const [isFetchingSpecificDoctors, setIsFetchingSpecificDoctors] =
     useState(false);
   console.log(requestSpecificDoctors);
+  const [surgeryData, setSurgeryData] = useState({
+    patientID: "",
+    doctorID: "",
+    day: "",
+    time: "",
+  });
+  const [isScheduling, setIsSechudling] = useState(false);
+  console.log(surgeryData);
+  const [date, setDate] = useState(new Date());
+  const selectedDoctorForSurgery = specializedDoctors.map((doctor) => ({
+    label: doctor.name,
+    value: doctor._id,
+  }));
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
+  useEffect(() => {
+    setSurgeryData((prev) => ({
+      ...prev,
+      day: date.toISOString().slice(0, 10), // Formats date as 'YYYY-MM-DD'
+    }));
+  }, [date]);
   //fetch surgeries
   useEffect(() => {
     async function loadRequestedSurgeries() {
@@ -123,7 +145,6 @@ function HospitalManager() {
   console.log(specializedDoctors);
 
   //return specific doctors based on the specialize
-
   const handleGetSpecificDoctors = async (event) => {
     event.preventDefault();
     setIsFetchingSpecificDoctors(true);
@@ -152,6 +173,48 @@ function HospitalManager() {
     } catch (error) {
       toast.error("unexpected error during fetching specialized doctors");
       setIsFetchingSpecificDoctors(false);
+      return;
+    }
+  };
+
+  //Schedule surgery
+  const handleSchedulingSurgery = async (event) => {
+    setIsSechudling(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/hospitalManager/appointSurgery",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(surgeryData),
+        }
+      );
+      const resData = await response.json();
+
+      if (!response.ok) {
+        toast.error(resData.error);
+        setIsSechudling(false);
+        return;
+      }
+
+      toast.success("Scheduled Successfully");
+      setSurgeryData({
+        doctorID: "",
+        patientID: "",
+        day: "",
+        time: "",
+      });
+      setRequestSpecificDoctors({
+        hospitalID: hospitalId,
+        specialize: "",
+      });
+      setIsSechudling(false);
+    } catch (error) {
+      toast.error("unexpected error during scheduling");
+      setIsSechudling(false);
       return;
     }
   };
@@ -260,7 +323,9 @@ function HospitalManager() {
             <div className="flex justify-end gap-2">
               <div className="flex flex-col">
                 <h1 className="mt-3 text-[18px]">العمليات الجراحية الجديدة</h1>
-                <p className="text-end text-[22px] font-bold">200</p>
+                <p className="text-end text-[22px] font-bold">
+                  {requestedSurgeries.length}
+                </p>
               </div>
               <HiOutlineClipboardDocumentList
                 size={50}
@@ -273,7 +338,9 @@ function HospitalManager() {
             <div className="flex justify-end gap-2">
               <div className="flex flex-col">
                 <h1 className="mt-3 text-[18px]">الأطباء</h1>
-                <p className="text-end text-[22px] font-bold">200</p>
+                <p className="text-end text-[22px] font-bold">
+                  {doctorsList.length}
+                </p>
               </div>
               <BsFillPeopleFill
                 size={50}
@@ -430,13 +497,13 @@ function HospitalManager() {
                         scope="col"
                         className="text-md font-medium text-white px-6 py-4 text-right"
                       >
-                        الدكتور
+                        المريض
                       </th>
                       <th
                         scope="col"
                         className="text-md font-medium text-white px-6 py-4 text-right"
                       >
-                        المريض
+                        الدكتور
                       </th>
                     </tr>
                   </thead>
@@ -463,6 +530,10 @@ function HospitalManager() {
                                           ...prev,
                                           specialize: request.specialize,
                                         }));
+                                        setSurgeryData((prev) => ({
+                                          ...prev,
+                                          patientID: request.patient._id,
+                                        }));
                                       }}
                                     >
                                       <RxCalendar
@@ -472,32 +543,91 @@ function HospitalManager() {
                                     </button>
                                   </form>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent>
+                                <AlertDialogContent className="w-[320px] md:w-[600px]">
                                   <AlertDialogHeader>
                                     <AlertDialogTitle>
-                                      هل أنت متأكد؟
+                                      جدولة عملية جراحية
                                     </AlertDialogTitle>
                                     <AlertDialogDescription>
-                                      لا يمكن التراجع عن هذا الإجراء. هذا سوف
-                                      حذف حساب الأدمن الخاص به/لها نهائيًا
-                                      وإزالته من خدمتنا
+                                      يجب الحفاظ على سرية جميع معلومات المريض
+                                      واستخدامها فقط لأغراض الجدولة. لا تشارك
+                                      تفاصيل المريض مع أفراد غير مصرح لهم بذلك
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
-                                  <AlertDialogFooter>
+                                  <form>
+                                    <div className="flex flex-col md:flex-row items-center gap-4">
+                                      <div>
+                                        <Calendar
+                                          mode="single"
+                                          name="date"
+                                          selected={date}
+                                          onSelect={setDate}
+                                          className="rounded-md border shadow w-full"
+                                        />
+                                      </div>
+                                      <div className="flex flex-col gap-2 w-full">
+                                        <Select
+                                          isClearable
+                                          placeholder="...الدكتور"
+                                          type="text"
+                                          name="doctorID"
+                                          className="text-end w-full mb-4"
+                                          options={selectedDoctorForSurgery}
+                                          value={selectedDoctor}
+                                          onChange={(option) => {
+                                            setSelectedDoctor(option);
+                                            setSurgeryData((prev) => ({
+                                              ...prev,
+                                              doctorID: option
+                                                ? option.value
+                                                : "",
+                                            }));
+                                          }}
+                                        />
+                                        <input
+                                          type="time"
+                                          name="time"
+                                          value={surgeryData.time}
+                                          onChange={(event) => {
+                                            setSurgeryData((prev) => ({
+                                              ...prev,
+                                              time: event.target.value,
+                                            }));
+                                          }}
+                                          className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 bg-white"
+                                        />
+                                      </div>
+                                    </div>
+                                  </form>
+                                  <AlertDialogFooter className="flex items-center gap-3">
                                     <AlertDialogCancel
+                                      className="w-[150px] bg-red-600 text-white mb-2 text-[18px] font-bold hover:bg-red-900 transition-all duration-300"
                                       onClick={() => {
                                         setRequestSpecificDoctors({
                                           hospitalID: hospitalId,
                                           specialize: "",
+                                        });
+                                        setSurgeryData({
+                                          patientID: "",
+                                          doctorID: "",
+                                          day: "",
+                                          time: "",
                                         });
                                       }}
                                     >
                                       إلغاء
                                     </AlertDialogCancel>
 
-                                    <form method="post">
-                                      <AlertDialogAction>
-                                        <p>تأكيد</p>
+                                    <form
+                                      method="patch"
+                                      onClick={handleSchedulingSurgery}
+                                    >
+                                      <AlertDialogAction className="w-[150px] bg-blue-600 text-[18px] rounded-lg px-3 py-2 cursor-pointer hover:bg-blue-900 transition-all duration-300">
+                                        <button disabled={isScheduling}>
+                                          {isScheduling
+                                            ? "...جاري الحجز"
+                                            : "تأكيد"}
+                                        </button>
                                       </AlertDialogAction>
                                     </form>
                                   </AlertDialogFooter>
@@ -507,12 +637,12 @@ function HospitalManager() {
                             <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
                               <Dialog>
                                 <DialogTrigger asChild>
-                                  <>
+                                  <p>
                                     <HiOutlineClipboardDocumentList
                                       size={22}
                                       className="text-blue-600 ml-4"
                                     />
-                                  </>
+                                  </p>
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[425px]">
                                   <DialogHeader>
