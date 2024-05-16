@@ -33,7 +33,7 @@ function Dashboard() {
               <button className="text-emerald-950">تسجيل الخروج</button>
             </div>
           </AlertDialogTrigger>
-          <AlertDialogContent className="bg-white">
+          <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-[#056558]">
                 هل أنت متأكد؟
