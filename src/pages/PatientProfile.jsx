@@ -1,24 +1,22 @@
 import NewNavbar from "./../components/NewNavbar";
 import "../css/Patient.css";
-import IconForUserProfile from "../assets/icons/download.jpg";
+import IconForUserProfile from "../assets/icons/764d59d32f61f0f91dec8c442ab052c5.jpg";
 import IconForDoc from "../assets/icons/2e80a0b84f2afc0b21df07b67a892371.jpg";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 function PatientProfile() {
-  //patient code -> amr
-  const code = localStorage.getItem("patientCode");
-  //-----------------------------
-
   // tfasel aluser aly d5l
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
-  console.log(decodedToken);
+  // console.log(decodedToken);
   const name = localStorage.getItem("patientName");
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
   // --------------end----------------
-  // fetch kol aldoctors
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
   const [activeTab, setActiveTab] = useState(null);
   const handleClick = (tabNumber) => {
     if (activeTab === tabNumber) {
@@ -27,6 +25,15 @@ function PatientProfile() {
       setActiveTab(tabNumber);
     }
   };
+useEffect(()=>{
+  if (activeTab === null) {
+    setIsLoading(false)    
+  }else if (WattingBooks.length <= 0 || acceptBooks.length <=0 || setRecords.length <=0 ) {
+    setIsLoading(true)
+  }
+},[activeTab ,isLoading])
+  // fetch kol aldoctors
+
   const [ShowDoc, setShowDoc] = useState([]);
   useEffect(() => {
     GetDoc();
@@ -37,6 +44,7 @@ function PatientProfile() {
         "https://mhiproject.onrender.com/patient/getDoctors"
       );
       setShowDoc(data.userD);
+      setIsLoading2(false);
       // console.log(data);
     } catch (error) {}
   }
@@ -44,14 +52,15 @@ function PatientProfile() {
 
   // to get watting books
   const [WattingBooks, setWattingBooks] = useState([]);
-  console.log(WattingBooks);
+  // console.log(WattingBooks);
   async function getWattingBooks() {
     try {
       let { data } = await axios(
         `https://mhiproject.onrender.com/patient/getWaitingBooks/${UserIdOfLogin}`
       );
-      console.log(data);
+      // console.log(data);
       setWattingBooks(data);
+      setIsLoading(false);
     } catch (error) {}
   }
 
@@ -64,8 +73,9 @@ function PatientProfile() {
       let { data } = await axios(
         `https://mhiproject.onrender.com/patient/getDone/${UserIdOfLogin}`
       );
-      console.log(data);
+      // console.log(data);
       setAcceptBooks(data);
+      setIsLoading(false);
     } catch (error) {}
   }
 
@@ -78,8 +88,9 @@ function PatientProfile() {
       let { data } = await axios(
         `https://mhiproject.onrender.com/patient/getRecords/${UserIdOfLogin}`
       );
-      console.log(data);
+      // console.log(data);
       setSetRecords(data);
+      setIsLoading(false);
     } catch (error) {}
   }
 
@@ -195,8 +206,16 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
+                {isLoading === true ? (
+                  <p className="fw-bold text-center mt-5 fs-2">
+                    {" "}
+                    جارى التحميل{" "}
+                  </p>
+                ) : (
+                  ""
+                )}
+                {/* 3rd mwa3ed montzra */}
                 <div className="w-100 d-flex justify-content-center">
-                  {/* 3rd mwa3ed montzra */}
                   {activeTab === 1 ? (
                     <table className="table mt-4 w-11/12">
                       <thead>
@@ -311,7 +330,7 @@ function PatientProfile() {
           <div className="col-md-2 shadow mt-5 rounded-3 styleForScroll py-4">
             <h3 className="text-right fs-3 mb-3">الاطباء</h3>
             {ShowDoc.map((element, i) => (
-              <div key={i} className="d-flex justify-content-between mb-3">
+              <Link to={"/docsearch"} key={i} className="d-flex justify-content-between mb-3">
                 <div className="w-14 h-14 rounded-3 overflow-hidden">
                   <img src={IconForDoc} alt="" className="w-100 h-100" />
                 </div>
@@ -324,8 +343,13 @@ function PatientProfile() {
                     {element.specialize.name}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
+            {isLoading2 == true ? (
+              <p className="fw-bold text-center mt-36 fs-2"> جارى التحميل </p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>
