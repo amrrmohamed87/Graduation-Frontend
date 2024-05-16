@@ -189,7 +189,7 @@ useEffect(()=>{
                         getAcceptBooks();
                       }}
                     >
-                      المواعيد المقبولة
+                      المواعيد السابقة
                     </p>
                     <p
                       className={`fs-4 cursor-pointer ${
