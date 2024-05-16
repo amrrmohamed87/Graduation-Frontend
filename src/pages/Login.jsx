@@ -50,7 +50,6 @@ function Login() {
 
       const role = data.user.role;
       const token = data.token;
-      const patientName = data.user.name;
       //const hospitalID = data.user._id; no longer available will be deleted later
       if (
         role === "hospitalManager" ||
@@ -83,9 +82,16 @@ function Login() {
         localStorage.setItem("hospitalLocation", hospitalLocation);
       }
 
+      if (role === "patient") {
+        const patientName = data.user.name;
+        const patientCode = data.user.code;
+
+        localStorage.setItem("patientName", patientName);
+        localStorage.setItem("patientCode", patientCode);
+      }
+
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem("patientName", patientName);
       //localStorage.setItem("hospitalID", hospitalID);
 
       switch (role) {
