@@ -38,7 +38,7 @@ export function DocSearch() {
   let [showResult, setShowResult] = useState([]);
   console.log(showResult);
   let [handleForSearch, setHandleForSearch] = useState(
-    "mt-4 text-right p-4 heightOfCardSearch cardInIphoneX border-3 border-success rounded-4"
+    "w-25 d-flex justify-content-center"
   );
   let [docDetail, setDocDetail] = useState({
     name: "",
@@ -119,11 +119,12 @@ export function DocSearch() {
         searchUser
       );
       setShowResult(data.search);
+      setHandleForSearch("w-25 d-flex justify-content-center");
       setErrorForSearch("d-none");
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setErrorForSearch("text-center text-muted fs-1 mt-5");
         setHandleForSearch("d-none");
+        setErrorForSearch("text-center text-muted fs-1 mt-5");
       }
     }
   }
@@ -250,9 +251,8 @@ export function DocSearch() {
       );
       setShowResultFromHospi(data.searchName);
       setclassShowResultOfhospi(
-        "container shadow rounded-4 HightForSlidedown position-relative styleScrollOfHospitalSection overflow-scroll mt-5"
+        "container w-11/12 shadow rounded-4 HightForSlidedown position-relative styleScrollOfHospitalSection overflow-scroll mt-5"
       );
-      
     } catch (error) {
       console.error("Error searching for hospital:", error);
     }
@@ -615,36 +615,63 @@ export function DocSearch() {
         ) : (
           <div className="d-flex justify-content-center">
             <div
-              className={`d-flex justify-content-center mt-3 flex-wrap gap-3  overflow-scroll w-75 searchSection position-relative ${
+              className={`d-flex justify-content-center mt-3 flex-wrap gap-4  overflow-scroll pt-14 w-75 searchSection position-relative ${
                 isSearchActive ? "active" : ""
               }`}
             >
               {showResult.map((element, i) => (
-                <div key={i} className={handleForSearch}>
-                  <h2 className="text-center fs-3 text-muted">
-                    د/{element.name}{" "}
-                  </h2>
-                  <p className="mt-2 md:mt-0 fs-4 text-muted">
-                    <span className="fs-3 text-black"></span>
-                    {element.specialize.name} :{" "}
-                    <i className="fa-solid text-success fs-5 fa-stethoscope"></i>
-                  </p>
-                  <p className="mt-2 md:mt-0 fs-4 text-muted">
-                    {" "}
-                    {element.hospitalID?.name} :{" "}
-                    <i className=" fa-solid text-success fs-5 fa-truck-medical"></i>{" "}
-                  </p>
-                  <div className="d-flex justify-content-center">
-                    {" "}
-                    <button
-                      onClick={() => ShowBookSection(element._id, element.name)}
-                      type="button"
-                      className="btn mt-3 w-100 bg-success text-white border-3"
-                    >
-                      احجز الان
-                    </button>
-                  </div>
+                // <div key={i} className={handleForSearch}>
+                //   <h2 className="text-center fs-3 text-muted">
+                //     د/{element.name}{" "}
+                //   </h2>
+                //   <p className="mt-2 md:mt-0 fs-4 text-muted">
+                //     <span className="fs-3 text-black"></span>
+                //     {element.specialize.name} :{" "}
+                //     <i className="fa-solid text-success fs-5 fa-stethoscope"></i>
+                //   </p>
+                //   <p className="mt-2 md:mt-0 fs-4 text-muted">
+                //     {" "}
+                //     {element.hospitalID?.name} :{" "}
+                //     <i className=" fa-solid text-success fs-5 fa-truck-medical"></i>{" "}
+                //   </p>
+                //   <div className="d-flex justify-content-center">
+                //     {" "}
+                //     <button
+                //       onClick={() => ShowBookSection(element._id, element.name)}
+                //       type="button"
+                //       className="btn mt-3 w-100 bg-success text-white border-3"
+                //     >
+                //       احجز الان
+                //     </button>
+                //   </div>
+                // </div>
+                <div className={handleForSearch}>
+                <div
+                key={i}
+                className="position-relative w-11/12 roundedCorner shadow my-3 "
+              >
+                <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
+                  <img
+                    src={secondSectionPhoto}
+                    alt=""
+                    className="w-100 h-100"
+                  />
                 </div>
+                <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
+                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
+                  <p className="text-center text-muted mt-1 ">
+                    {element.specialize.name}
+                  </p>
+                  <button
+                    onClick={() => ShowBookSection(element._id, element.name)}
+                    type="button"
+                    className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                  >
+                    احجز الان
+                  </button>
+                </div>
+              </div>
+              </div>
               ))}
             </div>
           </div>
@@ -688,7 +715,7 @@ export function DocSearch() {
             alt="sora"
           />
           <div
-            className={`w-75 shadow rounded-4 z-3 bottom-0  d-flex flex-wrap justify-content-around gap-4 position-absolute overflow-scroll styleOfBoxGetUsers ${
+            className={`w-75 shadow rounded-4 z-3 bottom-0 pt-20 d-flex flex-wrap justify-content-around gap-4 position-absolute overflow-scroll styleOfBoxGetUsers ${
               showDiv ? "active" : ""
             }`}
           >
@@ -699,32 +726,59 @@ export function DocSearch() {
             )}
             <h1 className={errorGetDoc}>جارى التحميل</h1>
             {DocData.map((element, i) => (
-              <div
+              // <div
+              //   key={i}
+              //   className="widthForDivInGetUser rounded-4 border-4 mt-3"
+              // >
+              //   <div className="py-3 text-end">
+              //     <h1 className="text-center fs-3 mb-2 text-[#056558]">
+              //       د/ {element.name}
+              //     </h1>
+              //     <h3 className="fs-3 mb-2">
+              //       {element.specialize.name} :{" "}
+              //       <i className="fa-solid text-success fs-5 fa-stethoscope"></i>{" "}
+              //     </h3>
+              //     <div className="d-flex gap-2 flex-row justify-content-end">
+              //       <h6 className="fs-5"> {element.hospitalID?.name} : </h6>
+              //       <i className=" fa-solid text-success fs-5 fa-truck-medical"></i>
+              //     </div>
+              //     <div className="d-flex mt-3 justify-content-center">
+              //       <button
+              //         onClick={() => ShowBookSection(element._id, element.name)}
+              //         type="button"
+              //         className="btn bg-success  w-100 text-white border-3"
+              //       >
+              //         احجز الان
+              //       </button>
+              //     </div>
+              //   </div>
+              // </div>
+              <div className="w-25 d-flex justify-content-center">
+                <div
                 key={i}
-                className="widthForDivInGetUser rounded-4 border-4 mt-3"
+                className="position-relative w-11/12 roundedCorner shadow my-3 "
               >
-                <div className="py-3 text-end">
-                  <h1 className="text-center fs-3 mb-2 text-[#056558]">
-                    د/ {element.name}
-                  </h1>
-                  <h3 className="fs-3 mb-2">
-                    {element.specialize.name} :{" "}
-                    <i className="fa-solid text-success fs-5 fa-stethoscope"></i>{" "}
-                  </h3>
-                  <div className="d-flex gap-2 flex-row justify-content-end">
-                    <h6 className="fs-5"> {element.hospitalID?.name} : </h6>
-                    <i className=" fa-solid text-success fs-5 fa-truck-medical"></i>
-                  </div>
-                  <div className="d-flex mt-3 justify-content-center">
-                    <button
-                      onClick={() => ShowBookSection(element._id, element.name)}
-                      type="button"
-                      className="btn bg-success  w-100 text-white border-3"
-                    >
-                      احجز الان
-                    </button>
-                  </div>
+                <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
+                  <img
+                    src={secondSectionPhoto}
+                    alt=""
+                    className="w-100 h-100"
+                  />
                 </div>
+                <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
+                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
+                  <p className="text-center text-muted mt-1 ">
+                    {element.specialize.name}
+                  </p>
+                  <button
+                    onClick={() => ShowBookSection(element._id, element.name)}
+                    type="button"
+                    className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                  >
+                    احجز الان
+                  </button>
+                </div>
+              </div>
               </div>
             ))}
           </div>
@@ -768,10 +822,16 @@ export function DocSearch() {
                       setClickedButtonId(element._id);
                       searchDocINHospi(element._id);
                     }}
-                    className={`shadow FlexForButtonHospital  rounded-4 h-100 p-2 d-flex justify-content-between  gap-5 ${clickedButtonId === element._id ? "bg-warning":""}`}
+                    className={`shadow FlexForButtonHospital  rounded-4 h-100 p-2 d-flex justify-content-between  gap-5 ${
+                      clickedButtonId === element._id ? "bg-warning" : ""
+                    }`}
                   >
                     <div>
-                      <div className={`designForButtonOfHospital rounded-3 ${clickedButtonId === element._id ? "clicked":""}`}>
+                      <div
+                        className={`designForButtonOfHospital rounded-3 ${
+                          clickedButtonId === element._id ? "clicked" : ""
+                        }`}
+                      >
                         {clickedButtonId === element._id ? (
                           <i className="fa-solid fa-caret-down fs-2"></i>
                         ) : (
@@ -782,7 +842,11 @@ export function DocSearch() {
                     <div>
                       <h1 className="fs-5"> {element.name}</h1>
                       <p className="d-inline text-muted"> الخيرية</p>
-                      <i class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${clickedButtonId === element._id ? "text-white" : ""}`}></i>
+                      <i
+                        class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
+                          clickedButtonId === element._id ? "text-white" : ""
+                        }`}
+                      ></i>
                     </div>
                   </div>
                   // <h1
@@ -809,34 +873,60 @@ export function DocSearch() {
           </div>
           <div className="d-flex  position-absolute start-0 end-0 gap-2 flex-wrap justify-content-evenly ">
             {ShowResultFromHospi.map((element, i) => (
+              // <div
+              //   key={i}
+              //   className="w-25 showDocInHospitals rounded-4 border-4 mt-3"
+              // >
+              //   <div className="py-3 text-end">
+              //     <h1 className="text-center fs-3 mb-2 text-[#056558]">
+              //       د/ {element.name}
+              //     </h1>
+              //     <h3 className="fs-3 mb-2">
+              //       {" "}
+              //       {element.specialize.name} :{" "}
+              //       <i className="fa-solid text-success fs-5 fa-stethoscope"></i>{" "}
+              //     </h3>
+              //     <div className="d-flex mt-3 justify-content-center">
+              //       <button
+              //         onClick={() => ShowBookSection(element._id, element.name)}
+              //         type="button"
+              //         className="btn bg-success  w-100 text-white border-3"
+              //       >
+              //         احجز الان
+              //       </button>
+              //     </div>
+              //   </div>
+              // </div>
               <div
                 key={i}
-                className="w-25 showDocInHospitals rounded-4 border-4 mt-3"
+                className="position-relative w-1/5 roundedCorner shadow my-4 "
               >
-                <div className="py-3 text-end">
-                  <h1 className="text-center fs-3 mb-2 text-[#056558]">
-                    د/ {element.name}
-                  </h1>
-                  <h3 className="fs-3 mb-2">
-                    {" "}
-                    {element.specialize.name} :{" "}
-                    <i className="fa-solid text-success fs-5 fa-stethoscope"></i>{" "}
-                  </h3>
-                  <div className="d-flex mt-3 justify-content-center">
-                    <button
-                      onClick={() => ShowBookSection(element._id, element.name)}
-                      type="button"
-                      className="btn bg-success  w-100 text-white border-3"
-                    >
-                      احجز الان
-                    </button>
-                  </div>
+                <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
+                  <img
+                    src={secondSectionPhoto}
+                    alt=""
+                    className="w-100 h-100"
+                  />
+                </div>
+                <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
+                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
+                  <p className="text-center text-muted mt-1 ">
+                    {element.specialize.name}
+                  </p>
+                  <button
+                    onClick={() => ShowBookSection(element._id, element.name)}
+                    type="button"
+                    className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                  >
+                    احجز الان
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
       <Footer />
     </>
   );

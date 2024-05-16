@@ -30,7 +30,9 @@ function Hospital() {
   };
   // filter with t5sos w alasm
   const [specializationFilter, setSpecializationFilter] = useState("");
+  console.log(specializationFilter);
   const [doctorName, setDoctorNameFilter] = useState("");
+  console.log(doctorName);
   const filterDoctors = (value) => {
     setSpecializationFilter(value);
   };
@@ -39,10 +41,11 @@ function Hospital() {
   };
   const filteredDoctors = docInHospital.filter((doctor) => {
     return (
-      doctor.specialize.includes(specializationFilter) &&
+      doctor.code.includes(specializationFilter) &&
       doctor.name.includes(doctorName)
     );
   });
+  console.log(filteredDoctors);
   // ------------------------
 
   //  put time work for doctors in hospitals
@@ -94,6 +97,7 @@ function Hospital() {
   function putDay(e) {
     setConfirmOperation("d-none");
     setWhenTheAdminChooseSameTime("d-none");
+    setRefOperation("d-none")
     let theDay = e.target.value;
     setDocInformation({ ...docInformation, day: theDay, time: [] });
   }
@@ -240,7 +244,7 @@ function Hospital() {
               <input
                 type="text"
                 className=" opacity-75 w-25 text-end form-control"
-                placeholder="التخصص"
+                placeholder="بكود الطبيب"
                 onChange={(e) => filterDoctors(e.target.value)}
               />
               <input
@@ -251,13 +255,14 @@ function Hospital() {
               />
             </div>
           </div>
-          <div className="d-flex justify-content-center mt-3">
+          <div className="d-flex flex-wrap justify-content-center mt-3">
             <table className="table widthforfirstSection  border-2 rounded-3 text-end">
               <thead>
                 <tr className="table-success">
                   <th scope="col" className="text-center">
                     تخصيص معاد
                   </th>
+                  <th scope="col">كود الطبيب</th>
                   <th scope="col">التخصص</th>
                   <th scope="col">الأسم</th>
                 </tr>
@@ -276,12 +281,14 @@ function Hospital() {
                         <p className="opacity-100">اضغط للأضافة</p>
                       </button>
                     </td>
-                    <td>{element.specialize}</td>
+                    <td>{element.code}</td>
+                    <td>{element.specialize.name}</td>
                     <td>{element.name}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            {/* <h1 className="w-100">dadwdawdw</h1> */}
           </div>
         </div>
       </section>
@@ -290,7 +297,7 @@ function Hospital() {
         <div className="d-flex justify-content-end">
           <i
             onClick={closeDiv}
-            class="fa-regular fa-circle-xmark fs-3 text-danger closeOfHospitalPutTime"
+            className="fa-regular fa-circle-xmark fs-3 text-danger closeOfHospitalPutTime"
           ></i>
         </div>
         <div className="d-flex flex-row flex-wrap w-100 justify-content-evenly">
@@ -373,7 +380,7 @@ function Hospital() {
             className="alert alert-danger text-center mt-4 w-50 fs-5"
             role="alert"
           >
-            لا يمكن تعين هذا الموعد لهذا الطبيب
+            لا يمكن تعين هذا اليوم لهذا الطبيب
           </div>
         </div>
         <div className="d-flex w-100 justify-content-center mt-5">
