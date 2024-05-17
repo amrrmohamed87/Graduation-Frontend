@@ -214,68 +214,8 @@ export function DoctorDashBoard() {
     description: "",
   });
   const [isRequestingSurgery, setIsRequestingSurgery] = useState(false);
-  const surgeries = [
-    {
-      label: "جراحات القلب والأوعية الدموية",
-      value: "جراحات القلب والأوعية الدموية",
-    },
-    {
-      label: "جراحات الجهاز الهضمي",
-      value: "جراحات الجهاز الهضمي",
-    },
-    {
-      label: "جراحات العظام والمفاصل",
-      value: "جراحات العظام والمفاصل",
-    },
-    {
-      label: "جراحات العين",
-      value: "جراحات العين",
-    },
-    {
-      label: "جراحات الجهاز التناسلي",
-      value: "جراحات الجهاز التناسلي",
-    },
-    {
-      label: "جراحات الجهاز التنفسي",
-      value: "جراحات الجهاز التنفسي",
-    },
-    {
-      label: "جراحات العصبية",
-      value: "جراحات العصبية",
-    },
-    {
-      label: "جراحات الأسنان والفم",
-      value: "جراحات الأسنان والفم",
-    },
-    {
-      label: "جراحات النساء",
-      value: "جراحات النساء",
-    },
-    {
-      label: "جراحات الجهاز البولي",
-      value: "جراحات الجهاز البولي",
-    },
-    {
-      label: "جراحات الطوارئ والإصابات",
-      value: "جراحات الطوارئ والإصابات",
-    },
-    {
-      label: "جراحات الأورام الخبيثة",
-      value: "جراحات الأورام الخبيثة",
-    },
-    {
-      label: "جراحات العنق والرأس والوجه",
-      value: "جراحات العنق والرأس والوجه",
-    },
-    {
-      label: "جراحات التجميل والترميم الجلدي",
-      value: "جراحات التجميل والترميم الجلدي",
-    },
-    {
-      label: "جراحات الجهاز العصبي المركزي",
-      value: "جراحات الجهاز العصبي المركزي",
-    },
-  ];
+  const [surgeries, setSurgeries] = useState([]);
+  const [isFetchingSurgeries, setIsFetchingSurgeries] = useState(false);
 
   const handleFetchingPatientRecord = async (id) => {
     setIsLoadingPatientRecord(true);
@@ -319,6 +259,7 @@ export function DoctorDashBoard() {
     }
   };
 
+  //Load Specializes
   useEffect(() => {
     async function loadSpecializes() {
       setIsFetchingSpecializes(true);
@@ -346,6 +287,35 @@ export function DoctorDashBoard() {
     loadSpecializes();
   }, []);
 
+  //Load Surgeries
+  useEffect(() => {
+    async function loadSurgeries() {
+      setIsFetchingSurgeries(true);
+
+      try {
+        const response = await fetch(
+          `https://mhiproject.onrender.com/doctor/getSurgeries/${doctorId}`
+        );
+        const resData = await response.json();
+
+        if (!response.ok) {
+          toast.error(resData.message);
+          setIsFetchingSurgeries(false);
+          return;
+        }
+
+        setSurgeries(resData);
+        setIsFetchingSurgeries(false);
+      } catch (error) {
+        toast.error("unexpected error during fetching surgeries");
+        setIsFetchingSurgeries(false);
+        return;
+      }
+    }
+    loadSurgeries();
+  }, []);
+
+  console.log(surgeries);
   //Send patient id to the API
   const handleGetPatientId = (id) => {
     handleFetchingPatientRecord(id);
@@ -570,7 +540,7 @@ export function DoctorDashBoard() {
                     <i className="fa-solid fa-stethoscope ms-4 me-1 text-muted"></i>
                   </div>
                   <div className="justify-content-center d-flex">
-                    <h1 className="fs-5 text-muted mt-3">50</h1>
+                    <h1 className="fs-5 text-muted mt-3">{surgeries.length}</h1>
                   </div>
                 </div>
                 <div className="widthForCard  shadow rounded-3 p-3">
@@ -691,11 +661,13 @@ export function DoctorDashBoard() {
                             حضور
                           </button>
                         </td>
-                        <td >
+                        <td>
                           <p className="w-100">{element.day.slice(0, 10)}</p>
                         </td>
 
-                        <td><p className="w-100">{element.time}</p></td>
+                        <td>
+                          <p className="w-100">{element.time}</p>
+                        </td>
                         {/* 7tt amr fy code alfilter */}
                         <td>
                           <div>
