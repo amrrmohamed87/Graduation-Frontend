@@ -611,7 +611,7 @@ export function DoctorDashBoard() {
                     <input
                       type="text"
                       className="form-control text-end"
-                      placeholder="ادخل رقم التأمين"
+                      placeholder="ادخل كود المريض"
                       id="idFilter"
                       onChange={(e) => handleIdFilter(e.target.value)}
                     />
@@ -636,7 +636,7 @@ export function DoctorDashBoard() {
                       <th scope="col">التاريخ</th>
                       <th scope="col">الوقت</th>
                       <th scope="col">سجله الطبى</th>
-                      <th scope="col">رقم التأمين</th>
+                      <th scope="col"> كود المريض</th>
                       <th scope="col">اسم المريض</th>
                     </tr>
                   </thead>

@@ -13,7 +13,7 @@ function PatientProfile() {
   // tfasel aluser aly d5l
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
-  console.log(decodedToken);
+  // console.log(decodedToken);
   const name = localStorage.getItem("patientName");
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
