@@ -892,9 +892,27 @@ function Admin() {
     <main>
       <ToastContainer />
       <Dashboard />
-      <h1 className="text-center mt-16 text-[20px] text-emerald-950 md:mb-8 md:text-[50px]">
-        منظمة التأمين الصحي
-      </h1>
+      <section className="mt-16 md:mb-8">
+        <div className="flex justify-center items-center gap-12">
+          <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
+            <div className="flex  flex-col justify-end items-end gap-1">
+              <h1 className="text-[28px]">المديرين</h1>
+              <p className="text-[19px] text-gray-700">{adminsData.length}</p>
+            </div>
+            <GrUserAdmin size={25} className="text-emerald-500" />
+          </div>
+          <h1 className="text-[20px] text-emerald-950 md:text-[50px]">
+            منظمة التأمين الصحي
+          </h1>
+          <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
+            <div className="flex  flex-col justify-end items-end gap-1">
+              <h1 className="text-[28px]">المستشفيات</h1>
+              <p className="text-[19px] text-gray-700">{hospitalInfo.length}</p>
+            </div>
+            <FaRegHospital size={25} className="text-emerald-500" />
+          </div>
+        </div>
+      </section>
       <section className="mb-8 md:mb-12 bg-white shadow-md rounded-md border m-9">
         <h1 className="text-center mt-4 text-emerald-700 text-2xl">
           إضافة مستخدم جديد او دواء
