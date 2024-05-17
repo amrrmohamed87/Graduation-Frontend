@@ -13,7 +13,7 @@ function PatientProfile() {
   // tfasel aluser aly d5l
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
-  // console.log(decodedToken);
+  console.log(decodedToken);
   const name = localStorage.getItem("patientName");
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
@@ -132,7 +132,7 @@ function PatientProfile() {
                       <h2 className="text-center text-muted w-100">
                         كود المريض
                       </h2>
-                      <p className=" text-center">PT-3e548e</p>
+                      <p className=" text-center">{code}</p>
                     </div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ function PatientProfile() {
                     />
                   </div>
                   <div className="w-75 mt-1 pe-2">
-                    <h1 className="text-right  text-white fs-5">{name} </h1>
+                    <h1 className="text-right  text-white fs-5">{name}</h1>
                     <p className="text-white-50 text-right">25 سنة</p>
                   </div>
 
