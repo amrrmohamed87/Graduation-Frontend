@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 function PatientProfile() {
+  //Passing the patient code - amr
+  const code = localStorage.getItem("patientCode");
+  //---------------------------------------------
   // tfasel aluser aly d5l
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
@@ -25,13 +28,17 @@ function PatientProfile() {
       setActiveTab(tabNumber);
     }
   };
-useEffect(()=>{
-  if (activeTab === null) {
-    setIsLoading(false)    
-  }else if (WattingBooks.length <= 0 || acceptBooks.length <=0 || setRecords.length <=0 ) {
-    setIsLoading(true)
-  }
-},[activeTab ,isLoading])
+  useEffect(() => {
+    if (activeTab === null) {
+      setIsLoading(false);
+    } else if (
+      WattingBooks.length <= 0 ||
+      acceptBooks.length <= 0 ||
+      setRecords.length <= 0
+    ) {
+      setIsLoading(true);
+    }
+  }, [activeTab, isLoading]);
   // fetch kol aldoctors
 
   const [ShowDoc, setShowDoc] = useState([]);
@@ -330,7 +337,11 @@ useEffect(()=>{
           <div className="col-md-2 shadow mt-5 rounded-3 styleForScroll py-4">
             <h3 className="text-right fs-3 mb-3">الاطباء</h3>
             {ShowDoc.map((element, i) => (
-              <Link to={"/docsearch"} key={i} className="d-flex justify-content-between mb-3">
+              <Link
+                to={"/docsearch"}
+                key={i}
+                className="d-flex justify-content-between mb-3"
+              >
                 <div className="w-14 h-14 rounded-3 overflow-hidden">
                   <img src={IconForDoc} alt="" className="w-100 h-100" />
                 </div>
