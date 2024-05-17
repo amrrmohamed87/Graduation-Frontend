@@ -97,7 +97,7 @@ export function DoctorDashBoard() {
   const [errorClass, setErrorClass] = useState("d-none");
   const [ClassForTable, setClassForTable] = useState("table shadow");
   const [classOfFilterButton, setclassOfFilterButton] =
-    useState("btn btn-success");
+    useState("btn ms-5 btn-success");
   async function getBooking() {
     try {
       let { data } = await axios.get(
@@ -628,7 +628,8 @@ export function DoctorDashBoard() {
                 </div>
               }
 
-              <div className="table-responsive w-100">
+              <div className="d-flex justify-content-center w-100 ">
+              <div className="table-responsive w-11/12">
                 <table className={ClassForTable}>
                   <thead>
                     <tr className="table-success">
@@ -1544,6 +1545,7 @@ export function DoctorDashBoard() {
                     ))}
                   </tbody>
                 </table>
+              </div>
               </div>
               {/* two arrows to go between pages */}
               <div className="d-flex justify-content-center">
