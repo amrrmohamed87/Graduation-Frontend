@@ -172,7 +172,7 @@ function NewNavbar() {
                 <AlertDialogTrigger asChild>
                   <button>تسجيل الخروج</button>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="bg-white">
+                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
                   <AlertDialogHeader>
                     <AlertDialogTitle className="text-[#056558]">
                       هل أنت متأكد؟
@@ -226,7 +226,7 @@ function NewNavbar() {
                                 <AlertDialogTrigger asChild>
                                   <button>تسجيل الخروج</button>
                                 </AlertDialogTrigger>
-                                <AlertDialogContent className="bg-white">
+                                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
                                   <AlertDialogHeader>
                                     <AlertDialogTitle className="text-[#056558]">
                                       هل أنت متأكد؟
