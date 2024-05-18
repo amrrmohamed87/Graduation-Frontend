@@ -343,7 +343,7 @@ function PatientProfile() {
                 className="d-flex justify-content-between mb-3"
               >
                 <div className="w-14 h-14 rounded-3 overflow-hidden">
-                  <img src={IconForDoc} alt="" className="w-100 h-100" />
+                  <img src={`https://mhiproject.onrender.com/${element.image}`} alt="صورة الطبيب" className="w-100 h-100" />
                 </div>
                 <div className="p-2 w-75 text-right">
                   <h2>

@@ -652,8 +652,8 @@ export function DocSearch() {
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
-                    src={secondSectionPhoto}
-                    alt=""
+                    src={`https://mhiproject.onrender.com/${element.image}`}
+                    alt="صورة ملف شخصى"
                     className="w-100 h-100"
                   />
                 </div>
@@ -760,7 +760,7 @@ export function DocSearch() {
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
-                    src={secondSectionPhoto}
+                    src={`https://mhiproject.onrender.com/${element.image}`}
                     alt=""
                     className="w-100 h-100"
                   />
@@ -903,8 +903,8 @@ export function DocSearch() {
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
-                    src={secondSectionPhoto}
-                    alt=""
+                    src={`https://mhiproject.onrender.com/${element.image}`}
+                    alt="صورة ملف شخصى"
                     className="w-100 h-100"
                   />
                 </div>
