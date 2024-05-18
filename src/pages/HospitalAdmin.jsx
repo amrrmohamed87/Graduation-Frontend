@@ -41,6 +41,7 @@ const HospitalAdmin = () => {
     password: "",
     specialize: "",
     hospitalID: hospitalId,
+    image: "",
   });
   const [isAddingDoctor, setIsAddingDoctor] = useState(false);
   const [hospitalManager, setHospitalManager] = useState({
@@ -176,19 +177,34 @@ const HospitalAdmin = () => {
     }));
   }
 
+  function handleImageOnChange(event) {
+    const file = event.target.files[0];
+    setDoctor((prev) => ({
+      ...prev,
+      image: file,
+    }));
+  }
+
   const handleAddDoctor = async (event) => {
     event.preventDefault();
     setIsAddingDoctor(true);
+    const formData = new FormData();
+    formData.append("name", doctor.name);
+    formData.append("username", doctor.username);
+    formData.append("password", doctor.password);
+    formData.append("specialize", doctor.specialize);
+    formData.append("hospitalID", doctor.hospitalID);
+
+    if (doctor.image) {
+      formData.append("image", doctor.image);
+    }
 
     try {
       const response = await fetch(
         "https://mhiproject.onrender.com/hospitalAdmin/signupDoctor",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(doctor),
+          body: formData,
         }
       );
       const resData = await response.json();
@@ -206,6 +222,7 @@ const HospitalAdmin = () => {
         password: "",
         specialize: "",
         hospitalID: hospitalId,
+        image: "",
       });
       setSelectedSpecialize(null);
       setIsAddingDoctor(false);
@@ -599,7 +616,12 @@ const HospitalAdmin = () => {
                   }));
                 }}
               />
-
+              <input
+                type="file"
+                name="image"
+                onChange={handleImageOnChange}
+                className="w-full p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              />
               <button
                 type="submit"
                 onClick={handleAddDoctor}
