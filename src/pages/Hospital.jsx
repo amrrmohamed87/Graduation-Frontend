@@ -307,6 +307,7 @@ function Hospital() {
               <input
                 type="date"
                 className="form-control"
+                value={docInformation.day}
                 onChange={putDay}
                 name="day"
               />
