@@ -17,6 +17,7 @@ function PatientProfile() {
   const name = localStorage.getItem("patientName");
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
+  // console.log(UserIdOfLogin);
   // --------------end----------------
   const [isLoading, setIsLoading] = useState(true);
   const [isLoading2, setIsLoading2] = useState(true);
@@ -102,6 +103,62 @@ function PatientProfile() {
   }
 
   // -------------end---------
+ const [doneMessage,setDoneMessage] = useState("d-none")
+  const [detailsOfPatient , setDetailsOfPatient] = useState({
+    mobileNumber: "",
+    bloodType: "",
+    patientID: UserIdOfLogin,
+    weight: "",
+    height: "",
+    address: "",
+  })
+  console.log(detailsOfPatient);
+  function putPatientDetail(e) {
+    let MyDetail = {...detailsOfPatient}
+    MyDetail[e.target.name] = e.target.value
+    setDetailsOfPatient(MyDetail)
+  }
+  async function SendDetailOfUSer(e) {
+    e.preventDefault();
+    try{
+      let {data} = await axios.patch("https://mhiproject.onrender.com/patient/updateProfile" , detailsOfPatient)
+      setDetailsOfPatient({
+        mobileNumber: "",
+      bloodType: "",
+      patientID: UserIdOfLogin,
+      weight: "",
+      height: "",
+      address: "",
+      })
+      setDoneMessage("text-center text-muted fs-4 mt-4")
+      console.log(data);
+    } catch(error){
+
+    }
+  }
+  const [classOfPateintDeta ,setClassOfPateintDeta] = useState("d-none")
+  const [activeSection, setActiveSection] = useState(false);
+
+  const toggleSection = () => {
+    setActiveSection(!activeSection);
+  }; 
+  function closePatientSection() {
+    setClassOfPateintDeta("d-none")
+    toggleSection()
+    setDetailsOfPatient({
+      mobileNumber: "",
+    bloodType: "",
+    patientID: UserIdOfLogin,
+    weight: "",
+    height: "",
+    address: "",
+    })
+    setDoneMessage("d-none")
+  }
+  function openPatientDetail() {
+    setClassOfPateintDeta("border-b border-gray-900/10 pb-12 container mt-3")
+  }
+  
   return (
     <>
       <NewNavbar />
@@ -112,8 +169,16 @@ function PatientProfile() {
             {/* m3lomat 3n al patient asmo w sno w kda  */}
             <div className="d-flex justify-content-center w-100 mt-5 ">
               <div className="forPatient d-flex flex-row flex-wrap rounded-3 shadow">
-                <div className="row gap-2 StyleForSecondPartOfUSerInfo justify-content-end">
-                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
+                <div className="row gap-1 StyleForSecondPartOfUSerInfo justify-content-end">
+                  <div className="col-md-3">
+                   <div className="d-flex justify-content-center" >
+                   <button onClick={()=>{
+                    openPatientDetail();
+                    toggleSection()
+                   }} className="btn btn-primary mt-3"> تعديل الملف الشخصي </button>
+                   </div>
+                  </div>
+                  <div className="col-md-2">
                     <div className="mt-4 h-50 w-100 d-flex justify-content-center flex-wrap ">
                       <h2 className="text-right text-muted w-100">
                         البريد الالكترونى
@@ -121,15 +186,15 @@ function PatientProfile() {
                       <p className="w-100 text-right mb-3">{UserNameOfLogin}</p>
                     </div>
                   </div>
-                  <div className="col-md-4 justify-content-center flex-wrap d-flex ">
+                  <div className="col-md-4 ">
                     <div className="mt-4 w-100 d-flex justify-content-center flex-wrap">
-                      <h2 className="text-center text-muted w-100">
+                      <h2 className="text-center text-muted w-100 mb-1">
                         رقم الهاتف
                       </h2>
-                      <p className="w-100 text-center">01062321845</p>
+                      <p className="w-100 text-center mb-1">01062321845</p>
                     </div>
                     <div className=" d-flex justify-content-center flex-wrap">
-                      <h2 className="text-center text-muted w-100">
+                      <h2 className="text-center text-muted w-100 mb-1">
                         كود المريض
                       </h2>
                       <p className=" text-center">{code}</p>
@@ -167,7 +232,103 @@ function PatientProfile() {
               </div>
             </div>
             {/* ------------------------------------ end ----------------- */}
+            {/* lma ydos 3la t3del almlf al45sy hyft7 dy  */}
+            <section >
+              <div className={`position-fixed w-3/5  top-50 StyleForDisplay translate-middle shadow rounded-3 bg-white ${activeSection === true ? "active":""} `}>
+                {/* <div onClick={closePatientSection} className="position-absolute top-0 end-0 cursor-pointer">
+                <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
+                </div> */}
+                <div className={classOfPateintDeta}>
+          <h2 className="text-base font-semibold leading-7 text-gray-900 text-end me-5">تفاصيل المستخدم</h2>
+          <p className="mt-1 text-sm leading-6 text-gray-600 text-end me-5">يمكنك وضع تفاصيل الصفححة الشخصية من هنا </p>
 
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-3">
+              <label htmlFor="height" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
+                الطول 
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="height"
+                  id="height"
+                  value={detailsOfPatient.height}
+                  autoComplete="given-name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={putPatientDetail}
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-3">
+              <label htmlFor="weight" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
+                الوزن
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="weight"
+                  id="weight"
+                  value={detailsOfPatient.weight}
+                  autoComplete="family-name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={putPatientDetail}
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-3">
+              <label htmlFor="bloodType" className="block text-sm font-medium leading-6 text-gray-900 text-end w-75">
+                فصيلة الدم
+              </label>
+              <div className="mt-2">
+                <select
+                  id="bloodType"
+                  name="bloodType"
+                  autoComplete="country-name"
+                  value={detailsOfPatient.bloodType}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  onChange={putPatientDetail}
+                >
+                  <option>O+</option>
+                  <option>O-</option>
+                  <option>A+</option>
+                  <option>A-</option>
+                  <option>B+</option>
+                  <option>B-</option>
+                  <option>AB+</option>
+                  <option>AB-</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="mobileNumber" className="block text-sm font-medium leading-6 text-gray-900 text-end">
+                رقم الهاتف 
+              </label>
+              <div className="mt-2">
+                <input
+                  type="number"
+                  name="mobileNumber"
+                  id="mobileNumber"
+                  value={detailsOfPatient.mobileNumber}
+                  autoComplete="street-address"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={putPatientDetail}
+                />
+              </div>
+            </div>
+          </div>
+          <h1 className={doneMessage}>تم الحفظ</h1>
+          <div className="d-flex justify-content-end gap-4 mt-4">
+            <button onClick={closePatientSection} className="btn btn-light w-2/12"> الغاء</button>
+            <button onClick={SendDetailOfUSer} className="btn btn-primary w-2/12"> حفظ</button>
+          </div>
+        </div>
+
+              </div>
+            </section>
+            {/* ----------------------------------------- */}
             <div className="w-100 d-flex justify-content-center">
               <div className="mt-4 shadow forPatient rounded-3 classForHeight">
                 <div className="d-flex justify-content-center w-100">
