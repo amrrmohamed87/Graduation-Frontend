@@ -45,6 +45,7 @@ function PatientProfile() {
   const [ShowDoc, setShowDoc] = useState([]);
   useEffect(() => {
     GetDoc();
+    getInfoOfUser()
   }, []);
   async function GetDoc() {
     try {
@@ -112,7 +113,7 @@ function PatientProfile() {
     height: "",
     address: "",
   })
-  console.log(detailsOfPatient);
+  // console.log(detailsOfPatient);
   function putPatientDetail(e) {
     let MyDetail = {...detailsOfPatient}
     MyDetail[e.target.name] = e.target.value
@@ -122,6 +123,7 @@ function PatientProfile() {
     e.preventDefault();
     try{
       let {data} = await axios.patch("https://mhiproject.onrender.com/patient/updateProfile" , detailsOfPatient)
+      getInfoOfUser()
       setDetailsOfPatient({
         mobileNumber: "",
       bloodType: "",
@@ -131,7 +133,7 @@ function PatientProfile() {
       address: "",
       })
       setDoneMessage("text-center text-muted fs-4 mt-4")
-      console.log(data);
+      // console.log(data);
     } catch(error){
 
     }
@@ -158,7 +160,18 @@ function PatientProfile() {
   function openPatientDetail() {
     setClassOfPateintDeta("border-b border-gray-900/10 pb-12 container mt-3")
   }
-  
+  const [getDetails ,setGetDetails] = useState({});
+  async function getInfoOfUser() {
+    try{
+      let {data} = await axios.get(`https://mhiproject.onrender.com/patient/getProfile/${UserIdOfLogin}`)
+      // console.log(data);
+      setGetDetails(data)
+      // console.log("yarab");
+    } catch(error){
+
+    }
+  }
+  // getInfoOfUser()
   return (
     <>
       <NewNavbar />
@@ -191,7 +204,7 @@ function PatientProfile() {
                       <h2 className="text-center text-muted w-100 mb-1">
                         رقم الهاتف
                       </h2>
-                      <p className="w-100 text-center mb-1">01062321845</p>
+                      <p className="w-100 text-center mb-1">{getDetails.mobileNumber}</p>
                     </div>
                     <div className=" d-flex justify-content-center flex-wrap">
                       <h2 className="text-center text-muted w-100 mb-1">
@@ -217,15 +230,15 @@ function PatientProfile() {
                   <div className="row mt-3 p-1 gap-2 justify-content-center w-100">
                     <div className="col-md-3">
                       <h1 className="text-white-50 text-center">الطول</h1>
-                      <p className="text-white text-center">185</p>
+                      <p className="text-white text-center">{getDetails.height}</p>
                     </div>
                     <div className="col-md-3">
                       <h1 className="text-white-50 text-center">الوزن</h1>
-                      <p className="text-white text-center">88</p>
+                      <p className="text-white text-center">{getDetails.weight}</p>
                     </div>
                     <div className="col-md-4">
                       <h1 className="text-white-50 text-center">فصيلة الدم</h1>
-                      <p className="text-white text-center">AB+</p>
+                      <p className="text-white text-center">{getDetails.bloodType}</p>
                     </div>
                   </div>
                 </div>
