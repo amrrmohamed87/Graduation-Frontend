@@ -1,4 +1,5 @@
 import { Form, Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Input from "../components/NewInput";
 import { useState, useEffect } from "react";
@@ -10,6 +11,15 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [signin, setSignin] = useState(false);
+  const [patientData, setPatientData] = useState({
+    username: "",
+    name: "",
+    password: "",
+    confirmPassword: "",
+    birthday: "",
+  });
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -127,6 +137,54 @@ function Login() {
     }
   };
 
+  function handleSignupPatientChange(event) {
+    const { name, value } = event.target;
+    setPatientData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  const handleSignupPatient = async (event) => {
+    event.preventDefault();
+    setIsCreatingAccount(true);
+
+    try {
+      const response = await fetch(
+        "https://mhiproject.onrender.com/auth/signupPatient",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(patientData),
+        }
+      );
+      const resData = await response.json();
+
+      if (!response.ok) {
+        toast.error(resData.message);
+        setIsCreatingAccount(false);
+        return;
+      }
+
+      toast.success("Account Created Successfully");
+      setPatientData({
+        username: "",
+        name: "",
+        password: "",
+        confirmPassword: "",
+        birthday: "",
+      });
+      setIsCreatingAccount(false);
+      setSignin(false);
+    } catch (error) {
+      toast.error("unexpected error during sign up!");
+      setIsCreatingAccount(false);
+      return;
+    }
+  };
+
   function handleShowPassword() {
     setShowPassword(!showPassword);
   }
@@ -147,8 +205,29 @@ function Login() {
     },
   };
 
+  const animationVariants = {
+    enterFromRight: {
+      x: 20,
+      opacity: 0,
+    },
+    enterFromLeft: {
+      x: -300,
+      opacity: 0,
+    },
+    center: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    },
+  };
+
   return (
     <section className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+      <ToastContainer />
       <div className="md:flex md:items-center md:justify-center md:gap-14 px-4">
         <div className="text-center md:w-1/2">
           <h1 className="text-emerald-800 text-[23px] mb-4 md:text-[49px] md:mb-4">
@@ -184,10 +263,150 @@ function Login() {
           variants={upwardMotionVariants}
           className="w-full mt-4 md:mt-0 max-w-md p-8 bg-white rounded-lg shadow-lg"
         >
-          <h1 className="text-xl font-bold text-center text-emerald-800 mb-10">
+          <h1 className="text-[24px] font-bold text-center text-emerald-800 mb-2">
             مصر للتأمين الصحي
           </h1>
-          <form onSubmit={handleLogin} className="space-y-6">
+          {signin ? (
+            <p className="text-[18px] font-bold text-center text-gray-500 mb-4">
+              إنشاء حساب
+            </p>
+          ) : (
+            <p className="text-[18px] font-bold text-center text-gray-500 mb-4">
+              تسجيل الدخول
+            </p>
+          )}
+
+          {signin ? (
+            <motion.form
+              initial="enterFromRight"
+              animate="center"
+              exit="enterFromLeft"
+              variants={animationVariants}
+              onSubmit={handleSignupPatient}
+              className="space-y-6"
+            >
+              <Input
+                id="patientFullName"
+                label="الأسم ثلاثي"
+                type="text"
+                name="name"
+                value={patientData.name}
+                onChange={handleSignupPatientChange}
+              />
+              <Input
+                id="patientUserName"
+                label="أسم المستخدم"
+                type="text"
+                name="username"
+                value={patientData.username}
+                onChange={handleSignupPatientChange}
+              />
+              <Input
+                id="patientPassword"
+                label="كلمة المرور"
+                type={!showPassword ? "password" : "text"}
+                name="password"
+                value={patientData.password}
+                onChange={handleSignupPatientChange}
+                icon={
+                  !showPassword ? (
+                    <FaRegEye size={20} className="text-emerald-950" />
+                  ) : (
+                    <FaRegEyeSlash size={20} className="text-emerald-950" />
+                  )
+                }
+              />
+              <Input
+                id="confirmPassword"
+                label="تأكيد كلمة المرور"
+                type={!showPassword ? "password" : "text"}
+                name="confirmPassword"
+                value={patientData.confirmPassword}
+                onChange={handleSignupPatientChange}
+                icon={
+                  !showPassword ? (
+                    <FaRegEye size={20} className="text-emerald-950" />
+                  ) : (
+                    <FaRegEyeSlash size={20} className="text-emerald-950" />
+                  )
+                }
+              />
+              <Input
+                id="patientBirthDate"
+                label="تاريخ الميلاد"
+                type="date"
+                name="birthday"
+                value={patientData.birthday}
+                onChange={handleSignupPatientChange}
+              />
+              <button
+                type="submit"
+                disabled={isCreatingAccount}
+                className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-200 transform bg-emerald-800 rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-emerald-700"
+              >
+                {isCreatingAccount ? "...جاري التجيل" : "إنشاء حساب"}
+              </button>
+              <h1 className="flex justify-center gap-2">
+                <Link
+                  className="text-[#056550]"
+                  onClick={() => {
+                    setSignin(!signin);
+                  }}
+                >
+                  تسجيل الدخول
+                </Link>
+                هل لديك حساب؟
+              </h1>
+            </motion.form>
+          ) : (
+            <form onSubmit={handleLogin} className="space-y-6">
+              <Input
+                id="username"
+                label="أسم المستخدم"
+                type="text"
+                name="username"
+                value={userData.username}
+                onChange={handleChange}
+              />
+              <Input
+                id="password"
+                label="كلمة المرور"
+                type={!showPassword ? "password" : "text"}
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+                showPassword={handleShowPassword}
+                icon={
+                  !showPassword ? (
+                    <FaRegEye size={20} className="text-emerald-950" />
+                  ) : (
+                    <FaRegEyeSlash size={20} className="text-emerald-950" />
+                  )
+                }
+              />
+              {error && <p className="text-center text-red-600">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-200 transform bg-emerald-800 rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-emerald-700"
+              >
+                {loading ? "...جاري الدخول" : "تسجيل الدخول"}
+              </button>
+
+              <h1 className="flex justify-center gap-2">
+                <Link
+                  className="text-[#056550]"
+                  onClick={() => {
+                    setSignin(!signin);
+                  }}
+                >
+                  إنشاء حساب
+                </Link>{" "}
+                ليس لديك حساب؟
+              </h1>
+            </form>
+          )}
+          {/* <form onSubmit={handleLogin} className="space-y-6">
             <Input
               id="username"
               label="أسم المستخدم"
@@ -220,7 +439,11 @@ function Login() {
             >
               {loading ? "...جاري الدخول" : "تسجيل الدخول"}
             </button>
-          </form>
+
+            <h1 className="flex justify-center gap-2">
+              <Link className="text-[#056550]">إنشاء حساب</Link> ليس لديك حساب؟
+            </h1>
+          </form> */}
         </motion.div>
       </div>
     </section>
