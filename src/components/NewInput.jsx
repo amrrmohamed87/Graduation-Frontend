@@ -1,10 +1,7 @@
 function Input({ id, label, icon, showPassword, ...props }) {
   return (
-    <div className="flex flex-col mb-4 md:mb-8">
-      <label
-        htmlFor={id}
-        className="text-right text-[#056550] mb-1 md:mb-2 text-[20px] md:text-[23px] lg:text-[26px]"
-      >
+    <div className="flex flex-col mb-4">
+      <label htmlFor={id} className="text-right mb-1 md:mb-2 text-[20px]">
         {label}
       </label>
       <div className="relative flex justify-center items-center">
@@ -12,7 +9,7 @@ function Input({ id, label, icon, showPassword, ...props }) {
           id={id}
           required
           {...props}
-          className={`w-full rounded-lg h-[28px] md:h-[35px] lg:h-[40px] border-2 border-gray-400 focus:border-gray-950 pl-2 md:pl-3`}
+          className={`w-full rounded-lg h-[28px] md:h-[35px] lg:h-[40px] border-2 border-gray-400 focus:border-gray-950 pl-2 md:pl-3 pr-4`}
         />
         {icon && (
           <div
