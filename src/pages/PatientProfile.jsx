@@ -112,6 +112,7 @@ function PatientProfile() {
     weight: "",
     height: "",
     address: "",
+    age: "",
   })
   // console.log(detailsOfPatient);
   function putPatientDetail(e) {
@@ -131,6 +132,7 @@ function PatientProfile() {
       weight: "",
       height: "",
       address: "",
+      age: "",
       })
       setDoneMessage("text-center text-muted fs-4 mt-4")
       // console.log(data);
@@ -154,6 +156,7 @@ function PatientProfile() {
     weight: "",
     height: "",
     address: "",
+    age: "",
     })
     setDoneMessage("d-none")
   }
@@ -161,11 +164,14 @@ function PatientProfile() {
     setClassOfPateintDeta("border-b border-gray-900/10 pb-12 container mt-3")
   }
   const [getDetails ,setGetDetails] = useState({});
+  const [getDetails2 ,setGetDetails2] = useState();
+  console.log(getDetails);
   async function getInfoOfUser() {
     try{
       let {data} = await axios.get(`https://mhiproject.onrender.com/patient/getProfile/${UserIdOfLogin}`)
       // console.log(data);
-      setGetDetails(data)
+      setGetDetails(data.getProfile)
+      setGetDetails2(data.age)
       // console.log("yarab");
     } catch(error){
 
@@ -224,7 +230,7 @@ function PatientProfile() {
                   </div>
                   <div className="w-75 mt-1 pe-2">
                     <h1 className="text-right  text-white fs-5">{name}</h1>
-                    <p className="text-white-50 text-right">25 سنة</p>
+                    <p className="text-white-50 text-right">سنة {getDetails2}</p>
                   </div>
 
                   <div className="row mt-3 p-1 gap-2 justify-content-center w-100">
@@ -290,8 +296,8 @@ function PatientProfile() {
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="bloodType" className="block text-sm font-medium leading-6 text-gray-900 text-end w-75">
+            <div className="col-span-4">
+              <label htmlFor="bloodType" className="block text-sm font-medium leading-6 text-gray-900 text-end  text-center">
                 فصيلة الدم
               </label>
               <div className="mt-2">
@@ -315,6 +321,22 @@ function PatientProfile() {
               </div>
             </div>
 
+            <div className="col-span-3">
+              <label htmlFor="age" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
+                 العمر 
+              </label>
+              <div className="mt-2">
+                <input
+                  type="number"
+                  name="age"
+                  id="age"
+                  value={detailsOfPatient.age}
+                  autoComplete="street-address"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={putPatientDetail}
+                />
+              </div>
+            </div>
             <div className="col-span-full">
               <label htmlFor="mobileNumber" className="block text-sm font-medium leading-6 text-gray-900 text-end">
                 رقم الهاتف 
