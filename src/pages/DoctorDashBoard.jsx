@@ -581,9 +581,9 @@ export function DoctorDashBoard() {
 
             <div className="col-md-2 text-end">
               <h1 className="fs-3 py-1 ">د/ {name}</h1>
-              <p className="text-muted fs-5">{specialize}</p>
+              {/* <p className="text-muted fs-5">{specialize}</p> */}
             </div>
-            <div className="mt-3 col-md-10 text-center bg-muted rounded-4 p-5">
+            <div className="mt-3  col-md-10 ms-4 text-center bg-muted rounded-4 p-5">
               <h1 className={errorClass}>{error}</h1>
               {isLoading == true ? (
                 <h1 className="text-center fs-1 m-5">جارى التحميل</h1>

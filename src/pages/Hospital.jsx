@@ -29,23 +29,27 @@ function Hospital() {
     setIsDivVisible(!isDivVisible);
   };
   // filter with t5sos w alasm
-  const [specializationFilter, setSpecializationFilter] = useState("");
-  console.log(specializationFilter);
+  const [DoctorCOde, setDoctorCOde] = useState("");
+  // console.log(DoctorCOde);
   const [doctorName, setDoctorNameFilter] = useState("");
-  console.log(doctorName);
+  const [DoctorSpecialize, setDoctorSpecialize] = useState("");
+  // console.log(doctorName);
   const filterDoctors = (value) => {
-    setSpecializationFilter(value);
+    setDoctorCOde(value);
   };
   const docNameFilter = (value) => {
     setDoctorNameFilter(value);
   };
+  const docSecializeFilter = (value) => {
+    setDoctorSpecialize(value);
+  };
   const filteredDoctors = docInHospital.filter((doctor) => {
     return (
-      doctor.code.includes(specializationFilter) &&
-      doctor.name.includes(doctorName)
+      doctor.code.includes(DoctorCOde) &&
+      doctor.name.includes(doctorName) && doctor.specialize.name.includes(DoctorSpecialize)
     );
   });
-  console.log(filteredDoctors);
+  // console.log(filteredDoctors);
   // ------------------------
 
   //  put time work for doctors in hospitals
@@ -230,7 +234,7 @@ function Hospital() {
             Filter
           </button>
           <div
-            className={` position-relative ${isDivVisible ? "active" : "hide"}`}
+            className={` position-relative start-0  ${isDivVisible ? "active" : "hide"}`}
             style={{
               transition: "height 0.5s",
               height: isDivVisible ? 35 : 0,
@@ -247,9 +251,11 @@ function Hospital() {
                 placeholder="بكود الطبيب"
                 onChange={(e) => filterDoctors(e.target.value)}
               />
+                <input type="text" className=" opacity-75 w-25 text-end form-control" placeholder=" بالتخصص"
+                onChange={(e) => docSecializeFilter(e.target.value)}/>
               <input
                 type="text"
-                className=" opacity-75 w-25 text-end form-control"
+                className=" opacity-75 w-25  text-end form-control"
                 placeholder="بالأسم"
                 onChange={(e) => docNameFilter(e.target.value)}
               />
