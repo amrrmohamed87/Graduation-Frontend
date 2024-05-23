@@ -92,12 +92,13 @@ export function DoctorDashBoard() {
   // get booking
   const [isLoading, setIsLoading] = useState(true);
   const [getBookForDoct, setgetBookForDoct] = useState([]);
-  console.log(getBookForDoct);
+  // console.log(getBookForDoct);
   const [error, setError] = useState("");
   const [errorClass, setErrorClass] = useState("d-none");
   const [ClassForTable, setClassForTable] = useState("table shadow");
-  const [classOfFilterButton, setclassOfFilterButton] =
-    useState("btn ms-5 btn-success");
+  const [classOfFilterButton, setclassOfFilterButton] = useState(
+    "btn ms-5 btn-success"
+  );
   async function getBooking() {
     try {
       let { data } = await axios.get(
@@ -381,7 +382,7 @@ export function DoctorDashBoard() {
       ...prev,
       [name]: value,
     }));
-    console.log(createRecord);
+    // console.log(createRecord);
   };
 
   //Create medical record api
@@ -628,401 +629,414 @@ export function DoctorDashBoard() {
                 </div>
               }
 
-              <div className="d-flex justify-content-center w-100 ">
-              <div className="table-responsive w-11/12">
-                <table className={ClassForTable}>
-                  <thead>
-                    <tr className="table-success">
-                      <th scope="col">تعليقات</th>
-                      <th scope="col">التاريخ</th>
-                      <th scope="col">الوقت</th>
-                      <th scope="col">سجله الطبى</th>
-                      <th scope="col"> كود المريض</th>
-                      <th scope="col">اسم المريض</th>
-                    </tr>
-                  </thead>
-                  <tbody className={showResult}>
-                    {filteredRows.map((element, i) => (
-                      <tr key={i}>
-                        <td>
-                          <button
-                            onClick={() => {
-                              setStatusOfPatientIfCancel(element._id);
-                            }}
-                            className="btn btn-danger me-2 widthForButton"
-                          >
-                            الغاء
-                          </button>
-                          <button
-                            onClick={() => {
-                              StatusOfPatient(element._id);
-                            }}
-                            className="btn btn-success widthForButton"
-                          >
-                            حضور
-                          </button>
-                        </td>
-                        <td>
-                          <p className="w-100">{element.day.slice(0, 10)}</p>
-                        </td>
+              <div className="d-flex justify-content-center  ">
+                <div className="table-responsive w-11/12">
+                  <table className={ClassForTable}>
+                    <thead>
+                      <tr className="table-success">
+                        <th scope="col">تعليقات</th>
+                        <th scope="col">التاريخ</th>
+                        <th scope="col">الوقت</th>
+                        <th scope="col">سجله الطبى</th>
+                        <th scope="col"> كود المريض</th>
+                        <th scope="col">اسم المريض</th>
+                      </tr>
+                    </thead>
+                    <tbody className={showResult}>
+                      {filteredRows.map((element, i) => (
+                        <tr key={i}>
+                          <td>
+                            <button
+                              onClick={() => {
+                                setStatusOfPatientIfCancel(element._id);
+                              }}
+                              className="btn btn-danger me-2 widthForButton"
+                            >
+                              الغاء
+                            </button>
+                            <button
+                              onClick={() => {
+                                StatusOfPatient(element._id);
+                              }}
+                              className="btn btn-success widthForButton"
+                            >
+                              حضور
+                            </button>
+                          </td>
+                          <td>
+                            <p className="w-100">{element.day.slice(0, 10)}</p>
+                          </td>
 
-                        <td>
-                          <p className="w-100">{element.time}</p>
-                        </td>
-                        {/* 7tt amr fy code alfilter */}
-                        <td>
-                          <div>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handleGetPatientId(element.patientID._id)
-                                  }
-                                >
-                                  <IoOpenOutline
-                                    size={20}
-                                    className="text-blue-800"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-5xl mx-auto p-4">
-                                <DialogHeader>
-                                  <DialogTitle>Patient Information</DialogTitle>
-                                  <DialogDescription>
-                                    You can easily create a new medical record
-                                    for by pressing on The button "Create" Below
-                                    the table
-                                  </DialogDescription>
-                                </DialogHeader>
-
-                                <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
-                                  <div className="flex justify-between items-center">
-                                    <button
-                                      className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
-                                      onClick={() => {
-                                        setFilter(!filter);
-                                      }}
-                                    >
-                                      Filter
-                                      <motion.span
-                                        animate={{ rotate: filter ? -180 : 0 }}
-                                        transition={{ duration: 0.4 }}
-                                      >
-                                        <MdKeyboardArrowDown size={20} />
-                                      </motion.span>
-                                    </button>
-                                  </div>
-
-                                  <AnimatePresence>
-                                    {filter && (
-                                      <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: "auto" }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.4 }}
-                                      >
-                                        {filter && (
-                                          <div className="flex justify-between items-center my-6 px-1">
-                                            <Select
-                                              options={dateOptions}
-                                              onChange={(date) =>
-                                                setDateFilter(
-                                                  date ? date.value : ""
-                                                )
-                                              }
-                                              value={dateOptions.find(
-                                                (date) =>
-                                                  date.value === dateFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Date..."
-                                            />
-                                            <Select
-                                              options={medicineOptions}
-                                              onChange={(medicine) =>
-                                                setMedicineFilter(
-                                                  medicine ? medicine.value : ""
-                                                )
-                                              }
-                                              value={medicineOptions.find(
-                                                (medicine) =>
-                                                  medicine.value ===
-                                                  medicineFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Medicine..."
-                                            />
-
-                                            <Select
-                                              options={diagnoseOptions}
-                                              onChange={(diagnose) =>
-                                                setDiagnoseFilter(
-                                                  diagnose ? diagnose.value : ""
-                                                )
-                                              }
-                                              value={diagnoseOptions.find(
-                                                (diagnose) =>
-                                                  diagnose.value ===
-                                                  diagnoseFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Diagnose..."
-                                            />
-
-                                            <Select
-                                              options={doctorOptions}
-                                              onChange={(name) =>
-                                                setDoctorFilter(
-                                                  name ? name.value : ""
-                                                )
-                                              }
-                                              value={doctorOptions.find(
-                                                (name) =>
-                                                  name.value === doctorFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Doctor's Name..."
-                                            />
-                                          </div>
-                                        )}
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-
-                                  <div className="overflow-x-auto rounded-[5px]">
-                                    <table className="min-w-full divide-y divide-gray-300">
-                                      <thead className="bg-emerald-600">
-                                        <tr>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            التاريخ
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            الدواء
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            التشخيص
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            أسم الدكتور
-                                          </th>
-                                        </tr>
-                                      </thead>
-                                      {isLoadingPatientRecord ? (
-                                        <p>Loading...</p>
-                                      ) : (
-                                        <tbody className="bg-white divide-y divide-gray-300">
-                                          {currentData.map((record, index) => (
-                                            <tr
-                                              key={index}
-                                              className="hover:bg-gray-50"
-                                            >
-                                              <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
-                                                {formateDate(record.date)}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.medicine}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.diagnose}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.doctor.name}
-                                              </td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      )}
-                                    </table>
-                                  </div>
-                                  <Pagination />
-                                </div>
-                              </DialogContent>
-                            </Dialog>
-
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handlePassingIds(element.patientID._id)
-                                  }
-                                >
-                                  <TfiWrite
-                                    size={20}
-                                    className="text-emerald-700"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[650px]">
-                                <DialogHeader>
-                                  <DialogTitle>
-                                    Create New Medical Records
-                                  </DialogTitle>
-                                  <DialogDescription>
-                                    You can easily create a new medical record
-                                    by pressing on The button "Create" after
-                                    filling the form.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div>
-                                  <form method="post">
-                                    <h1 className="text-center text-[18px] mb-2">
-                                      The following is a list of items you
-                                      should not include in the medical entry
-                                    </h1>
-                                    <p className="text-left pl-4 mb-2">
-                                      (Financial or health insurance
-                                      information, Subjective opinions,
-                                      Speculations, Blame of others or
-                                      self-doubt, Legal information such as
-                                      narratives provided to your professional
-                                      liability carrier or correspondence with
-                                      your defense attorney)
-                                    </p>
-                                    <div className="flex flex-col bg-white shadow-lg p-6">
-                                      <div className="flex flex-col justify-start">
-                                        <label
-                                          htmlFor="diagnose"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          Diagnose
-                                        </label>
-                                        <textarea
-                                          id="diagnose"
-                                          type="text"
-                                          name="diagnose"
-                                          placeholder="Write your diagnose..."
-                                          value={createRecord.diagnose}
-                                          onChange={handleChange}
-                                          className="w-full pl-2 py-2 border rounde-lg"
-                                        />
-                                      </div>
-                                      <div className="flex flex-col justify-start mt-4">
-                                        <label
-                                          htmlFor="medicine"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          Medicine
-                                        </label>
-                                        <textarea
-                                          id="medicine"
-                                          type="text"
-                                          name="medicine"
-                                          placeholder="Write the prescription medication..."
-                                          value={createRecord.medicine}
-                                          onChange={handleChange}
-                                          className="w-full pl-2 py-2 border rounde-lg"
-                                        />
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <DialogFooter>
+                          <td>
+                            <p className="w-100">{element.time}</p>
+                          </td>
+                          {/* 7tt amr fy code alfilter */}
+                          <td>
+                            <div>
+                              <Dialog>
+                                <DialogTrigger asChild>
                                   <Button
-                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
-                                      isCreating
-                                        ? "bg-blue-600"
-                                        : "bg-emerald-700"
-                                    }`}
-                                    type="submit"
-                                    disabled={isCreating}
-                                    onClick={handleCreateMedicalRecord}
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handleGetPatientId(element.patientID._id)
+                                    }
                                   >
-                                    {isCreating ? "Creating..." : "Create"}
+                                    <IoOpenOutline
+                                      size={20}
+                                      className="text-blue-800"
+                                    />
                                   </Button>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-5xl mx-auto p-4">
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Patient Information
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      You can easily create a new medical record
+                                      for by pressing on The button "Create"
+                                      Below the table
+                                    </DialogDescription>
+                                  </DialogHeader>
 
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handleRequestSurgeryIds(
-                                      element.patientID._id
-                                    )
-                                  }
-                                >
-                                  <TbEmergencyBed
-                                    size={20}
-                                    className="text-red-500"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[650px]">
-                                <DialogHeader>
-                                  <DialogTitle>Request a Surgery</DialogTitle>
-                                  <DialogDescription>
-                                    You can easily request a surgery by pressing
-                                    on The button "Create" after filling the
-                                    form.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div>
-                                  <form method="post">
-                                    <h1 className="text-center text-[18px] mb-2">
-                                      The following is a list of items you
-                                      should not include in the medical entry
-                                    </h1>
-                                    <p className="text-left pl-4 mb-2">
-                                      (Financial or health insurance
-                                      information, Subjective opinions,
-                                      Speculations, Blame of others or
-                                      self-doubt, Legal information such as
-                                      narratives provided to your professional
-                                      liability carrier or correspondence with
-                                      your defense attorney)
-                                    </p>
-                                    <div className="flex flex-col bg-white shadow-lg p-6">
-                                      <div className="flex flex-col justify-start items-end">
-                                        <label
-                                          htmlFor="diagnose"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          العملية
-                                        </label>
-                                        <Select
-                                          id="doctorSpecialization"
-                                          isClearable
-                                          placeholder="...التخصص"
-                                          type="text"
-                                          name="specialize"
-                                          className="text-end w-full pl-2 py-2  rounde-lg"
-                                          options={specializeOptions}
-                                          value={selectedSpecialize}
-                                          onChange={(option) => {
-                                            setSelectedSpecialize(option);
-                                            setRequestSurgery((prev) => ({
-                                              ...prev,
-                                              specialize: option
-                                                ? option.value
-                                                : "",
-                                            }));
+                                  <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
+                                    <div className="flex justify-between items-center">
+                                      <button
+                                        className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
+                                        onClick={() => {
+                                          setFilter(!filter);
+                                        }}
+                                      >
+                                        Filter
+                                        <motion.span
+                                          animate={{
+                                            rotate: filter ? -180 : 0,
                                           }}
-                                        />
-                                        {/* <Select
+                                          transition={{ duration: 0.4 }}
+                                        >
+                                          <MdKeyboardArrowDown size={20} />
+                                        </motion.span>
+                                      </button>
+                                    </div>
+
+                                    <AnimatePresence>
+                                      {filter && (
+                                        <motion.div
+                                          initial={{ opacity: 0, height: 0 }}
+                                          animate={{
+                                            opacity: 1,
+                                            height: "auto",
+                                          }}
+                                          exit={{ opacity: 0, height: 0 }}
+                                          transition={{ duration: 0.4 }}
+                                        >
+                                          {filter && (
+                                            <div className="flex justify-between items-center my-6 px-1">
+                                              <Select
+                                                options={dateOptions}
+                                                onChange={(date) =>
+                                                  setDateFilter(
+                                                    date ? date.value : ""
+                                                  )
+                                                }
+                                                value={dateOptions.find(
+                                                  (date) =>
+                                                    date.value === dateFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Date..."
+                                              />
+                                              <Select
+                                                options={medicineOptions}
+                                                onChange={(medicine) =>
+                                                  setMedicineFilter(
+                                                    medicine
+                                                      ? medicine.value
+                                                      : ""
+                                                  )
+                                                }
+                                                value={medicineOptions.find(
+                                                  (medicine) =>
+                                                    medicine.value ===
+                                                    medicineFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Medicine..."
+                                              />
+
+                                              <Select
+                                                options={diagnoseOptions}
+                                                onChange={(diagnose) =>
+                                                  setDiagnoseFilter(
+                                                    diagnose
+                                                      ? diagnose.value
+                                                      : ""
+                                                  )
+                                                }
+                                                value={diagnoseOptions.find(
+                                                  (diagnose) =>
+                                                    diagnose.value ===
+                                                    diagnoseFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Diagnose..."
+                                              />
+
+                                              <Select
+                                                options={doctorOptions}
+                                                onChange={(name) =>
+                                                  setDoctorFilter(
+                                                    name ? name.value : ""
+                                                  )
+                                                }
+                                                value={doctorOptions.find(
+                                                  (name) =>
+                                                    name.value === doctorFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Doctor's Name..."
+                                              />
+                                            </div>
+                                          )}
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+
+                                    <div className="overflow-x-auto rounded-[5px]">
+                                      <table className="min-w-full divide-y divide-gray-300">
+                                        <thead className="bg-emerald-600">
+                                          <tr>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              التاريخ
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              الدواء
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              التشخيص
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              أسم الدكتور
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        {isLoadingPatientRecord ? (
+                                          <p>Loading...</p>
+                                        ) : (
+                                          <tbody className="bg-white divide-y divide-gray-300">
+                                            {currentData.map(
+                                              (record, index) => (
+                                                <tr
+                                                  key={index}
+                                                  className="hover:bg-gray-50"
+                                                >
+                                                  <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
+                                                    {formateDate(record.date)}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.medicine}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.diagnose}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.doctor.name}
+                                                  </td>
+                                                </tr>
+                                              )
+                                            )}
+                                          </tbody>
+                                        )}
+                                      </table>
+                                    </div>
+                                    <Pagination />
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handlePassingIds(element.patientID._id)
+                                    }
+                                  >
+                                    <TfiWrite
+                                      size={20}
+                                      className="text-emerald-700"
+                                    />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[650px]">
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Create New Medical Records
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      You can easily create a new medical record
+                                      by pressing on The button "Create" after
+                                      filling the form.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div>
+                                    <form method="post">
+                                      <h1 className="text-center text-[18px] mb-2">
+                                        The following is a list of items you
+                                        should not include in the medical entry
+                                      </h1>
+                                      <p className="text-left pl-4 mb-2">
+                                        (Financial or health insurance
+                                        information, Subjective opinions,
+                                        Speculations, Blame of others or
+                                        self-doubt, Legal information such as
+                                        narratives provided to your professional
+                                        liability carrier or correspondence with
+                                        your defense attorney)
+                                      </p>
+                                      <div className="flex flex-col bg-white shadow-lg p-6">
+                                        <div className="flex flex-col justify-start">
+                                          <label
+                                            htmlFor="diagnose"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            Diagnose
+                                          </label>
+                                          <textarea
+                                            id="diagnose"
+                                            type="text"
+                                            name="diagnose"
+                                            placeholder="Write your diagnose..."
+                                            value={createRecord.diagnose}
+                                            onChange={handleChange}
+                                            className="w-full pl-2 py-2 border rounde-lg"
+                                          />
+                                        </div>
+                                        <div className="flex flex-col justify-start mt-4">
+                                          <label
+                                            htmlFor="medicine"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            Medicine
+                                          </label>
+                                          <textarea
+                                            id="medicine"
+                                            type="text"
+                                            name="medicine"
+                                            placeholder="Write the prescription medication..."
+                                            value={createRecord.medicine}
+                                            onChange={handleChange}
+                                            className="w-full pl-2 py-2 border rounde-lg"
+                                          />
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                        isCreating
+                                          ? "bg-blue-600"
+                                          : "bg-emerald-700"
+                                      }`}
+                                      type="submit"
+                                      disabled={isCreating}
+                                      onClick={handleCreateMedicalRecord}
+                                    >
+                                      {isCreating ? "Creating..." : "Create"}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handleRequestSurgeryIds(
+                                        element.patientID._id
+                                      )
+                                    }
+                                  >
+                                    <TbEmergencyBed
+                                      size={20}
+                                      className="text-red-500"
+                                    />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[650px]">
+                                  <DialogHeader>
+                                    <DialogTitle>Request a Surgery</DialogTitle>
+                                    <DialogDescription>
+                                      You can easily request a surgery by
+                                      pressing on The button "Create" after
+                                      filling the form.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div>
+                                    <form method="post">
+                                      <h1 className="text-center text-[18px] mb-2">
+                                        The following is a list of items you
+                                        should not include in the medical entry
+                                      </h1>
+                                      <p className="text-left pl-4 mb-2">
+                                        (Financial or health insurance
+                                        information, Subjective opinions,
+                                        Speculations, Blame of others or
+                                        self-doubt, Legal information such as
+                                        narratives provided to your professional
+                                        liability carrier or correspondence with
+                                        your defense attorney)
+                                      </p>
+                                      <div className="flex flex-col bg-white shadow-lg p-6">
+                                        <div className="flex flex-col justify-start items-end">
+                                          <label
+                                            htmlFor="diagnose"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            العملية
+                                          </label>
+                                          <Select
+                                            id="doctorSpecialization"
+                                            isClearable
+                                            placeholder="...التخصص"
+                                            type="text"
+                                            name="specialize"
+                                            className="text-end w-full pl-2 py-2  rounde-lg"
+                                            options={specializeOptions}
+                                            value={selectedSpecialize}
+                                            onChange={(option) => {
+                                              setSelectedSpecialize(option);
+                                              setRequestSurgery((prev) => ({
+                                                ...prev,
+                                                specialize: option
+                                                  ? option.value
+                                                  : "",
+                                              }));
+                                            }}
+                                          />
+                                          {/* <Select
                                           isClearable
                                           id="diagnose"
                                           type="text"
@@ -1045,435 +1059,450 @@ export function DoctorDashBoard() {
                                           )}
                                           className="w-full pl-2 py-2  rounde-lg"
                                         /> */}
+                                        </div>
+                                        <div className="flex flex-col justify-start items-end mt-4">
+                                          <label
+                                            htmlFor="description"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            التفصيل
+                                          </label>
+                                          <textarea
+                                            id="description"
+                                            type="text"
+                                            name="description"
+                                            placeholder="...اذكر أسبابك لطلب إجراء عملية جراحية"
+                                            value={requestSurgery.description}
+                                            onChange={
+                                              handleRequestSurgeryChange
+                                            }
+                                            className="w-full pl-2 py-2 border rounde-lg text-right pr-4"
+                                          />
+                                        </div>
                                       </div>
-                                      <div className="flex flex-col justify-start items-end mt-4">
-                                        <label
-                                          htmlFor="description"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          التفصيل
-                                        </label>
-                                        <textarea
-                                          id="description"
-                                          type="text"
-                                          name="description"
-                                          placeholder="...اذكر أسبابك لطلب إجراء عملية جراحية"
-                                          value={requestSurgery.description}
-                                          onChange={handleRequestSurgeryChange}
-                                          className="w-full pl-2 py-2 border rounde-lg text-right pr-4"
-                                        />
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <DialogFooter>
-                                  <Button
-                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
-                                      isRequestingSurgery
-                                        ? "bg-blue-600"
-                                        : "bg-emerald-700"
-                                    }`}
-                                    type="submit"
-                                    disabled={isRequestingSurgery}
-                                    onClick={handleRequestSurgery}
-                                  >
-                                    {isRequestingSurgery
-                                      ? "Requesting..."
-                                      : "Request"}
-                                  </Button>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-                        </td>
-                        {/* end of 7tt amr */}
-                        <td>{element.patientID.code}</td>
-                        <td>{element.patientID.name}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tbody className={currentResult}>
-                    {currentRows.map((element, i) => (
-                      <tr key={i}>
-                        <td>
-                          <button
-                            onClick={() => {
-                              setStatusOfPatientIfCancel(element._id);
-                            }}
-                            className="btn btn-danger me-2 widthForButton"
-                          >
-                            الغاء
-                          </button>
-                          <button
-                            onClick={() => {
-                              StatusOfPatient(element._id);
-                            }}
-                            className="btn btn-success widthForButton"
-                          >
-                            حضور
-                          </button>
-                        </td>
-                        <td>
-                          <p>{element.day.slice(0, 10)}</p>
-                        </td>
-                        <td>
-                          <p>{element.time}</p>
-                        </td>
-
-                        {/* Medical Records - Amr */}
-                        <td>
-                          <div>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handleGetPatientId(element.patientID._id)
-                                  }
-                                >
-                                  <IoOpenOutline
-                                    size={20}
-                                    className="text-blue-800"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-5xl mx-auto p-4">
-                                <DialogHeader>
-                                  <DialogTitle>Patient Information</DialogTitle>
-                                  <DialogDescription>
-                                    You can easily create a new medical record
-                                    for by pressing on The button "Create" Below
-                                    the table
-                                  </DialogDescription>
-                                </DialogHeader>
-
-                                <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
-                                  <div className="flex justify-between items-center">
-                                    <button
-                                      className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
-                                      onClick={() => {
-                                        setFilter(!filter);
-                                      }}
+                                    </form>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                        isRequestingSurgery
+                                          ? "bg-blue-600"
+                                          : "bg-emerald-700"
+                                      }`}
+                                      type="submit"
+                                      disabled={isRequestingSurgery}
+                                      onClick={handleRequestSurgery}
                                     >
-                                      Filter
-                                      <motion.span
-                                        animate={{ rotate: filter ? -180 : 0 }}
-                                        transition={{ duration: 0.4 }}
-                                      >
-                                        <MdKeyboardArrowDown size={20} />
-                                      </motion.span>
-                                    </button>
-                                  </div>
+                                      {isRequestingSurgery
+                                        ? "Requesting..."
+                                        : "Request"}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                            </div>
+                          </td>
+                          {/* end of 7tt amr */}
+                          <td>{element.patientID.code}</td>
+                          <td>{element.patientID.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tbody className={currentResult}>
+                      {currentRows.map((element, i) => (
+                        <tr key={i}>
+                          <td>
+                            <button
+                              onClick={() => {
+                                setStatusOfPatientIfCancel(element._id);
+                              }}
+                              className="btn btn-danger me-2 widthForButton"
+                            >
+                              الغاء
+                            </button>
+                            <button
+                              onClick={() => {
+                                StatusOfPatient(element._id);
+                              }}
+                              className="btn btn-success widthForButton"
+                            >
+                              حضور
+                            </button>
+                          </td>
+                          <td>
+                            <p>{element.day.slice(0, 10)}</p>
+                          </td>
+                          <td>
+                            <p>{element.time}</p>
+                          </td>
 
-                                  <AnimatePresence>
-                                    {filter && (
-                                      <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: "auto" }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.4 }}
-                                      >
-                                        {filter && (
-                                          <div className="flex justify-between items-center my-6 px-1">
-                                            <Select
-                                              options={dateOptions}
-                                              onChange={(date) =>
-                                                setDateFilter(
-                                                  date ? date.value : ""
-                                                )
-                                              }
-                                              value={dateOptions.find(
-                                                (date) =>
-                                                  date.value === dateFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Date..."
-                                            />
-                                            <Select
-                                              options={medicineOptions}
-                                              onChange={(medicine) =>
-                                                setMedicineFilter(
-                                                  medicine ? medicine.value : ""
-                                                )
-                                              }
-                                              value={medicineOptions.find(
-                                                (medicine) =>
-                                                  medicine.value ===
-                                                  medicineFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Medicine..."
-                                            />
-
-                                            <Select
-                                              options={diagnoseOptions}
-                                              onChange={(diagnose) =>
-                                                setDiagnoseFilter(
-                                                  diagnose ? diagnose.value : ""
-                                                )
-                                              }
-                                              value={diagnoseOptions.find(
-                                                (diagnose) =>
-                                                  diagnose.value ===
-                                                  diagnoseFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Diagnose..."
-                                            />
-
-                                            <Select
-                                              options={doctorOptions}
-                                              onChange={(name) =>
-                                                setDoctorFilter(
-                                                  name ? name.value : ""
-                                                )
-                                              }
-                                              value={doctorOptions.find(
-                                                (name) =>
-                                                  name.value === doctorFilter
-                                              )}
-                                              isClearable
-                                              className="custom-select"
-                                              classNamePrefix="react-select"
-                                              placeholder="Doctor's Name..."
-                                            />
-                                          </div>
-                                        )}
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
-
-                                  <div className="overflow-x-auto rounded-[5px]">
-                                    <table className="min-w-full divide-y divide-gray-300">
-                                      <thead className="bg-emerald-600">
-                                        <tr>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            التاريخ
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            الدواء
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            التشخيص
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                          >
-                                            أسم الدكتور
-                                          </th>
-                                        </tr>
-                                      </thead>
-                                      {isLoadingPatientRecord ? (
-                                        <p>Loading...</p>
-                                      ) : (
-                                        <tbody className="bg-white divide-y divide-gray-300">
-                                          {currentData.map((record, index) => (
-                                            <tr
-                                              key={index}
-                                              className="hover:bg-gray-50"
-                                            >
-                                              <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
-                                                {formateDate(record.date)}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.medicine}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.diagnose}
-                                              </td>
-                                              <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                {record.doctor.name}
-                                              </td>
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      )}
-                                    </table>
-                                  </div>
-                                  <Pagination />
-                                </div>
-                              </DialogContent>
-                            </Dialog>
-
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handlePassingIds(element.patientID._id)
-                                  }
-                                >
-                                  <TfiWrite
-                                    size={20}
-                                    className="text-emerald-700"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[650px]">
-                                <DialogHeader>
-                                  <DialogTitle>
-                                    Create New Medical Records
-                                  </DialogTitle>
-                                  <DialogDescription>
-                                    You can easily create a new medical record
-                                    by pressing on The button "Create" after
-                                    filling the form.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div>
-                                  <form method="post">
-                                    <h1 className="text-center text-[18px] mb-2">
-                                      The following is a list of items you
-                                      should not include in the medical entry
-                                    </h1>
-                                    <p className="text-left pl-4 mb-2">
-                                      (Financial or health insurance
-                                      information, Subjective opinions,
-                                      Speculations, Blame of others or
-                                      self-doubt, Legal information such as
-                                      narratives provided to your professional
-                                      liability carrier or correspondence with
-                                      your defense attorney)
-                                    </p>
-                                    <div className="flex flex-col bg-white shadow-lg p-6">
-                                      <div className="flex flex-col justify-start">
-                                        <label
-                                          htmlFor="diagnose"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          Diagnose
-                                        </label>
-                                        <textarea
-                                          id="diagnose"
-                                          type="text"
-                                          name="diagnose"
-                                          placeholder="Write your diagnose..."
-                                          value={createRecord.diagnose}
-                                          onChange={handleChange}
-                                          className="w-full pl-2 py-2 border rounde-lg"
-                                        />
-                                      </div>
-                                      <div className="flex flex-col justify-start mt-4">
-                                        <label
-                                          htmlFor="medicine"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          Medicine
-                                        </label>
-                                        <textarea
-                                          id="medicine"
-                                          type="text"
-                                          name="medicine"
-                                          placeholder="Write the prescription medication..."
-                                          value={createRecord.medicine}
-                                          onChange={handleChange}
-                                          className="w-full pl-2 py-2 border rounde-lg"
-                                        />
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <DialogFooter>
+                          {/* Medical Records - Amr */}
+                          <td>
+                            <div>
+                              <Dialog>
+                                <DialogTrigger asChild>
                                   <Button
-                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
-                                      isCreating
-                                        ? "bg-blue-600"
-                                        : "bg-emerald-700"
-                                    }`}
-                                    type="submit"
-                                    disabled={isCreating}
-                                    onClick={handleCreateMedicalRecord}
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handleGetPatientId(element.patientID._id)
+                                    }
                                   >
-                                    {isCreating ? "Creating..." : "Create"}
+                                    <IoOpenOutline
+                                      size={20}
+                                      className="text-blue-800"
+                                    />
                                   </Button>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-5xl mx-auto p-4">
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Patient Information
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      You can easily create a new medical record
+                                      for by pressing on The button "Create"
+                                      Below the table
+                                    </DialogDescription>
+                                  </DialogHeader>
 
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  variant="outline-none"
-                                  onClick={() =>
-                                    handleRequestSurgeryIds(
-                                      element.patientID._id
-                                    )
-                                  }
-                                >
-                                  <TbEmergencyBed
-                                    size={20}
-                                    className="text-red-500"
-                                  />
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[650px]">
-                                <DialogHeader>
-                                  <DialogTitle>Request a Surgery</DialogTitle>
-                                  <DialogDescription>
-                                    You can easily request a surgery by pressing
-                                    on The button "Create" after filling the
-                                    form.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div>
-                                  <form method="post">
-                                    <h1 className="text-center text-[18px] mb-2">
-                                      The following is a list of items you
-                                      should not include in the medical entry
-                                    </h1>
-                                    <p className="text-left pl-4 mb-2">
-                                      (Financial or health insurance
-                                      information, Subjective opinions,
-                                      Speculations, Blame of others or
-                                      self-doubt, Legal information such as
-                                      narratives provided to your professional
-                                      liability carrier or correspondence with
-                                      your defense attorney)
-                                    </p>
-                                    <div className="flex flex-col bg-white shadow-lg p-6">
-                                      <div className="flex flex-col justify-start items-end">
-                                        <label
-                                          htmlFor="diagnose"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          العملية
-                                        </label>
-                                        <Select
-                                          id="doctorSpecialization"
-                                          isClearable
-                                          placeholder="...التخصص"
-                                          type="text"
-                                          name="specialize"
-                                          className="text-end w-full pl-2 py-2  rounde-lg"
-                                          options={specializeOptions}
-                                          value={selectedSpecialize}
-                                          onChange={(option) => {
-                                            setSelectedSpecialize(option);
-                                            setRequestSurgery((prev) => ({
-                                              ...prev,
-                                              specialize: option
-                                                ? option.value
-                                                : "",
-                                            }));
+                                  <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
+                                    <div className="flex justify-between items-center">
+                                      <button
+                                        className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
+                                        onClick={() => {
+                                          setFilter(!filter);
+                                        }}
+                                      >
+                                        Filter
+                                        <motion.span
+                                          animate={{
+                                            rotate: filter ? -180 : 0,
                                           }}
-                                        />
-                                        {/* <Select
+                                          transition={{ duration: 0.4 }}
+                                        >
+                                          <MdKeyboardArrowDown size={20} />
+                                        </motion.span>
+                                      </button>
+                                    </div>
+
+                                    <AnimatePresence>
+                                      {filter && (
+                                        <motion.div
+                                          initial={{ opacity: 0, height: 0 }}
+                                          animate={{
+                                            opacity: 1,
+                                            height: "auto",
+                                          }}
+                                          exit={{ opacity: 0, height: 0 }}
+                                          transition={{ duration: 0.4 }}
+                                        >
+                                          {filter && (
+                                            <div className="flex justify-between items-center my-6 px-1">
+                                              <Select
+                                                options={dateOptions}
+                                                onChange={(date) =>
+                                                  setDateFilter(
+                                                    date ? date.value : ""
+                                                  )
+                                                }
+                                                value={dateOptions.find(
+                                                  (date) =>
+                                                    date.value === dateFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Date..."
+                                              />
+                                              <Select
+                                                options={medicineOptions}
+                                                onChange={(medicine) =>
+                                                  setMedicineFilter(
+                                                    medicine
+                                                      ? medicine.value
+                                                      : ""
+                                                  )
+                                                }
+                                                value={medicineOptions.find(
+                                                  (medicine) =>
+                                                    medicine.value ===
+                                                    medicineFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Medicine..."
+                                              />
+
+                                              <Select
+                                                options={diagnoseOptions}
+                                                onChange={(diagnose) =>
+                                                  setDiagnoseFilter(
+                                                    diagnose
+                                                      ? diagnose.value
+                                                      : ""
+                                                  )
+                                                }
+                                                value={diagnoseOptions.find(
+                                                  (diagnose) =>
+                                                    diagnose.value ===
+                                                    diagnoseFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Diagnose..."
+                                              />
+
+                                              <Select
+                                                options={doctorOptions}
+                                                onChange={(name) =>
+                                                  setDoctorFilter(
+                                                    name ? name.value : ""
+                                                  )
+                                                }
+                                                value={doctorOptions.find(
+                                                  (name) =>
+                                                    name.value === doctorFilter
+                                                )}
+                                                isClearable
+                                                className="custom-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Doctor's Name..."
+                                              />
+                                            </div>
+                                          )}
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+
+                                    <div className="overflow-x-auto rounded-[5px]">
+                                      <table className="min-w-full divide-y divide-gray-300">
+                                        <thead className="bg-emerald-600">
+                                          <tr>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              التاريخ
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              الدواء
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              التشخيص
+                                            </th>
+                                            <th
+                                              scope="col"
+                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                            >
+                                              أسم الدكتور
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        {isLoadingPatientRecord ? (
+                                          <p>Loading...</p>
+                                        ) : (
+                                          <tbody className="bg-white divide-y divide-gray-300">
+                                            {currentData.map(
+                                              (record, index) => (
+                                                <tr
+                                                  key={index}
+                                                  className="hover:bg-gray-50"
+                                                >
+                                                  <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
+                                                    {formateDate(record.date)}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.medicine}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.diagnose}
+                                                  </td>
+                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                    {record.doctor.name}
+                                                  </td>
+                                                </tr>
+                                              )
+                                            )}
+                                          </tbody>
+                                        )}
+                                      </table>
+                                    </div>
+                                    <Pagination />
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handlePassingIds(element.patientID._id)
+                                    }
+                                  >
+                                    <TfiWrite
+                                      size={20}
+                                      className="text-emerald-700"
+                                    />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[650px]">
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Create New Medical Records
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      You can easily create a new medical record
+                                      by pressing on The button "Create" after
+                                      filling the form.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div>
+                                    <form method="post">
+                                      <h1 className="text-center text-[18px] mb-2">
+                                        The following is a list of items you
+                                        should not include in the medical entry
+                                      </h1>
+                                      <p className="text-left pl-4 mb-2">
+                                        (Financial or health insurance
+                                        information, Subjective opinions,
+                                        Speculations, Blame of others or
+                                        self-doubt, Legal information such as
+                                        narratives provided to your professional
+                                        liability carrier or correspondence with
+                                        your defense attorney)
+                                      </p>
+                                      <div className="flex flex-col bg-white shadow-lg p-6">
+                                        <div className="flex flex-col justify-start">
+                                          <label
+                                            htmlFor="diagnose"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            Diagnose
+                                          </label>
+                                          <textarea
+                                            id="diagnose"
+                                            type="text"
+                                            name="diagnose"
+                                            placeholder="Write your diagnose..."
+                                            value={createRecord.diagnose}
+                                            onChange={handleChange}
+                                            className="w-full pl-2 py-2 border rounde-lg"
+                                          />
+                                        </div>
+                                        <div className="flex flex-col justify-start mt-4">
+                                          <label
+                                            htmlFor="medicine"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            Medicine
+                                          </label>
+                                          <textarea
+                                            id="medicine"
+                                            type="text"
+                                            name="medicine"
+                                            placeholder="Write the prescription medication..."
+                                            value={createRecord.medicine}
+                                            onChange={handleChange}
+                                            className="w-full pl-2 py-2 border rounde-lg"
+                                          />
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                        isCreating
+                                          ? "bg-blue-600"
+                                          : "bg-emerald-700"
+                                      }`}
+                                      type="submit"
+                                      disabled={isCreating}
+                                      onClick={handleCreateMedicalRecord}
+                                    >
+                                      {isCreating ? "Creating..." : "Create"}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="outline-none"
+                                    onClick={() =>
+                                      handleRequestSurgeryIds(
+                                        element.patientID._id
+                                      )
+                                    }
+                                  >
+                                    <TbEmergencyBed
+                                      size={20}
+                                      className="text-red-500"
+                                    />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[650px]">
+                                  <DialogHeader>
+                                    <DialogTitle>Request a Surgery</DialogTitle>
+                                    <DialogDescription>
+                                      You can easily request a surgery by
+                                      pressing on The button "Create" after
+                                      filling the form.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div>
+                                    <form method="post">
+                                      <h1 className="text-center text-[18px] mb-2">
+                                        The following is a list of items you
+                                        should not include in the medical entry
+                                      </h1>
+                                      <p className="text-left pl-4 mb-2">
+                                        (Financial or health insurance
+                                        information, Subjective opinions,
+                                        Speculations, Blame of others or
+                                        self-doubt, Legal information such as
+                                        narratives provided to your professional
+                                        liability carrier or correspondence with
+                                        your defense attorney)
+                                      </p>
+                                      <div className="flex flex-col bg-white shadow-lg p-6">
+                                        <div className="flex flex-col justify-start items-end">
+                                          <label
+                                            htmlFor="diagnose"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            العملية
+                                          </label>
+                                          <Select
+                                            id="doctorSpecialization"
+                                            isClearable
+                                            placeholder="...التخصص"
+                                            type="text"
+                                            name="specialize"
+                                            className="text-end w-full pl-2 py-2  rounde-lg"
+                                            options={specializeOptions}
+                                            value={selectedSpecialize}
+                                            onChange={(option) => {
+                                              setSelectedSpecialize(option);
+                                              setRequestSurgery((prev) => ({
+                                                ...prev,
+                                                specialize: option
+                                                  ? option.value
+                                                  : "",
+                                              }));
+                                            }}
+                                          />
+                                          {/* <Select
                                           isClearable
                                           id="diagnose"
                                           type="text"
@@ -1496,56 +1525,58 @@ export function DoctorDashBoard() {
                                           )}
                                           className="w-full pl-2 py-2  rounde-lg"
                                         /> */}
+                                        </div>
+                                        <div className="flex flex-col justify-start items-end mt-4">
+                                          <label
+                                            htmlFor="description"
+                                            className="mb-2 text-[18px]"
+                                          >
+                                            التفصيل
+                                          </label>
+                                          <textarea
+                                            id="description"
+                                            type="text"
+                                            name="description"
+                                            placeholder="...اذكر أسبابك لطلب إجراء عملية جراحية"
+                                            value={requestSurgery.description}
+                                            onChange={
+                                              handleRequestSurgeryChange
+                                            }
+                                            className="w-full pl-2 py-2 border rounde-lg text-right pr-4"
+                                          />
+                                        </div>
                                       </div>
-                                      <div className="flex flex-col justify-start items-end mt-4">
-                                        <label
-                                          htmlFor="description"
-                                          className="mb-2 text-[18px]"
-                                        >
-                                          التفصيل
-                                        </label>
-                                        <textarea
-                                          id="description"
-                                          type="text"
-                                          name="description"
-                                          placeholder="...اذكر أسبابك لطلب إجراء عملية جراحية"
-                                          value={requestSurgery.description}
-                                          onChange={handleRequestSurgeryChange}
-                                          className="w-full pl-2 py-2 border rounde-lg text-right pr-4"
-                                        />
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <DialogFooter>
-                                  <Button
-                                    className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
-                                      isRequestingSurgery
-                                        ? "bg-blue-600"
-                                        : "bg-emerald-700"
-                                    }`}
-                                    type="submit"
-                                    disabled={isRequestingSurgery}
-                                    onClick={handleRequestSurgery}
-                                  >
-                                    {isRequestingSurgery
-                                      ? "Requesting..."
-                                      : "Request"}
-                                  </Button>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-                        </td>
-                        {/* End */}
+                                    </form>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button
+                                      className={`px-10 text-[18px] tracking-wider bg-emerald-700 hover:bg-blue-600 transition-all duration-300 ${
+                                        isRequestingSurgery
+                                          ? "bg-blue-600"
+                                          : "bg-emerald-700"
+                                      }`}
+                                      type="submit"
+                                      disabled={isRequestingSurgery}
+                                      onClick={handleRequestSurgery}
+                                    >
+                                      {isRequestingSurgery
+                                        ? "Requesting..."
+                                        : "Request"}
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                            </div>
+                          </td>
+                          {/* End */}
 
-                        <td>{element.patientID.code}</td>
-                        <td>{element.patientID.name}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                          <td>{element.patientID.code}</td>
+                          <td>{element.patientID.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
               {/* two arrows to go between pages */}
               <div className="d-flex justify-content-center">
@@ -1584,6 +1615,39 @@ export function DoctorDashBoard() {
                   </ul>
                 </nav>
               </div>
+              {surgeries === null && surgeries.length === 0 ? (
+                ""
+              ) : (
+                <h1 className="text-center fs-1 mt-5">جدول العمليات </h1>
+              )}
+              
+              {surgeries === null && surgeries.length === 0 ? (
+                ""
+              ) : (
+                <table className="table shadow mt-5">
+                  <thead>
+                    <tr className="table-success">
+                      <th scope="col">التاريخ</th>
+                      <th scope="col">الوقت</th>
+                      <th scope="col">اسم المريض</th>
+                    </tr>
+                  </thead>
+                  <tbody className="">
+                    {surgeries.map((element, i) => (
+                      <tr key={i}>
+                        <td>
+                          <p className="w-100">{element.day.slice(0, 10)}</p>
+                        </td>
+
+                        <td>
+                          <p className="w-100">{element.time}</p>
+                        </td>
+                        <td>{element.patientID.name}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
