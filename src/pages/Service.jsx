@@ -7,7 +7,15 @@ import SecoundSectionPhoto from "../assets/images/doctor-name.jpg";
 import SecoundPhotoSecoundSection from "../assets/images/specialization.jpg";
 import { NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 export function Service() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Duration of animations in milliseconds
+      once: true, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
   const cards = [
     {
       title: "حجز موعد",
@@ -91,6 +99,7 @@ export function Service() {
                 <div
                   key={i}
                   className="col-md-6 mb-10 rounded-3 relative overflow-hidden"
+                  data-aos="fade-right"
                 >
                   <img
                     src={element.imgSrc}

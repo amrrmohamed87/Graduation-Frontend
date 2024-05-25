@@ -7,9 +7,17 @@ import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor P
 import BookingSectionPhoto from "../assets/images/Desk_calendar_with_marked_dates_3d_cartoon_style_icon-Photoroom.png-Photoroom.png";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 // import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Duration of animations in milliseconds
+      once: true, // Whether animation should happen only once - while scrolling down
+    });
+  }, []);
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
   console.log(decodedToken);
@@ -503,14 +511,14 @@ export function DocSearch() {
       {/* ----------------------- choose the doctor ---------------- */}
       <section className="container mt-5">
         <div className="row  justify-content-center">
-          <div className="col-md-5 layerfixed rounded-4 position-relative">
+          <div data-aos="fade-right" className="col-md-5 layerfixed rounded-4 position-relative">
             <img
               src={firstSectionPhoto}
               alt=""
               className="w-75 h-100 rounded-4 shadow position-absolute layerGoUp z-2"
             />
           </div>
-          <div className="col-md-5 position-relative rounded-4 shadow p-4">
+          <div data-aos="fade-left" className="col-md-5 position-relative rounded-4 shadow p-4">
             <div className="d-flex flex-wrap w-100 justify-content-end">
               <h1 className="text-end fs-1 mb-4"> أختر الدكتور المناسب</h1>
               <i className="fa-solid fs-3 text-success opacity-75 fa-magnifying-glass mt-2 ms-2"></i>
@@ -532,7 +540,7 @@ export function DocSearch() {
         </div>
       </section>
       {/* section search and response of search  */}
-      <section className={showDivSearch}>
+      <section data-aos="zoom-in" className={showDivSearch}>
         <button
           onClick={CloseSectionSearch}
           className="btn btn-close position-absolute  fs-5 end-0 searchCloseSection"
@@ -678,7 +686,9 @@ export function DocSearch() {
         )}
       </section>
       {/* section Get doctors */}
-      <section className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden">
+      <section data-aos="fade-right"
+     data-aos-offset="300"
+     data-aos-easing="ease-in-sine" className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden">
         <div className="container  mt-5 d-flex flex-wrap justify-content-center">
           <div className="w-75 shadow rounded-4 p-4">
             <h1 className="fs-4 text-center">
@@ -788,14 +798,16 @@ export function DocSearch() {
       <section>
         <div className="container mt-24">
           <div className="d-flex SectionBookingInIphone justify-content-evenly">
-            <div className=" BookingSectionSora shado rounded-4">
+            <div data-aos="zoom-out-right" className=" BookingSectionSora shado rounded-4">
               <img
                 src={BookingSectionPhoto}
                 alt="sa"
                 className="rounded-4 h-100"
               />
             </div>
-            <div className=" BookingSectionText shadow rounded-4 p-4 text-end">
+            <div data-aos="fade-left"
+     data-aos-offset="300"
+     data-aos-easing="ease-in-sine" className=" BookingSectionText shadow rounded-4 p-4 text-end">
               <h1 className="text-end fs-1">يمكنك حجز موعد</h1>
               <p className="text-end mt-3 fs-4">
                 {" "}
@@ -864,7 +876,8 @@ export function DocSearch() {
             </div>
           </div>
         </div>
-        <div className={classShowResultOfhospi}>
+        <div data-aos="fade-up"
+     data-aos-duration="3000" className={classShowResultOfhospi}>
           <div className="w-100 d-flex justify-content-end">
             <i
               onClick={closeHospitalSection}
