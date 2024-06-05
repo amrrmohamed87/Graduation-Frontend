@@ -656,7 +656,7 @@ export function DocSearch() {
                 <div className={handleForSearch}>
                 <div
                 key={i}
-                className="position-relative w-11/12 roundedCorner shadow my-3 "
+                className="position-relative w-11/12 roundedCorner shadow my-3 h-4/6"
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
