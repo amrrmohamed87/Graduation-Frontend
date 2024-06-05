@@ -216,6 +216,7 @@ export function DoctorDashBoard() {
   });
   const [isRequestingSurgery, setIsRequestingSurgery] = useState(false);
   const [surgeries, setSurgeries] = useState([]);
+  console.log(surgeries);
   const [isFetchingSurgeries, setIsFetchingSurgeries] = useState(false);
 
   const handleFetchingPatientRecord = async (id) => {
@@ -316,7 +317,7 @@ export function DoctorDashBoard() {
     loadSurgeries();
   }, []);
 
-  console.log(surgeries);
+  // console.log(surgeries);
   //Send patient id to the API
   const handleGetPatientId = (id) => {
     handleFetchingPatientRecord(id);
@@ -1615,13 +1616,13 @@ export function DoctorDashBoard() {
                   </ul>
                 </nav>
               </div>
-              {surgeries === null && surgeries.length === 0 ? (
+              {surgeries === null || surgeries.length === 0 ? (
                 ""
               ) : (
-                <h1 className="text-center fs-1 mt-5">جدول العمليات </h1>
+                <h1 className="text-center fs-1 mt-5">جدول العمليات</h1>
               )}
               
-              {surgeries === null && surgeries.length === 0 ? (
+              {surgeries === null || surgeries.length === 0 ? (
                 ""
               ) : (
                 <table className="table shadow mt-5">
