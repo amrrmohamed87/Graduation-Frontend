@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 import app from "../assets/images/app.jpg";
 import play from "../assets/images/play.jpg";
-import download from "../assets/images/download.png";
+import download from "../assets/images/appNew.jpg";
 function DownLoadApp() {
   const upwardMotionVariants = {
     offscreen: {
