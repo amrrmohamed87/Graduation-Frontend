@@ -571,6 +571,7 @@ export function DocSearch() {
               }}
               placeholder="..بحث باسم الدكتور"
               name="name"
+              value={searchUser.name}
             />
             {/* <input
               type="text"
