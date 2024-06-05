@@ -325,7 +325,7 @@ export function DocSearch() {
   // -----------------
   return (
     <>
-      <header className="relative h-screen w-full ">
+      <header data-aos="fade-right" className="relative h-screen w-full ">
         <div className=" w-full h-screen">
           <img
             src={SearchPhoto}
