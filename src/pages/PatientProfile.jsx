@@ -259,7 +259,7 @@ function PatientProfile() {
                 </div> */}
                 <div className={classOfPateintDeta}>
           <h2 className="text-base font-semibold leading-7 text-gray-900 text-end me-5">تفاصيل المستخدم</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600 text-end me-5">يمكنك وضع تفاصيل الصفححة الشخصية من هنا </p>
+          <p className="mt-1 text-sm leading-6 text-gray-600 text-end me-5">يمكنك وضع تفاصيل الصفحة الشخصية من هنا </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -409,16 +409,18 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
-                {isLoading === true ? (
-                  <p className="fw-bold text-center mt-5 fs-2">
+               <div className="position-absolute start-50 top-50 translate-middle ">
+               {isLoading === true ? (
+                  <p className="fw-bold text-center mt-5 me-22 fs-2">
                     {" "}
                     جارى التحميل{" "}
                   </p>
                 ) : (
                   ""
                 )}
+               </div>
                 {/* 3rd mwa3ed montzra */}
-                <div className="w-100 togetTableInMiddle position-absolute">
+                <div className="w-100 togetTableInMiddle position-absolute z-3">
                   {activeTab === 1 ? (
                     <table className="table mt-4 w-11/12">
                       <thead>
@@ -508,7 +510,7 @@ function PatientProfile() {
                     ""
                   )}
                   {/* -------------------------------------- */}
-
+                
                   {/* ----------------------------- */}
                 </div>
 
