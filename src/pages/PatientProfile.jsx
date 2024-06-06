@@ -253,7 +253,7 @@ function PatientProfile() {
             {/* ------------------------------------ end ----------------- */}
             {/* lma ydos 3la t3del almlf al45sy hyft7 dy  */}
             <section >
-              <div className={`position-fixed w-3/5  top-50 StyleForDisplay translate-middle shadow rounded-3 bg-white ${activeSection === true ? "active":""} `}>
+              <div className={`position-fixed w-3/5 z-2 top-50 StyleForDisplay translate-middle shadow rounded-3 bg-white ${activeSection === true ? "active":""} `}>
                 {/* <div onClick={closePatientSection} className="position-absolute top-0 end-0 cursor-pointer">
                 <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
                 </div> */}
