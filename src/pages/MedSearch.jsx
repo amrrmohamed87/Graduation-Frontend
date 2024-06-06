@@ -36,9 +36,11 @@ export function MedSearch() {
   };
   function ShowDiv() {
     setShowDivGetMed("w-100");
+
   }
   function HideDiv() {
     setShowDivGetMed("d-none");
+    setShowDiv(null)
   }
   // ------------------------
 
@@ -222,7 +224,7 @@ export function MedSearch() {
                         <button
                           type="button"
                           onClick={() => toggleDivPosition2(i)}
-                          className={`btn bg-success text-white  ms-2 mt-5 z-2 position-relative buttonToShowHowToUse start-0 ${
+                          className={`btn bg-success text-white  ms-2 mt-2 z-2 position-relative buttonToShowHowToUse start-0 ${
                             showDiv === i ? "active" : ""
                           }`}
                         >
@@ -324,7 +326,7 @@ export function MedSearch() {
                     <button
                       type="button"
                       onClick={() => toggleDivPosition2(i)}
-                      className={`btn bg-success text-white mb-3 mt-3 z-2 position-relative buttonToShowHowToUse ${
+                      className={`btn bg-success text-white mb-3 mt-3 z-2 start-0 position-relative buttonToShowHowToUse ${
                         showDiv === i ? "active" : ""
                       }`}
                     >
