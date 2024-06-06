@@ -365,7 +365,7 @@ function PatientProfile() {
             </section>
             {/* ----------------------------------------- */}
             <div className="w-100 d-flex justify-content-center">
-              <div className="mt-4 shadow forPatient rounded-3 classForHeight">
+              <div className="mt-4 shadow forPatient rounded-3 classForHeight position-relative overflow-scroll ">
                 <div className="d-flex justify-content-center w-100">
                   <div className="d-flex justify-content-center gap-4 mt-3 shadow rounded-3 py-2 px-3">
                     <p
@@ -418,7 +418,7 @@ function PatientProfile() {
                   ""
                 )}
                 {/* 3rd mwa3ed montzra */}
-                <div className="w-100 d-flex justify-content-center">
+                <div className="w-100 togetTableInMiddle position-absolute">
                   {activeTab === 1 ? (
                     <table className="table mt-4 w-11/12">
                       <thead>
@@ -509,8 +509,11 @@ function PatientProfile() {
                   )}
                   {/* -------------------------------------- */}
 
-                  {/* lw mfe4 7aga tt3rd y3rd dy  */}
-                  {activeTab === null ? (
+                  {/* ----------------------------- */}
+                </div>
+
+  {/* lw mfe4 7aga tt3rd y3rd dy  */}
+  {activeTab === null ? (
                     <div className="w-100  mt-16 d-flex justify-content-center">
                       <div className="w-8/12 shadow p-3 text-right rounded-3">
                         <p className="fs-2">
@@ -525,8 +528,6 @@ function PatientProfile() {
                     ""
                   )}
 
-                  {/* ----------------------------- */}
-                </div>
               </div>
             </div>
           </div>
