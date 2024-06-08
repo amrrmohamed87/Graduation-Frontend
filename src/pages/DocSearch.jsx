@@ -72,8 +72,6 @@ export function DocSearch() {
   }, []);
   function closeTrueBook() {
     setTrueBook("d-none");
-    setActiveIndexOfTime(null);
-    setActiveIndexOfDate(null);
 
 // code gded anta 7tato 34an lma ydos al8a2 aly fy window tm al7gz bnga7 mtbyn4 almw3ed tany 
     setClassName("d-none");
@@ -124,6 +122,11 @@ export function DocSearch() {
   }
   function HideSureBoook() {
     setSureBookSection("d-none");
+    setClassName("d-none");
+    setTrueBook("d-none");
+    setClassOfDocTime("d-none");
+    setActiveIndexOfDate(null);
+    setActiveIndexOfTime(null);
   }
   async function submitSearch(e) {
     e.preventDefault();
