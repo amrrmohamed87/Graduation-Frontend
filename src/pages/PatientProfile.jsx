@@ -45,7 +45,7 @@ function PatientProfile() {
   const [ShowDoc, setShowDoc] = useState([]);
   useEffect(() => {
     GetDoc();
-    getInfoOfUser()
+    getInfoOfUser();
   }, []);
   async function GetDoc() {
     try {
@@ -104,8 +104,8 @@ function PatientProfile() {
   }
 
   // -------------end---------
- const [doneMessage,setDoneMessage] = useState("d-none")
-  const [detailsOfPatient , setDetailsOfPatient] = useState({
+  const [doneMessage, setDoneMessage] = useState("d-none");
+  const [detailsOfPatient, setDetailsOfPatient] = useState({
     mobileNumber: "",
     bloodType: "",
     patientID: UserIdOfLogin,
@@ -113,69 +113,70 @@ function PatientProfile() {
     height: "",
     address: "",
     age: "",
-  })
+  });
   // console.log(detailsOfPatient);
   function putPatientDetail(e) {
-    let MyDetail = {...detailsOfPatient}
-    MyDetail[e.target.name] = e.target.value
-    setDetailsOfPatient(MyDetail)
+    let MyDetail = { ...detailsOfPatient };
+    MyDetail[e.target.name] = e.target.value;
+    setDetailsOfPatient(MyDetail);
   }
   async function SendDetailOfUSer(e) {
     e.preventDefault();
-    try{
-      let {data} = await axios.patch("https://mhiproject.onrender.com/patient/updateProfile" , detailsOfPatient)
-      getInfoOfUser()
+    try {
+      let { data } = await axios.patch(
+        "https://mhiproject.onrender.com/patient/updateProfile",
+        detailsOfPatient
+      );
+      getInfoOfUser();
       setDetailsOfPatient({
         mobileNumber: "",
+        bloodType: "",
+        patientID: UserIdOfLogin,
+        weight: "",
+        height: "",
+        address: "",
+        age: "",
+      });
+      setDoneMessage("text-center text-muted fs-4 mt-4");
+      // console.log(data);
+    } catch (error) {}
+  }
+  const [classOfPateintDeta, setClassOfPateintDeta] = useState("d-none");
+  const [activeSection, setActiveSection] = useState(false);
+
+  const toggleSection = () => {
+    setActiveSection(!activeSection);
+  };
+  function closePatientSection() {
+    setClassOfPateintDeta("d-none");
+    toggleSection();
+    setDetailsOfPatient({
+      mobileNumber: "",
       bloodType: "",
       patientID: UserIdOfLogin,
       weight: "",
       height: "",
       address: "",
       age: "",
-      })
-      setDoneMessage("text-center text-muted fs-4 mt-4")
-      // console.log(data);
-    } catch(error){
-
-    }
-  }
-  const [classOfPateintDeta ,setClassOfPateintDeta] = useState("d-none")
-  const [activeSection, setActiveSection] = useState(false);
-
-  const toggleSection = () => {
-    setActiveSection(!activeSection);
-  }; 
-  function closePatientSection() {
-    setClassOfPateintDeta("d-none")
-    toggleSection()
-    setDetailsOfPatient({
-      mobileNumber: "",
-    bloodType: "",
-    patientID: UserIdOfLogin,
-    weight: "",
-    height: "",
-    address: "",
-    age: "",
-    })
-    setDoneMessage("d-none")
+    });
+    setDoneMessage("d-none");
   }
   function openPatientDetail() {
-    setClassOfPateintDeta("border-b border-gray-900/10 pb-12 container mt-3")
+    setClassOfPateintDeta("border-b border-gray-900/10 pb-12 container mt-3");
   }
-  const [getDetails ,setGetDetails] = useState({});
-  const [getDetails2 ,setGetDetails2] = useState();
+  const [getDetails, setGetDetails] = useState({});
+  const [getDetails2, setGetDetails2] = useState();
   console.log(getDetails);
   async function getInfoOfUser() {
-    try{
-      let {data} = await axios.get(`https://mhiproject.onrender.com/patient/getProfile/${UserIdOfLogin}`)
+    try {
+      let { data } = await axios.get(
+        `https://mhiproject.onrender.com/patient/getProfile/${UserIdOfLogin}`
+      );
       // console.log(data);
-      setGetDetails(data.getProfile)
-      setGetDetails2(data.age)
+      setGetDetails(data.getProfile);
+      setGetDetails2(data.age);
       // console.log("yarab");
-    } catch(error){
-
-    }
+    } catch (error) {}
   }
   // getInfoOfUser()
   return (
@@ -190,12 +191,18 @@ function PatientProfile() {
               <div className="forPatient d-flex flex-row flex-wrap rounded-3 shadow">
                 <div className="row gap-1 StyleForSecondPartOfUSerInfo justify-content-end">
                   <div className="col-md-3">
-                   <div className="d-flex justify-content-center" >
-                   <button onClick={()=>{
-                    openPatientDetail();
-                    toggleSection()
-                   }} className="btn btn-primary mt-3"> تعديل الملف الشخصي </button>
-                   </div>
+                    <div className="d-flex justify-content-center">
+                      <button
+                        onClick={() => {
+                          openPatientDetail();
+                          toggleSection();
+                        }}
+                        className="btn btn-primary mt-3"
+                      >
+                        {" "}
+                        تعديل الملف الشخصي{" "}
+                      </button>
+                    </div>
                   </div>
                   <div className="col-md-2">
                     <div className="mt-4 h-50 w-100 d-flex justify-content-center flex-wrap ">
@@ -210,7 +217,9 @@ function PatientProfile() {
                       <h2 className="text-center text-muted w-100 mb-1">
                         رقم الهاتف
                       </h2>
-                      <p className="w-100 text-center mb-1">{getDetails.mobileNumber}</p>
+                      <p className="w-100 text-center mb-1">
+                        {getDetails.mobileNumber}
+                      </p>
                     </div>
                     <div className=" d-flex justify-content-center flex-wrap">
                       <h2 className="text-center text-muted w-100 mb-1">
@@ -230,21 +239,29 @@ function PatientProfile() {
                   </div>
                   <div className="w-75 mt-1 pe-2">
                     <h1 className="text-right  text-white fs-5">{name}</h1>
-                    <p className="text-white-50 text-right">سنة {getDetails2}</p>
+                    <p className="text-white-50 text-right">
+                      سنة {getDetails2}
+                    </p>
                   </div>
 
                   <div className="row mt-3 p-1 gap-2 justify-content-center w-100">
                     <div className="col-md-3">
                       <h1 className="text-white-50 text-center">الطول</h1>
-                      <p className="text-white text-center">{getDetails.height}</p>
+                      <p className="text-white text-center">
+                        {getDetails.height}
+                      </p>
                     </div>
                     <div className="col-md-3">
                       <h1 className="text-white-50 text-center">الوزن</h1>
-                      <p className="text-white text-center">{getDetails.weight}</p>
+                      <p className="text-white text-center">
+                        {getDetails.weight}
+                      </p>
                     </div>
                     <div className="col-md-4">
                       <h1 className="text-white-50 text-center">فصيلة الدم</h1>
-                      <p className="text-white text-center">{getDetails.bloodType}</p>
+                      <p className="text-white text-center">
+                        {getDetails.bloodType}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -252,115 +269,149 @@ function PatientProfile() {
             </div>
             {/* ------------------------------------ end ----------------- */}
             {/* lma ydos 3la t3del almlf al45sy hyft7 dy  */}
-            <section >
-              <div className={`position-fixed w-3/5 z-2 top-50 StyleForDisplay translate-middle shadow rounded-3 bg-white ${activeSection === true ? "active":""} `}>
+            <section>
+              <div
+                className={`position-fixed w-3/5 z-2 top-50 StyleForDisplay translate-middle shadow rounded-3 bg-gray-100 ${
+                  activeSection === true ? "active" : ""
+                } `}
+              >
                 {/* <div onClick={closePatientSection} className="position-absolute top-0 end-0 cursor-pointer">
                 <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
                 </div> */}
                 <div className={classOfPateintDeta}>
-          <h2 className="text-base font-semibold leading-7 text-gray-900 text-end me-5">تفاصيل المستخدم</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600 text-end me-5">يمكنك وضع تفاصيل الصفحة الشخصية من هنا </p>
+                  <h2 className="text-base font-semibold leading-7 text-gray-900 text-end me-5">
+                    تفاصيل المستخدم
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-gray-600 text-end me-5">
+                    يمكنك وضع تفاصيل الصفحة الشخصية من هنا{" "}
+                  </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <label htmlFor="height" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
-                الطول 
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="height"
-                  id="height"
-                  value={detailsOfPatient.height}
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={putPatientDetail}
-                />
-              </div>
-            </div>
+                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="height"
+                        className="block text-sm font-medium leading-6 text-gray-900 text-end me-2"
+                      >
+                        الطول
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="number"
+                          name="height"
+                          id="height"
+                          value={detailsOfPatient.height}
+                          autoComplete="given-name"
+                          className="block w-full text-right pr-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={putPatientDetail}
+                        />
+                      </div>
+                    </div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="weight" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
-                الوزن
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="weight"
-                  id="weight"
-                  value={detailsOfPatient.weight}
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={putPatientDetail}
-                />
-              </div>
-            </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="weight"
+                        className="block text-sm font-medium leading-6 text-gray-900 text-end me-2"
+                      >
+                        الوزن
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="number"
+                          name="weight"
+                          id="weight"
+                          value={detailsOfPatient.weight}
+                          autoComplete="family-name"
+                          className="block w-full text-right pr-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={putPatientDetail}
+                        />
+                      </div>
+                    </div>
 
-            <div className="col-span-4">
-              <label htmlFor="bloodType" className="block text-sm font-medium leading-6 text-gray-900 text-end  text-center">
-                فصيلة الدم
-              </label>
-              <div className="mt-2">
-                <select
-                  id="bloodType"
-                  name="bloodType"
-                  autoComplete="country-name"
-                  value={detailsOfPatient.bloodType}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  onChange={putPatientDetail}
-                >
-                  <option>O+</option>
-                  <option>O-</option>
-                  <option>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                </select>
-              </div>
-            </div>
+                    <div className="col-span-4">
+                      <label
+                        htmlFor="bloodType"
+                        className="block text-sm font-medium leading-6 text-gray-900 text-center"
+                      >
+                        فصيلة الدم
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="bloodType"
+                          name="bloodType"
+                          autoComplete="country-name"
+                          value={detailsOfPatient.bloodType}
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          onChange={putPatientDetail}
+                        >
+                          <option>O+</option>
+                          <option>O-</option>
+                          <option>A+</option>
+                          <option>A-</option>
+                          <option>B+</option>
+                          <option>B-</option>
+                          <option>AB+</option>
+                          <option>AB-</option>
+                        </select>
+                      </div>
+                    </div>
 
-            <div className="col-span-3">
-              <label htmlFor="age" className="block text-sm font-medium leading-6 text-gray-900 text-end me-2">
-                 العمر 
-              </label>
-              <div className="mt-2">
-                <input
-                  type="number"
-                  name="age"
-                  id="age"
-                  value={detailsOfPatient.age}
-                  autoComplete="street-address"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={putPatientDetail}
-                />
-              </div>
-            </div>
-            <div className="col-span-full">
-              <label htmlFor="mobileNumber" className="block text-sm font-medium leading-6 text-gray-900 text-end">
-                رقم الهاتف 
-              </label>
-              <div className="mt-2">
-                <input
-                  type="number"
-                  name="mobileNumber"
-                  id="mobileNumber"
-                  value={detailsOfPatient.mobileNumber}
-                  autoComplete="street-address"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={putPatientDetail}
-                />
-              </div>
-            </div>
-          </div>
-          <h1 className={doneMessage}>تم الحفظ</h1>
-          <div className="d-flex justify-content-end gap-4 mt-4">
-            <button onClick={closePatientSection} className="btn btn-light w-2/12"> الغاء</button>
-            <button onClick={SendDetailOfUSer} className="btn btn-primary w-2/12"> حفظ</button>
-          </div>
-        </div>
-
+                    <div className="col-span-3">
+                      <label
+                        htmlFor="age"
+                        className="block text-sm font-medium leading-6 text-gray-900 text-end me-2"
+                      >
+                        العمر
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="number"
+                          name="age"
+                          id="age"
+                          value={detailsOfPatient.age}
+                          autoComplete="street-address"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={putPatientDetail}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-span-full">
+                      <label
+                        htmlFor="mobileNumber"
+                        className="block text-sm font-medium leading-6 text-gray-900 text-end"
+                      >
+                        رقم الهاتف
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="number"
+                          name="mobileNumber"
+                          id="mobileNumber"
+                          value={detailsOfPatient.mobileNumber}
+                          autoComplete="street-address"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          onChange={putPatientDetail}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <h1 className={doneMessage}>تم الحفظ</h1>
+                  <div className="d-flex justify-content-end gap-4 mt-4">
+                    <button
+                      onClick={closePatientSection}
+                      className="btn btn-light w-2/12"
+                    >
+                      {" "}
+                      الغاء
+                    </button>
+                    <button
+                      onClick={SendDetailOfUSer}
+                      className="btn btn-primary w-2/12"
+                    >
+                      {" "}
+                      حفظ
+                    </button>
+                  </div>
+                </div>
               </div>
             </section>
             {/* ----------------------------------------- */}
@@ -409,16 +460,16 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
-               <div className="position-absolute start-50 top-50 translate-middle ">
-               {isLoading === true ? (
-                  <p className="fw-bold text-center mt-5 me-22 fs-2">
-                    {" "}
-                    جارى التحميل{" "}
-                  </p>
-                ) : (
-                  ""
-                )}
-               </div>
+                <div className="position-absolute start-50 top-50 translate-middle ">
+                  {isLoading === true ? (
+                    <p className="fw-bold text-center mt-5 me-22 fs-2">
+                      {" "}
+                      جارى التحميل{" "}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
                 {/* 3rd mwa3ed montzra */}
                 <div className="w-100 togetTableInMiddle position-absolute z-3">
                   {activeTab === 1 ? (
@@ -485,7 +536,6 @@ function PatientProfile() {
                     <table className="table mt-4 w-11/12">
                       <thead>
                         <tr className="table-success text-right">
-                          <th scope="col"> كود الطبيب</th>
                           <th scope="col">يوم</th>
                           <th scope="col"> الجرعات</th>
                           <th scope="col">الدواء</th>
@@ -496,12 +546,14 @@ function PatientProfile() {
                       <tbody className="border rounded-3 text-right">
                         {setRecords.map((element, i) => (
                           <tr key={i}>
-                            <td>{element.doctor.code}</td>
-                            <td> {element.date.slice(0, 10)} </td>
+                            <td className="w-[10%]">
+                              {" "}
+                              {element.date.slice(0, 10)}{" "}
+                            </td>
                             <td>{element.diagnose} </td>
                             <td>{element.medicine} </td>
                             <td>{element.doctor.specialize.name} </td>
-                            <td> {element.doctor.name} </td>
+                            <td className="w-[15%]"> {element.doctor.name} </td>
                           </tr>
                         ))}
                       </tbody>
@@ -510,26 +562,25 @@ function PatientProfile() {
                     ""
                   )}
                   {/* -------------------------------------- */}
-                
+
                   {/* ----------------------------- */}
                 </div>
 
-  {/* lw mfe4 7aga tt3rd y3rd dy  */}
-  {activeTab === null ? (
-                    <div className="w-100  mt-16 d-flex justify-content-center">
-                      <div className="w-8/12 shadow p-3 text-right rounded-3">
-                        <p className="fs-2">
-                          الوهم نصف الداء، والاطمئنان نصف الدواء، والصبر أول
-                          خطوات الشفاء. في آلام الجسد شفاء للنفس. لا يمكن لأحد
-                          أن يطلب الشفاء، ويتذمر من الألم الذي يصاحب الالتئام.
-                          ربما الشفاء أحياناً يكون جزءاً من الألم.
-                        </p>
-                      </div>
+                {/* lw mfe4 7aga tt3rd y3rd dy  */}
+                {activeTab === null ? (
+                  <div className="w-100  mt-16 d-flex justify-content-center">
+                    <div className="w-8/12 shadow p-3 text-right rounded-3">
+                      <p className="fs-2">
+                        الوهم نصف الداء، والاطمئنان نصف الدواء، والصبر أول خطوات
+                        الشفاء. في آلام الجسد شفاء للنفس. لا يمكن لأحد أن يطلب
+                        الشفاء، ويتذمر من الألم الذي يصاحب الالتئام. ربما الشفاء
+                        أحياناً يكون جزءاً من الألم.
+                      </p>
                     </div>
-                  ) : (
-                    ""
-                  )}
-
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
@@ -542,7 +593,11 @@ function PatientProfile() {
                 className="d-flex justify-content-between mb-3"
               >
                 <div className="w-14 h-14 rounded-3 overflow-hidden">
-                  <img src={`https://mhiproject.onrender.com/${element.image}`} alt="صورة الطبيب" className="w-100 h-100" />
+                  <img
+                    src={`https://mhiproject.onrender.com/${element.image}`}
+                    alt="صورة الطبيب"
+                    className="w-100 h-100"
+                  />
                 </div>
                 <div className="p-2 w-75 text-right">
                   <h2>
