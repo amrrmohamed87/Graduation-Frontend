@@ -46,7 +46,7 @@ export function DocSearch() {
   let [showResult, setShowResult] = useState([]);
   console.log(showResult);
   let [handleForSearch, setHandleForSearch] = useState(
-    "w-25 d-flex justify-content-center"
+    "w-25 d-flex justify-content-center "
   );
   let [docDetail, setDocDetail] = useState({
     name: "",
@@ -633,7 +633,7 @@ export function DocSearch() {
         ) : (
           <div className="d-flex justify-content-center">
             <div
-              className={`d-flex justify-content-center mt-3 flex-wrap gap-4  overflow-scroll pt-14 w-75 searchSection position-relative ${
+              className={`d-flex justify-content-center mt-3 flex-wrap gap-4  overflow-scroll  pt-14 w-75 searchSection position-relative ${
                 isSearchActive ? "active" : ""
               }`}
             >
@@ -666,7 +666,7 @@ export function DocSearch() {
                 <div className={handleForSearch}>
                 <div
                 key={i}
-                className="position-relative w-11/12 roundedCorner shadow my-3 h-4/6"
+                className="position-relative w-11/12 roundedCorner border  shadow my-3 h-5/6"
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
@@ -776,7 +776,7 @@ export function DocSearch() {
               <div className="w-25 d-flex justify-content-center">
                 <div
                 key={i}
-                className="position-relative w-11/12 roundedCorner shadow my-3 "
+                className="position-relative w-11/12 roundedCorner shadow-sm border my-3 "
               >
                 <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                   <img
