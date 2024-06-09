@@ -11,6 +11,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [signin, setSignin] = useState(false);
   const [patientData, setPatientData] = useState({
     username: "",
@@ -122,7 +123,6 @@ function Login() {
           break;
         case "hospitalManager":
           navigate("/hospitalManager");
-          return;
           break;
         default:
           console.error("Unexpected role:", role);
@@ -187,6 +187,10 @@ function Login() {
 
   function handleShowPassword() {
     setShowPassword(!showPassword);
+  }
+
+  function handleShowSignupPassword() {
+    setShowSignupPassword(!showSignupPassword);
   }
 
   const upwardMotionVariants = {
@@ -261,13 +265,13 @@ function Login() {
           whileInView="onscreen"
           viewport={{ once: true }}
           variants={upwardMotionVariants}
-          className="w-full mt-4 md:mt-0 max-w-md p-8 bg-white rounded-lg shadow-lg"
+          className="w-full mt-2 md:mt-0 max-w-md p-8 bg-white rounded-lg shadow-lg"
         >
           <h1 className="text-[24px] font-bold text-center text-emerald-800 mb-2">
             مصر للتأمين الصحي
           </h1>
           {signin ? (
-            <p className="text-[18px] font-bold text-center text-gray-500 mb-4">
+            <p className="text-[18px] font-bold text-center text-gray-500 mb-2">
               إنشاء حساب
             </p>
           ) : (
@@ -304,12 +308,13 @@ function Login() {
               <Input
                 id="patientPassword"
                 label="كلمة المرور"
-                type={!showPassword ? "password" : "text"}
+                type={!showSignupPassword ? "password" : "text"}
                 name="password"
                 value={patientData.password}
                 onChange={handleSignupPatientChange}
+                showPassword={handleShowSignupPassword}
                 icon={
-                  !showPassword ? (
+                  !showSignupPassword ? (
                     <FaRegEye size={20} className="text-emerald-950" />
                   ) : (
                     <FaRegEyeSlash size={20} className="text-emerald-950" />
@@ -319,12 +324,13 @@ function Login() {
               <Input
                 id="confirmPassword"
                 label="تأكيد كلمة المرور"
-                type={!showPassword ? "password" : "text"}
+                type={!showSignupPassword ? "password" : "text"}
                 name="confirmPassword"
                 value={patientData.confirmPassword}
                 onChange={handleSignupPatientChange}
+                showPassword={handleShowSignupPassword}
                 icon={
-                  !showPassword ? (
+                  !showSignupPassword ? (
                     <FaRegEye size={20} className="text-emerald-950" />
                   ) : (
                     <FaRegEyeSlash size={20} className="text-emerald-950" />
@@ -344,7 +350,7 @@ function Login() {
                 disabled={isCreatingAccount}
                 className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-200 transform bg-emerald-800 rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-emerald-700"
               >
-                {isCreatingAccount ? "...جاري التجيل" : "إنشاء حساب"}
+                {isCreatingAccount ? "...جاري التسجيل" : "إنشاء حساب"}
               </button>
               <h1 className="flex justify-center gap-2">
                 <Link
