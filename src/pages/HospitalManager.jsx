@@ -178,7 +178,7 @@ function HospitalManager() {
   };
 
   //Schedule surgery
-  const handleSchedulingSurgery = async (event) => {
+  const handleSchedulingSurgery = async () => {
     setIsSechudling(true);
 
     try {
