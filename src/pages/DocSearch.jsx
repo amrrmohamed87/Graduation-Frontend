@@ -7,8 +7,8 @@ import secondSectionPhoto from "../assets/images/Download Cardiologists Doctor P
 import BookingSectionPhoto from "../assets/images/Desk_calendar_with_marked_dates_3d_cartoon_style_icon-Photoroom.png-Photoroom.png";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 // import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
@@ -73,7 +73,7 @@ export function DocSearch() {
   function closeTrueBook() {
     setTrueBook("d-none");
 
-// code gded anta 7tato 34an lma ydos al8a2 aly fy window tm al7gz bnga7 mtbyn4 almw3ed tany 
+    // code gded anta 7tato 34an lma ydos al8a2 aly fy window tm al7gz bnga7 mtbyn4 almw3ed tany
     setClassName("d-none");
     setClassOfDocTime("d-none");
     setActiveIndexOfDate(null);
@@ -520,14 +520,20 @@ export function DocSearch() {
       {/* ----------------------- choose the doctor ---------------- */}
       <section className="container mt-5">
         <div className="row  justify-content-center">
-          <div data-aos="fade-right" className="col-md-5 layerfixed rounded-4 position-relative">
+          <div
+            data-aos="fade-right"
+            className="col-md-5 layerfixed rounded-4 position-relative"
+          >
             <img
               src={firstSectionPhoto}
               alt=""
               className="w-75 h-100 rounded-4 shadow position-absolute layerGoUp z-2"
             />
           </div>
-          <div data-aos="fade-left" className="col-md-5 position-relative rounded-4 shadow p-4">
+          <div
+            data-aos="fade-left"
+            className="col-md-5 position-relative rounded-4 shadow p-4"
+          >
             <div className="d-flex flex-wrap w-100 justify-content-end">
               <h1 className="text-end fs-1 mb-4"> أختر الدكتور المناسب</h1>
               <i className="fa-solid fs-3 text-success opacity-75 fa-magnifying-glass mt-2 ms-2"></i>
@@ -549,7 +555,7 @@ export function DocSearch() {
         </div>
       </section>
       {/* section search and response of search  */}
-      <section data-aos="zoom-in" className={showDivSearch}>
+      <section className={showDivSearch}>
         <button
           onClick={CloseSectionSearch}
           className="btn btn-close position-absolute  fs-5 end-0 searchCloseSection"
@@ -589,7 +595,7 @@ export function DocSearch() {
               placeholder="..بحث بالتخصص"
               name="specialize"
             /> */}
-            <div className="dropdown searchfordocBar ">
+            <div className="dropdown searchfordocBar z-30 ">
               <button
                 className="form-control rounded-5 dropdown-toggle w-100 text-muted py-2  fs-6"
                 type="button"
@@ -664,41 +670,48 @@ export function DocSearch() {
                 //   </div>
                 // </div>
                 <div className={handleForSearch}>
-                <div
-                key={i}
-                className="position-relative w-11/12 roundedCorner border  shadow my-3 h-5/6"
-              >
-                <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
-                  <img
-                    src={`https://mhiproject.onrender.com/${element.image}`}
-                    alt="صورة ملف شخصى"
-                    className="w-100 h-100"
-                  />
-                </div>
-                <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
-                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
-                  <p className="text-center text-muted mt-1 ">
-                    {element.specialize.name}
-                  </p>
-                  <button
-                    onClick={() => ShowBookSection(element._id, element.name)}
-                    type="button"
-                    className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                  <div
+                    key={i}
+                    className="position-relative w-11/12 roundedCorner border  shadow my-3 h-5/6"
                   >
-                    احجز الان
-                  </button>
+                    <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
+                      <img
+                        src={`https://mhiproject.onrender.com/${element.image}`}
+                        alt="صورة ملف شخصى"
+                        className="w-100 h-100"
+                      />
+                    </div>
+                    <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
+                      <h3 className="fw-medium text-center fs-4">
+                        {element.name}
+                      </h3>
+                      <p className="text-center text-muted mt-1 ">
+                        {element.specialize.name}
+                      </p>
+                      <button
+                        onClick={() =>
+                          ShowBookSection(element._id, element.name)
+                        }
+                        type="button"
+                        className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                      >
+                        احجز الان
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              </div>
               ))}
             </div>
           </div>
         )}
       </section>
       {/* section Get doctors */}
-      <section data-aos="fade-right"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine" className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden">
+      <section
+        data-aos="fade-right"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-sine"
+        className="mt-5 z-2 HightForSlidedown position-relative overflow-hidden"
+      >
         <div className="container  mt-5 d-flex flex-wrap justify-content-center">
           <div className="w-75 shadow rounded-4 p-4">
             <h1 className="fs-4 text-center">
@@ -775,30 +788,32 @@ export function DocSearch() {
               // </div>
               <div className="w-25 d-flex justify-content-center">
                 <div
-                key={i}
-                className="position-relative w-11/12 roundedCorner shadow-sm border my-3 "
-              >
-                <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
-                  <img
-                    src={`https://mhiproject.onrender.com/${element.image}`}
-                    alt=""
-                    className="w-100 h-100"
-                  />
+                  key={i}
+                  className="position-relative w-11/12 roundedCorner shadow-sm border my-3 "
+                >
+                  <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
+                    <img
+                      src={`https://mhiproject.onrender.com/${element.image}`}
+                      alt=""
+                      className="w-100 h-100"
+                    />
+                  </div>
+                  <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
+                    <h3 className="fw-medium text-center fs-4">
+                      {element.name}
+                    </h3>
+                    <p className="text-center text-muted mt-1 ">
+                      {element.specialize.name}
+                    </p>
+                    <button
+                      onClick={() => ShowBookSection(element._id, element.name)}
+                      type="button"
+                      className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
+                    >
+                      احجز الان
+                    </button>
+                  </div>
                 </div>
-                <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
-                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
-                  <p className="text-center text-muted mt-1 ">
-                    {element.specialize.name}
-                  </p>
-                  <button
-                    onClick={() => ShowBookSection(element._id, element.name)}
-                    type="button"
-                    className="cursor-pointer btn bg-success w-11/12 mt-3 text-white"
-                  >
-                    احجز الان
-                  </button>
-                </div>
-              </div>
               </div>
             ))}
           </div>
@@ -808,16 +823,22 @@ export function DocSearch() {
       <section>
         <div className="container mt-24">
           <div className="d-flex SectionBookingInIphone justify-content-evenly">
-            <div data-aos="zoom-out-right" className=" BookingSectionSora shado rounded-4">
+            <div
+              data-aos="zoom-out-right"
+              className=" BookingSectionSora shado rounded-4"
+            >
               <img
                 src={BookingSectionPhoto}
                 alt="sa"
                 className="rounded-4 h-100"
               />
             </div>
-            <div data-aos="fade-left"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine" className=" BookingSectionText shadow rounded-4 p-4 text-end">
+            <div
+              data-aos="fade-left"
+              data-aos-offset="300"
+              data-aos-easing="ease-in-sine"
+              className=" BookingSectionText shadow rounded-4 p-4 text-end"
+            >
               <h1 className="text-end fs-1">يمكنك حجز موعد</h1>
               <p className="text-end mt-3 fs-4">
                 {" "}
@@ -863,12 +884,14 @@ export function DocSearch() {
                     </div>
                     <div>
                       <h1 className="fs-5"> {element.name}</h1>
-                      <p className="d-inline text-muted"> الخيرية</p>
-                      <i
-                        class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
-                          clickedButtonId === element._id ? "text-white" : ""
-                        }`}
-                      ></i>
+                      <div className="d-flex justify-content-end ">
+                        <p className="text-muted">{element.address}</p>
+                        <i
+                          class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
+                            clickedButtonId === element._id ? "text-white" : ""
+                          }`}
+                        ></i>
+                      </div>
                     </div>
                   </div>
                   // <h1
@@ -886,8 +909,10 @@ export function DocSearch() {
             </div>
           </div>
         </div>
-        <div data-aos="fade-up"
-     data-aos-duration="3000" className={classShowResultOfhospi}>
+        <div
+          
+          className={classShowResultOfhospi}
+        >
           <div className="w-100 d-flex justify-content-end">
             <i
               onClick={closeHospitalSection}
