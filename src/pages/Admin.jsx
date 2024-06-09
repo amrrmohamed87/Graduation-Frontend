@@ -894,86 +894,30 @@ function Admin() {
       <Dashboard />
       <section className="mt-16 md:mb-8">
         <div className="flex justify-center items-center gap-12">
-          <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
+          {/* <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
             <div className="flex  flex-col justify-end items-end gap-1">
               <h1 className="text-[28px]">المديرين</h1>
               <p className="text-[19px] text-gray-700">{adminsData.length}</p>
             </div>
             <GrUserAdmin size={25} className="text-emerald-500" />
-          </div>
+          </div> */}
           <h1 className="text-[20px] text-emerald-950 md:text-[50px]">
             منظمة التأمين الصحي
           </h1>
-          <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
+          {/* <div className="bg-white w-[250px] rounded-lg border shadow-md p-3 flex justify-end gap-2">
             <div className="flex  flex-col justify-end items-end gap-1">
               <h1 className="text-[28px]">المستشفيات</h1>
               <p className="text-[19px] text-gray-700">{hospitalInfo.length}</p>
             </div>
             <FaRegHospital size={25} className="text-emerald-500" />
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="mb-8 md:mb-12 bg-white shadow-md rounded-md border m-9">
         <h1 className="text-center mt-4 text-emerald-700 text-2xl">
           إضافة مستخدم جديد او دواء
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center md:mx-16 md:mt-4">
-          <form method="post">
-            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
-              <h1 className="text-center text-gray-800 text-2xl mb-4">
-                إضافة أدمن للمستشفيات
-              </h1>
-              <Input
-                id="adminFullName"
-                label="الأسم ثلاثي"
-                type="text"
-                name="name"
-                value={hospitalAdminData.name}
-                onChange={handleHospitalAdminChange}
-              />
-              <Input
-                id="adminUsername"
-                label="أسم المستخدم"
-                type="text"
-                name="username"
-                value={hospitalAdminData.username}
-                onChange={handleHospitalAdminChange}
-              />
-              <Input
-                id="adminPassword"
-                label="كلمة المرور"
-                type="password"
-                name="password"
-                value={hospitalAdminData.password}
-                onChange={handleHospitalAdminChange}
-              />
-              <select
-                name="hospitalID"
-                id="hospital"
-                label="المستشفي"
-                value={hospitalAdminData.hospitalID}
-                onChange={handleHospitalAdminChange}
-                className="h-[30px] w-full border-2 mt-8 mb-4 text-right border-gray-300 focus:border-gray-950 rounded-lg pl-2 md:h-[40px]"
-              >
-                <option value="">اختر المستشفى</option>
-                {hospitalInfo.map((hospital) => (
-                  <option key={hospital._id} value={hospital._id}>
-                    {hospital.name}
-                  </option>
-                ))}
-              </select>
-
-              <button
-                type="submit"
-                onClick={handleAddHospitalAdmin}
-                disabled={isAddingAdminHospital}
-                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
-              >
-                {isAddingAdminHospital ? "جاري إضافة الأدمن" : "إضافة أدمن"}
-              </button>
-            </div>
-          </form>
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center md:mx-16 md:mt-4">
           {/* <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
               <h1 className="text-center text-gray-800 text-2xl mb-4">
@@ -1078,6 +1022,62 @@ function Admin() {
           <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
               <h1 className="text-center text-gray-800 text-2xl mb-4">
+                إضافة أدمن للمستشفيات
+              </h1>
+              <Input
+                id="adminFullName"
+                label="الأسم ثلاثي"
+                type="text"
+                name="name"
+                value={hospitalAdminData.name}
+                onChange={handleHospitalAdminChange}
+              />
+              <Input
+                id="adminUsername"
+                label="أسم المستخدم"
+                type="text"
+                name="username"
+                value={hospitalAdminData.username}
+                onChange={handleHospitalAdminChange}
+              />
+              <Input
+                id="adminPassword"
+                label="كلمة المرور"
+                type="password"
+                name="password"
+                value={hospitalAdminData.password}
+                onChange={handleHospitalAdminChange}
+              />
+              <select
+                name="hospitalID"
+                id="hospital"
+                label="المستشفي"
+                value={hospitalAdminData.hospitalID}
+                onChange={handleHospitalAdminChange}
+                className="h-[30px] w-full border-2 mt-8 mb-4 text-right border-gray-300 focus:border-gray-950 rounded-lg pl-2 md:h-[40px]"
+              >
+                <option value="">اختر المستشفى</option>
+                {hospitalInfo.map((hospital) => (
+                  <option key={hospital._id} value={hospital._id}>
+                    {hospital.name}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                type="submit"
+                onClick={handleAddHospitalAdmin}
+                disabled={isAddingAdminHospital}
+                className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
+              >
+                {isAddingAdminHospital ? "جاري إضافة الأدمن" : "إضافة أدمن"}
+              </button>
+            </div>
+          </form>
+
+          <form method="post">
+            <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
+              <h1 className="text-center text-gray-800 text-2xl mb-4">
                 إضافة دواء
               </h1>
               <Input
@@ -1131,7 +1131,7 @@ function Admin() {
             </div>
           </form>
 
-          <form method="post">
+          {/* <form method="post">
             <div className="bg-white rounded-lg shadow-md p-4 m-4 border border-gray-200">
               <h1 className="text-center text-gray-800 text-2xl mb-4">
                 إضافة مريض
@@ -1196,7 +1196,7 @@ function Admin() {
                 {isAddingPatient ? "جاري إضافة المريض" : "إضافة مريض"}
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
       </section>
 
