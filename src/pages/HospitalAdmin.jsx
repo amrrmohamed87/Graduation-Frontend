@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Dashboard from "@/components/Dashboard";
 import { ToastContainer, toast } from "react-toastify";
 import Input from "@/components/AdminInput";
@@ -26,6 +26,7 @@ import { GrUserManager } from "react-icons/gr";
 
 const HospitalAdmin = () => {
   const hospitalId = localStorage.getItem("hospitalAdminHospitalID");
+  const imageInputRef = useRef(null);
 
   //Signup States
   const [addClinicDirector, setAddClinicDirector] = useState({
@@ -224,6 +225,9 @@ const HospitalAdmin = () => {
         hospitalID: hospitalId,
         image: "",
       });
+      if (imageInputRef.current) {
+        imageInputRef.current.value = "";
+      }
       setSelectedSpecialize(null);
       setIsAddingDoctor(false);
     } catch (error) {
@@ -619,6 +623,7 @@ const HospitalAdmin = () => {
               <input
                 type="file"
                 name="image"
+                ref={imageInputRef}
                 onChange={handleImageOnChange}
                 className="w-full p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               />
