@@ -478,7 +478,7 @@ export function DocSearch() {
           <div className="row gap-1 justify-content-evenly">
             <div className="col-md-5 d-flex">
               <p className="text-right fs-4 me-3 text-success">Patient :</p>
-              <p className="fs-5 text-right"> {UserNameOfLogin} </p>
+              <p className="fs-5 text-right"> {name} </p>
             </div>
             <div className="col-md-5 d-flex">
               <p className="text-right fs-4 me-3 text-success">Doctor :</p>
