@@ -19,6 +19,7 @@ export function DocSearch() {
     });
   }, []);
   const Token = localStorage.getItem("token");
+  const name = localStorage.getItem("patientName");
   const decodedToken = jwtDecode(Token);
   console.log(decodedToken);
   // name of user
@@ -353,7 +354,7 @@ export function DocSearch() {
                 <div className="d-flex gap-2 justify-content-center ">
                   <h1 className="fs-3 fontSizeINSmallScreen">
                     {" "}
-                    {UserNameOfLogin}
+                    {name}
                   </h1>
                   <label
                     htmlFor="patientID"
