@@ -374,7 +374,6 @@ export function DoctorDashBoard() {
       doctorID: doctorId,
       patientID: id,
     }));
-    toast.success("Doctor and Patient IDS are successfully added");
   };
 
   const handleChange = (event) => {
@@ -429,7 +428,6 @@ export function DoctorDashBoard() {
       doctor: doctorId,
       patient: id,
     }));
-    toast.success("Ids are passed to the body");
   }
 
   function handleRequestSurgeryChange(event) {
@@ -440,8 +438,7 @@ export function DoctorDashBoard() {
     }));
   }
 
-  const handleRequestSurgery = async (event) => {
-    // event.preventDefault();
+  const handleRequestSurgery = async () => {
     setIsRequestingSurgery(true);
 
     try {
@@ -842,7 +839,9 @@ export function DoctorDashBoard() {
                                           </tr>
                                         </thead>
                                         {isLoadingPatientRecord ? (
-                                          <p>Loading...</p>
+                                          <p className="text-center text-[26px]">
+                                            Loading...
+                                          </p>
                                         ) : (
                                           <tbody className="bg-white divide-y divide-gray-300">
                                             {currentData.map(
@@ -870,6 +869,7 @@ export function DoctorDashBoard() {
                                         )}
                                       </table>
                                     </div>
+
                                     <Pagination />
                                   </div>
                                 </DialogContent>
@@ -1165,179 +1165,185 @@ export function DoctorDashBoard() {
                                       Below the table
                                     </DialogDescription>
                                   </DialogHeader>
-
-                                  <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
-                                    <div className="flex justify-between items-center">
-                                      <button
-                                        className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
-                                        onClick={() => {
-                                          setFilter(!filter);
-                                        }}
-                                      >
-                                        Filter
-                                        <motion.span
-                                          animate={{
-                                            rotate: filter ? -180 : 0,
+                                  {patientRecord.length === 0 ? (
+                                    <h1 className="text-center text-[26px]">
+                                      لا يوجد سجلات طبية لهذا المريض
+                                    </h1>
+                                  ) : (
+                                    <div className="flex flex-col p-6 mb-12 bg-white rounded-lg shadow-xl w-full mx-auto">
+                                      <div className="flex justify-between items-center">
+                                        <button
+                                          className="flex items-center gap-2 bg-emerald-600 text-white shadow-md px-8 py-2 rounded-md mb-2 hover:bg-blue-700 transition-all duration-300"
+                                          onClick={() => {
+                                            setFilter(!filter);
                                           }}
-                                          transition={{ duration: 0.4 }}
                                         >
-                                          <MdKeyboardArrowDown size={20} />
-                                        </motion.span>
-                                      </button>
-                                    </div>
+                                          Filter
+                                          <motion.span
+                                            animate={{
+                                              rotate: filter ? -180 : 0,
+                                            }}
+                                            transition={{ duration: 0.4 }}
+                                          >
+                                            <MdKeyboardArrowDown size={20} />
+                                          </motion.span>
+                                        </button>
+                                      </div>
 
-                                    <AnimatePresence>
-                                      {filter && (
-                                        <motion.div
-                                          initial={{ opacity: 0, height: 0 }}
-                                          animate={{
-                                            opacity: 1,
-                                            height: "auto",
-                                          }}
-                                          exit={{ opacity: 0, height: 0 }}
-                                          transition={{ duration: 0.4 }}
-                                        >
-                                          {filter && (
-                                            <div className="flex justify-between items-center my-6 px-1">
-                                              <Select
-                                                options={dateOptions}
-                                                onChange={(date) =>
-                                                  setDateFilter(
-                                                    date ? date.value : ""
-                                                  )
-                                                }
-                                                value={dateOptions.find(
-                                                  (date) =>
-                                                    date.value === dateFilter
-                                                )}
-                                                isClearable
-                                                className="custom-select"
-                                                classNamePrefix="react-select"
-                                                placeholder="Date..."
-                                              />
-                                              <Select
-                                                options={medicineOptions}
-                                                onChange={(medicine) =>
-                                                  setMedicineFilter(
-                                                    medicine
-                                                      ? medicine.value
-                                                      : ""
-                                                  )
-                                                }
-                                                value={medicineOptions.find(
-                                                  (medicine) =>
-                                                    medicine.value ===
-                                                    medicineFilter
-                                                )}
-                                                isClearable
-                                                className="custom-select"
-                                                classNamePrefix="react-select"
-                                                placeholder="Medicine..."
-                                              />
+                                      <AnimatePresence>
+                                        {filter && (
+                                          <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{
+                                              opacity: 1,
+                                              height: "auto",
+                                            }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            transition={{ duration: 0.4 }}
+                                          >
+                                            {filter && (
+                                              <div className="flex justify-between items-center my-6 px-1">
+                                                <Select
+                                                  options={dateOptions}
+                                                  onChange={(date) =>
+                                                    setDateFilter(
+                                                      date ? date.value : ""
+                                                    )
+                                                  }
+                                                  value={dateOptions.find(
+                                                    (date) =>
+                                                      date.value === dateFilter
+                                                  )}
+                                                  isClearable
+                                                  className="custom-select"
+                                                  classNamePrefix="react-select"
+                                                  placeholder="Date..."
+                                                />
+                                                <Select
+                                                  options={medicineOptions}
+                                                  onChange={(medicine) =>
+                                                    setMedicineFilter(
+                                                      medicine
+                                                        ? medicine.value
+                                                        : ""
+                                                    )
+                                                  }
+                                                  value={medicineOptions.find(
+                                                    (medicine) =>
+                                                      medicine.value ===
+                                                      medicineFilter
+                                                  )}
+                                                  isClearable
+                                                  className="custom-select"
+                                                  classNamePrefix="react-select"
+                                                  placeholder="Medicine..."
+                                                />
 
-                                              <Select
-                                                options={diagnoseOptions}
-                                                onChange={(diagnose) =>
-                                                  setDiagnoseFilter(
-                                                    diagnose
-                                                      ? diagnose.value
-                                                      : ""
-                                                  )
-                                                }
-                                                value={diagnoseOptions.find(
-                                                  (diagnose) =>
-                                                    diagnose.value ===
-                                                    diagnoseFilter
-                                                )}
-                                                isClearable
-                                                className="custom-select"
-                                                classNamePrefix="react-select"
-                                                placeholder="Diagnose..."
-                                              />
+                                                <Select
+                                                  options={diagnoseOptions}
+                                                  onChange={(diagnose) =>
+                                                    setDiagnoseFilter(
+                                                      diagnose
+                                                        ? diagnose.value
+                                                        : ""
+                                                    )
+                                                  }
+                                                  value={diagnoseOptions.find(
+                                                    (diagnose) =>
+                                                      diagnose.value ===
+                                                      diagnoseFilter
+                                                  )}
+                                                  isClearable
+                                                  className="custom-select"
+                                                  classNamePrefix="react-select"
+                                                  placeholder="Diagnose..."
+                                                />
 
-                                              <Select
-                                                options={doctorOptions}
-                                                onChange={(name) =>
-                                                  setDoctorFilter(
-                                                    name ? name.value : ""
-                                                  )
-                                                }
-                                                value={doctorOptions.find(
-                                                  (name) =>
-                                                    name.value === doctorFilter
-                                                )}
-                                                isClearable
-                                                className="custom-select"
-                                                classNamePrefix="react-select"
-                                                placeholder="Doctor's Name..."
-                                              />
-                                            </div>
-                                          )}
-                                        </motion.div>
-                                      )}
-                                    </AnimatePresence>
-
-                                    <div className="overflow-x-auto rounded-[5px]">
-                                      <table className="min-w-full divide-y divide-gray-300">
-                                        <thead className="bg-emerald-600">
-                                          <tr>
-                                            <th
-                                              scope="col"
-                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                            >
-                                              التاريخ
-                                            </th>
-                                            <th
-                                              scope="col"
-                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                            >
-                                              الدواء
-                                            </th>
-                                            <th
-                                              scope="col"
-                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                            >
-                                              التشخيص
-                                            </th>
-                                            <th
-                                              scope="col"
-                                              className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                            >
-                                              أسم الدكتور
-                                            </th>
-                                          </tr>
-                                        </thead>
-                                        {isLoadingPatientRecord ? (
-                                          <p>Loading...</p>
-                                        ) : (
-                                          <tbody className="bg-white divide-y divide-gray-300">
-                                            {currentData.map(
-                                              (record, index) => (
-                                                <tr
-                                                  key={index}
-                                                  className="hover:bg-gray-50"
-                                                >
-                                                  <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
-                                                    {formateDate(record.date)}
-                                                  </td>
-                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                    {record.medicine}
-                                                  </td>
-                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                    {record.diagnose}
-                                                  </td>
-                                                  <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                    {record.doctor.name}
-                                                  </td>
-                                                </tr>
-                                              )
+                                                <Select
+                                                  options={doctorOptions}
+                                                  onChange={(name) =>
+                                                    setDoctorFilter(
+                                                      name ? name.value : ""
+                                                    )
+                                                  }
+                                                  value={doctorOptions.find(
+                                                    (name) =>
+                                                      name.value ===
+                                                      doctorFilter
+                                                  )}
+                                                  isClearable
+                                                  className="custom-select"
+                                                  classNamePrefix="react-select"
+                                                  placeholder="Doctor's Name..."
+                                                />
+                                              </div>
                                             )}
-                                          </tbody>
+                                          </motion.div>
                                         )}
-                                      </table>
+                                      </AnimatePresence>
+
+                                      <div className="overflow-x-auto rounded-[5px]">
+                                        <table className="min-w-full divide-y divide-gray-300">
+                                          <thead className="bg-emerald-600">
+                                            <tr>
+                                              <th
+                                                scope="col"
+                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                              >
+                                                التاريخ
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                              >
+                                                الدواء
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                              >
+                                                التشخيص
+                                              </th>
+                                              <th
+                                                scope="col"
+                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                              >
+                                                أسم الدكتور
+                                              </th>
+                                            </tr>
+                                          </thead>
+                                          {isLoadingPatientRecord ? (
+                                            <p>Loading...</p>
+                                          ) : (
+                                            <tbody className="bg-white divide-y divide-gray-300">
+                                              {currentData.map(
+                                                (record, index) => (
+                                                  <tr
+                                                    key={index}
+                                                    className="hover:bg-gray-50"
+                                                  >
+                                                    <td className="px-6 py-4 text-center  whitespace-nowrap text-md text-gray-900">
+                                                      {formateDate(record.date)}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                      {record.medicine}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                      {record.diagnose}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
+                                                      {record.doctor.name}
+                                                    </td>
+                                                  </tr>
+                                                )
+                                              )}
+                                            </tbody>
+                                          )}
+                                        </table>
+                                      </div>
+                                      <Pagination />
                                     </div>
-                                    <Pagination />
-                                  </div>
+                                  )}
                                 </DialogContent>
                               </Dialog>
 
@@ -1621,7 +1627,7 @@ export function DoctorDashBoard() {
               ) : (
                 <h1 className="text-center fs-1 mt-5">جدول العمليات</h1>
               )}
-              
+
               {surgeries === null || surgeries.length === 0 ? (
                 ""
               ) : (
