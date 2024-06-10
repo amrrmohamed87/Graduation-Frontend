@@ -865,7 +865,7 @@ export function DocSearch() {
                       setClickedButtonId(element._id);
                       searchDocINHospi(element._id);
                     }}
-                    className={`shadow FlexForButtonHospital  rounded-4 h-100 p-2 d-flex justify-content-between  gap-5 ${
+                    className={`shadow FlexForButtonHospital cursor-pointer rounded-4 h-100 p-2 d-flex justify-content-between  gap-5 ${
                       clickedButtonId === element._id ? "bg-warning" : ""
                     }`}
                   >
