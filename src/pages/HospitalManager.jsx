@@ -69,6 +69,7 @@ function HospitalManager() {
     doctorID: "",
     day: "",
     time: "",
+    surgeryID: "",
   });
   const [isScheduling, setIsSechudling] = useState(false);
   console.log(surgeryData);
@@ -206,6 +207,7 @@ function HospitalManager() {
         patientID: "",
         day: "",
         time: "",
+        surgeryID: "",
       });
       setRequestSpecificDoctors({
         hospitalID: hospitalId,
@@ -533,6 +535,7 @@ function HospitalManager() {
                                         setSurgeryData((prev) => ({
                                           ...prev,
                                           patientID: request.patient._id,
+                                          surgeryID: request._id,
                                         }));
                                       }}
                                     >
