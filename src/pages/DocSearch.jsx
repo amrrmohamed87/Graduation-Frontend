@@ -21,7 +21,7 @@ export function DocSearch() {
   const Token = localStorage.getItem("token");
   const name = localStorage.getItem("patientName");
   const decodedToken = jwtDecode(Token);
-  console.log(decodedToken);
+  // console.log(decodedToken);
   // name of user
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
@@ -31,7 +31,7 @@ export function DocSearch() {
     name: "",
     specialize: "",
   });
-  console.log(searchUser);
+  // console.log(searchUser);
   const [sureBookSection, setSureBookSection] = useState("d-none");
   const [ClassNamee, setClassName] = useState(
     "d-none position-fixed z-1 secBook rounded-5 shadow-lg bg-white"
@@ -43,9 +43,9 @@ export function DocSearch() {
   const [showDiv2, setShowDiv2] = useState(false);
   // -----------------------------new code ------------------------
   let [DocData, setDocData] = useState([]);
-  //   console.log(DocData);
+    // console.log(DocData);
   let [showResult, setShowResult] = useState([]);
-  console.log(showResult);
+  // console.log(showResult);
   let [handleForSearch, setHandleForSearch] = useState(
     "w-25 d-flex justify-content-center "
   );
@@ -689,6 +689,9 @@ export function DocSearch() {
                       <p className="text-center text-muted mt-1 ">
                         {element.specialize.name}
                       </p>
+                      <div className="d-flex flex-row">
+                        <p className="text-muted">{element.hospitalID.name} <i className="fa-solid fa-location-dot text-success"></i></p>  
+                      </div>
                       <button
                         onClick={() =>
                           ShowBookSection(element._id, element.name)
@@ -760,36 +763,8 @@ export function DocSearch() {
             )}
             <h1 className={errorGetDoc}>جارى التحميل</h1>
             {DocData.map((element, i) => (
-              // <div
-              //   key={i}
-              //   className="widthForDivInGetUser rounded-4 border-4 mt-3"
-              // >
-              //   <div className="py-3 text-end">
-              //     <h1 className="text-center fs-3 mb-2 text-[#056558]">
-              //       د/ {element.name}
-              //     </h1>
-              //     <h3 className="fs-3 mb-2">
-              //       {element.specialize.name} :{" "}
-              //       <i className="fa-solid text-success fs-5 fa-stethoscope"></i>{" "}
-              //     </h3>
-              //     <div className="d-flex gap-2 flex-row justify-content-end">
-              //       <h6 className="fs-5"> {element.hospitalID?.name} : </h6>
-              //       <i className=" fa-solid text-success fs-5 fa-truck-medical"></i>
-              //     </div>
-              //     <div className="d-flex mt-3 justify-content-center">
-              //       <button
-              //         onClick={() => ShowBookSection(element._id, element.name)}
-              //         type="button"
-              //         className="btn bg-success  w-100 text-white border-3"
-              //       >
-              //         احجز الان
-              //       </button>
-              //     </div>
-              //   </div>
-              // </div>
-              <div className="w-25 d-flex justify-content-center">
+              <div key={i} className="w-25 d-flex justify-content-center">
                 <div
-                  key={i}
                   className="position-relative w-11/12 roundedCorner shadow-sm border my-3 "
                 >
                   <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
@@ -806,6 +781,9 @@ export function DocSearch() {
                     <p className="text-center text-muted mt-1 ">
                       {element.specialize.name}
                     </p>
+                    <div className="d-flex flex-row">
+                        <p className="text-muted"> {element.hospitalID?.name} <i className="fa-solid fa-location-dot text-success"></i></p>  
+                      </div>
                     <button
                       onClick={() => ShowBookSection(element._id, element.name)}
                       type="button"
@@ -888,7 +866,7 @@ export function DocSearch() {
                       <div className="d-flex justify-content-end ">
                         <p className="text-muted">{element.address}</p>
                         <i
-                          class={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
+                          className={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
                             clickedButtonId === element._id ? "text-white" : ""
                           }`}
                         ></i>
