@@ -1,7 +1,10 @@
 import { NavLink, Form, useRouteLoaderData, useSubmit } from "react-router-dom";
 import { navLinks } from "../data/constants";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 import {
   AlertDialog,
@@ -29,12 +32,14 @@ import { TbLogout2 } from "react-icons/tb";
 
 import logo1 from "../assets/images/MHI.png";
 import logo2 from "../assets/images/MHI-Emerald.svg";
+import { Sidebar } from "lucide-react";
 
 function NewNavbar() {
   const name = localStorage.getItem("patientName");
   const role = localStorage.getItem("role");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebar, setIsSidebar] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const token = useRouteLoaderData("root");
   const submit = useSubmit();
 
@@ -162,111 +167,79 @@ function NewNavbar() {
               <NavLink to="/login">تسجيل الدخول</NavLink>
             </li>
           )}
-          {token && (
-            <li
-              className={`hidden md:block list-none text-[23px] hover:animate-pulse p-6 ${
-                isScrolled ? "text-white" : "text-slate-100"
-              }`}
-            >
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button>تسجيل الخروج</button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-[#056558]">
-                      هل أنت متأكد؟
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
-                      سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن تعد
-                      متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول مرة
-                      أخرى
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="flex items-center gap-3">
-                    <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
-                      إلغاء
-                    </AlertDialogCancel>
-                    <Form
-                      action="/logout"
-                      method="post"
-                      onClick={logoutHandler}
-                      className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
-                    >
-                      <TbLogout2 size={20} className="text-emerald-950" />
-                      <button className="text-emerald-950">تسجيل الخروج</button>
-                    </Form>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </li>
-          )}
+
           {token && role === "patient" && (
-            <NavigationMenu className="mr-12">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-[20px]">
-                    {name}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="md:w-[400px] lg:w-[140px]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <div className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-2 no-underline outline-none focus:shadow-md">
-                            <NavLink
-                              to="/profile"
-                              className="mb-2 text-lg font-medium"
-                            >
-                              Profile
-                            </NavLink>
-                            <li
-                              className={`hidden md:block list-none text-[16px] hover:animate-pulse text-black`}
-                            >
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <button>تسجيل الخروج</button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle className="text-[#056558]">
-                                      هل أنت متأكد؟
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
-                                      سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا
-                                      من حسابك ولن تعد متاحًا لاستخدام هذه
-                                      الخدمات حتى تقوم بتسجيل الدخول مرة أخرى
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter className="flex items-center gap-3">
-                                    <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
-                                      إلغاء
-                                    </AlertDialogCancel>
-                                    <Form
-                                      action="/logout"
-                                      method="post"
-                                      onClick={logoutHandler}
-                                      className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
-                                    >
-                                      <TbLogout2
-                                        size={20}
-                                        className="text-emerald-950"
-                                      />
-                                      <button className="text-emerald-950">
-                                        تسجيل الخروج
-                                      </button>
-                                    </Form>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                            </li>
-                          </div>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <div
+              onMouseEnter={() => {
+                setDropdownVisible(true);
+              }}
+              onMouseLeave={() => {
+                setDropdownVisible(false);
+              }}
+              className="pr-4 relative cursor-pointer hidden md:block"
+            >
+              <div className="flex place-items-center bg-white text-emerald-950 p-2 rounded">
+                <motion.div
+                  animate={{ rotate: dropdownVisible ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <MdKeyboardArrowDown />
+                </motion.div>
+                <NavLink to="/profile">{name}</NavLink>
+              </div>
+              {dropdownVisible && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute right-4 mt-[1px] w-full p-3 bg-white rounded-md shadow-lg"
+                >
+                  <NavLink to="/profile">
+                    <p className="text-emerald-950 text-end mb-2">
+                      الصفحة الشخصية
+                    </p>
+                  </NavLink>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <div className="flex items-center justify-end gap-2  md:gap-8 cursor-pointer">
+                        <TbLogout2 size={20} className="text-emerald-950" />
+                        <button className="text-emerald-950">
+                          تسجيل الخروج
+                        </button>
+                      </div>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-[#056558]">
+                          هل أنت متأكد؟
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
+                          سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن
+                          تعد متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول
+                          مرة أخرى.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="flex items-center gap-3">
+                        <AlertDialogCancel className="w-[150px] bg-red-600 text-white mb-1 text-[18px] font-bold hover:bg-red-900 transition-all duration-300">
+                          إلغاء
+                        </AlertDialogCancel>
+                        <form
+                          action="/logout"
+                          method="post"
+                          onClick={logoutHandler}
+                          className="flex items-center gap-2 w-[150px] bg-emerald-700 rounded-lg px-3 py-2 md:gap-8 cursor-pointer hover:bg-emerald-900 transition-all duration-300"
+                        >
+                          <TbLogout2 size={20} className="text-white" />
+                          <button className="text-white">تسجيل الخروج</button>
+                        </form>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </motion.div>
+              )}
+            </div>
           )}
         </div>
 
@@ -410,3 +383,112 @@ function NewNavbar() {
 }
 
 export default NewNavbar;
+
+/**
+ * 
+ * <NavigationMenu className="mr-12">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-[20px]">
+                    {name}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="md:w-[400px] lg:w-[140px]">
+                      <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <div className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-2 no-underline outline-none focus:shadow-md">
+                            <NavLink
+                              to="/profile"
+                              className="mb-2 text-lg font-medium"
+                            >
+                              Profile
+                            </NavLink>
+                            <li
+                              className={`hidden md:block list-none text-[16px] hover:animate-pulse text-black`}
+                            >
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <button>تسجيل الخروج</button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle className="text-[#056558]">
+                                      هل أنت متأكد؟
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
+                                      سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا
+                                      من حسابك ولن تعد متاحًا لاستخدام هذه
+                                      الخدمات حتى تقوم بتسجيل الدخول مرة أخرى
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter className="flex items-center gap-3">
+                                    <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
+                                      إلغاء
+                                    </AlertDialogCancel>
+                                    <Form
+                                      action="/logout"
+                                      method="post"
+                                      onClick={logoutHandler}
+                                      className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
+                                    >
+                                      <TbLogout2
+                                        size={20}
+                                        className="text-emerald-950"
+                                      />
+                                      <button className="text-emerald-950">
+                                        تسجيل الخروج
+                                      </button>
+                                    </Form>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </li>
+                          </div>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {token && (
+            <li
+              className={`hidden md:block list-none text-[23px] hover:animate-pulse p-6 ${
+                isScrolled ? "text-white" : "text-slate-100"
+              }`}
+            >
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button>تسجيل الخروج</button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-white w-[320px] md:w-[500px]">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-[#056558]">
+                      هل أنت متأكد؟
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-emerald-700 text-[15px] md:text-[20px]">
+                      سيؤدي هذا الإجراء إلى تسجيل خروجك نهائيًا من حسابك ولن تعد
+                      متاحًا لاستخدام هذه الخدمات حتى تقوم بتسجيل الدخول مرة
+                      أخرى
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="flex items-center gap-3">
+                    <AlertDialogCancel className="border-2 border-[#056558] text-emerald-950 mb-1 text-[18px] font-bold">
+                      إلغاء
+                    </AlertDialogCancel>
+                    <Form
+                      action="/logout"
+                      method="post"
+                      onClick={logoutHandler}
+                      className="flex items-center gap-2 bg-white shadow-2xl rounded-[30px] px-3 py-2 md:gap-8 cursor-pointer"
+                    >
+                      <TbLogout2 size={20} className="text-emerald-950" />
+                      <button className="text-emerald-950">تسجيل الخروج</button>
+                    </Form>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </li>
+          )}
+ */
