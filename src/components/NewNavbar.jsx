@@ -196,7 +196,7 @@ function NewNavbar() {
                   className="absolute right-4 mt-[1px] w-full p-3 bg-white rounded-md shadow-lg"
                 >
                   <NavLink to="/profile">
-                    <p className="text-emerald-950 text-end mb-2">
+                    <p className="text-emerald-900 text-end mb-2">
                       الصفحة الشخصية
                     </p>
                   </NavLink>
@@ -204,8 +204,8 @@ function NewNavbar() {
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <div className="flex items-center justify-end gap-2  md:gap-8 cursor-pointer">
-                        <TbLogout2 size={20} className="text-emerald-950" />
-                        <button className="text-emerald-950">
+                        <TbLogout2 size={20} className="text-emerald-900" />
+                        <button className="text-emerald-900">
                           تسجيل الخروج
                         </button>
                       </div>
