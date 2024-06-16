@@ -193,7 +193,7 @@ function NewNavbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute right-4 mt-[1px] w-full p-3 bg-white rounded-md shadow-lg"
+                  className="absolute right-4 mt-[1px] w-full min-w-[150px] p-3 bg-white rounded-md shadow-lg"
                 >
                   <NavLink to="/profile">
                     <p className="text-emerald-900 text-end mb-2">
