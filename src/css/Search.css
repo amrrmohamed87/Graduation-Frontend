@@ -221,8 +221,12 @@
   width: 80px;
   height: 80px;
 }
+.roundedCornerForGet{
+  border-radius:7% 0 7% 0;
+}
 .roundedCorner{
   border-radius:7% 0 7% 0;
+  height: 53%;
 }
 /* medication search */
 .DivSoraSearchMed {

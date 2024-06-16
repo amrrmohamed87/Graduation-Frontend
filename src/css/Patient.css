@@ -48,3 +48,22 @@
     left: 4%;
     top: 22%;
   }
+
+  .styleForPatienDiagnoses{
+   position: absolute;
+   top: -100%;
+   left: 15%;
+   width: 70%;
+   height: 500px;
+   background: white;
+   z-index: 12;
+   border-radius: 2%;
+   transition:all 0.5s ;
+   -webkit-transition:all 0.5s ;
+   -moz-transition:all 0.5s ;
+   -ms-transition:all 0.5s ;
+   -o-transition:all 0.5s ;
+}
+.activeCLass{
+   top: 20%;
+}

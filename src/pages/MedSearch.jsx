@@ -291,6 +291,10 @@ export function MedSearch() {
                 ) : (
                   ""
                 )}
+                {getMedicine.length === 0 || getMedicine === null ?  <h1 className="fs-1 mt-5 text-center fw-bold ">
+                    {" "}
+                    لا يوجد ادوية
+                  </h1> : ""}
                 {getMedicine.map((element, i) => (
                   <div
                     key={i}
@@ -314,12 +318,12 @@ export function MedSearch() {
                       {element.components} :{" "}
                       <i className="fa-solid fa-mortar-pestle fs-4 text-success"></i>
                     </p>
-                    <div className="d-flex justify-content-evenly">
-                      <p className="mt-3 text-end fs-6 w-75">
+                    <div className="d-flex justify-content-end">
+                      <p className="mt-3 text-end fs-6 ">
                         {" "}
                         {element.tradeMark}{" "}
                       </p>
-                      <span className="text-success text-center fs-5 mt-3 w-50 ">
+                      <span className="text-success text-center fs-5 mt-3 ms-2 ">
                         : اسم الشركات
                       </span>
                     </div>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/DoctorDashboard.css";
 function Hospital() {
+  const [watingForPutTimeForDoc , setWatingForPutTimeForDoc] = useState(false)
   // returning the name, location, and id of the logged hospital - amr
   const name = localStorage.getItem("name");
   const hsopital = localStorage.getItem("hospital");
@@ -64,9 +65,14 @@ function Hospital() {
   const [whenTheAdminChooseSameTime, setWhenTheAdminChooseSameTime] =
     useState("d-none");
   const [errorForTIme, seterrorForTIme] = useState(false);
+
+
+
   async function putDoctorInformation() {
+    setWatingForPutTimeForDoc(true)
     if (docInformation.time.length <= 0) {
       seterrorForTIme(true);
+      setWatingForPutTimeForDoc(false)
     } else {
       try {
         seterrorForTIme(false)
@@ -79,14 +85,17 @@ function Hospital() {
         setRefOperation("d-none");
         setWhenTheAdminChooseSameTime("d-none");
         setActiveIndex(null);
+        setWatingForPutTimeForDoc(false)
       } catch (error) {
         if (error.response && error.response.status === 422) {
           setRefOperation("d-flex justify-content-center");
           setConfirmOperation("d-none");
           setDocInformation({ ...docInformation, time: [] });
+          setWatingForPutTimeForDoc(false)
         } else if (error.response && error.response.status === 424) {
           setWhenTheAdminChooseSameTime("d-flex justify-content-center");
           setRefOperation("d-none");
+          setWatingForPutTimeForDoc(false)
         }
       }
     }
@@ -107,6 +116,7 @@ function Hospital() {
   }
   function putTime(e) {
     seterrorForTIme(false)
+    setWatingForPutTimeForDoc(false)
     const selectedTime = e.target.value;
     const isTimeSelected = docInformation.time.includes(selectedTime);
     if (isTimeSelected) {
@@ -132,6 +142,8 @@ function Hospital() {
     setDocInformation({ ...docInformation, doctorID: "", day: "", time: [] });
     setActiveIndex(null);
     seterrorForTIme(false)
+    setWatingForPutTimeForDoc(false)
+    setWatingForPutTimeForDoc(false)
   }
   const timesValues = [
     { value: "8:00" },
@@ -198,10 +210,10 @@ function Hospital() {
     { value: "23:15" },
     { value: "23:30" },
     { value: "23:45" },
-    { value: "24:00" },
-    { value: "24:15" },
-    { value: "24:30" },
-    { value: "24:45" },
+    { value: "00:00" },
+    { value: "00:15" },
+    { value: "00:30" },
+    { value: "00:45" },
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
@@ -392,13 +404,13 @@ function Hospital() {
         </div>
         <div className="d-flex w-100 justify-content-center mt-5">
           <button
-            className="me-5 ButtonStyleForHospital fs-3 btn btn-success"
+            className="me-5 ButtonStyleForHospital fs-4 btn btn-success"
             onClick={putDoctorInformation}
           >
-            أضافة
+            {watingForPutTimeForDoc ? "...جارى الأضافة" :  " أضافة"}
           </button>
           <button
-            className="btn btn-danger ButtonStyleForHospital fs-3"
+            className="btn btn-danger ButtonStyleForHospital fs-4"
             onClick={closeDiv}
           >
             الغاء

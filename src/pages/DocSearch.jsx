@@ -12,6 +12,9 @@ import "aos/dist/aos.css";
 // import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
+  const[IsLOadingDays , setIsLoadingDays] = useState(true)
+  const [isLoadingForDateDoc , setIsLoadingForDateDoc] = useState(true)
+  const [watingForSureBook , setWatingForSureBook] = useState(false)
   useEffect(() => {
     AOS.init({
       duration: 1000, // Duration of animations in milliseconds
@@ -79,6 +82,8 @@ export function DocSearch() {
     setClassOfDocTime("d-none");
     setActiveIndexOfDate(null);
     setActiveIndexOfTime(null);
+    setErrorButton("d-none")
+    setWatingForSureBook(false)
   }
   function closeBookSection() {
     let newBook = { ...BookTime, day: "", time: "" };
@@ -128,6 +133,10 @@ export function DocSearch() {
     setClassOfDocTime("d-none");
     setActiveIndexOfDate(null);
     setActiveIndexOfTime(null);
+    setClassOfError("d-none")
+    setWatingForSureBook(false)
+    setErrorButton("d-none")
+    setWatingForSureBook(false)
   }
   async function submitSearch(e) {
     e.preventDefault();
@@ -180,13 +189,14 @@ export function DocSearch() {
   }
   async function submitBook(e) {
     e.preventDefault();
-
+    setWatingForSureBook(true)
     try {
       let { data } = await axios.post(
         "https://mhiproject.onrender.com/patient/book",
         BookTime
       );
       // setClassName("d-none")
+      setWatingForSureBook(false)
       setSureBookSection("d-none");
       setTrueBook(
         "w-50 position-fixed secBook2 rounded-5 shadow-lg bg-white d-flex flex-wrap"
@@ -196,18 +206,21 @@ export function DocSearch() {
         setError("يرجى اختيار موعد حجز أخر");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
+        setWatingForSureBook(false)
       } else if (error.response && error.response.status === 400) {
         setError("يرجى ادخال بيانات صحيحة ");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
+        setWatingForSureBook(false)
       } else if (error.response && error.response.status === 404) {
         setError("يرجى اختيار موعد حجز أخر");
         setErrorButton("btn btn-success me-5");
         setClassOfError("text-center fs-5 text-danger");
+        setWatingForSureBook(false)
       } else if (error.response && error.response.status === 422) {
         setError("لقد حجزت مع هذا الطبيب من قبل");
         setErrorButton("btn btn-success me-5");
-        setClassOfError("text-center fs-5 text-danger");
+        setClassOfError("text-center fs-5 text-danger");setWatingForSureBook(false)
       }
     }
   }
@@ -216,6 +229,7 @@ export function DocSearch() {
     setClassName("position-fixed z-3 secBook rounded-5 shadow-lg bg-white");
     setErrorButton("d-none");
     setClassOfError("d-none");
+    setWatingForSureBook(false)
   }
   // ---------------------new code-----------------
   function showSectionSearch() {
@@ -300,6 +314,7 @@ export function DocSearch() {
         { doctorID: DocId }
       );
       setDocDays(data);
+      setIsLoadingForDateDoc(false)
       setNotHaveDays(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -318,6 +333,7 @@ export function DocSearch() {
         { doctorID: docDetail.id, day: DayOfWork }
       );
       setDocTimes(data);
+      setIsLoadingDays(false)
     } catch (error) {}
   }
   // -------------------
@@ -390,7 +406,8 @@ export function DocSearch() {
                           لا يعمل هذا الطبيب
                         </h1>
                       )}
-
+                     
+                      {isLoadingForDateDoc ?  <h2 className="mt-5 text-center fs-5 text-muted">جارى التحميل</h2> : "" }
                       {docDays.map((element, i) => {
                         const date = new Date(element);
                         const formattedDate = date.toISOString().split("T")[0];
@@ -424,7 +441,7 @@ export function DocSearch() {
 
                     <div className="d-flex w-100 toChangeStyleTime overflow-scroll position-relative justify-content-center border py-3 rounded-3 hieghtInSmallScreenForDate">
                       <div className="position-absolute">
-                        {docTimes &&
+                        {IsLOadingDays? "جارى التحميل" : docTimes &&
                           docTimes.length > 0 &&
                           docTimes[0].map((element, i) => (
                             <div key={i} className="w-100">
@@ -497,7 +514,7 @@ export function DocSearch() {
         <p className={classOfError}>{error}</p>
         <div className="d-flex justify-content-center py-3">
           <button onClick={submitBook} className="btn btn-success me-5">
-            تأكيد الحجز
+            {watingForSureBook ? "....جارى تأكيد الحجز": " تأكيد الحجز "}
           </button>
           <button onClick={BackStep} className={errorButton}>
             الرجوع للصفحة السابقة{" "}
@@ -673,7 +690,7 @@ export function DocSearch() {
                 <div className={handleForSearch}>
                   <div
                     key={i}
-                    className="position-relative w-11/12 roundedCorner border  shadow my-3 h-5/6"
+                    className="position-relative w-11/12 roundedCorner border  shadow my-3"
                   >
                     <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                       <img
@@ -684,7 +701,7 @@ export function DocSearch() {
                     </div>
                     <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
                       <h3 className="fw-medium text-center fs-4">
-                        {element.name}
+                      د/  {element.name}
                       </h3>
                       <p className="text-center text-muted mt-1 ">
                         {element.specialize.name}
@@ -765,7 +782,7 @@ export function DocSearch() {
             {DocData.map((element, i) => (
               <div key={i} className="w-25 d-flex justify-content-center">
                 <div
-                  className="position-relative w-11/12 roundedCorner shadow-sm border my-3 "
+                  className="position-relative w-11/12 roundedCornerForGet shadow-sm border my-3 "
                 >
                   <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                     <img
@@ -776,7 +793,7 @@ export function DocSearch() {
                   </div>
                   <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
                     <h3 className="fw-medium text-center fs-4">
-                      {element.name}
+                     د/ {element.name} 
                     </h3>
                     <p className="text-center text-muted mt-1 ">
                       {element.specialize.name}
@@ -864,7 +881,7 @@ export function DocSearch() {
                     <div>
                       <h1 className="fs-5"> {element.name}</h1>
                       <div className="d-flex justify-content-end ">
-                        <p className="text-muted">{element.address}</p>
+                        <p className="text-muted mt-1">{element.address}</p>
                         <i
                           className={`fa-solid fa-location-dot text-warning ms-2 mt-2 ${
                             clickedButtonId === element._id ? "text-white" : ""
@@ -936,7 +953,7 @@ export function DocSearch() {
                   />
                 </div>
                 <div className="d-flex align-items-center flex-column flex-wrap pt-14 pb-4 ">
-                  <h3 className="fw-medium text-center fs-4">{element.name}</h3>
+                  <h3 className="fw-medium text-center fs-4">د/ {element.name}</h3>
                   <p className="text-center text-muted mt-1 ">
                     {element.specialize.name}
                   </p>

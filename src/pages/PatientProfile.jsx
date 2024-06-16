@@ -20,6 +20,7 @@ function PatientProfile() {
   // console.log(UserIdOfLogin);
   // --------------end----------------
   const [isLoading, setIsLoading] = useState(true);
+  const [errorForGetTimes, setErrorForGetTimes] = useState("");
   const [isLoading2, setIsLoading2] = useState(true);
   const [activeTab, setActiveTab] = useState(null);
   const handleClick = (tabNumber) => {
@@ -70,7 +71,13 @@ function PatientProfile() {
       // console.log(data);
       setWattingBooks(data);
       setIsLoading(false);
-    } catch (error) {}
+      setErrorForGetTimes("");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setIsLoading(false);
+        alert("لا يوجد ");
+      }
+    }
   }
 
   // -------------end---------
@@ -85,13 +92,24 @@ function PatientProfile() {
       // console.log(data);
       setAcceptBooks(data);
       setIsLoading(false);
-    } catch (error) {}
+      setErrorForGetTimes("");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setIsLoading(false);
+        setErrorForGetTimes("لا يوجد مواعيد سابقة");
+      }
+    }
   }
 
   // -------------end---------
   // to get records
+  const [activeIndex, setActiveIndex] = useState(null);
   const [setRecords, setSetRecords] = useState([]);
-  // console.log(setRecords);
+  const [getDiagnose, setDiagnose] = useState([]);
+  console.log(getDiagnose[activeIndex]);
+  const [activeClass, setActiveClass] = useState(false);
+  // console.log(tempDiagnose.medicine);
+
   async function getRecords() {
     try {
       let { data } = await axios(
@@ -99,10 +117,29 @@ function PatientProfile() {
       );
       // console.log(data);
       setSetRecords(data);
+      // console.log(data.diagnose);
+      const allDiagnoses = data.map((record) => record.diagnose);
+      // console.log(allDiagnoses);
+      setDiagnose(allDiagnoses);
       setIsLoading(false);
-    } catch (error) {}
+      setErrorForGetTimes("");
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setIsLoading(false);
+        alert("لا يوجد سجلات طبية");
+      }
+    }
   }
 
+  function putIToGetDiagnose(IOfDiagnose) {
+    setActiveClass(true);
+    setActiveIndex(IOfDiagnose);
+  }
+
+  function closeDiagnoseSection() {
+    setActiveClass(false);
+    setActiveIndex(null);
+  }
   // -------------end---------
   const [doneMessage, setDoneMessage] = useState("d-none");
   const [detailsOfPatient, setDetailsOfPatient] = useState({
@@ -166,7 +203,7 @@ function PatientProfile() {
   }
   const [getDetails, setGetDetails] = useState({});
   const [getDetails2, setGetDetails2] = useState();
-  console.log(getDetails);
+  // console.log(getDetails);
   async function getInfoOfUser() {
     try {
       let { data } = await axios.get(
@@ -460,7 +497,7 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
-                <div className="position-absolute start-50 top-50 translate-middle ">
+                <div className="position-absolute z-1 start-50 top-50 translate-middle ">
                   {isLoading === true ? (
                     <p className="fw-bold text-center mt-5 me-22 fs-2">
                       {" "}
@@ -470,6 +507,10 @@ function PatientProfile() {
                     ""
                   )}
                 </div>
+                <h2 className="start-50 top-50 z-3 bg-black translate-middle mt-4 shadow p-4  position-absolute fs-2 fw-bold text-white rounded ">
+                    {" "}
+                    {errorForGetTimes}
+                  </h2>
                 {/* 3rd mwa3ed montzra */}
                 <div className="w-100 togetTableInMiddle position-absolute z-3">
                   {activeTab === 1 ? (
@@ -528,7 +569,7 @@ function PatientProfile() {
                   ) : (
                     ""
                   )}
-
+                 
                   {/* ------------------------------ */}
 
                   {/* medical records */}
@@ -537,8 +578,7 @@ function PatientProfile() {
                       <thead>
                         <tr className="table-success text-right">
                           <th scope="col">يوم</th>
-                          <th scope="col"> الجرعات</th>
-                          <th scope="col">الدواء</th>
+                          <th scope="col">الدواء و الجرعات</th>
                           <th scope="col">التخصص</th>
                           <th scope="col">اسم الطبيب</th>
                         </tr>
@@ -546,14 +586,19 @@ function PatientProfile() {
                       <tbody className="border rounded-3 text-right">
                         {setRecords.map((element, i) => (
                           <tr key={i}>
-                            <td className="w-[10%]">
-                              {" "}
-                              {element.date.slice(0, 10)}{" "}
+                            <td> {element.date.slice(0, 10)} </td>
+                            <td>
+                              <div
+                                onClick={() => {
+                                  putIToGetDiagnose(i);
+                                }}
+                                className="d-flex justify-content-end"
+                              >
+                                <i className="fa-solid fa-info text-muted cursor-pointer"></i>
+                              </div>{" "}
                             </td>
-                            <td>{element.diagnose} </td>
-                            <td>{element.medicine} </td>
                             <td>{element.doctor.specialize.name} </td>
-                            <td className="w-[15%]"> {element.doctor.name} </td>
+                            <td> {element.doctor.name} </td>
                           </tr>
                         ))}
                       </tbody>
@@ -618,6 +663,42 @@ function PatientProfile() {
           </div>
         </div>
       </section>
+      {/* to show diagnoses  */}
+      <div
+        className={`styleForPatienDiagnoses shadow-md ${
+          activeClass ? "activeCLass" : ""
+        } `}
+      >
+        <i
+          className="fa-solid fa-circle-xmark position-absolute top-1 end-3 fs-4 text-danger cursor-pointer"
+          onClick={closeDiagnoseSection}
+        ></i>
+        <div className="container">
+          <div className="row  gap-5 justify-content-center align-items-center">
+            <div className="col-md-5 border mt-5 rounded py-2">
+              <h2 className="text-center mt-4 fs-3"> الجرعات </h2>
+              
+              {activeIndex !== null && getDiagnose[activeIndex] && getDiagnose[activeIndex].length > 0 ? (
+                getDiagnose[activeIndex].map((element, i) => (
+                  <p key={i} className="text-end mt-4 text-muted">{element.description}</p>
+                ))
+              ) : (
+                <p className="text-center fw-bold fs-4 mt-5"> لا يوجد جرعات </p>
+              )}
+            </div>
+            <div className="col-md-5 border mt-5 rounded py-2">
+              <h2 className="text-center mt-4 fs-3">أسماء الأدوية</h2>
+              {activeIndex !== null && getDiagnose[activeIndex] && getDiagnose[activeIndex].length > 0 ? (
+                getDiagnose[activeIndex].map((element, i) => (
+                  <p key={i} className="text-end mt-4 text-muted">{element.medicine}</p>
+                ))
+              ) : (
+                <p className="text-center fw-bold fs-4 mt-5"> لا يوجد أدوية </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
