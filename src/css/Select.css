@@ -1,5 +1,5 @@
 .custom-select .react-select__control {
-  width: 200px;
+  width: 100%;
   min-height: 36px;
   border-color: #d1d5db;
 }
@@ -7,6 +7,7 @@
 .custom-select .react-select__control:hover {
   border-color: #bfdbfe;
 }
+
 .react-select__menu {
   z-index: 9999 !important;
 }
