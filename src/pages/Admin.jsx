@@ -915,7 +915,7 @@ function Admin() {
       </section>
       <section className="mb-8 md:mb-12 bg-white shadow-md rounded-md border m-9">
         <h1 className="text-center mt-4 text-emerald-700 text-2xl">
-          إضافة مستخدم جديد او دواء
+          إضافة دواء - مسؤل - مستشفى
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center md:mx-16 md:mt-4">
           {/* <form method="post">
