@@ -488,7 +488,7 @@ export function DoctorDashBoard() {
           body: JSON.stringify(createRecord),
         }
       );
-      const resData = response.json();
+      const resData = await response.json();
 
       if (!response.ok) {
         toast.error(resData.message || "Failed to Create");
@@ -508,7 +508,7 @@ export function DoctorDashBoard() {
         medicine: "",
         description: "",
       });
-      selectedMedicine(null);
+      setSelectedMedicine(null);
       setIsCreating(false);
     } catch (error) {
       toast.error("Unexpected error occurred");
@@ -562,6 +562,7 @@ export function DoctorDashBoard() {
         specialize: "",
         description: "",
       });
+      setSelectedSpecialize(null);
       setIsRequestingSurgery(false);
     } catch (error) {
       toast.error("unexpected error during requesting a surgery");
