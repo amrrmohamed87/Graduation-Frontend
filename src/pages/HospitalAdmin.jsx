@@ -128,7 +128,7 @@ const HospitalAdmin = () => {
       });
       setIsAddingDirector(false);
     } catch (error) {
-      toast.error(error);
+      toast.error("الرجاء إدخال البيانات أولا");
       setIsAddingDirector(false);
       return;
     }
@@ -231,7 +231,7 @@ const HospitalAdmin = () => {
       setSelectedSpecialize(null);
       setIsAddingDoctor(false);
     } catch (error) {
-      toast.error("fucking error");
+      toast.error("الرجاء إدخال البيانات أولا");
       setIsAddingDoctor(false);
       return;
     }
@@ -313,7 +313,7 @@ const HospitalAdmin = () => {
       });
       setIsAddingHospitalManager(false);
     } catch (error) {
-      toast.error("Fucking error");
+      toast.error("الرجاء إدخال البيانات أولا");
       setIsAddingHospitalManager(false);
       return;
     }
@@ -625,7 +625,7 @@ const HospitalAdmin = () => {
                 name="image"
                 ref={imageInputRef}
                 onChange={handleImageOnChange}
-                className="w-full p-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="w-full p-2 mb-4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               />
               <button
                 type="submit"
@@ -633,7 +633,7 @@ const HospitalAdmin = () => {
                 disabled={isAddingDoctor}
                 className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
               >
-                {isAddingDoctor ? "جاري إضافة الطبيب" : "إضافة طبيب"}
+                {isAddingDoctor ? "...جاري إضافة الطبيب" : "إضافة طبيب"}
               </button>
             </div>
           </form>
@@ -675,7 +675,9 @@ const HospitalAdmin = () => {
                 disabled={isAddingDirector}
                 className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
               >
-                {isAddingDirector ? "جاري إضافة الدواء" : "إضافة دواء"}
+                {isAddingDirector
+                  ? "...جاري إضافة مدير عيادات"
+                  : "إضافة مدير عيادات"}
               </button>
             </div>
           </form>
@@ -715,7 +717,9 @@ const HospitalAdmin = () => {
                 disabled={isAddingHospitalManager}
                 className="bg-emerald-700 px-4 py-2 text-[20px] text-white rounded-xl hover:bg-[#056658] transition-colors duration-150"
               >
-                {isAddingHospitalManager ? "جاري إضافة المدير" : "إضافة مدير"}
+                {isAddingHospitalManager
+                  ? "...جاري إضافة مدير مستشفي"
+                  : "إضافة مدير مستشفي"}
               </button>
             </div>
           </form>
