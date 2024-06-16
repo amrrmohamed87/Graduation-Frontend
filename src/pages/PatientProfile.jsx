@@ -20,9 +20,9 @@ function PatientProfile() {
   // console.log(UserIdOfLogin);
   // --------------end----------------
   const [isLoading, setIsLoading] = useState(true);
-  const [errorForGetTimes, setErrorForGetTimes] = useState("");
   const [isLoading2, setIsLoading2] = useState(true);
   const [activeTab, setActiveTab] = useState(null);
+  
   const handleClick = (tabNumber) => {
     if (activeTab === tabNumber) {
       setActiveTab(null);
@@ -71,7 +71,7 @@ function PatientProfile() {
       // console.log(data);
       setWattingBooks(data);
       setIsLoading(false);
-      setErrorForGetTimes("");
+      
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setIsLoading(false);
@@ -92,11 +92,10 @@ function PatientProfile() {
       // console.log(data);
       setAcceptBooks(data);
       setIsLoading(false);
-      setErrorForGetTimes("");
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setIsLoading(false);
-        setErrorForGetTimes("لا يوجد مواعيد سابقة");
+        alert("لا يوجد مواعيد سابقة")
       }
     }
   }
@@ -122,7 +121,6 @@ function PatientProfile() {
       // console.log(allDiagnoses);
       setDiagnose(allDiagnoses);
       setIsLoading(false);
-      setErrorForGetTimes("");
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setIsLoading(false);
@@ -507,10 +505,6 @@ function PatientProfile() {
                     ""
                   )}
                 </div>
-                <h2 className="start-50 top-50 z-3 bg-black translate-middle mt-4 shadow p-4  position-absolute fs-2 fw-bold text-white rounded ">
-                    {" "}
-                    {errorForGetTimes}
-                  </h2>
                 {/* 3rd mwa3ed montzra */}
                 <div className="w-100 togetTableInMiddle position-absolute z-3">
                   {activeTab === 1 ? (
