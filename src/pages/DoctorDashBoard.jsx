@@ -200,13 +200,6 @@ export function DoctorDashBoard() {
   }));
   const [selectedSpecialize, setSelectedSpecialize] = useState(null);
 
-  const [createRecord, setCreateRecord] = useState({
-    patientID: "",
-    doctorID: "",
-    medicine: "",
-    diagnose: "",
-  });
-  const [isCreating, setIsCreating] = useState(false);
   const [requestSurgery, setRequestSurgery] = useState({
     doctor: "",
     patient: "",
@@ -218,6 +211,25 @@ export function DoctorDashBoard() {
   const [surgeries, setSurgeries] = useState([]);
   console.log(surgeries);
   const [isFetchingSurgeries, setIsFetchingSurgeries] = useState(false);
+
+  const [medications, setMedications] = useState([]);
+  const [isLoadingMedications, setIsLoadindMedications] = useState(false);
+  const MedicationOptions = medications.map((medicine) => ({
+    label: medicine.name,
+    value: medicine.name,
+  }));
+  const [diagnoseData, setDiganoseData] = useState({
+    medicine: "",
+    description: "",
+  });
+  const [addedData, setAddedData] = useState([]);
+  const [createRecord, setCreateRecord] = useState({
+    patientID: "",
+    doctorID: "",
+    diagnose: [],
+  });
+  const [isCreating, setIsCreating] = useState(false);
+  const [selectedMedicine, setSelectedMedicine] = useState(null);
 
   const handleFetchingPatientRecord = async (id) => {
     setIsLoadingPatientRecord(true);
@@ -239,11 +251,19 @@ export function DoctorDashBoard() {
       ].map((doctor) => ({ label: doctor, value: doctor }));
 
       const diagnose = [
-        ...new Set(resData.userR.map((diagnose) => diagnose.diagnose)),
+        ...new Set(
+          resData.userR.map((diagnose) =>
+            diagnose.diagnose.map((description) => description.description)
+          )
+        ),
       ].map((diagnose) => ({ label: diagnose, value: diagnose }));
 
       const medicine = [
-        ...new Set(resData.userR.map((medicine) => medicine.medicine)),
+        ...new Set(
+          resData.userR.map((medicine) =>
+            medicine.diagnose.map((medicine) => medicine.medicine)
+          )
+        ),
       ].map((medicine) => ({ label: medicine, value: medicine }));
 
       const date = [
@@ -260,6 +280,11 @@ export function DoctorDashBoard() {
       setIsLoadingPatientRecord(false);
     }
   };
+  console.log(createRecord.diagnose);
+  console.log(diagnoseData);
+  console.log(createRecord);
+  console.log(patientRecord);
+  console.log(addedData);
 
   //Load Specializes
   useEffect(() => {
@@ -317,7 +342,69 @@ export function DoctorDashBoard() {
     loadSurgeries();
   }, []);
 
-  // console.log(surgeries);
+  //Load Medications
+  useEffect(() => {
+    async function loadMedications() {
+      setIsLoadindMedications(true);
+      try {
+        const response = await fetch(
+          "https://mhiproject.onrender.com/patient/getMedicines"
+        );
+        const resData = await response.json();
+
+        if (!response.ok) {
+          toast.error(resData.message);
+          setIsLoadindMedications(false);
+          return;
+        }
+
+        setMedications(resData.findMedicines);
+        setIsLoadindMedications(false);
+      } catch (error) {
+        toast.error("Error during fetching medications");
+        setIsLoadindMedications(false);
+        return;
+      }
+    }
+    loadMedications();
+  }, []);
+
+  //HandleDiagnoseData
+  function handleDiagnoseDataChange(event) {
+    const { name, value } = event.target;
+    setDiganoseData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function handleAddDiagnoseData(event) {
+    event.preventDefault();
+
+    const data = {
+      medicine: diagnoseData.medicine,
+      description: diagnoseData.description,
+    };
+    setCreateRecord((prev) => ({
+      ...prev,
+      diagnose: [...prev.diagnose, data],
+    }));
+    setAddedData((prev) => [...prev, diagnoseData]);
+  }
+
+  function handleDeleteDiagnoseData(diagnoseToDelete) {
+    setAddedData((prevData) =>
+      prevData.filter((_, index) => index !== diagnoseToDelete)
+    );
+
+    setCreateRecord((prevData) => ({
+      ...prevData,
+      diagnose: prevData.diagnose.filter(
+        (_, index) => index !== diagnoseToDelete
+      ),
+    }));
+  }
+
   //Send patient id to the API
   const handleGetPatientId = (id) => {
     handleFetchingPatientRecord(id);
@@ -340,9 +427,11 @@ export function DoctorDashBoard() {
       (!doctorFilter ||
         patient.doctor.name.toLowerCase() === doctorFilter.toLowerCase()) &&
       (!diagnoseFilter ||
-        patient.diagnose.toLowerCase() === diagnoseFilter.toLowerCase()) &&
+        patient.diagnose.medicine.toLowerCase() ===
+          diagnoseFilter.toLowerCase()) &&
       (!medicineFilter ||
-        patient.medicine.toLowerCase() === medicineFilter.toLowerCase()) &&
+        patient.diagnose.description.toLowerCase() ===
+          medicineFilter.toLowerCase()) &&
       (!dateFilter || formateDate(patient.date) === dateFilter)
   );
 
@@ -412,8 +501,14 @@ export function DoctorDashBoard() {
         patientID: "",
         doctorID: "",
         medicine: "",
-        diagnose: "",
+        diagnose: [],
       });
+      setAddedData([]);
+      setDiganoseData({
+        medicine: "",
+        description: "",
+      });
+      selectedMedicine(null);
       setIsCreating(false);
     } catch (error) {
       toast.error("Unexpected error occurred");
@@ -1154,7 +1249,7 @@ export function DoctorDashBoard() {
                                     />
                                   </Button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-5xl mx-auto p-4">
+                                <DialogContent className="sm:max-w-7xl mx-auto p-4">
                                   <DialogHeader>
                                     <DialogTitle>
                                       Patient Information
@@ -1203,23 +1298,26 @@ export function DoctorDashBoard() {
                                           >
                                             {filter && (
                                               <div className="flex justify-between items-center my-6 px-1">
-                                                <Select
-                                                  options={dateOptions}
-                                                  onChange={(date) =>
-                                                    setDateFilter(
-                                                      date ? date.value : ""
-                                                    )
-                                                  }
-                                                  value={dateOptions.find(
-                                                    (date) =>
-                                                      date.value === dateFilter
-                                                  )}
-                                                  isClearable
-                                                  className="custom-select"
-                                                  classNamePrefix="react-select"
-                                                  placeholder="Date..."
-                                                />
-                                                <Select
+                                                <div className="w-1/2 px-2">
+                                                  <Select
+                                                    options={dateOptions}
+                                                    onChange={(date) =>
+                                                      setDateFilter(
+                                                        date ? date.value : ""
+                                                      )
+                                                    }
+                                                    value={dateOptions.find(
+                                                      (date) =>
+                                                        date.value ===
+                                                        dateFilter
+                                                    )}
+                                                    isClearable
+                                                    className="custom-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Date..."
+                                                  />
+                                                </div>
+                                                {/* <Select
                                                   options={medicineOptions}
                                                   onChange={(medicine) =>
                                                     setMedicineFilter(
@@ -1237,9 +1335,9 @@ export function DoctorDashBoard() {
                                                   className="custom-select"
                                                   classNamePrefix="react-select"
                                                   placeholder="Medicine..."
-                                                />
+                                                /> */}
 
-                                                <Select
+                                                {/* <Select
                                                   options={diagnoseOptions}
                                                   onChange={(diagnose) =>
                                                     setDiagnoseFilter(
@@ -1257,25 +1355,26 @@ export function DoctorDashBoard() {
                                                   className="custom-select"
                                                   classNamePrefix="react-select"
                                                   placeholder="Diagnose..."
-                                                />
-
-                                                <Select
-                                                  options={doctorOptions}
-                                                  onChange={(name) =>
-                                                    setDoctorFilter(
-                                                      name ? name.value : ""
-                                                    )
-                                                  }
-                                                  value={doctorOptions.find(
-                                                    (name) =>
-                                                      name.value ===
-                                                      doctorFilter
-                                                  )}
-                                                  isClearable
-                                                  className="custom-select"
-                                                  classNamePrefix="react-select"
-                                                  placeholder="Doctor's Name..."
-                                                />
+                                                /> */}
+                                                <div className="w-1/2 px-2">
+                                                  <Select
+                                                    options={doctorOptions}
+                                                    onChange={(name) =>
+                                                      setDoctorFilter(
+                                                        name ? name.value : ""
+                                                      )
+                                                    }
+                                                    value={doctorOptions.find(
+                                                      (name) =>
+                                                        name.value ===
+                                                        doctorFilter
+                                                    )}
+                                                    isClearable
+                                                    className="custom-select"
+                                                    classNamePrefix="react-select"
+                                                    placeholder="Doctor's Name..."
+                                                  />
+                                                </div>
                                               </div>
                                             )}
                                           </motion.div>
@@ -1283,38 +1382,36 @@ export function DoctorDashBoard() {
                                       </AnimatePresence>
 
                                       <div className="overflow-x-auto rounded-[5px]">
-                                        <table className="min-w-full divide-y divide-gray-300">
-                                          <thead className="bg-emerald-600">
-                                            <tr>
-                                              <th
-                                                scope="col"
-                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                              >
-                                                التاريخ
-                                              </th>
-                                              <th
-                                                scope="col"
-                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                              >
-                                                الدواء
-                                              </th>
-                                              <th
-                                                scope="col"
-                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                              >
-                                                التشخيص
-                                              </th>
-                                              <th
-                                                scope="col"
-                                                className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
-                                              >
-                                                أسم الدكتور
-                                              </th>
-                                            </tr>
-                                          </thead>
-                                          {isLoadingPatientRecord ? (
-                                            <p>Loading...</p>
-                                          ) : (
+                                        {isLoadingPatientRecord ? (
+                                          <h1 className="text-center text-[26px] my-4">
+                                            Loading...
+                                          </h1>
+                                        ) : (
+                                          <table className="min-w-full divide-y divide-gray-300">
+                                            <thead className="bg-emerald-600">
+                                              <tr>
+                                                <th
+                                                  scope="col"
+                                                  className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                                >
+                                                  التاريخ
+                                                </th>
+
+                                                <th
+                                                  scope="col"
+                                                  className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                                >
+                                                  التشخيص
+                                                </th>
+                                                <th
+                                                  scope="col"
+                                                  className="px-6 py-3 text-center text-lg font-semibold text-white tracking-wider"
+                                                >
+                                                  أسم الدكتور
+                                                </th>
+                                              </tr>
+                                            </thead>
+
                                             <tbody className="bg-white divide-y divide-gray-300">
                                               {currentData.map(
                                                 (record, index) => (
@@ -1326,10 +1423,25 @@ export function DoctorDashBoard() {
                                                       {formateDate(record.date)}
                                                     </td>
                                                     <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                      {record.medicine}
-                                                    </td>
-                                                    <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
-                                                      {record.diagnose}
+                                                      {record.diagnose.map(
+                                                        (
+                                                          item,
+                                                          diagnoseIndex
+                                                        ) => (
+                                                          <div
+                                                            key={diagnoseIndex}
+                                                            className="flex gap-3 justify-center"
+                                                          >
+                                                            <span>
+                                                              {item.medicine}
+                                                            </span>
+                                                            <span>-</span>
+                                                            <span>
+                                                              {item.description}
+                                                            </span>
+                                                          </div>
+                                                        )
+                                                      )}
                                                     </td>
                                                     <td className="px-6 py-4 text-center whitespace-nowrap text-md text-gray-900">
                                                       {record.doctor.name}
@@ -1338,8 +1450,8 @@ export function DoctorDashBoard() {
                                                 )
                                               )}
                                             </tbody>
-                                          )}
-                                        </table>
+                                          </table>
+                                        )}
                                       </div>
                                       <Pagination />
                                     </div>
@@ -1361,7 +1473,21 @@ export function DoctorDashBoard() {
                                     />
                                   </Button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-[650px]">
+                                <DialogContent
+                                  onClose={() => {
+                                    setCreateRecord({
+                                      patientID: "",
+                                      doctorID: "",
+                                      medicine: "",
+                                      diagnose: [],
+                                    });
+                                    setDiganoseData({
+                                      medicine: "",
+                                      description: "",
+                                    });
+                                  }}
+                                  className="sm:max-w-[1150px]"
+                                >
                                   <DialogHeader>
                                     <DialogTitle>
                                       Create New Medical Records
@@ -1388,41 +1514,79 @@ export function DoctorDashBoard() {
                                         your defense attorney)
                                       </p>
                                       <div className="flex flex-col bg-white shadow-lg p-6">
-                                        <div className="flex flex-col justify-start">
+                                        <Select
+                                          id="doctorSpecialization"
+                                          isClearable
+                                          placeholder="Medicine"
+                                          type="text"
+                                          name="specialize"
+                                          className="w-full pl-2 py-2 rounded-lg"
+                                          options={MedicationOptions}
+                                          value={selectedMedicine}
+                                          onChange={(option) => {
+                                            setSelectedMedicine(option);
+                                            setDiganoseData((prev) => ({
+                                              ...prev,
+                                              medicine: option
+                                                ? option.value
+                                                : "",
+                                            }));
+                                          }}
+                                        />
+
+                                        <div className="mt-2 flex flex-col justify-start">
                                           <label
                                             htmlFor="diagnose"
                                             className="mb-2 text-[18px]"
                                           >
-                                            Diagnose
+                                            Description
                                           </label>
                                           <textarea
                                             id="diagnose"
                                             type="text"
-                                            name="diagnose"
+                                            name="description"
+                                            value={diagnoseData.description}
+                                            onChange={handleDiagnoseDataChange}
                                             placeholder="Write your diagnose..."
-                                            value={createRecord.diagnose}
-                                            onChange={handleChange}
                                             className="w-full pl-2 py-2 border rounde-lg"
                                           />
                                         </div>
-                                        <div className="flex flex-col justify-start mt-4">
-                                          <label
-                                            htmlFor="medicine"
-                                            className="mb-2 text-[18px]"
-                                          >
-                                            Medicine
-                                          </label>
-                                          <textarea
-                                            id="medicine"
-                                            type="text"
-                                            name="medicine"
-                                            placeholder="Write the prescription medication..."
-                                            value={createRecord.medicine}
-                                            onChange={handleChange}
-                                            className="w-full pl-2 py-2 border rounde-lg"
-                                          />
-                                        </div>
+                                        <button
+                                          onClick={handleAddDiagnoseData}
+                                          className="bg-blue-600 mt-4 py-2 rounded text-white transition-all duration-300 hover:bg-blue-800"
+                                        >
+                                          Add Diagnose
+                                        </button>
                                       </div>
+                                      {addedData.length > 0 && (
+                                        <div className="grid grid-cols-4 place-items-center bg-white shadow-lg p-6">
+                                          {addedData.map((data, index) => (
+                                            <div
+                                              key={index}
+                                              className="flex items-center"
+                                            >
+                                              <div className="flex flex-col gap-2 mb-3 bg-slate-100 border shadow-md p-4 rounded">
+                                                <p className="text-[18px]">
+                                                  {data.medicine}
+                                                </p>
+                                                <p className="text-[18px]">
+                                                  {data.description}
+                                                </p>
+                                                <button
+                                                  onClick={() =>
+                                                    handleDeleteDiagnoseData(
+                                                      index
+                                                    )
+                                                  }
+                                                  className="bg-red-500 px-3 py-1 max-w-20 rounded"
+                                                >
+                                                  Delete
+                                                </button>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )}
                                     </form>
                                   </div>
                                   <DialogFooter>
@@ -1458,7 +1622,17 @@ export function DoctorDashBoard() {
                                     />
                                   </Button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-[650px]">
+                                <DialogContent
+                                  onClose={() => {
+                                    setRequestSurgery({
+                                      doctor: "",
+                                      patient: "",
+                                      specialize: "",
+                                      description: "",
+                                    });
+                                  }}
+                                  className="sm:max-w-[650px]"
+                                >
                                   <DialogHeader>
                                     <DialogTitle>Request a Surgery</DialogTitle>
                                     <DialogDescription>
