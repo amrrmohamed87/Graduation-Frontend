@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/DoctorDashboard.css";
 function Hospital() {
-  const [watingForPutTimeForDoc , setWatingForPutTimeForDoc] = useState(false)
+  const [watingForPutTimeForDoc, setWatingForPutTimeForDoc] = useState(false);
   // returning the name, location, and id of the logged hospital - amr
   const name = localStorage.getItem("name");
   const hsopital = localStorage.getItem("hospital");
@@ -12,8 +12,13 @@ function Hospital() {
   //the hospital now you receive it from the hospitalDetails and it works the same - amr
   const hospitalID = localStorage.getItem("hospitalAdminHospitalID");
   // --------------------------
-  // ramez work get doctors in hospital logged in
+  // ramez work get doctors in hospital logged in   and  pagination
+  const [isLoadingForDocInHospital, setIsLoadingForDocInHospital] =
+    useState(true);
   const [docInHospital, setDocInHospital] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 5;
+
   console.log(docInHospital);
   useEffect(() => {
     getDoctorsInHospital();
@@ -23,6 +28,7 @@ function Hospital() {
       `https://mhiproject.onrender.com/clinicsDirector/getDoctors/${hospitalID}`
     );
     setDocInHospital(data.searchDoctorsInHospital);
+    setIsLoadingForDocInHospital(false);
   }
   const [isDivVisible, setIsDivVisible] = useState(false);
 
@@ -47,9 +53,28 @@ function Hospital() {
   const filteredDoctors = docInHospital.filter((doctor) => {
     return (
       doctor.code.includes(DoctorCOde) &&
-      doctor.name.includes(doctorName) && doctor.specialize.name.includes(DoctorSpecialize)
+      doctor.name.includes(doctorName) &&
+      doctor.specialize.name.includes(DoctorSpecialize)
     );
   });
+
+  // b2aaat alpagination
+
+  const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
+
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filteredDoctors.slice(
+    indexOfFirstDoctor,
+    indexOfLastDoctor
+  );
+
+
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
   // console.log(filteredDoctors);
   // ------------------------
 
@@ -66,16 +91,14 @@ function Hospital() {
     useState("d-none");
   const [errorForTIme, seterrorForTIme] = useState(false);
 
-
-
   async function putDoctorInformation() {
-    setWatingForPutTimeForDoc(true)
+    setWatingForPutTimeForDoc(true);
     if (docInformation.time.length <= 0) {
       seterrorForTIme(true);
-      setWatingForPutTimeForDoc(false)
+      setWatingForPutTimeForDoc(false);
     } else {
       try {
-        seterrorForTIme(false)
+        seterrorForTIme(false);
         let { data } = await axios.post(
           "https://mhiproject.onrender.com/clinicsDirector/doctorSchedule",
           docInformation
@@ -85,17 +108,17 @@ function Hospital() {
         setRefOperation("d-none");
         setWhenTheAdminChooseSameTime("d-none");
         setActiveIndex(null);
-        setWatingForPutTimeForDoc(false)
+        setWatingForPutTimeForDoc(false);
       } catch (error) {
         if (error.response && error.response.status === 422) {
           setRefOperation("d-flex justify-content-center");
           setConfirmOperation("d-none");
           setDocInformation({ ...docInformation, time: [] });
-          setWatingForPutTimeForDoc(false)
+          setWatingForPutTimeForDoc(false);
         } else if (error.response && error.response.status === 424) {
           setWhenTheAdminChooseSameTime("d-flex justify-content-center");
           setRefOperation("d-none");
-          setWatingForPutTimeForDoc(false)
+          setWatingForPutTimeForDoc(false);
         }
       }
     }
@@ -110,13 +133,13 @@ function Hospital() {
   function putDay(e) {
     setConfirmOperation("d-none");
     setWhenTheAdminChooseSameTime("d-none");
-    setRefOperation("d-none")
+    setRefOperation("d-none");
     let theDay = e.target.value;
     setDocInformation({ ...docInformation, day: theDay, time: [] });
   }
   function putTime(e) {
-    seterrorForTIme(false)
-    setWatingForPutTimeForDoc(false)
+    seterrorForTIme(false);
+    setWatingForPutTimeForDoc(false);
     const selectedTime = e.target.value;
     const isTimeSelected = docInformation.time.includes(selectedTime);
     if (isTimeSelected) {
@@ -141,9 +164,9 @@ function Hospital() {
     setWhenTheAdminChooseSameTime("d-none");
     setDocInformation({ ...docInformation, doctorID: "", day: "", time: [] });
     setActiveIndex(null);
-    seterrorForTIme(false)
-    setWatingForPutTimeForDoc(false)
-    setWatingForPutTimeForDoc(false)
+    seterrorForTIme(false);
+    setWatingForPutTimeForDoc(false);
+    setWatingForPutTimeForDoc(false);
   }
   const timesValues = [
     { value: "8:00" },
@@ -242,11 +265,18 @@ function Hospital() {
       {/* section 3rd aldoctors aly fy almost4fa */}
       <section className="mt-5">
         <div className="container rounded-3 shadow py-3 ">
+          {isLoadingForDocInHospital ? (
+            <h2 className="text-center fs-3 fw-bold mt-5">جارى التحميل</h2>
+          ) : (
+            " "
+          )}
           <button className="btn btn-success" onClick={toggleDivVisibility}>
             Filter
           </button>
           <div
-            className={` position-relative start-0  ${isDivVisible ? "active" : "hide"}`}
+            className={` position-relative start-0  ${
+              isDivVisible ? "active" : "hide"
+            }`}
             style={{
               transition: "height 0.5s",
               height: isDivVisible ? 35 : 0,
@@ -263,8 +293,12 @@ function Hospital() {
                 placeholder="بكود الطبيب"
                 onChange={(e) => filterDoctors(e.target.value)}
               />
-                <input type="text" className=" opacity-75 w-25 text-end form-control" placeholder=" بالتخصص"
-                onChange={(e) => docSecializeFilter(e.target.value)}/>
+              <input
+                type="text"
+                className=" opacity-75 w-25 text-end form-control"
+                placeholder=" بالتخصص"
+                onChange={(e) => docSecializeFilter(e.target.value)}
+              />
               <input
                 type="text"
                 className=" opacity-75 w-25  text-end form-control"
@@ -273,7 +307,7 @@ function Hospital() {
               />
             </div>
           </div>
-          <div className="d-flex flex-wrap justify-content-center mt-3">
+          <div className="d-flex flex-wrap justify-content-center mt-3 ">
             <table className="table widthforfirstSection  border-2 rounded-3 text-end">
               <thead>
                 <tr className="table-success">
@@ -286,7 +320,7 @@ function Hospital() {
                 </tr>
               </thead>
               <tbody>
-                {filteredDoctors.map((element, i) => (
+                {currentDoctors.map((element, i) => (
                   <tr key={i}>
                     <td className="d-flex justify-content-center">
                       <button
@@ -306,6 +340,31 @@ function Hospital() {
                 ))}
               </tbody>
             </table>
+            <div className="w-100 d-flex justify-content-center">
+            <div className="pagination">
+            <button
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              &laquo;
+            </button>
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={currentPage === index + 1 ? 'active' : ''}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              &raquo;
+            </button>
+          </div>
+            </div>
             {/* <h1 className="w-100">dadwdawdw</h1> */}
           </div>
         </div>
@@ -374,7 +433,7 @@ function Hospital() {
             تم تعين موعد العمل لدى هذا الطبيب فى اليوم المحدد
           </div>
         </div>
-        {errorForTIme == false? (
+        {errorForTIme == false ? (
           ""
         ) : (
           <div className="d-flex justify-content-center">
@@ -407,7 +466,7 @@ function Hospital() {
             className="me-5 ButtonStyleForHospital fs-4 btn btn-success"
             onClick={putDoctorInformation}
           >
-            {watingForPutTimeForDoc ? "...جارى الأضافة" :  " أضافة"}
+            {watingForPutTimeForDoc ? "...جارى الأضافة" : " أضافة"}
           </button>
           <button
             className="btn btn-danger ButtonStyleForHospital fs-4"

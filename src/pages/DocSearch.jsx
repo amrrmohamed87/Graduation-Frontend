@@ -320,6 +320,7 @@ export function DocSearch() {
       if (error.response && error.response.status === 404) {
         setNotHaveDays(true);
         setDocDays([]);
+        setIsLoadingForDateDoc(false)
       }
     }
   }
