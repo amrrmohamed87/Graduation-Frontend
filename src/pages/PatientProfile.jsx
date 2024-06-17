@@ -517,7 +517,7 @@ getRecords
                     </p>
                   </div>
                 </div>
-                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForWatingTime === true ? (
                     <p className="fw-bold text-center p-3  fs-2">
                       {" "}
@@ -527,7 +527,7 @@ getRecords
                     ""
                   )}
                 </div>
-                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForGetAcceptBooks === true ? (
                     <p className="fw-bold text-center p-3 fs-2">
                       {" "}
@@ -537,7 +537,7 @@ getRecords
                     ""
                   )}
                 </div>
-                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForGetRecords === true ? (
                     <p className="fw-bold text-center p-3 fs-2">
                       {" "}
@@ -561,7 +561,7 @@ getRecords
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {WattingBooks.length <=0 || WattingBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد مواعيد منتظرة</h2> : WattingBooks.map((element, i) => (
+                        {WattingBooks.length <=0 || WattingBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد مواعيد منتظرة</h2> : WattingBooks.map((element, i) => (
                           <tr key={i}>
                             <td> {element.doctorID.code} </td>
                             <td>{element.time} </td>
@@ -591,7 +591,7 @@ getRecords
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {acceptBooks.length <=0 || acceptBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد مواعيد سابقة</h2> : acceptBooks.map((element, i) => (
+                        {acceptBooks.length <=0 || acceptBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد مواعيد سابقة</h2> : acceptBooks.map((element, i) => (
                           <tr key={i}>
                             <td> {element.doctorID.code} </td>
                             <td>{element.time} </td>
@@ -622,7 +622,7 @@ getRecords
                       </thead>
                       <tbody className="border rounded-3 text-right">
                         
-                        {setRecords.length <= 0 || setRecords === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد سجلات طبية</h2> : setRecords.map((element, i) => (
+                        {setRecords.length <= 0 || setRecords === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد سجلات طبية</h2> : setRecords.map((element, i) => (
                           <tr key={i}>
                             <td> {element.date.slice(0, 10)} </td>
                             <td>
