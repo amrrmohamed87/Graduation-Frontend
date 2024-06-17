@@ -19,10 +19,27 @@ function PatientProfile() {
   const UserIdOfLogin = decodedToken.userId;
   // console.log(UserIdOfLogin);
   // --------------end----------------
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoading2, setIsLoading2] = useState(true);
   const [activeTab, setActiveTab] = useState(null);
   
+  const [isLoadingForWatingTime, setIsLoadingForWatingTime] = useState(true);
+  const [isLoadingForGetAcceptBooks, setIsLoadingForGetAcceptBooks] = useState(true);
+  const [isLoadingForGetRecords, setIsLoadingForGetRecords] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
+  useEffect(() => {
+    if (activeTab === null) {
+      setIsLoadingForWatingTime(false);
+      setIsLoadingForGetAcceptBooks(false);
+      setIsLoadingForGetRecords(false);
+    }else if (activeTab === 1) {
+      setIsLoadingForWatingTime(true)
+    }
+    else if (activeTab === 2) {
+      setIsLoadingForGetAcceptBooks(true)
+    }
+    else if (activeTab === 3) {
+      setIsLoadingForGetRecords(true)
+    }
+  }, [activeTab]);
   const handleClick = (tabNumber) => {
     if (activeTab === tabNumber) {
       setActiveTab(null);
@@ -30,17 +47,18 @@ function PatientProfile() {
       setActiveTab(tabNumber);
     }
   };
-  useEffect(() => {
-    if (activeTab === null) {
-      setIsLoading(false);
-    } else if (
-      WattingBooks.length <= 0 ||
-      acceptBooks.length <= 0 ||
-      setRecords.length <= 0
-    ) {
-      setIsLoading(true);
-    }
-  }, [activeTab, isLoading]);
+  
+  // useEffect(() => {
+  //   if (activeTab === null) {
+  //     setIsLoading(false);
+  //   } else if (
+  //     WattingBooks.length <= 0 ||
+  //     acceptBooks.length <= 0 ||
+  //     setRecords.length <= 0
+  //   ) {
+  //     setIsLoading(true);
+  //   }
+  // }, [activeTab, isLoading]);
   // fetch kol aldoctors
 
   const [ShowDoc, setShowDoc] = useState([]);
@@ -70,16 +88,18 @@ function PatientProfile() {
       );
       // console.log(data);
       setWattingBooks(data);
-      setIsLoading(false);
+      setIsLoadingForWatingTime(false);
       
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setIsLoading(false);
-        alert("لا يوجد ");
+        setIsLoadingForWatingTime(false);
+      
       }
     }
   }
-
+useEffect(()=>{
+  getWattingBooks()
+},[])
   // -------------end---------
   // to get accept books
   const [acceptBooks, setAcceptBooks] = useState([]);
@@ -91,21 +111,22 @@ function PatientProfile() {
       );
       // console.log(data);
       setAcceptBooks(data);
-      setIsLoading(false);
+      setIsLoadingForGetAcceptBooks(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setIsLoading(false);
-        alert("لا يوجد مواعيد سابقة")
+        setIsLoadingForGetAcceptBooks(false);
       }
     }
   }
-
+useEffect(()=>{
+getAcceptBooks()
+},[])
   // -------------end---------
   // to get records
   const [activeIndex, setActiveIndex] = useState(null);
   const [setRecords, setSetRecords] = useState([]);
   const [getDiagnose, setDiagnose] = useState([]);
-  console.log(getDiagnose[activeIndex]);
+  // console.log(getDiagnose[activeIndex]);
   const [activeClass, setActiveClass] = useState(false);
   // console.log(tempDiagnose.medicine);
 
@@ -120,15 +141,16 @@ function PatientProfile() {
       const allDiagnoses = data.map((record) => record.diagnose);
       // console.log(allDiagnoses);
       setDiagnose(allDiagnoses);
-      setIsLoading(false);
+      setIsLoadingForGetRecords(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        setIsLoading(false);
-        alert("لا يوجد سجلات طبية");
+        setIsLoadingForGetRecords(false);
       }
     }
   }
-
+useEffect(()=>{
+getRecords
+},[])
   function putIToGetDiagnose(IOfDiagnose) {
     setActiveClass(true);
     setActiveIndex(IOfDiagnose);
@@ -495,9 +517,29 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
-                <div className="position-absolute z-1 start-50 top-50 translate-middle ">
-                  {isLoading === true ? (
-                    <p className="fw-bold text-center mt-5 me-22 fs-2">
+                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                  {isLoadingForWatingTime === true ? (
+                    <p className="fw-bold text-center p-3  fs-2">
+                      {" "}
+                      جارى التحميل{" "}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                  {isLoadingForGetAcceptBooks === true ? (
+                    <p className="fw-bold text-center p-3 fs-2">
+                      {" "}
+                      جارى التحميل{" "}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="position-absolute z-30 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                  {isLoadingForGetRecords === true ? (
+                    <p className="fw-bold text-center p-3 fs-2">
                       {" "}
                       جارى التحميل{" "}
                     </p>
@@ -519,7 +561,7 @@ function PatientProfile() {
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {WattingBooks.map((element, i) => (
+                        {WattingBooks.length <=0 || WattingBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد مواعيد منتظرة</h2> : WattingBooks.map((element, i) => (
                           <tr key={i}>
                             <td> {element.doctorID.code} </td>
                             <td>{element.time} </td>
@@ -534,7 +576,7 @@ function PatientProfile() {
                     ""
                   )}
                   {/* -------------------end-------- */}
-
+                  
                   {/* 3rd mwa3ed mkbola  */}
 
                   {activeTab === 2 ? (
@@ -549,7 +591,7 @@ function PatientProfile() {
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {acceptBooks.map((element, i) => (
+                        {acceptBooks.length <=0 || acceptBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد مواعيد سابقة</h2> : acceptBooks.map((element, i) => (
                           <tr key={i}>
                             <td> {element.doctorID.code} </td>
                             <td>{element.time} </td>
@@ -563,6 +605,7 @@ function PatientProfile() {
                   ) : (
                     ""
                   )}
+                        
                  
                   {/* ------------------------------ */}
 
@@ -578,7 +621,8 @@ function PatientProfile() {
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {setRecords.map((element, i) => (
+                        
+                        {setRecords.length <= 0 || setRecords === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute fs-3 fw-bold">لا يوجد سجلات طبية</h2> : setRecords.map((element, i) => (
                           <tr key={i}>
                             <td> {element.date.slice(0, 10)} </td>
                             <td>
@@ -608,7 +652,7 @@ function PatientProfile() {
                 {/* lw mfe4 7aga tt3rd y3rd dy  */}
                 {activeTab === null ? (
                   <div className="w-100  mt-16 d-flex justify-content-center">
-                    <div className="w-8/12 shadow p-3 text-right rounded-3">
+                    <div className="w-8/12  shadow p-3 text-right rounded-3">
                       <p className="fs-2">
                         الوهم نصف الداء، والاطمئنان نصف الدواء، والصبر أول خطوات
                         الشفاء. في آلام الجسد شفاء للنفس. لا يمكن لأحد أن يطلب
