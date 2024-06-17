@@ -84,11 +84,16 @@ function HospitalManager() {
   const [surgeryRowsPerPage, setSurgeryRowsPerPage] = useState(5);
 
   useEffect(() => {
-    setSurgeryData((prev) => ({
-      ...prev,
-      day: date.toISOString().slice(0, 10), // Formats date as 'YYYY-MM-DD'
-    }));
+    if (date instanceof Date && !isNaN(date)) {
+      setSurgeryData((prev) => ({
+        ...prev,
+        day: date.toISOString().slice(0, 10), // Formats date as 'YYYY-MM-DD'
+      }));
+    } else {
+      console.error("Invalid date:", date);
+    }
   }, [date]);
+
   //fetch surgeries
   useEffect(() => {
     async function loadRequestedSurgeries() {
@@ -115,7 +120,7 @@ function HospitalManager() {
       }
     }
     loadRequestedSurgeries();
-  }, []);
+  }, [isScheduling]);
 
   //fetch doctors
   useEffect(() => {
@@ -228,11 +233,16 @@ function HospitalManager() {
   const formateDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
-    });
+    if (date instanceof Date && !isNaN(date)) {
+      return date.toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      });
+    } else {
+      console.error("Invalid date string:", dateString);
+      return "N/A";
+    }
   };
 
   //Filter Doctor's List && Handle Pagination functions
@@ -669,7 +679,29 @@ function HospitalManager() {
                                               mode="single"
                                               name="date"
                                               selected={date}
-                                              onSelect={setDate}
+                                              onSelect={(selectedDate) => {
+                                                if (
+                                                  selectedDate instanceof
+                                                    Date &&
+                                                  !isNaN(selectedDate)
+                                                ) {
+                                                  // Normalize the date to avoid time zone issues
+                                                  const normalizedDate =
+                                                    new Date(
+                                                      Date.UTC(
+                                                        selectedDate.getFullYear(),
+                                                        selectedDate.getMonth(),
+                                                        selectedDate.getDate()
+                                                      )
+                                                    );
+                                                  setDate(normalizedDate);
+                                                } else {
+                                                  console.error(
+                                                    "Invalid date selected:",
+                                                    selectedDate
+                                                  );
+                                                }
+                                              }}
                                               className="rounded-md border shadow w-full"
                                             />
                                           </div>
