@@ -585,266 +585,258 @@ function HospitalManager() {
                         />
                       </div>
                     </div>
-
-                    <table className="w-full">
-                      <thead className="bg-emerald-600 border">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="text-md font-medium text-white px-6 py-4 text-right"
-                          >
-                            حجز
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-md font-medium text-white px-6 py-4 text-right w-4"
-                          >
-                            البيانات
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-md font-medium text-white px-6 py-4 text-right"
-                          >
-                            التاريخ
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-md font-medium text-white px-6 py-4 text-right"
-                          >
-                            المريض
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-md font-medium text-white px-6 py-4 text-right"
-                          >
-                            الدكتور
-                          </th>
-                        </tr>
-                      </thead>
-
-                      {requestedSurgeries.length <= 0 ? (
-                        <h1 className="text-center">You have zero surgeries</h1>
-                      ) : (
+                    {isFetchingRequestedSurgeries ? (
+                      <h1 className="text-center text-[18px] md:text-[26px]">
+                        ...جار التحميل
+                      </h1>
+                    ) : (
+                      <table className="w-full">
+                        <thead className="bg-emerald-600 border">
+                          <tr>
+                            <th
+                              scope="col"
+                              className="text-md font-medium text-white px-6 py-4 text-right"
+                            >
+                              حجز
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-md font-medium text-white px-6 py-4 text-right w-4"
+                            >
+                              البيانات
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-md font-medium text-white px-6 py-4 text-right"
+                            >
+                              التاريخ
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-md font-medium text-white px-6 py-4 text-right"
+                            >
+                              المريض
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-md font-medium text-white px-6 py-4 text-right"
+                            >
+                              الدكتور
+                            </th>
+                          </tr>
+                        </thead>
                         <tbody>
-                          {isFetchingRequestedSurgeries ? (
-                            <h1 className="text-r text-2xl">...جار التحميل</h1>
-                          ) : (
-                            currentSurgeryData.map((request, index) => (
-                              <tr key={index} className="border text-right">
-                                <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                                  <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                      <form
-                                        method="post"
-                                        onSubmit={handleGetSpecificDoctors}
+                          {currentSurgeryData.map((request, index) => (
+                            <tr key={index} className="border text-right">
+                              <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <form
+                                      method="post"
+                                      onSubmit={handleGetSpecificDoctors}
+                                    >
+                                      <button
+                                        onClick={() => {
+                                          setRequestSpecificDoctors((prev) => ({
+                                            ...prev,
+                                            specialize: request.specialize,
+                                          }));
+                                          setSurgeryData((prev) => ({
+                                            ...prev,
+                                            patientID: request.patient._id,
+                                            surgeryID: request._id,
+                                          }));
+                                        }}
                                       >
-                                        <button
-                                          onClick={() => {
-                                            setRequestSpecificDoctors(
-                                              (prev) => ({
-                                                ...prev,
-                                                specialize: request.specialize,
-                                              })
-                                            );
-                                            setSurgeryData((prev) => ({
-                                              ...prev,
-                                              patientID: request.patient._id,
-                                              surgeryID: request._id,
-                                            }));
-                                          }}
-                                        >
-                                          <RxCalendar
-                                            size={20}
-                                            className="text-emerald-500 hover:text-emerald-700 transition-all duration-300 cursor-pointer"
-                                          />
-                                        </button>
-                                      </form>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent className="w-[420px] md:w-[600px]">
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle>
-                                          جدولة عملية جراحية
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                          يجب الحفاظ على سرية جميع معلومات
-                                          المريض واستخدامها فقط لأغراض الجدولة.
-                                          لا تشارك تفاصيل المريض مع أفراد غير
-                                          مصرح لهم بذلك
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
-                                      <form>
-                                        <div className="flex flex-col md:flex-row items-center gap-4">
-                                          <div>
-                                            <Calendar
-                                              mode="single"
-                                              name="date"
-                                              selected={date}
-                                              onSelect={(selectedDate) => {
-                                                if (
-                                                  selectedDate instanceof
-                                                    Date &&
-                                                  !isNaN(selectedDate)
-                                                ) {
-                                                  // Normalize the date to avoid time zone issues
-                                                  const normalizedDate =
-                                                    new Date(
-                                                      Date.UTC(
-                                                        selectedDate.getFullYear(),
-                                                        selectedDate.getMonth(),
-                                                        selectedDate.getDate()
-                                                      )
-                                                    );
-                                                  setDate(normalizedDate);
-                                                } else {
-                                                  console.error(
-                                                    "Invalid date selected:",
-                                                    selectedDate
-                                                  );
-                                                }
-                                              }}
-                                              className="rounded-md border shadow w-full"
-                                            />
-                                          </div>
-                                          <div className="flex flex-col gap-2 w-full">
-                                            <Select
-                                              isClearable
-                                              placeholder="...الدكتور"
-                                              type="text"
-                                              name="doctorID"
-                                              className="text-end w-full mb-4"
-                                              options={selectedDoctorForSurgery}
-                                              value={selectedDoctor}
-                                              onChange={(option) => {
-                                                setSelectedDoctor(option);
-                                                setSurgeryData((prev) => ({
-                                                  ...prev,
-                                                  doctorID: option
-                                                    ? option.value
-                                                    : "",
-                                                }));
-                                              }}
-                                            />
-                                            <input
-                                              type="time"
-                                              name="time"
-                                              value={surgeryData.time}
-                                              onChange={(event) => {
-                                                setSurgeryData((prev) => ({
-                                                  ...prev,
-                                                  time: event.target.value,
-                                                }));
-                                              }}
-                                              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 bg-white"
-                                            />
-                                          </div>
-                                        </div>
-                                      </form>
-                                      <AlertDialogFooter className="flex items-center gap-3">
-                                        <AlertDialogCancel
-                                          className="w-[150px] bg-red-600 text-white mb-2 text-[18px] font-bold hover:bg-red-900 transition-all duration-300"
-                                          onClick={() => {
-                                            setRequestSpecificDoctors({
-                                              hospitalID: hospitalId,
-                                              specialize: "",
-                                            });
-                                            setSurgeryData({
-                                              patientID: "",
-                                              doctorID: "",
-                                              day: "",
-                                              time: "",
-                                            });
-                                          }}
-                                        >
-                                          إلغاء
-                                        </AlertDialogCancel>
-
-                                        <form
-                                          method="patch"
-                                          onClick={handleSchedulingSurgery}
-                                        >
-                                          <AlertDialogAction className="w-[150px] bg-blue-600 text-[18px] rounded-lg px-3 py-2 cursor-pointer hover:bg-blue-900 transition-all duration-300">
-                                            <button disabled={isScheduling}>
-                                              {isScheduling
-                                                ? "...جاري الحجز"
-                                                : "تأكيد"}
-                                            </button>
-                                          </AlertDialogAction>
-                                        </form>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                                  <Dialog>
-                                    <DialogTrigger asChild>
-                                      <p>
-                                        <HiOutlineClipboardDocumentList
-                                          size={22}
-                                          className="text-blue-600 ml-4"
+                                        <RxCalendar
+                                          size={20}
+                                          className="text-emerald-500 hover:text-emerald-700 transition-all duration-300 cursor-pointer"
                                         />
-                                      </p>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[425px]">
-                                      <DialogHeader>
-                                        <DialogTitle>وثائق الجراحة</DialogTitle>
-                                        <DialogDescription>
-                                          توثيق كامل وأسباب طلب الجراحة
-                                        </DialogDescription>
-                                      </DialogHeader>
-                                      <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-1 items-center gap-4 text-end">
-                                          <h1 className="text-[18px] md:text-[24px] text-neutral-600">
-                                            <span className="text-[18px] md:text-[22px] text-neutral-950">
-                                              أسم المريض:
-                                            </span>{" "}
-                                            {request.patient.name}
-                                          </h1>
-                                          <h1 className="text-[18px] md:text-[24px] text-neutral-600">
-                                            <span className="text-[18px] md:text-[22px] text-neutral-950">
-                                              أسم الدكتور:
-                                            </span>{" "}
-                                            {request.doctor.name}
-                                          </h1>
-                                          <h1 className="text-[18px] md:text-[24px] text-neutral-600">
-                                            {formateDate(request.date)}
-                                            <span className="text-[18px] md:text-[22px] text-neutral-950">
-                                              {" "}
-                                              :التاريخ
-                                            </span>
-                                          </h1>
-                                          <h1 className="text-[18px] md:text-[24px] text-neutral-600">
-                                            <span className="text-[18px] md:text-[22px] text-neutral-950 ">
-                                              {" "}
-                                              التخصص:
-                                            </span>{" "}
-                                            {request.doctor.specialize.name}
-                                          </h1>
-                                          <h1 className="text-[18px] md:text-[24px] text-neutral-600">
-                                            <span className="text-[18px] md:text-[22px] text-neutral-950">
-                                              الأسباب:
-                                            </span>{" "}
-                                            {request.description}
-                                          </h1>
+                                      </button>
+                                    </form>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent className="w-[420px] md:w-[600px]">
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>
+                                        جدولة عملية جراحية
+                                      </AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        يجب الحفاظ على سرية جميع معلومات المريض
+                                        واستخدامها فقط لأغراض الجدولة. لا تشارك
+                                        تفاصيل المريض مع أفراد غير مصرح لهم بذلك
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <form>
+                                      <div className="flex flex-col md:flex-row items-center gap-4">
+                                        <div>
+                                          <Calendar
+                                            mode="single"
+                                            name="date"
+                                            selected={date}
+                                            onSelect={(selectedDate) => {
+                                              if (
+                                                selectedDate instanceof Date &&
+                                                !isNaN(selectedDate)
+                                              ) {
+                                                // Normalize the date to avoid time zone issues
+                                                const normalizedDate = new Date(
+                                                  Date.UTC(
+                                                    selectedDate.getFullYear(),
+                                                    selectedDate.getMonth(),
+                                                    selectedDate.getDate()
+                                                  )
+                                                );
+                                                setDate(normalizedDate);
+                                              } else {
+                                                console.error(
+                                                  "Invalid date selected:",
+                                                  selectedDate
+                                                );
+                                              }
+                                            }}
+                                            className="rounded-md border shadow w-full"
+                                          />
+                                        </div>
+                                        <div className="flex flex-col gap-2 w-full">
+                                          <Select
+                                            isClearable
+                                            placeholder="...الدكتور"
+                                            type="text"
+                                            name="doctorID"
+                                            className="text-end w-full mb-4"
+                                            options={selectedDoctorForSurgery}
+                                            value={selectedDoctor}
+                                            onChange={(option) => {
+                                              setSelectedDoctor(option);
+                                              setSurgeryData((prev) => ({
+                                                ...prev,
+                                                doctorID: option
+                                                  ? option.value
+                                                  : "",
+                                              }));
+                                            }}
+                                          />
+                                          <input
+                                            type="time"
+                                            name="time"
+                                            value={surgeryData.time}
+                                            onChange={(event) => {
+                                              setSurgeryData((prev) => ({
+                                                ...prev,
+                                                time: event.target.value,
+                                              }));
+                                            }}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 bg-white"
+                                          />
                                         </div>
                                       </div>
-                                    </DialogContent>
-                                  </Dialog>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                                  {formateDate(request.date)}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                                  {request.patient.name}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                                  {request.doctor.name}
-                                </td>
-                              </tr>
-                            ))
-                          )}
+                                    </form>
+                                    <AlertDialogFooter className="flex items-center gap-3">
+                                      <AlertDialogCancel
+                                        className="w-[150px] bg-red-600 text-white mb-2 text-[18px] font-bold hover:bg-red-900 transition-all duration-300"
+                                        onClick={() => {
+                                          setRequestSpecificDoctors({
+                                            hospitalID: hospitalId,
+                                            specialize: "",
+                                          });
+                                          setSurgeryData({
+                                            patientID: "",
+                                            doctorID: "",
+                                            day: "",
+                                            time: "",
+                                          });
+                                        }}
+                                      >
+                                        إلغاء
+                                      </AlertDialogCancel>
+
+                                      <form
+                                        method="patch"
+                                        onClick={handleSchedulingSurgery}
+                                      >
+                                        <AlertDialogAction className="w-[150px] bg-blue-600 text-[18px] rounded-lg px-3 py-2 cursor-pointer hover:bg-blue-900 transition-all duration-300">
+                                          <button disabled={isScheduling}>
+                                            {isScheduling
+                                              ? "...جاري الحجز"
+                                              : "تأكيد"}
+                                          </button>
+                                        </AlertDialogAction>
+                                      </form>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <p>
+                                      <HiOutlineClipboardDocumentList
+                                        size={22}
+                                        className="text-blue-600 ml-4"
+                                      />
+                                    </p>
+                                  </DialogTrigger>
+                                  <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                      <DialogTitle>وثائق الجراحة</DialogTitle>
+                                      <DialogDescription>
+                                        توثيق كامل وأسباب طلب الجراحة
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="grid gap-4 py-4">
+                                      <div className="grid grid-cols-1 items-center gap-4 text-end">
+                                        <h1 className="text-[18px] md:text-[24px] text-neutral-600">
+                                          <span className="text-[18px] md:text-[22px] text-neutral-950">
+                                            أسم المريض:
+                                          </span>{" "}
+                                          {request.patient.name}
+                                        </h1>
+                                        <h1 className="text-[18px] md:text-[24px] text-neutral-600">
+                                          <span className="text-[18px] md:text-[22px] text-neutral-950">
+                                            أسم الدكتور:
+                                          </span>{" "}
+                                          {request.doctor.name}
+                                        </h1>
+                                        <h1 className="text-[18px] md:text-[24px] text-neutral-600">
+                                          {formateDate(request.date)}
+                                          <span className="text-[18px] md:text-[22px] text-neutral-950">
+                                            {" "}
+                                            :التاريخ
+                                          </span>
+                                        </h1>
+                                        <h1 className="text-[18px] md:text-[24px] text-neutral-600">
+                                          <span className="text-[18px] md:text-[22px] text-neutral-950 ">
+                                            {" "}
+                                            التخصص:
+                                          </span>{" "}
+                                          {request.doctor.specialize.name}
+                                        </h1>
+                                        <h1 className="text-[18px] md:text-[24px] text-neutral-600">
+                                          <span className="text-[18px] md:text-[22px] text-neutral-950">
+                                            الأسباب:
+                                          </span>{" "}
+                                          {request.description}
+                                        </h1>
+                                      </div>
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                                {formateDate(request.date)}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                                {request.patient.name}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                                {request.doctor.name}
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
-                      )}
-                    </table>
+                      </table>
+                    )}
+
                     <SurgeryPagination />
                   </>
                 )}
