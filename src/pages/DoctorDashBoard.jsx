@@ -285,6 +285,7 @@ export function DoctorDashBoard() {
   console.log(createRecord);
   console.log(patientRecord);
   console.log(addedData);
+  console.log(surgeries);
 
   //Load Specializes
   useEffect(() => {
@@ -1501,19 +1502,6 @@ export function DoctorDashBoard() {
                                   </DialogHeader>
                                   <div>
                                     <form method="post">
-                                      <h1 className="text-center text-[18px] mb-2">
-                                        The following is a list of items you
-                                        should not include in the medical entry
-                                      </h1>
-                                      <p className="text-left pl-4 mb-2">
-                                        (Financial or health insurance
-                                        information, Subjective opinions,
-                                        Speculations, Blame of others or
-                                        self-doubt, Legal information such as
-                                        narratives provided to your professional
-                                        liability carrier or correspondence with
-                                        your defense attorney)
-                                      </p>
                                       <div className="flex flex-col bg-white shadow-lg p-6">
                                         <Select
                                           id="doctorSpecialization"
@@ -1535,38 +1523,28 @@ export function DoctorDashBoard() {
                                           }}
                                         />
 
-                                        <div className="mt-2 flex flex-col justify-start">
-                                          <label
-                                            htmlFor="diagnose"
-                                            className="mb-2 text-[18px]"
-                                          >
-                                            Description
-                                          </label>
-                                          <textarea
-                                            id="diagnose"
-                                            type="text"
-                                            name="description"
-                                            value={diagnoseData.description}
-                                            onChange={handleDiagnoseDataChange}
-                                            placeholder="Write your diagnose..."
-                                            className="w-full pl-2 py-2 border rounde-lg"
-                                          />
-                                        </div>
+                                        <textarea
+                                          id="diagnose"
+                                          type="text"
+                                          name="description"
+                                          required
+                                          value={diagnoseData.description}
+                                          onChange={handleDiagnoseDataChange}
+                                          placeholder="Write your diagnose..."
+                                          className="w-full pl-2 py-2 border mt-1 mb-1"
+                                        />
                                         <button
                                           onClick={handleAddDiagnoseData}
-                                          className="bg-blue-600 mt-4 py-2 rounded text-white transition-all duration-300 hover:bg-blue-800"
+                                          className="bg-blue-600 mt-2 py-2 rounded text-white transition-all duration-300 hover:bg-blue-800"
                                         >
                                           Add Diagnose
                                         </button>
                                       </div>
                                       {addedData.length > 0 && (
-                                        <div className="grid grid-cols-4 place-items-center bg-white shadow-lg p-6">
+                                        <div className="grid grid-cols-5 place-items-center bg-white shadow-lg">
                                           {addedData.map((data, index) => (
-                                            <div
-                                              key={index}
-                                              className="flex items-center"
-                                            >
-                                              <div className="flex flex-col gap-2 mb-3 bg-slate-100 border shadow-md p-4 rounded">
+                                            <div key={index}>
+                                              <div className="flex flex-col mb-2 bg-slate-100 border shadow-md p-3 rounded">
                                                 <p className="text-[18px]">
                                                   {data.medicine}
                                                 </p>
@@ -1579,7 +1557,7 @@ export function DoctorDashBoard() {
                                                       index
                                                     )
                                                   }
-                                                  className="bg-red-500 px-3 py-1 max-w-20 rounded"
+                                                  className="bg-red-500 px-2 py-1 text-white hover:bg-red-800 transition-all duration-300 mt-2 max-w-20 rounded"
                                                 >
                                                   Delete
                                                 </button>
