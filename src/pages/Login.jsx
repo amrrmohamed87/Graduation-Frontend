@@ -97,7 +97,7 @@ function Login() {
         const patientName = data.user.name;
         const patientCode = data.user.code;
 
-        localStorage.setItem("patientName", patientName);
+        localStorage.setItem("name", patientName);
         localStorage.setItem("patientCode", patientCode);
       }
 
