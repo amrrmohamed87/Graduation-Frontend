@@ -600,9 +600,11 @@ function PatientProfile() {
                       </thead>
                       <tbody className="border rounded-3 text-right">
                         {WattingBooks.length <= 0 || WattingBooks === null ? (
-                          <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">
+                         <tr>
+                           <td className=" text-muted start-80 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-2/6">
                             لا يوجد مواعيد منتظرة
-                          </h2>
+                          </td>
+                         </tr>
                         ) : (
                           WattingBooks.map((element, i) => (
                             <tr key={i}>
@@ -636,9 +638,11 @@ function PatientProfile() {
                       </thead>
                       <tbody className="border rounded-3 text-right">
                         {acceptBooks.length <= 0 || acceptBooks === null ? (
-                          <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">
+                          <tr>
+                            <td className=" text-muted start-80 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-2/6">
                             لا يوجد مواعيد سابقة
-                          </h2>
+                          </td>
+                          </tr>
                         ) : (
                           acceptBooks.map((element, i) => (
                             <tr key={i}>
