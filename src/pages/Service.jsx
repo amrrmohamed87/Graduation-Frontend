@@ -5,10 +5,10 @@ import FirstSectionPhoto from "../assets/images/appointment.jpg";
 import SecoundPhoto from "../assets/images/medical-information.jpeg";
 import SecoundSectionPhoto from "../assets/images/doctor-name.jpg";
 import SecoundPhotoSecoundSection from "../assets/images/specialization.jpg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 export function Service() {
   useEffect(() => {
     AOS.init({
@@ -65,6 +65,19 @@ export function Service() {
 
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
+  const navigate = useNavigate();
+
+  //amr's work to handle the service authorizations
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      toast.error("Please if you're a patient log in to access this service");
+    } else if (role !== "patient") {
+      navigate("/");
+      toast.error("This service is for patients only");
+    }
+  }, [token, role, navigate]);
+
   return (
     <>
       <div
@@ -114,9 +127,7 @@ export function Service() {
                     <p className="text-white text-right textForP pe-5 ">
                       {element.pragrapgh}
                     </p>
-                    <NavLink
-                      to={role && role === "patient" ? element.to : "/login"}
-                    >
+                    <NavLink to={element.to}>
                       <button className="absolute start-5 bottom-5  btn btn-primary buttonResponsive">
                         {" "}
                         {element.buttonContent}
