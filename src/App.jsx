@@ -3,13 +3,11 @@ import {
   Navigate,
   useLocation,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 
 import RootLayout from "./root/RootLayout";
 import Home from "./pages/Home";
 import Error from "./Error/Error";
-import ContactUs from "./pages/ContactUs.jsx";
 
 import { Service } from "./pages/Service.jsx";
 import { MedSearch } from "./pages/MedSearch.jsx";
@@ -28,7 +26,6 @@ import DuringPregnancy from "./health/woman/DuringPregnancy.jsx";
 import Birth from "./health/woman/Birth.jsx";
 import Elderly from "./health/senior/Elderly.jsx";
 import Alzheimers from "./health/senior/Alzheimers.jsx";
-import DoctorProfile from "./pages/DoctorProfile.jsx";
 import Admin from "./pages/Admin.jsx";
 import Hospital from "./pages/Hospital.jsx";
 import Login from "./pages/Login.jsx";
@@ -38,6 +35,7 @@ import { DoctorDashBoard } from "./pages/DoctorDashBoard";
 import HospitalAdmin from "./pages/HospitalAdmin";
 import HospitalManager from "./pages/HospitalManager";
 import PatientProfile from "./pages/PatientProfile";
+import Scroll from "./routes/Scroll";
 
 function PrivateRoutes({ roles, children }) {
   const location = useLocation();
@@ -228,5 +226,9 @@ export default function App() {
     return () => unlisten(); // Clean up the listener when the component unmounts
   }, [router]); */
 
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router}>
+      <Scroll />
+    </RouterProvider>
+  );
 }
