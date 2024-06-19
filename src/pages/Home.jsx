@@ -60,6 +60,29 @@ export default function Home() {
     },
   };
 
+  const animationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100, // Start below the viewport
+    },
+    visible: {
+      opacity: 1,
+      y: 0, // Move to natural position
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 100, // Move below the viewport
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+  };
+
   return (
     <main>
       <section className="relative h-screen w-full">
@@ -71,10 +94,11 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <motion.div
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: true }}
-          variants={upwardMotionVariants}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: false, amount: 0.7 }}
+          variants={animationVariants}
           className="absolute inset-2 left-4 md:inset-4 md:mt-36 flex flex-1 flex-col justify-center text-right mr-2 md:mr-0 md:items-end"
         >
           <h2 className="text-white text-[40px] md:text-[70px]">
@@ -106,10 +130,11 @@ export default function Home() {
         </motion.div>
       </section>
       <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
       >
         <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px]">
           مميزاتنا
@@ -134,10 +159,11 @@ export default function Home() {
         </div>
       </motion.section>
       <motion.div
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
       >
         <AboutUs />
       </motion.div>
