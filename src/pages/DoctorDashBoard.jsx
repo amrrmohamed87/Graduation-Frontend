@@ -286,7 +286,7 @@ export function DoctorDashBoard() {
   console.log(patientRecord);
   console.log(addedData);
   console.log(surgeries);
-
+  console.log(requestSurgery);
   //Load Specializes
   useEffect(() => {
     async function loadSpecializes() {
@@ -382,18 +382,30 @@ export function DoctorDashBoard() {
   function handleAddDiagnoseData(event) {
     event.preventDefault();
 
-    const data = {
-      medicine: diagnoseData.medicine,
-      description: diagnoseData.description,
-    };
-    setCreateRecord((prev) => ({
-      ...prev,
-      diagnose: [...prev.diagnose, data],
-    }));
-    setAddedData((prev) => [...prev, diagnoseData]);
+    if (diagnoseData.medicine === "") {
+      toast.error("Please choose a medication");
+    } else if (diagnoseData.description === "") {
+      toast.error("Please write a description for the chosen medicine");
+    } else {
+      const data = {
+        medicine: diagnoseData.medicine,
+        description: diagnoseData.description,
+      };
+      setCreateRecord((prev) => ({
+        ...prev,
+        diagnose: [...prev.diagnose, data],
+      }));
+      setAddedData((prev) => [...prev, diagnoseData]);
+      setDiganoseData({
+        medicine: "",
+        description: "",
+      });
+      setSelectedMedicine(null);
+    }
   }
 
-  function handleDeleteDiagnoseData(diagnoseToDelete) {
+  function handleDeleteDiagnoseData(diagnoseToDelete, event) {
+    event.preventDefault();
     setAddedData((prevData) =>
       prevData.filter((_, index) => index !== diagnoseToDelete)
     );
@@ -476,7 +488,7 @@ export function DoctorDashBoard() {
   };
 
   //Create medical record api
-  const handleCreateMedicalRecord = async () => {
+  const handleCreateMedicalRecord = async (id) => {
     setIsCreating(true);
     try {
       const response = await fetch(
@@ -499,9 +511,8 @@ export function DoctorDashBoard() {
 
       toast.success("Record Created Successfully");
       setCreateRecord({
-        patientID: "",
-        doctorID: "",
-        medicine: "",
+        patientID: id,
+        doctorID: doctorId,
         diagnose: [],
       });
       setAddedData([]);
@@ -534,7 +545,7 @@ export function DoctorDashBoard() {
     }));
   }
 
-  const handleRequestSurgery = async () => {
+  const handleRequestSurgery = async (id) => {
     setIsRequestingSurgery(true);
 
     try {
@@ -558,8 +569,8 @@ export function DoctorDashBoard() {
 
       toast.success("Successfully requested");
       setRequestSurgery({
-        doctor: "",
-        patient: "",
+        doctor: doctorId,
+        patient: id,
         specialize: "",
         description: "",
       });
@@ -1487,6 +1498,7 @@ export function DoctorDashBoard() {
                                       medicine: "",
                                       description: "",
                                     });
+                                    setAddedData([]);
                                   }}
                                   className="sm:max-w-[1150px]"
                                 >
@@ -1552,9 +1564,10 @@ export function DoctorDashBoard() {
                                                   {data.description}
                                                 </p>
                                                 <button
-                                                  onClick={() =>
+                                                  onClick={(e) =>
                                                     handleDeleteDiagnoseData(
-                                                      index
+                                                      index,
+                                                      e
                                                     )
                                                   }
                                                   className="bg-red-500 px-2 py-1 text-white hover:bg-red-800 transition-all duration-300 mt-2 max-w-20 rounded"
@@ -1577,7 +1590,11 @@ export function DoctorDashBoard() {
                                       }`}
                                       type="submit"
                                       disabled={isCreating}
-                                      onClick={handleCreateMedicalRecord}
+                                      onClick={() => {
+                                        handleCreateMedicalRecord(
+                                          element.patientID._id
+                                        );
+                                      }}
                                     >
                                       {isCreating ? "Creating..." : "Create"}
                                     </Button>
@@ -1717,7 +1734,11 @@ export function DoctorDashBoard() {
                                       }`}
                                       type="submit"
                                       disabled={isRequestingSurgery}
-                                      onClick={handleRequestSurgery}
+                                      onClick={() => {
+                                        handleRequestSurgery(
+                                          element.patientID._id
+                                        );
+                                      }}
                                     >
                                       {isRequestingSurgery
                                         ? "Requesting..."
