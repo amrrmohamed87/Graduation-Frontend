@@ -220,7 +220,8 @@ export function DocSearch() {
       } else if (error.response && error.response.status === 422) {
         setError("لقد حجزت مع هذا الطبيب من قبل");
         setErrorButton("btn btn-success me-5");
-        setClassOfError("text-center fs-5 text-danger");setWatingForSureBook(false)
+        setClassOfError("text-center fs-5 text-danger");
+        setWatingForSureBook(false)
       }
     }
   }

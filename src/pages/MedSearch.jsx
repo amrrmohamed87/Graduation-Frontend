@@ -5,7 +5,7 @@ import SearchPhoto from "../assets/images/search.jpg";
 import SectionPhoto from "../assets/images/Search-Drug-Monitoring-Checker.jpg";
 import SectionPhoto2 from "../assets/images/shutterstock-huge-file.avif";
 import axios from "axios";
-import AOS from 'aos';
+import AOS from "aos";
 export function MedSearch() {
   useEffect(() => {
     AOS.init({
@@ -36,17 +36,17 @@ export function MedSearch() {
   };
   function ShowDiv() {
     setShowDivGetMed("w-100");
-
   }
   function HideDiv() {
     setShowDivGetMed("d-none");
-    setShowDiv(null)
+    setShowDiv(null);
   }
   // ------------------------
 
   // search medicines
   const [ShowDivSearch, setShowDivSearch] = useState("d-none");
   const [error2, setError2] = useState("");
+  const [classOfCloseErrorMessage, setClassOfCloseErrorMessage] = useState("d-none");
   const [classError2, setClassError2] = useState("d-none");
   const [ValueOfSearch, setValueOfSearch] = useState({
     name: "",
@@ -77,19 +77,31 @@ export function MedSearch() {
       setResultOfSearch(data.searchName);
       setError2("");
       setClassError2("d-none");
-      showThing()
+      setClassOfCloseErrorMessage("d-none")
+      showThing();
     } catch (error2) {
       if (error2.response && error2.response.status === 404) {
         setError2("غير متوفر");
         setClassError2(
           "text-center fs-1 w-50 alert ClassError2Width alert-warning fw-bold mt-3"
         );
+        setClassOfCloseErrorMessage("position-absolute top-0 end-16 cursor-pointer")
+        setShowDivSearch("d-none");
         setResultOfSearch([]);
       } else {
         setError2("");
         setClassError2("d-none");
+        setClassOfCloseErrorMessage("d-none")
       }
     }
+  }
+  function closeErrorMessage() {
+    setClassError2("d-none");
+    setClassOfCloseErrorMessage("d-none")
+    setValueOfSearch((prevState) => ({
+      ...prevState,
+      name: "",
+    }));
   }
 
   // ------------------------
@@ -130,8 +142,11 @@ export function MedSearch() {
             <div className=" DivSoraSearchMed rounded-4 shadow-lg">
               <img src={SectionPhoto} alt="sora" className="rounded-4 h-100" />
             </div>
-            <div data-aos="fade-up"
-     data-aos-anchor-placement="bottom-bottom" className=" textForSearchMed shadow-lg p-4 rounded-4">
+            <div
+              data-aos="fade-up"
+              data-aos-anchor-placement="bottom-bottom"
+              className=" textForSearchMed shadow-lg p-4 rounded-4"
+            >
               <h1 className="text-end textForSearchMEdH1 fs-1">
                 هدفنا هو التوعية{" "}
                 <i className="fa-solid fs-3 text-success fa-magnifying-glass"></i>
@@ -153,7 +168,11 @@ export function MedSearch() {
         <div className="container">
           <form data-aos="fade-left" onSubmit={getResponseOfSearch}>
             <div className="d-flex w-100 justify-content-center ">
-              <button onClick={getResponseOfSearch} type="button" className="btn btn-info rounded-5">
+              <button
+                onClick={getResponseOfSearch}
+                type="button"
+                className="btn btn-info rounded-5"
+              >
                 <i className="fa-solid fs-3 text-white fa-magnifying-glass"></i>
               </button>
               <input
@@ -168,10 +187,16 @@ export function MedSearch() {
           </form>
         </div>
         {/* 3rd ntegt alsearch */}
-        <div className="d-flex w-100 justify-content-center">
-                <div className={classError2}>{error2}</div>
-              </div>
-        <div  className={ShowDivSearch}>
+        <div className="d-flex w-100 position-relative justify-content-center">
+        <div
+                  onClick={closeErrorMessage}
+                  className={classOfCloseErrorMessage}
+                >
+                  <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
+                </div>
+          <div className={classError2}>{error2}</div>
+        </div>
+        <div className={ShowDivSearch}>
           <div
             onClick={closeDivShowSearch}
             className="position-absolute StyleOfCloseX end-0 top-0"
@@ -218,7 +243,8 @@ export function MedSearch() {
                           </p>
                           <span className="text-success text-end fs-5 mt-3 ms-2">
                             {/* : اسم الشركات */}
-                            <span className="mt-3 fs-4 me-2 ms-2">:</span> <i className="fa-regular fa-building fs-4 text-success"></i>
+                            <span className="mt-3 fs-4 me-2 ms-2">:</span>{" "}
+                            <i className="fa-regular fa-building fs-4 text-success"></i>
                           </span>
                         </div>
                         <button
@@ -253,10 +279,16 @@ export function MedSearch() {
         <div className="container">
           <div className="container p-4 rounded-4 shadow">
             <div className="d-flex flex-wrap gap-5 justify-content-evenly">
-              <div data-aos="fade-right" className="w-25 soraShowAllMed shadow rounded-4">
+              <div
+                data-aos="fade-right"
+                className="w-25 soraShowAllMed shadow rounded-4"
+              >
                 <img src={SectionPhoto2} alt="" className="w-100 rounded-4" />
               </div>
-              <div data-aos="fade-left" className="shadow TextShowAllMed p-4 rounded-4 w-50">
+              <div
+                data-aos="fade-left"
+                className="shadow TextShowAllMed p-4 rounded-4 w-50"
+              >
                 <h1 className="text-center fs-2"> يمكنك عرض جميع الادوية </h1>
                 <div className="d-flex justify-content-center gap-5 mt-5">
                   <button
@@ -291,14 +323,18 @@ export function MedSearch() {
                 ) : (
                   ""
                 )}
-                {getMedicine.length === 0 || getMedicine === null ?  <h1 className="fs-1 mt-5 text-center fw-bold ">
+                {getMedicine.length === 0 || getMedicine === null ? (
+                  <h1 className="fs-1 mt-5 text-center fw-bold ">
                     {" "}
                     لا يوجد ادوية
-                  </h1> : ""}
+                  </h1>
+                ) : (
+                  ""
+                )}
                 {getMedicine.map((element, i) => (
                   <div
                     key={i}
-                    className="col-md-3 rounded-4 mt-3 shadow position-relative overflow-hidden WidthOfResultCard"
+                    className="col-md-3  rounded-4 mt-3 shadow position-relative overflow-hidden WidthOfResultCard"
                   >
                     <div className="d-flex mt-2 justify-content-center ">
                       <div className="d-flex justify-content-center w-50 styleCardOfShowMed">
@@ -307,30 +343,37 @@ export function MedSearch() {
                         </h1>
                       </div>
                     </div>
-                      <p className="text-end mt-3 fs-5">
-                        {" "}
-                        {element.description}
-                        <span className="mt-3 fs-4 ms-2 me-2">:</span>
-                      <i className="fa-solid fa-file-medical mt-3 text-success fs-3 "></i>
-                      </p>
-                    <p className="text-end mt-2 fs-4">
+                    <p className="d-flex mt-3 justify-content-end text-end   fs-5">
+                      {" "}
+                     <span className=""> {element.description}</span>
+                      <span className=" fs-4 ms-2 me-2">:</span>
+                      <i className="fa-solid fa-file-medical  text-success fs-3 "></i>
+                    </p>
+                    <p className="text-end  fs-4 ">
                       {" "}
                       {element.components} :{" "}
                       <i className="fa-solid fa-mortar-pestle fs-4 text-success"></i>
                     </p>
-                    <div className="d-flex justify-content-end">
-                      <p className="mt-3 text-end fs-6 ">
+                    {/* <div className="d-flex mt-3 justify-content-end">
+                      <p className=" text-end  ">
                         {" "}
                         {element.tradeMark}{" "}
                       </p>
-                      <span className="text-success text-center fs-5 mt-3 ms-2 ">
-                        : اسم الشركات
-                      </span>
-                    </div>
+                      <span className="fs-4 ms-2 me-1 ">:</span>
+                      <p className="text-success text-end fs-5  ms-2 ">
+                         اسم الشركات
+                      </p>
+                    </div> */}
+                    <p className="d-flex mt-3 justify-content-end text-end ">
+                      {" "}
+                     <span className=""> {element.tradeMark}</span>
+                      <span className=" fs-4 ms-2 me-2">:</span>
+                      <p className="text-success  ">اسم الشركات</p>
+                    </p>
                     <button
                       type="button"
                       onClick={() => toggleDivPosition2(i)}
-                      className={`btn bg-success text-white mb-3 mt-3 z-2 start-0 position-relative buttonToShowHowToUse ${
+                      className={`btn bg-success  text-white z-2 bottom-3  start-3 position-absolute buttonToShowHowToUse ${
                         showDiv === i ? "active" : ""
                       }`}
                     >

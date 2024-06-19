@@ -90,15 +90,23 @@ function Hospital() {
   const [whenTheAdminChooseSameTime, setWhenTheAdminChooseSameTime] =
     useState("d-none");
   const [errorForTIme, seterrorForTIme] = useState(false);
+  const [errorForDate, seterrorForDate] = useState(false);
 
   async function putDoctorInformation() {
     setWatingForPutTimeForDoc(true);
     if (docInformation.time.length <= 0) {
       seterrorForTIme(true);
+      seterrorForDate(false)
       setWatingForPutTimeForDoc(false);
-    } else {
+    }else if(docInformation.day == ""){
+        seterrorForDate(true)
+        setWatingForPutTimeForDoc(false);
+        seterrorForTIme(false);
+    } 
+    else {
       try {
         seterrorForTIme(false);
+        seterrorForDate(false)
         let { data } = await axios.post(
           "https://mhiproject.onrender.com/clinicsDirector/doctorSchedule",
           docInformation
@@ -134,11 +142,13 @@ function Hospital() {
     setConfirmOperation("d-none");
     setWhenTheAdminChooseSameTime("d-none");
     setRefOperation("d-none");
+    seterrorForDate(false)
     let theDay = e.target.value;
-    setDocInformation({ ...docInformation, day: theDay, time: [] });
+    setDocInformation({ ...docInformation, day: theDay });
   }
   function putTime(e) {
     seterrorForTIme(false);
+    seterrorForDate(false)
     setWatingForPutTimeForDoc(false);
     const selectedTime = e.target.value;
     const isTimeSelected = docInformation.time.includes(selectedTime);
@@ -165,6 +175,7 @@ function Hospital() {
     setDocInformation({ ...docInformation, doctorID: "", day: "", time: [] });
     setActiveIndex(null);
     seterrorForTIme(false);
+    seterrorForDate(false)
     setWatingForPutTimeForDoc(false);
     setWatingForPutTimeForDoc(false);
   }
@@ -442,6 +453,18 @@ function Hospital() {
               role="alert"
             >
               يجب عليك اعطاء الطبيب مواعيد العمل{" "}
+            </div>
+          </div>
+        )}
+        {errorForDate == false ? (
+          ""
+        ) : (
+          <div className="d-flex justify-content-center">
+            <div
+              className="alert alert-success text-center mt-4 w-50 fs-5"
+              role="alert"
+            >
+              يجب عليك اعطاء الطبيب يوم العمل{" "}
             </div>
           </div>
         )}

@@ -31,10 +31,13 @@ function PatientProfile() {
       setIsLoadingForWatingTime(false);
       setIsLoadingForGetAcceptBooks(false);
       setIsLoadingForGetRecords(false);
+      setIsDivVisible(false)
     } else if (activeTab === 1) {
       setIsLoadingForWatingTime(true);
+      setIsDivVisible(false)
     } else if (activeTab === 2) {
       setIsLoadingForGetAcceptBooks(true);
+      setIsDivVisible(false)
     } else if (activeTab === 3) {
       setIsLoadingForGetRecords(true);
     }
@@ -122,6 +125,7 @@ function PatientProfile() {
   // to get records
   const [activeIndex, setActiveIndex] = useState(null);
   const [setRecords, setSetRecords] = useState([]);
+  // console.log(setRecords);
   const [getDiagnose, setDiagnose] = useState([]);
   // console.log(getDiagnose[activeIndex]);
   const [activeClass, setActiveClass] = useState(false);
@@ -146,7 +150,7 @@ function PatientProfile() {
     }
   }
   useEffect(() => {
-    getRecords;
+    getRecords();
   }, []);
   function putIToGetDiagnose(IOfDiagnose) {
     setActiveClass(true);
@@ -157,6 +161,40 @@ function PatientProfile() {
     setActiveClass(false);
     setActiveIndex(null);
   }
+
+  // filter for records
+  const toggleDivVisibility = () => {
+    setIsDivVisible(!isDivVisible);
+  };
+  const [DoctorSpecialize, setDoctorSpecialize] = useState("");
+  const docSecializeFilter = (value) => {
+    setDoctorSpecialize(value);
+  };
+  const [isDivVisible, setIsDivVisible] = useState(false);
+  // const filteredDoctors = setRecords.filter((doctor) => {
+  //   return doctor.specialize.name.includes(DoctorSpecialize);
+  // });
+  const filteredDoctors = setRecords.filter((record) => {
+    return record.doctor && record.doctor.specialize && record.doctor.specialize.name && record.doctor.specialize.name.includes(DoctorSpecialize);
+  });
+  // console.log(filteredDoctors);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 4;
+
+  const totalPage = Math.ceil(filteredDoctors.length / recordPerPage);
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecord = filteredDoctors.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+  // console.log(currentRecord);
+  const pagination = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPage) {
+      setCurrentPage(pageNumber);
+    }
+  };
   // -------------end---------
   const [doneMessage, setDoneMessage] = useState("d-none");
   const [detailsOfPatient, setDetailsOfPatient] = useState({
@@ -325,13 +363,16 @@ function PatientProfile() {
             {/* lma ydos 3la t3del almlf al45sy hyft7 dy  */}
             <section>
               <div
-                className={`position-fixed w-3/5 z-2 top-50 StyleForDisplay translate-middle shadow rounded-3 bg-gray-100 ${
+                className={`position-fixed w-3/5 z-30 top-50 StyleForDisplay translate-middle shadow rounded-3 bg-gray-100 ${
                   activeSection === true ? "active" : ""
                 } `}
               >
-                {/* <div onClick={closePatientSection} className="position-absolute top-0 end-0 cursor-pointer">
-                <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
-                </div> */}
+                <div
+                  onClick={closePatientSection}
+                  className="position-absolute top-0 end-0 cursor-pointer"
+                >
+                  <i className="fa-regular fa-circle-xmark text-danger me-2 mt-2 fs-3 "></i>
+                </div>
                 <div className={classOfPateintDeta}>
                   <h2 className="text-base font-semibold leading-7 text-gray-900 text-end me-5">
                     تفاصيل المستخدم
@@ -514,7 +555,7 @@ function PatientProfile() {
                     </p>
                   </div>
                 </div>
-                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-4 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForWatingTime === true ? (
                     <p className="fw-bold text-center p-3  fs-2">
                       {" "}
@@ -524,7 +565,7 @@ function PatientProfile() {
                     ""
                   )}
                 </div>
-                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-4 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForGetAcceptBooks === true ? (
                     <p className="fw-bold text-center p-3 fs-2">
                       {" "}
@@ -534,7 +575,7 @@ function PatientProfile() {
                     ""
                   )}
                 </div>
-                <div className="position-absolute z-2 mt-3 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
+                <div className="position-absolute z-2 mt-4 shadow w-25 rounded text-white bg-success start-50 top-50 translate-middle ">
                   {isLoadingForGetRecords === true ? (
                     <p className="fw-bold text-center p-3 fs-2">
                       {" "}
@@ -545,9 +586,9 @@ function PatientProfile() {
                   )}
                 </div>
                 {/* 3rd mwa3ed montzra */}
-                <div className="w-100 togetTableInMiddle position-absolute z-3">
+                <div className="togetTableInMiddle position-absolute z-3 ">
                   {activeTab === 1 ? (
-                    <table className="table mt-4 w-11/12">
+                    <table className="table mt-2 w-11/12">
                       <thead>
                         <tr className="table-success text-right">
                           <th scope="col">كود الطبيب</th>
@@ -583,7 +624,7 @@ function PatientProfile() {
                   {/* 3rd mwa3ed mkbola  */}
 
                   {activeTab === 2 ? (
-                    <table className="table mt-4 w-11/12">
+                    <table className="table mt-2 w-11/12">
                       <thead>
                         <tr className="table-success text-right">
                           <th scope="col">كود الطبيب</th>
@@ -618,7 +659,7 @@ function PatientProfile() {
                   {/* ------------------------------ */}
 
                   {/* medical records */}
-                  {activeTab === 3 ? (
+                  {/* {activeTab === 3 ? (
                     <table className="table mt-4 w-11/12">
                       <thead>
                         <tr className="table-success text-right">
@@ -654,6 +695,103 @@ function PatientProfile() {
                         )}
                       </tbody>
                     </table>
+                  ) : (
+                    ""
+                  )} */}
+                  {activeTab === 3 ? (
+                    <section className="mt-2">
+                      <div className="container rounded-3 shadow py-3">
+                        <button
+                          className="btn btn-success"
+                          onClick={toggleDivVisibility}
+                        >
+                          Filter
+                        </button>
+                        <div
+                          className={` position-relative start-0  ${
+                            isDivVisible ? "active" : "hide"
+                          }`}
+                          style={{
+                            transition: "height 0.5s",
+                            height: isDivVisible ? 35 : 0,
+                          }}
+                        >
+                          <div
+                            className={`d-flex justify-content-evenly ${
+                              isDivVisible ? "active" : "d-none"
+                            } `}
+                          >
+                            <input
+                              type="text"
+                              className=" opacity-75 w-25 text-end form-control"
+                              placeholder=" بالتخصص"
+                              onChange={(e) =>
+                                docSecializeFilter(e.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <table className="table mt-4 w-11/12">
+                          <thead>
+                            <tr className="table-success text-right">
+                              <th scope="col">يوم</th>
+                              <th scope="col">الدواء و الجرعات</th>
+                              <th scope="col">التخصص</th>
+                              <th scope="col">اسم الطبيب</th>
+                            </tr>
+                          </thead>
+                          <tbody className="border rounded-3 text-right">
+                            {currentRecord.length <= 0 ? (
+                              <tr>
+                                <td
+                                  colSpan="4"
+                                  className="text-muted text-center fs-3 fw-bold"
+                                >
+                                  لا يوجد سجلات طبية
+                                </td>
+                              </tr>
+                            ) : (
+                              currentRecord.map((element, i) => (
+                                <tr key={i}>
+                                  <td>{element.date.slice(0, 10)}</td>
+                                  <td>
+                                    <div
+                                      onClick={() => {
+                                        putIToGetDiagnose(i);
+                                      }}
+                                      className="d-flex justify-content-end"
+                                    >
+                                      <i className="fa-solid fa-info text-muted cursor-pointer"></i>
+                                    </div>
+                                  </td>
+                                  <td>{element.doctor?.specialize?.name}</td>
+                                  <td>{element.doctor?.name}</td>
+                                </tr>
+                              ))
+                            )}
+                          </tbody>
+                        </table>
+                        <div className="d-flex gap-2 justify-content-center w-11/12 mt-4">
+                          <button
+                            onClick={() => pagination(currentPage - 1)}
+                            className="btn btn-primary"
+                            disabled={currentPage === 1}
+                          >
+                            Previous
+                          </button>
+                          <span className="mt-2">
+                            Page {currentPage} of {totalPage}
+                          </span>
+                          <button
+                            onClick={() => pagination(currentPage + 1)}
+                            className="btn btn-primary"
+                            disabled={currentPage === totalPage}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </section>
                   ) : (
                     ""
                   )}
