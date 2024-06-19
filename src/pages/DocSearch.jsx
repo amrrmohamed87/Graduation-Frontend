@@ -18,7 +18,7 @@ export function DocSearch() {
   useEffect(() => {
     AOS.init({
       duration: 1000, // Duration of animations in milliseconds
-      once: true, // Whether animation should happen only once - while scrolling down
+      // once: true, // Whether animation should happen only once - while scrolling down
     });
   }, []);
   const Token = localStorage.getItem("token");
