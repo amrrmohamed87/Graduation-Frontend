@@ -251,6 +251,23 @@ function NewNavbar() {
             >
               {isSidebar && <AiOutlineClose size={20} />}
             </div>
+            {token && (
+              <li className="text-right text-[23px] mr-6 mt-12">
+                <NavLink
+                  onClick={() => {
+                    setIsSidebar(false);
+                  }}
+                  to={getProfilePath()}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-emerald-500 px-6 py-1 text-white rounded-xl"
+                      : "bg-transparent"
+                  }
+                >
+                  {name}
+                </NavLink>
+              </li>
+            )}
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
                 onClick={() => {
@@ -269,6 +286,9 @@ function NewNavbar() {
             </li>
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
+                onClick={() => {
+                  setIsSidebar(false);
+                }}
                 to="/health-awareness"
                 className={({ isActive }) =>
                   isActive
@@ -281,6 +301,9 @@ function NewNavbar() {
             </li>
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
+                onClick={() => {
+                  setIsSidebar(false);
+                }}
                 to="/service"
                 className={({ isActive }) =>
                   isActive
@@ -293,6 +316,9 @@ function NewNavbar() {
             </li>
             <li className="text-right text-[23px] mr-6 mt-12">
               <NavLink
+                onClick={() => {
+                  setIsSidebar(false);
+                }}
                 to="/contact-us"
                 className={({ isActive }) =>
                   isActive
