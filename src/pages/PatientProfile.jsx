@@ -14,7 +14,7 @@ function PatientProfile() {
   const Token = localStorage.getItem("token");
   const decodedToken = jwtDecode(Token);
   // console.log(decodedToken);
-  const name = localStorage.getItem("patientName");
+  const name = localStorage.getItem("name");
   const UserNameOfLogin = decodedToken.email;
   const UserIdOfLogin = decodedToken.userId;
   // console.log(UserIdOfLogin);
