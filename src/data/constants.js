@@ -35,19 +35,19 @@ export const navLinks = [
 export const features = [
     {
         src: calendar,
-        link: "/docsearch",
+        link: "/service",
         label: "حجز موعد",
         description: "يتضمن حجز الطبيب تحديد موعد مع أخصائي الرعاية الصحية للاستشارة الطبية أو العلاج"
     },
     {
         src: doctors,
-        link: "/docsearch",
+        link: "/service",
         label: "ابحث عن طبيب",
         description: "يمكنك البحث بالاسم أو التخصص، مما يوصلك بمتخصصي الرعاية الصحية المناسبين في المستشفى الخاص بك"
     },
     {
         src: medications,
-        link: "searchmed",
+        link: "service",
         label: "ابحث عن دواء",
         description: "مما يسمح لك بالعثور على المعلومات والفوائد والآثار الجانبية للدواء"
     }
