@@ -148,7 +148,7 @@ function Admin() {
       }
     }
     loadAdmins();
-  }, [isDeletingAdmin || isAddingAdminHospital]);
+  }, [isDeletingAdmin || isAddingAdminHospital || isDeletingHospital]);
 
   function handleHospitalAdminChange(event) {
     const { name, value } = event.target;
