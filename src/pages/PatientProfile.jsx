@@ -20,9 +20,10 @@ function PatientProfile() {
   // console.log(UserIdOfLogin);
   // --------------end----------------
   const [activeTab, setActiveTab] = useState(null);
-  
+
   const [isLoadingForWatingTime, setIsLoadingForWatingTime] = useState(true);
-  const [isLoadingForGetAcceptBooks, setIsLoadingForGetAcceptBooks] = useState(true);
+  const [isLoadingForGetAcceptBooks, setIsLoadingForGetAcceptBooks] =
+    useState(true);
   const [isLoadingForGetRecords, setIsLoadingForGetRecords] = useState(true);
   const [isLoading2, setIsLoading2] = useState(true);
   useEffect(() => {
@@ -30,14 +31,12 @@ function PatientProfile() {
       setIsLoadingForWatingTime(false);
       setIsLoadingForGetAcceptBooks(false);
       setIsLoadingForGetRecords(false);
-    }else if (activeTab === 1) {
-      setIsLoadingForWatingTime(true)
-    }
-    else if (activeTab === 2) {
-      setIsLoadingForGetAcceptBooks(true)
-    }
-    else if (activeTab === 3) {
-      setIsLoadingForGetRecords(true)
+    } else if (activeTab === 1) {
+      setIsLoadingForWatingTime(true);
+    } else if (activeTab === 2) {
+      setIsLoadingForGetAcceptBooks(true);
+    } else if (activeTab === 3) {
+      setIsLoadingForGetRecords(true);
     }
   }, [activeTab]);
   const handleClick = (tabNumber) => {
@@ -47,7 +46,7 @@ function PatientProfile() {
       setActiveTab(tabNumber);
     }
   };
-  
+
   // useEffect(() => {
   //   if (activeTab === null) {
   //     setIsLoading(false);
@@ -89,17 +88,15 @@ function PatientProfile() {
       // console.log(data);
       setWattingBooks(data);
       setIsLoadingForWatingTime(false);
-      
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setIsLoadingForWatingTime(false);
-      
       }
     }
   }
-useEffect(()=>{
-  getWattingBooks()
-},[])
+  useEffect(() => {
+    getWattingBooks();
+  }, []);
   // -------------end---------
   // to get accept books
   const [acceptBooks, setAcceptBooks] = useState([]);
@@ -118,9 +115,9 @@ useEffect(()=>{
       }
     }
   }
-useEffect(()=>{
-getAcceptBooks()
-},[])
+  useEffect(() => {
+    getAcceptBooks();
+  }, []);
   // -------------end---------
   // to get records
   const [activeIndex, setActiveIndex] = useState(null);
@@ -148,9 +145,9 @@ getAcceptBooks()
       }
     }
   }
-useEffect(()=>{
-getRecords
-},[])
+  useEffect(() => {
+    getRecords;
+  }, []);
   function putIToGetDiagnose(IOfDiagnose) {
     setActiveClass(true);
     setActiveIndex(IOfDiagnose);
@@ -561,22 +558,28 @@ getRecords
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {WattingBooks.length <=0 || WattingBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد مواعيد منتظرة</h2> : WattingBooks.map((element, i) => (
-                          <tr key={i}>
-                            <td> {element.doctorID.code} </td>
-                            <td>{element.time} </td>
-                            <td> {element.day.slice(0, 10)} </td>
-                            <td>{element.doctorID.specialize.name} </td>
-                            <td> {element.doctorID.name} </td>
-                          </tr>
-                        ))}
+                        {WattingBooks.length <= 0 || WattingBooks === null ? (
+                          <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">
+                            لا يوجد مواعيد منتظرة
+                          </h2>
+                        ) : (
+                          WattingBooks.map((element, i) => (
+                            <tr key={i}>
+                              <td> {element.doctorID.code} </td>
+                              <td>{element.time} </td>
+                              <td> {element.day.slice(0, 10)} </td>
+                              <td>{element.doctorID.specialize.name} </td>
+                              <td> {element.doctorID.name} </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   ) : (
                     ""
                   )}
                   {/* -------------------end-------- */}
-                  
+
                   {/* 3rd mwa3ed mkbola  */}
 
                   {activeTab === 2 ? (
@@ -591,22 +594,27 @@ getRecords
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        {acceptBooks.length <=0 || acceptBooks === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد مواعيد سابقة</h2> : acceptBooks.map((element, i) => (
-                          <tr key={i}>
-                            <td> {element.doctorID.code} </td>
-                            <td>{element.time} </td>
-                            <td> {element.day.slice(0, 10)} </td>
-                            <td>{element.doctorID.specialize.name} </td>
-                            <td> {element.doctorID.name} </td>
-                          </tr>
-                        ))}
+                        {acceptBooks.length <= 0 || acceptBooks === null ? (
+                          <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">
+                            لا يوجد مواعيد سابقة
+                          </h2>
+                        ) : (
+                          acceptBooks.map((element, i) => (
+                            <tr key={i}>
+                              <td> {element.doctorID.code} </td>
+                              <td>{element.time} </td>
+                              <td> {element.day.slice(0, 10)} </td>
+                              <td>{element.doctorID.specialize.name} </td>
+                              <td> {element.doctorID.name} </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   ) : (
                     ""
                   )}
-                        
-                 
+
                   {/* ------------------------------ */}
 
                   {/* medical records */}
@@ -621,24 +629,29 @@ getRecords
                         </tr>
                       </thead>
                       <tbody className="border rounded-3 text-right">
-                        
-                        {setRecords.length <= 0 || setRecords === null ? <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">لا يوجد سجلات طبية</h2> : setRecords.map((element, i) => (
-                          <tr key={i}>
-                            <td> {element.date.slice(0, 10)} </td>
-                            <td>
-                              <div
-                                onClick={() => {
-                                  putIToGetDiagnose(i);
-                                }}
-                                className="d-flex justify-content-end"
-                              >
-                                <i className="fa-solid fa-info text-muted cursor-pointer"></i>
-                              </div>{" "}
-                            </td>
-                            <td>{element.doctor.specialize.name} </td>
-                            <td> {element.doctor.name} </td>
-                          </tr>
-                        ))}
+                        {setRecords.length <= 0 || setRecords === null ? (
+                          <h2 className="text-muted start-96 mt-5 ms-5 position-absolute z-1 fs-3 fw-bold">
+                            لا يوجد سجلات طبية
+                          </h2>
+                        ) : (
+                          setRecords.map((element, i) => (
+                            <tr key={i}>
+                              <td> {element.date.slice(0, 10)} </td>
+                              <td>
+                                <div
+                                  onClick={() => {
+                                    putIToGetDiagnose(i);
+                                  }}
+                                  className="d-flex justify-content-end"
+                                >
+                                  <i className="fa-solid fa-info text-muted cursor-pointer"></i>
+                                </div>{" "}
+                              </td>
+                              <td>{element.doctor.specialize.name} </td>
+                              <td> {element.doctor.name} </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   ) : (
@@ -715,10 +728,14 @@ getRecords
           <div className="row  gap-5 justify-content-center align-items-center">
             <div className="col-md-5 border mt-5 rounded py-2">
               <h2 className="text-center mt-4 fs-3"> الجرعات </h2>
-              
-              {activeIndex !== null && getDiagnose[activeIndex] && getDiagnose[activeIndex].length > 0 ? (
+
+              {activeIndex !== null &&
+              getDiagnose[activeIndex] &&
+              getDiagnose[activeIndex].length > 0 ? (
                 getDiagnose[activeIndex].map((element, i) => (
-                  <p key={i} className="text-end mt-4 text-muted">{element.description}</p>
+                  <p key={i} className="text-end mt-4 text-muted">
+                    {element.description}
+                  </p>
                 ))
               ) : (
                 <p className="text-center fw-bold fs-4 mt-5"> لا يوجد جرعات </p>
@@ -726,9 +743,13 @@ getRecords
             </div>
             <div className="col-md-5 border mt-5 rounded py-2">
               <h2 className="text-center mt-4 fs-3">أسماء الأدوية</h2>
-              {activeIndex !== null && getDiagnose[activeIndex] && getDiagnose[activeIndex].length > 0 ? (
+              {activeIndex !== null &&
+              getDiagnose[activeIndex] &&
+              getDiagnose[activeIndex].length > 0 ? (
                 getDiagnose[activeIndex].map((element, i) => (
-                  <p key={i} className="text-end mt-4 text-muted">{element.medicine}</p>
+                  <p key={i} className="text-end mt-4 text-muted">
+                    {element.medicine}
+                  </p>
                 ))
               ) : (
                 <p className="text-center fw-bold fs-4 mt-5"> لا يوجد أدوية </p>
