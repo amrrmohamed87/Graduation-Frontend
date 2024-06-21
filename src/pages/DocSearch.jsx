@@ -689,9 +689,9 @@ export function DocSearch() {
                 //     </button>
                 //   </div>
                 // </div>
-                <div className={handleForSearch}>
+                <div key={i} className={handleForSearch}>
                   <div
-                    key={i}
+                    
                     className={`position-relative w-11/12 roundedCorner border  shadow my-3 ${showResult.length === 1 ||2||3?"h-3/5" : ""} `}
                   >
                     <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
