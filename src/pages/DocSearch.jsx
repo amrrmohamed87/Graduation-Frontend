@@ -578,7 +578,7 @@ export function DocSearch() {
       <section className={showDivSearch}>
         <button
           onClick={CloseSectionSearch}
-          className="btn btn-close position-absolute  fs-5 end-0 searchCloseSection"
+          className="btn btn-close position-absolute  fs-5 end-24 searchCloseSection"
         ></button>
         <form
           className="mt-5"
