@@ -12,6 +12,7 @@ import "aos/dist/aos.css";
 // import { Book } from "lucide-react";
 // import { data } from "autoprefixer";
 export function DocSearch() {
+  const [errorWrongSsearch ,setErrorWrongSsearch] = useState("")
   const[IsLOadingDays , setIsLoadingDays] = useState(true)
   const [isLoadingForDateDoc , setIsLoadingForDateDoc] = useState(true)
   const [watingForSureBook , setWatingForSureBook] = useState(false)
@@ -146,6 +147,9 @@ export function DocSearch() {
         searchUser
       );
       setShowResult(data.search);
+      if (showResult.length === 0 || showResult ===null) {
+        setErrorWrongSsearch("لا يوجد طبيب بهذا الاسم")
+      }
       setHandleForSearch("w-25 d-flex justify-content-center");
       setErrorForSearch("d-none");
     } catch (error) {
@@ -245,6 +249,7 @@ export function DocSearch() {
       name: "",
       specialize: "",
     });
+    setErrorWrongSsearch("")
   }
   const toggleDivPosition = () => {
     if (!isSearchActive) {
@@ -655,7 +660,7 @@ export function DocSearch() {
           No input please write name or specialize
         </h1>
         {showResult === null || showResult.length === 0 ? (
-          ""
+          <p className="text-center fs-3 fw-bold text-muted mt-5"> {errorWrongSsearch}</p>
         ) : (
           <div className="d-flex justify-content-center">
             <div
