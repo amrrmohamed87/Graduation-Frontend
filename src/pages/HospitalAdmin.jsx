@@ -744,90 +744,92 @@ const HospitalAdmin = () => {
                     <FaUserDoctor size={20} className="text-emerald-500" />
                   </div>
                 </div>
-
-                <table className="w-full">
-                  <thead className="bg-emerald-600 border">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right w-4"
-                      >
-                        حدف
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right"
-                      >
-                        الكود
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right"
-                      >
-                        الأسم
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {currentDoctorData.map((doctor, index) => (
-                      <tr key={index} className="border text-right">
-                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <p>
-                                <RiDeleteBin5Fill
-                                  onClick={() => {
-                                    setDoctorId({
-                                      doctorID: doctor._id,
-                                    });
-                                  }}
-                                  size={20}
-                                  className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
-                                />
-                              </p>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  هل أنت متأكد؟
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                  حساب الأدمن الخاص به/لها نهائيًا وإزالته من
-                                  خدمتنا
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>إلغاء</AlertDialogCancel>
-
-                                <form method="delete" className="mt-2">
-                                  <AlertDialogAction
-                                    type="submit"
-                                    disabled={isDeletingDoctor}
-                                    onClick={handleDeleteDoctor}
-                                  >
-                                    {isDeletingDoctor
-                                      ? "...جاري الحذف"
-                                      : "تأكيد"}
-                                  </AlertDialogAction>
-                                </form>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {doctor.code}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {doctor.name}
-                        </td>
+                {doctorslist.length <= 0 ? (
+                  <h1 className="text-center text-[18px] md:text-[24px]">
+                    لا يوجد أطباء
+                  </h1>
+                ) : (
+                  <table className="w-full">
+                    <thead className="bg-emerald-600 border">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right w-4"
+                        >
+                          حدف
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right"
+                        >
+                          الكود
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right"
+                        >
+                          الأسم
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {doctorslist.length <= 0 && (
-                  <p className="text-center">You have zero Admins</p>
+                    </thead>
+
+                    <tbody>
+                      {currentDoctorData.map((doctor, index) => (
+                        <tr key={index} className="border text-right">
+                          <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <p>
+                                  <RiDeleteBin5Fill
+                                    onClick={() => {
+                                      setDoctorId({
+                                        doctorID: doctor._id,
+                                      });
+                                    }}
+                                    size={20}
+                                    className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                                  />
+                                </p>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    هل أنت متأكد؟
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
+                                    حساب الأدمن الخاص به/لها نهائيًا وإزالته من
+                                    خدمتنا
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>إلغاء</AlertDialogCancel>
+
+                                  <form method="delete" className="mt-2">
+                                    <AlertDialogAction
+                                      type="submit"
+                                      disabled={isDeletingDoctor}
+                                      onClick={handleDeleteDoctor}
+                                    >
+                                      {isDeletingDoctor
+                                        ? "...جاري الحذف"
+                                        : "تأكيد"}
+                                    </AlertDialogAction>
+                                  </form>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                            {doctor.code}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                            {doctor.name}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 )}
                 <DoctorPagination />
               </div>
@@ -851,92 +853,96 @@ const HospitalAdmin = () => {
                   </div>
                 </div>
 
-                <table className="w-full">
-                  <thead className="bg-emerald-600 border">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right w-4"
-                      >
-                        حدف
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right"
-                      >
-                        الكود
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-md font-medium text-white px-6 py-4 text-right"
-                      >
-                        الأسم
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {currenDirectorData.map((director, index) => (
-                      <tr key={index} className="border text-right">
-                        <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <p>
-                                <RiDeleteBin5Fill
-                                  onClick={() => {
-                                    setDirectorId({
-                                      directorID: director._id,
-                                    });
-                                  }}
-                                  size={20}
-                                  className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
-                                />
-                              </p>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  هل أنت متأكد؟
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
-                                  حساب الأدمن الخاص به/لها نهائيًا وإزالته من
-                                  خدمتنا
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>إلغاء</AlertDialogCancel>
-
-                                <form method="delete">
-                                  <AlertDialogAction>
-                                    <p
-                                      type="submit"
-                                      disabled={isDeletingDirector}
-                                      onClick={handleDeleteDireector}
-                                    >
-                                      {isDeletingDirector
-                                        ? "...جاري الحذف"
-                                        : "تأكيد"}
-                                    </p>
-                                  </AlertDialogAction>
-                                </form>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {director.code}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                          {director.name}
-                        </td>
+                {directorsList.length <= 0 ? (
+                  <h1 className="text-center text-[18px] md:text-[24px]">
+                    لا يوجد مدير عيادات
+                  </h1>
+                ) : (
+                  <table className="w-full">
+                    <thead className="bg-emerald-600 border">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right w-4"
+                        >
+                          حدف
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right"
+                        >
+                          الكود
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-md font-medium text-white px-6 py-4 text-right"
+                        >
+                          الأسم
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {directorsList.length <= 0 && (
-                  <p className="text-center">You have zero Admins</p>
+                    </thead>
+
+                    <tbody>
+                      {currenDirectorData.map((director, index) => (
+                        <tr key={index} className="border text-right">
+                          <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500 flex justify-end items-center">
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <p>
+                                  <RiDeleteBin5Fill
+                                    onClick={() => {
+                                      setDirectorId({
+                                        directorID: director._id,
+                                      });
+                                    }}
+                                    size={20}
+                                    className="text-red-500 hover:text-red-700 transition-all duration-300 cursor-pointer"
+                                  />
+                                </p>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    هل أنت متأكد؟
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    لا يمكن التراجع عن هذا الإجراء. هذا سوف حذف
+                                    حساب الأدمن الخاص به/لها نهائيًا وإزالته من
+                                    خدمتنا
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>إلغاء</AlertDialogCancel>
+
+                                  <form method="delete">
+                                    <AlertDialogAction>
+                                      <p
+                                        type="submit"
+                                        disabled={isDeletingDirector}
+                                        onClick={handleDeleteDireector}
+                                      >
+                                        {isDeletingDirector
+                                          ? "...جاري الحذف"
+                                          : "تأكيد"}
+                                      </p>
+                                    </AlertDialogAction>
+                                  </form>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                            {director.code}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                            {director.name}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 )}
+
                 <DoctorPagination />
               </div>
             </div>
