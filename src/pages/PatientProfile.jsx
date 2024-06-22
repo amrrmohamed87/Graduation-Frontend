@@ -832,7 +832,7 @@ function PatientProfile() {
               >
                 <div className="w-14 h-14 rounded-3 overflow-hidden">
                   <img
-                    src={`https://mhiproject.onrender.com/${element.image}`}
+                    src={`https://mhi-production.up.railway.app/${element.image}`}
                     alt="صورة الطبيب"
                     className="w-100 h-100"
                   />
