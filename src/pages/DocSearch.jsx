@@ -794,7 +794,7 @@ export function DocSearch() {
                 >
                   <div className="position-absolute top-0 start-50 translate-middle StyleForDoctorCardIMg overflow-hidden">
                     <img
-                      src={`https://mhiproject.onrender.com/${element.image}`}
+                      src={`https://mhi-production.up.railway.app/${element.image}`}
                       alt=""
                       className="w-100 h-100"
                     />
