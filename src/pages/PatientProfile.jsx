@@ -82,7 +82,7 @@ function PatientProfile() {
 
   // to get watting books
   const [WattingBooks, setWattingBooks] = useState([]);
-  console.log(WattingBooks);
+  // console.log(WattingBooks);
   async function getWattingBooks() {
     try {
       let { data } = await axios(
