@@ -414,9 +414,9 @@ function HospitalManager() {
     <>
       <ToastContainer />
       <Dashboard />
-      <section className="mt-8 mr-6">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-          <div className="bg-gray-100 border shadow-sm rounded-lg w-80 p-6">
+      <section className="mt-8">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-2">
+          <div className="bg-gray-100 border shadow-sm rounded-lg w-[260px] p-6">
             <div className="flex justify-end gap-2">
               <div className="flex flex-col">
                 <h1 className="mt-3 text-[18px]">العمليات الجراحية الجديدة</h1>
@@ -431,7 +431,7 @@ function HospitalManager() {
             </div>
           </div>
 
-          <div className="bg-gray-100 border shadow-sm rounded-lg p-6 w-80">
+          <div className="bg-gray-100 border shadow-sm rounded-lg p-6 w-[260px]">
             <div className="flex justify-end gap-2">
               <div className="flex flex-col">
                 <h1 className="mt-3 text-[18px]">الأطباء</h1>
@@ -446,7 +446,7 @@ function HospitalManager() {
             </div>
           </div>
 
-          <div className="flex justify-between gap-4 w-full md:w-[600px] bg-gray-50 border rounded-lg shadow-sm p-4">
+          <div className="flex justify-between gap-4 w-full md:w-[900px] bg-gray-50 border rounded-lg shadow-sm p-4">
             <div className="flex items-center gap-[0.35rem]">
               <h1 className="text-right text-[20px]">{location}</h1>
               <ImLocation size={20} className="text-red-600" />
