@@ -29,7 +29,7 @@ export function Service() {
     {
       title: "معلومات طبية",
       pragrapgh:
-        "ستتاح للمستخدمين فرصة البحث عن الأدوية جرعات هذا الدواء",
+        "ستتاح للمستخدمين فرصة البحث عن الأدوية و معرفة طريقة الاستعمال",
       imgSrc: SecoundPhoto,
       buttonContent: "ابحث الآن",
       alt: "secound",
