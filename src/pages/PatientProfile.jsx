@@ -451,7 +451,7 @@ function PatientProfile() {
                       </div>
                     </div>
 
-                    <div className="col-span-3">
+                    {/* <div className="col-span-3">
                       <label
                         htmlFor="age"
                         className="block text-sm font-medium leading-6 text-gray-900 text-end me-2"
@@ -469,7 +469,7 @@ function PatientProfile() {
                           onChange={putPatientDetail}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-span-full">
                       <label
                         htmlFor="mobileNumber"
