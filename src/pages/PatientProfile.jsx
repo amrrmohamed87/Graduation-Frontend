@@ -82,7 +82,7 @@ function PatientProfile() {
 
   // to get watting books
   const [WattingBooks, setWattingBooks] = useState([]);
-  // console.log(WattingBooks);
+  console.log(WattingBooks);
   async function getWattingBooks() {
     try {
       let { data } = await axios(
@@ -608,12 +608,12 @@ function PatientProfile() {
                         ) : (
                           WattingBooks.map((element, i) => (
                             <tr key={i}>
-                              <td> {element.doctorID.code} </td>
-                              <td>{element.time} </td>
-                              <td> {element.day.slice(0, 10)} </td>
-                              <td>{element.doctorID.specialize.name} </td>
-                              <td> {element.doctorID.name} </td>
-                            </tr>
+                            <td> {element.doctorID?.code || "N/A"} </td>
+                            <td>{element.time || "N/A"} </td>
+                            <td> {element.day ? element.day.slice(0, 10) : "N/A"} </td>
+                            <td>{element.doctorID?.specialize?.name || "N/A"} </td>
+                            <td> {element.doctorID?.name || "N/A"} </td>
+                          </tr>
                           ))
                         )}
                       </tbody>
@@ -646,11 +646,11 @@ function PatientProfile() {
                         ) : (
                           acceptBooks.map((element, i) => (
                             <tr key={i}>
-                              <td> {element.doctorID.code} </td>
-                              <td>{element.time} </td>
-                              <td> {element.day.slice(0, 10)} </td>
-                              <td>{element.doctorID.specialize.name} </td>
-                              <td> {element.doctorID.name} </td>
+                              <td> {element.doctorID?.code || "N/A"} </td>
+                              <td>{element.time || "N/A"} </td>
+                              <td> {element.day ? element.day.slice(0, 10) : "N/A"} </td>
+                              <td>{element.doctorID?.specialize?.name || "N/A"} </td>
+                              <td> {element.doctorID?.name || "N/A"} </td>
                             </tr>
                           ))
                         )}
