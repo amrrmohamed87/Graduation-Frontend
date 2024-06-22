@@ -19,6 +19,29 @@ function DownLoadApp() {
       },
     },
   };
+
+  const animationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100, // Start below the viewport
+    },
+    visible: {
+      opacity: 1,
+      y: 0, // Move to natural position
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 100, // Move below the viewport
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+  };
   return (
     <section className="md:h-screen">
       <div className="bg-white shadow-xl rounded-2xl p-4 m-4">

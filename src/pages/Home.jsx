@@ -167,7 +167,15 @@ export default function Home() {
       >
         <AboutUs />
       </motion.div>
-      <Services />
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
+      >
+        <Services />
+      </motion.div>
       <DownLoadApp />
       <Footer />
     </main>

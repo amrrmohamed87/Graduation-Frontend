@@ -354,7 +354,7 @@ function Login() {
               </button>
               <h1 className="flex justify-center gap-2">
                 <Link
-                  className="text-[#056550]"
+                  className="text-[#056550] underline"
                   onClick={() => {
                     setSignin(!signin);
                   }}
@@ -401,7 +401,7 @@ function Login() {
 
               <h1 className="flex justify-center gap-2">
                 <Link
-                  className="text-[#056550]"
+                  className="text-[#056550] underline"
                   onClick={() => {
                     setSignin(!signin);
                   }}

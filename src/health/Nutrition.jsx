@@ -55,6 +55,29 @@ function Nutrition() {
     },
   };
 
+  const animationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100, // Start below the viewport
+    },
+    visible: {
+      opacity: 1,
+      y: 0, // Move to natural position
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 100, // Move below the viewport
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+  };
+
   return (
     <main>
       <section className="relative">
@@ -64,10 +87,11 @@ function Nutrition() {
         />
         <div className="absolute inset-0 bg-black bg-opacity-25"></div>
         <motion.div
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: true }}
-          variants={upwardMotionVariants}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: false, amount: 0.7 }}
+          variants={animationVariants}
           className="absolute inset-2 flex flex-col justify-center items-end mt-48 mr-2 md:mt-16 md:mr-4"
         >
           <h1 className="text-emerald-700 text-[70px]">التغذية</h1>
@@ -77,10 +101,11 @@ function Nutrition() {
         </motion.div>
       </section>
       <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
         className="md:mb-36"
       >
         <h1 className="text-center text-emerald-700 text-[28px] mt-16 md:mb-10 md:mt-20 md:text-[45px]">
@@ -109,10 +134,11 @@ function Nutrition() {
       </motion.section>
 
       <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariantsSecond}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
         className="mb-16"
       >
         <div className="flex flex-col md:flex-row justify-center gap-12 p-4">
@@ -150,9 +176,15 @@ function Nutrition() {
         </div>
       </motion.section>
 
-      <section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
+      >
         <CaloriesCalculator />
-      </section>
+      </motion.section>
       <Footer />
     </main>
   );

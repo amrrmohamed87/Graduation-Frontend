@@ -61,6 +61,29 @@ function HealthAwareness() {
     },
   };
 
+  const animationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 100, // Start below the viewport
+    },
+    visible: {
+      opacity: 1,
+      y: 0, // Move to natural position
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 100, // Move below the viewport
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+  };
+
   return (
     <main>
       <section className="relative">
@@ -70,10 +93,11 @@ function HealthAwareness() {
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <motion.div
-          initial="offscreen"
-          whileInView="onscreen"
-          viewport={{ once: true }}
-          variants={upwardMotionVariants}
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: false, amount: 0.7 }}
+          variants={animationVariants}
           className="absolute inset-0 flex flex-col justify-center items-center md:mt-16"
         >
           <h1 className="text-[35px] md:text-[70px] text-slate-100">
@@ -95,10 +119,11 @@ function HealthAwareness() {
       </section>
 
       <motion.section
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        variants={upwardMotionVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: false, amount: 0.7 }}
+        variants={animationVariants}
         className="mb-6 md:mb-60"
       >
         <h1 className="text-center text-[#056558] mt-12 text-[22px] md:text-[30px]">
@@ -132,10 +157,11 @@ function HealthAwareness() {
             className="p-4 rounded-lg  shadow-sm md:w-[770px] md:h-[400px]"
           />
           <motion.div
-            initial="offscreen"
-            whileInView="onscreen"
-            viewport={{ once: true }}
-            variants={upwardMotionVariantsPattern}
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: false, amount: 0.7 }}
+            variants={animationVariants}
             className="flex flex-col"
           >
             <div className="flex justify-end items-center mx-8">
@@ -156,10 +182,11 @@ function HealthAwareness() {
         <div className="p-4 md:flex md:justify-center md:items-start md:gap-6 md:m-16">
           {healthcare.map((health) => (
             <motion.div
-              initial="offscreen"
-              whileInView="onscreen"
-              viewport={{ once: true }}
-              variants={upwardMotionVariantsSecond}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: false, amount: 0.7 }}
+              variants={animationVariants}
               key={health.src}
               className="bg-white border shadow-md rounded-bl-2xl rounded-br-2xl hover:-translate-y-6 hover:transition-all duration-500  mb-6"
             >
@@ -205,10 +232,11 @@ function HealthAwareness() {
           </h1>
           <div className="text-right p-4 md:flex md:items-center md:gap-8">
             <motion.img
-              initial="offscreen"
-              whileInView="onscreen"
-              viewport={{ once: true }}
-              variants={upwardMotionVariantsSecond}
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: false, amount: 0.7 }}
+              variants={animationVariants}
               src={nutritionImage}
               className="rounded-[15px] shadow-md md:w-[550px]"
             />

@@ -189,7 +189,7 @@ function Admin() {
       });
       setIsAddingHospitalAdmin(false);
     } catch (error) {
-      toast.error("Fucking error");
+      toast.error("Database error during adding hospital");
       setIsAddingHospitalAdmin(false);
       return;
     }
@@ -466,7 +466,7 @@ function Admin() {
       toast.success("تم مسح المريض بنجاح");
       setIsDeletingPatient(false);
     } catch (error) {
-      toast.error("fe Error");
+      toast.error("Database error during deleting patients");
       setIsDeletingPatient(false);
       return;
     }
@@ -498,7 +498,7 @@ function Admin() {
       toast.success("تم مسح المستشفي بنجاح");
       setIsDeletingHospital(false);
     } catch (error) {
-      toast.error("fe Error");
+      toast.error("Database error during deleting Hospital");
       setIsDeletingHospital(false);
       return;
     }
