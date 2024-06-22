@@ -52,6 +52,7 @@ export function MedSearch() {
     name: "",
   });
   const [resultOfSearch, setResultOfSearch] = useState([]);
+  const[errorOfSearchMed,setErrorOfSearchMed] = useState("");
   function showThing() {
     setShowDivSearch(" mt-5 w-100  position-relative");
   }
@@ -75,6 +76,7 @@ export function MedSearch() {
         ValueOfSearch
       );
       setResultOfSearch(data.searchName);
+      
       setError2("");
       setClassError2("d-none");
       setClassOfCloseErrorMessage("d-none")
@@ -88,7 +90,16 @@ export function MedSearch() {
         setClassOfCloseErrorMessage("position-absolute top-0 end-16 cursor-pointer")
         setShowDivSearch("d-none");
         setResultOfSearch([]);
-      } else {
+      }else if (error2.response && error2.response.status === 422) {
+        setError2("يجب عليك ادخال اسم الدواء");
+        setClassError2(
+          "text-center fs-1 w-50 alert ClassError2Width alert-warning fw-bold mt-3"
+        );
+        setClassOfCloseErrorMessage("position-absolute top-0 end-16 cursor-pointer")
+        setShowDivSearch("d-none");
+        setResultOfSearch([]);
+      } 
+      else {
         setError2("");
         setClassError2("d-none");
         setClassOfCloseErrorMessage("d-none")
