@@ -340,7 +340,18 @@ export function DocSearch() {
         "https://mhiproject.onrender.com/patient/getTime",
         { doctorID: docDetail.id, day: DayOfWork }
       );
-      setDocTimes(data);
+      const sortedTimes = data[0].sort((a, b) => {
+        const [aHours, aMinutes] = a.split(':').map(Number);
+        const [bHours, bMinutes] = b.split(':').map(Number);
+        
+        if (aHours === bHours) {
+          return aMinutes - bMinutes;
+        }
+        return aHours - bHours;
+      });
+
+      setDocTimes([sortedTimes]);
+      console.log(sortedTimes);
       setIsLoadingDays(false)
     } catch (error) {}
   }

@@ -401,7 +401,7 @@ function Login() {
 
               <h1 className="flex justify-center gap-2">
                 <Link
-                  className="text-[#056550] underline"
+                  className="text-[#4f53b3] underline"
                   onClick={() => {
                     setSignin(!signin);
                   }}
