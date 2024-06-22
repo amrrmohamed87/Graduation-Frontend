@@ -601,7 +601,7 @@ function PatientProfile() {
                       <tbody className="border rounded-3 text-right">
                         {WattingBooks.length <= 0 || WattingBooks === null ? (
                          <tr>
-                           <td className=" text-muted start-80 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-2/6">
+                           <td className=" text-muted start-72 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-3/6">
                             لا يوجد مواعيد منتظرة
                           </td>
                          </tr>
@@ -639,7 +639,7 @@ function PatientProfile() {
                       <tbody className="border rounded-3 text-right">
                         {acceptBooks.length <= 0 || acceptBooks === null ? (
                           <tr>
-                            <td className=" text-muted start-80 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-2/6">
+                            <td className=" text-muted start-72 mt-4 ms-2 p-5 shadow rounded position-absolute z-1 fs-3 fw-bold text-center w-3/6">
                             لا يوجد مواعيد سابقة
                           </td>
                           </tr>
