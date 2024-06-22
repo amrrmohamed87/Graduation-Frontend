@@ -202,7 +202,7 @@ const HospitalAdmin = () => {
 
     try {
       const response = await fetch(
-        "https://mhiproject.onrender.com/hospitalAdmin/signupDoctor",
+        "https://mhi-production.up.railway.app/hospitalAdmin/signupDoctor",
         {
           method: "POST",
           body: formData,
