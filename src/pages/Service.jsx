@@ -38,7 +38,7 @@ export function Service() {
     {
       title: "اسم الطبيب",
       pragrapgh:
-        "تبحث عن طبيب؟ يمكنك كتابة اسم الطبيب في شريط البحث وسنزودك بجميع الأطباء المتاحين بهذا الاسم.",
+        "تبحث عن طبيب؟ يمكنك كتابة اسم الطبيب في شريط البحث وسيظهر لك .",
       imgSrc: SecoundSectionPhoto,
       buttonContent: "ابحث الآن",
       alt: "third",
