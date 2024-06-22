@@ -99,7 +99,7 @@ export function DocSearch() {
   async function getDoctors() {
     try {
       let { data } = await axios.get(
-        "https://mhiproject.onrender.com/patient/getDoctors"
+        "https://mhi-production.up.railway.app/patient/getDoctors"
       );
       setDocData(data.userD);
       setIsLoading(false);

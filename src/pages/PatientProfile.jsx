@@ -71,7 +71,7 @@ function PatientProfile() {
   async function GetDoc() {
     try {
       let { data } = await axios.get(
-        "https://mhiproject.onrender.com/patient/getDoctors"
+        "https://mhi-production.up.railway.app/patient/getDoctors"
       );
       setShowDoc(data.userD);
       setIsLoading2(false);
