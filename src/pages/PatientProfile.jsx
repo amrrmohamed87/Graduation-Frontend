@@ -230,6 +230,7 @@ function PatientProfile() {
         age: "",
       });
       setDoneMessage("text-center text-muted fs-4 mt-4");
+      closePatientSection()
       // console.log(data);
     } catch (error) {}
   }
