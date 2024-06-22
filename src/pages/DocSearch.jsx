@@ -23,7 +23,8 @@ export function DocSearch() {
     });
   }, []);
   const Token = localStorage.getItem("token");
-  const name = localStorage.getItem("patientName");
+  const name = localStorage.getItem("name");
+  console.log(name);
   const decodedToken = jwtDecode(Token);
   // console.log(decodedToken);
   // name of user
